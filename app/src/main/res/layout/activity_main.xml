@@ -20,7 +20,7 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
         <FrameLayout
-            android:id="@+id/fm_whitelist"
+            android:id="@+id/fragmentContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </FrameLayout>

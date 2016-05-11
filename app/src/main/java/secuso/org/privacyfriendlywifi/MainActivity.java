@@ -1,6 +1,5 @@
 package secuso.org.privacyfriendlywifi;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,11 +15,27 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import secuso.org.privacyfriendlywifi.view.Fragment_Whitelist;
+import secuso.org.privacyfriendlywifi.view.FragmentWhitelist;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-    final String TAG = "Main Activity";
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private final static String TAG = "Main Activity";
+
+    private void switchToFragment(Class<? extends Fragment> fragmentClass) {
+
+        try {
+            // Insert the fragment by replacing any existing fragment
+            Fragment fragment = fragmentClass.newInstance();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+        } catch (InstantiationException e) {
+            Log.e(TAG, "InstantiationException");
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            Log.e(TAG, "IllegalAccessException");
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +44,10 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fm_whitelist, Fragment_Whitelist.newInstance()).commit();
+        // switch to initial fragment
+        this.switchToFragment(FragmentWhitelist.class);
 
+        // setup the floating action button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         if (fab != null) {
@@ -44,9 +60,10 @@ public class MainActivity extends AppCompatActivity
             });
         }
 
+        // setup the drawer layout
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         if (drawer != null) {
             drawer.addDrawerListener(toggle);
@@ -74,37 +91,20 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
 
-        // Create a new fragment and specify the planet to show based on
-        // position
-        Fragment fragment = null;
-
-        Class fragmentClass = Fragment_Whitelist.class;
+        Class<? extends Fragment> fragmentClass;
         switch (item.getItemId()) {
             case R.id.nav_whitelist:
-                fragmentClass = Fragment_Whitelist.class;
+                fragmentClass = FragmentWhitelist.class;
                 break;
             default:
-                fragmentClass = Fragment_Whitelist.class;
+                fragmentClass = FragmentWhitelist.class;
         }
 
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (InstantiationException e) {
-            Log.e(TAG, "InstantiationException");
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            Log.e(TAG, "IllegalAccessException");
-            e.printStackTrace();
-        }
-
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fm_whitelist, fragment).commit();
+        this.switchToFragment(fragmentClass);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
