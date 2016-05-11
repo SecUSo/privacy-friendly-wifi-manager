@@ -1,9 +1,7 @@
 package secuso.org.privacyfriendlywifi;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
+import secuso.org.privacyfriendlywifi.view.FragmentSchedule;
 import secuso.org.privacyfriendlywifi.view.FragmentWhitelist;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -22,11 +20,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void switchToFragment(Class<? extends Fragment> fragmentClass) {
 
+        // TODO check for fragmentClass != null ???
+
         try {
-            // Insert the fragment by replacing any existing fragment
-            Fragment fragment = fragmentClass.newInstance();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+            if (fragmentClass != null) {
+                // Insert the fragment by replacing any existing fragment
+                Fragment fragment = fragmentClass.newInstance();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+            }
         } catch (InstantiationException e) {
             Log.e(TAG, "InstantiationException");
             e.printStackTrace();
@@ -46,19 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // switch to initial fragment
         this.switchToFragment(FragmentWhitelist.class);
-
-        // setup the floating action button
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        if (fab != null) {
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
-        }
 
         // setup the drawer layout
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -95,10 +84,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
 
-        Class<? extends Fragment> fragmentClass;
+        Class<? extends Fragment> fragmentClass = null;
+
         switch (item.getItemId()) {
             case R.id.nav_whitelist:
                 fragmentClass = FragmentWhitelist.class;
+                break;
+            case R.id.nav_schedule:
+                fragmentClass = FragmentSchedule.class;
+                break;
+            case R.id.nav_settings:
+                break;
+            case R.id.nav_help:
+                break;
+            case R.id.nav_about:
                 break;
             default:
                 fragmentClass = FragmentWhitelist.class;

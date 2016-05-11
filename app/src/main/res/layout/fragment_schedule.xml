@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/header_whitelist"
+            android:text="@string/header_schedule"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:padding="10dp" />
 

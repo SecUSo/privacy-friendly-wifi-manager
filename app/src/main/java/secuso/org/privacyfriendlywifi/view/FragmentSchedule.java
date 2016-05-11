@@ -13,16 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
-import secuso.org.privacyfriendlywifi.view.adapter.WhitelistAdapter;
+import secuso.org.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 
-public class FragmentWhitelist extends Fragment {
+public class FragmentSchedule extends Fragment {
 
-    public FragmentWhitelist() {
+    public FragmentSchedule() {
         // Required empty public constructor
     }
 
-    public static FragmentWhitelist newInstance() {
-        FragmentWhitelist fragment = new FragmentWhitelist();
+    public static FragmentSchedule newInstance() {
+        FragmentSchedule fragment = new FragmentSchedule();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -37,7 +37,7 @@ public class FragmentWhitelist extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_whitelist, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_schedule, container, false);
 
         // setup the floating action button
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
@@ -46,7 +46,7 @@ public class FragmentWhitelist extends Fragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your first action", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Replace with your second action", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             });
@@ -57,13 +57,13 @@ public class FragmentWhitelist extends Fragment {
         // example list
         List<String> items = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
-            items.add("Wifi Nr. " + i);
-            items.add("MAC Nr. " + i);
+            items.add("TimeSlot Nr. " + i);
+            items.add("From To Nr. " + i);
         }
         String[] itemsArr = new String[items.size()];
         itemsArr = items.toArray(itemsArr);
 
-        WhitelistAdapter itemsAdapter = new WhitelistAdapter(getActivity(), R.layout.list_item_whitelist, itemsArr);
+        ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity(), R.layout.list_item_schedule, itemsArr);
         listView.setAdapter(itemsAdapter);
 
         return rootView;
