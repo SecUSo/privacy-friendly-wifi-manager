@@ -12,7 +12,6 @@
     <string name="group_communicate">Communicate</string>
 
 
-
     <!-- CONTENT STRINGS -->
     <string name="header_whitelist">List of managed WiFi networks</string>
     <string name="header_schedule">List of active time slots</string>

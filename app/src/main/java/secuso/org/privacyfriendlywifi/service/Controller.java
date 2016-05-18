@@ -11,6 +11,8 @@ public class Controller {
     private static ScreenOnReceiver screenOnReceiver;
 
     public static void registerReceivers(Context context) {
+        Controller.unregisterReceivers(context);
+
         if (Controller.screenOnReceiver == null) {
             Controller.screenOnReceiver = new ScreenOnReceiver();
         }
@@ -25,8 +27,13 @@ public class Controller {
 
     public static void unregisterReceivers(Context context) {
         if (Controller.screenOnReceiver != null) {
-            context.unregisterReceiver(Controller.screenOnReceiver);
-            Controller.screenOnReceiver = null;
+            try {
+                context.unregisterReceiver(Controller.screenOnReceiver);
+            } catch (IllegalArgumentException e) {
+                // expected in case receiver is not registered
+            } finally {
+                Controller.screenOnReceiver = null;
+            }
         }
 
         AlarmReceiver.cancelAlarm(context);

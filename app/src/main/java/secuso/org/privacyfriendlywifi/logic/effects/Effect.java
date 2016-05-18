@@ -7,7 +7,8 @@ public interface Effect {
 
     /**
      * Apply the effect using the arguments passed.
-     * @param args Arguments for the effect.
+     *
+     * @param state State for effect.
      */
-    void apply(Object args);
+    void apply(boolean state);
 }

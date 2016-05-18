@@ -12,7 +12,6 @@ public class ScreenOnReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent startManagerService = new Intent(context, ManagerService.class);
-
         startWakefulService(context, startManagerService);
     }
 }

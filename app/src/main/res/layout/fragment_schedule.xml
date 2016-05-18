@@ -1,10 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.FragmentWhitelist"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".view.FragmentWhitelist">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,9 +13,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="@string/header_schedule"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:padding="10dp" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <!--TODO Remove debugging Switch-->
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:text="New Switch" />
 
         <ListView
             android:id="@+id/listView"
@@ -30,8 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_action_add"
+        android:src="@drawable/ic_action_add" /><!--
         android:background="@color/colorPrimaryDark"
-        app:backgroundTint="@color/colorPrimaryDark" />
+        app:backgroundTint="@color/colorPrimaryDark" />-->
 
 </FrameLayout>

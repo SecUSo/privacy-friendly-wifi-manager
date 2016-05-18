@@ -26,7 +26,7 @@ public class WhitelistAdapter extends ArrayAdapter<String> {
 
     @Override
     public int getCount() {
-        return items.length/2;
+        return items.length / 2;
     }
 
     @Override
@@ -45,9 +45,9 @@ public class WhitelistAdapter extends ArrayAdapter<String> {
 
         // fill data
         WhitelistViewHolder viewHolder = (WhitelistViewHolder) listItem.getTag();
-        String item1Text = items[2*position];
+        String item1Text = items[2 * position];
         viewHolder.text1.setText(item1Text);
-        String item2Text = items[2*position+1];
+        String item2Text = items[2 * position + 1];
         viewHolder.text2.setText(item2Text);
 
         return listItem;

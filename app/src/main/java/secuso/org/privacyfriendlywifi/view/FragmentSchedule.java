@@ -4,15 +4,19 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
+import secuso.org.privacyfriendlywifi.service.Controller;
 import secuso.org.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 
 public class FragmentSchedule extends Fragment {
@@ -51,6 +55,23 @@ public class FragmentSchedule extends Fragment {
                 }
             });
         }
+
+        // TODO Switch for debugging. Removefor release
+        // ### begin switch ###
+        Switch asdfg = (Switch) rootView.findViewById(R.id.switch1);
+        asdfg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Log.i("TAG", "register all the receivers");
+                    Controller.registerReceivers(getContext());
+                } else {
+                    Log.i("TAG", "UNregister all the receivers");
+                    Controller.unregisterReceivers(getContext());
+                }
+            }
+        });
+        // ### end switch ###
 
         // setup example list
         ListView listView = (ListView) rootView.findViewById(R.id.listView);

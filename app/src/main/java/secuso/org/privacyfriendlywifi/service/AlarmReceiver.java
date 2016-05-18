@@ -12,7 +12,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
  *
  */
 public class AlarmReceiver extends WakefulBroadcastReceiver {
-    private static final int TIMEOUT_IN_SECONDS = 60;
+    private static final int TIMEOUT_IN_SECONDS = 5;
     private static AlarmManager alarmManager;
     private static PendingIntent alarmIntent;
 
@@ -23,7 +23,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         }
 
         if (AlarmReceiver.alarmIntent == null) {
-            AlarmReceiver.alarmIntent = getStartPendingIntent(context);
+            Intent intent = new Intent(context, AlarmReceiver.class);
+            AlarmReceiver.alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         }
     }
 
@@ -45,14 +46,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         AlarmReceiver.alarmManager.cancel(AlarmReceiver.alarmIntent);
     }
 
-    private static PendingIntent getStartPendingIntent(Context context) {
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
     @Override
     public void onReceive(Context context, Intent intent) {
-
         Intent startManagerService = new Intent(context, ManagerService.class);
         startWakefulService(context, startManagerService);
 
