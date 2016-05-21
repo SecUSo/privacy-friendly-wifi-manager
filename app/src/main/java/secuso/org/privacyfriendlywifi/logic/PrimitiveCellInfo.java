@@ -14,7 +14,7 @@ import android.telephony.TelephonyManager;
  *
  */
 public class PrimitiveCellInfo {
-    private int cellId; // the ID of the cell //TODO: consider hashing for privacy reasons
+    private int cellId; // the ID of the cell
     private double signalStrength; // in dBm
 
     public PrimitiveCellInfo(int cellId, double signalStrength) {
@@ -23,11 +23,11 @@ public class PrimitiveCellInfo {
     }
 
     public int getCellId() {
-        return cellId;
+        return this.cellId;
     }
 
     public double getSignalStrength() {
-        return signalStrength;
+        return this.signalStrength;
     }
 
     public static PrimitiveCellInfo getPrimitiveCellInfo(NeighboringCellInfo cellInfo) {
@@ -61,9 +61,14 @@ public class PrimitiveCellInfo {
         return new PrimitiveCellInfo(cellId, dBm);
     }
 
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfo cellInfo) {
-        // TODO: this is really ugly. Think of a way to get better generics
+
+        /*
+            There is no way to make this more appealing as Google did it like this themselves:
+            https://github.com/android/platform_frameworks_base/blob/marshmallow-mr2-release/services/core/java/com/android/server/connectivity/NetworkMonitor.java
+         */
         if (cellInfo instanceof CellInfoCdma) {
             return PrimitiveCellInfo.getPrimitiveCellInfo((CellInfoCdma) cellInfo);
         } else if (cellInfo instanceof CellInfoGsm) {
@@ -73,6 +78,7 @@ public class PrimitiveCellInfo {
         } else if (cellInfo instanceof CellInfoWcdma) {
             return PrimitiveCellInfo.getPrimitiveCellInfo((CellInfoWcdma) cellInfo);
         }
+
         return null; // TODO: maybe throw exception
     }
 
