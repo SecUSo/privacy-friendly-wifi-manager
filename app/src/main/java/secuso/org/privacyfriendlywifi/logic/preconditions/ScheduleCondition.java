@@ -8,11 +8,6 @@ import android.os.Parcel;
  */
 public class ScheduleCondition implements Precondition {
     @Override
-    public boolean check(Context context) {
-        return false;
-    }
-
-    @Override
     public int describeContents() {
         return 0;
     }
@@ -20,5 +15,10 @@ public class ScheduleCondition implements Precondition {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
+    }
+
+    @Override
+    public boolean check(Context context, Object obj) {
+        return false;
     }
 }

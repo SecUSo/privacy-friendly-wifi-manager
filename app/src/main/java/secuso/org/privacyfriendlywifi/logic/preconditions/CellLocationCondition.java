@@ -8,11 +8,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import secuso.org.privacyfriendlywifi.logic.types.PrimitiveCellInfo;
+import secuso.org.privacyfriendlywifi.logic.types.PrimitiveCellInfoTreeSet;
 
 /**
  *
  */
 public class CellLocationCondition implements Precondition {
+    public final int MIN_CELLS = 3;
+    public final double MIN_CELL_PERCENTAGE = 0.3;
     private Set<PrimitiveCellInfo> allowedCells;
 
     public CellLocationCondition() {
@@ -20,24 +23,29 @@ public class CellLocationCondition implements Precondition {
     }
 
     @Override
-    public boolean check(Context context) {
+    public boolean check(Context context, Object obj) {
+        Set<PrimitiveCellInfo> currentCells = (Set<PrimitiveCellInfo>) obj;
 
+        HashSet<PrimitiveCellInfo> union = new HashSet<>(currentCells);
+        union.retainAll(this.allowedCells);
 
-        // TODO: DO STUFF with cellsInRange
-
-
-        return false;
+        return ((double) union.size() / (double) this.allowedCells.size()) > MIN_CELL_PERCENTAGE || union.size() > MIN_CELLS;
     }
 
-    public void addKBestSurroundingCells(Context context, int k) {
+    public void addKBestSurroundingCells(Context context, int k, PrimitiveCellInfoTreeSet cells) {
         int i = 0;
-        for (PrimitiveCellInfo cell : PrimitiveCellInfo.getAllCells(context)) {
+        for (PrimitiveCellInfo cell : cells) {
             if (i >= k) {
                 break;
             }
 
             this.allowedCells.add(cell);
         }
+    }
+
+
+    public void addKBestSurroundingCells(Context context, int k) {
+        addKBestSurroundingCells(context, k, PrimitiveCellInfo.getAllCells(context));
     }
 
     @Override

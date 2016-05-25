@@ -13,5 +13,5 @@ public interface Precondition extends Parcelable {
      *
      * @return True, if the precondition applies.
      */
-    boolean check(Context context);
+    boolean check(Context context, Object obj);
 }
