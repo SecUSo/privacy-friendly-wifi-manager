@@ -51,7 +51,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         Intent startManagerService = new Intent(context, ManagerService.class);
         startWakefulService(context, startManagerService);
 
-        // Set next alarm (required for > Android 6 (support for Doze)
+        // Set next alarm (required for > Android 6 (support for Doze))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             AlarmReceiver.initAlarmManager(context);
             AlarmReceiver.alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, TIMEOUT_IN_SECONDS * 1000, alarmIntent);
