@@ -20,14 +20,14 @@ import secuso.org.privacyfriendlywifi.R;
 import secuso.org.privacyfriendlywifi.service.Controller;
 import secuso.org.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 
-public class FragmentSchedule extends Fragment {
+public class ScheduleFragment extends Fragment {
 
-    public FragmentSchedule() {
+    public ScheduleFragment() {
         // Required empty public constructor
     }
 
-    public static FragmentSchedule newInstance() {
-        FragmentSchedule fragment = new FragmentSchedule();
+    public static ScheduleFragment newInstance() {
+        ScheduleFragment fragment = new ScheduleFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

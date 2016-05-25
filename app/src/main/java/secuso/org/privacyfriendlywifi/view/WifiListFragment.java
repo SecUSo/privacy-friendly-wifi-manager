@@ -4,25 +4,26 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
-import secuso.org.privacyfriendlywifi.view.adapter.WhitelistAdapter;
+import secuso.org.privacyfriendlywifi.view.adapter.WifiListAdapter;
 
-public class FragmentWhitelist extends Fragment {
+public class WifiListFragment extends Fragment {
 
-    public FragmentWhitelist() {
+    public WifiListFragment() {
         // Required empty public constructor
     }
 
-    public static FragmentWhitelist newInstance() {
-        FragmentWhitelist fragment = new FragmentWhitelist();
+    public static WifiListFragment newInstance() {
+        WifiListFragment fragment = new WifiListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -37,7 +38,7 @@ public class FragmentWhitelist extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_whitelist, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
 
         // setup the floating action button
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
@@ -53,7 +54,7 @@ public class FragmentWhitelist extends Fragment {
         }
 
         // setup example list
-        ListView listView = (ListView) rootView.findViewById(R.id.listView);
+        RecyclerView listView = (RecyclerView) rootView.findViewById(R.id.listView);
         // example list
         List<String> items = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
@@ -63,8 +64,9 @@ public class FragmentWhitelist extends Fragment {
         String[] itemsArr = new String[items.size()];
         itemsArr = items.toArray(itemsArr);
 
-        WhitelistAdapter itemsAdapter = new WhitelistAdapter(getActivity(), R.layout.list_item_whitelist, itemsArr);
+        WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity(), R.layout.list_item_wifilist, itemsArr);
         listView.setAdapter(itemsAdapter);
+        listView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return rootView;
     }

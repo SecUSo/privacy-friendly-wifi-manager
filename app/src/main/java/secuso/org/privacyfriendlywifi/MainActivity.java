@@ -12,8 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
-import secuso.org.privacyfriendlywifi.view.FragmentSchedule;
-import secuso.org.privacyfriendlywifi.view.FragmentWhitelist;
+import secuso.org.privacyfriendlywifi.view.ScheduleFragment;
+import secuso.org.privacyfriendlywifi.view.WifiListFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = "Main Activity";
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         // switch to initial fragment
-        this.switchToFragment(FragmentWhitelist.class);
+        this.switchToFragment(WifiListFragment.class);
 
         // setup the drawer layout
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -88,10 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()) {
             case R.id.nav_whitelist:
-                fragmentClass = FragmentWhitelist.class;
+                fragmentClass = WifiListFragment.class;
                 break;
             case R.id.nav_schedule:
-                fragmentClass = FragmentSchedule.class;
+                fragmentClass = ScheduleFragment.class;
                 break;
             case R.id.nav_settings:
                 break;
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_about:
                 break;
             default:
-                fragmentClass = FragmentWhitelist.class;
+                fragmentClass = WifiListFragment.class;
         }
 
         this.switchToFragment(fragmentClass);
