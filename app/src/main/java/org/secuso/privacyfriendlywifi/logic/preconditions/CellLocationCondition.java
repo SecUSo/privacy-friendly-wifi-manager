@@ -25,10 +25,8 @@ public class CellLocationCondition implements Precondition {
     @Override
     public boolean check(Context context, Object obj) {
         Set<PrimitiveCellInfo> currentCells = (Set<PrimitiveCellInfo>) obj;
-
         HashSet<PrimitiveCellInfo> union = new HashSet<>(currentCells);
         union.retainAll(this.allowedCells);
-
         return ((double) union.size() / (double) this.allowedCells.size()) > MIN_CELL_PERCENTAGE || union.size() > MIN_CELLS;
     }
 
@@ -38,7 +36,6 @@ public class CellLocationCondition implements Precondition {
             if (i >= k) {
                 break;
             }
-
             this.allowedCells.add(cell);
         }
     }
