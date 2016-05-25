@@ -14,19 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".service.ManagerService"
+            android:name="org.secuso.privacyfriendlywifi.service.ManagerService"
             android:enabled="true"
             android:exported="false" />
 
-        <receiver android:name=".service.BootCompletedReceiver">
+        <receiver android:name="org.secuso.privacyfriendlywifi.service.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".service.AlarmReceiver" />
+        <receiver android:name="org.secuso.privacyfriendlywifi.service.AlarmReceiver" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="org.secuso.privacyfriendlywifi.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">

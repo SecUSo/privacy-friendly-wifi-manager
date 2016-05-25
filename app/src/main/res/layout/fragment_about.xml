@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".view.AboutFragment">
+    tools:context="org.secuso.privacyfriendlywifi.view.AboutFragment">
 
     <ScrollView
         android:layout_width="match_parent"
