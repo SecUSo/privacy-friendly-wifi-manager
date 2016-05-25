@@ -1,19 +1,27 @@
-package secuso.org.privacyfriendlywifi.logic;
+package secuso.org.privacyfriendlywifi.logic.types;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoCdma;
 import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
 import android.telephony.CellInfoWcdma;
+import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.TelephonyManager;
+import android.telephony.cdma.CdmaCellLocation;
+import android.telephony.gsm.GsmCellLocation;
+
+import java.util.List;
 
 /**
  *
  */
-public class PrimitiveCellInfo {
+public class PrimitiveCellInfo implements Parcelable {
     private int cellId; // the ID of the cell
     private double signalStrength; // in dBm
 
@@ -21,6 +29,7 @@ public class PrimitiveCellInfo {
         this.cellId = cellId;
         this.signalStrength = signalStrength;
     }
+
 
     public int getCellId() {
         return this.cellId;
@@ -108,5 +117,93 @@ public class PrimitiveCellInfo {
         int cellId = cellInfo.getCellIdentity().getCid();
         double dBm = cellInfo.getCellSignalStrength().getDbm();
         return new PrimitiveCellInfo(cellId, dBm);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.cellId);
+        dest.writeDouble(this.signalStrength);
+    }
+
+    protected PrimitiveCellInfo(Parcel in) {
+        cellId = in.readInt();
+        signalStrength = in.readDouble();
+    }
+
+    public static final Creator<PrimitiveCellInfo> CREATOR = new Creator<PrimitiveCellInfo>() {
+        @Override
+        public PrimitiveCellInfo createFromParcel(Parcel in) {
+            return new PrimitiveCellInfo(in);
+        }
+
+        @Override
+        public PrimitiveCellInfo[] newArray(int size) {
+            return new PrimitiveCellInfo[size];
+        }
+    };
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof PrimitiveCellInfo && ((PrimitiveCellInfo) o).getCellId() == this.getCellId();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getCellId();
+    }
+
+    public static PrimitiveCellInfoTreeSet getAllCells(Context context) {
+
+        // read cells in reach
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        PrimitiveCellInfoTreeSet cellsInRange = new PrimitiveCellInfoTreeSet();
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) { // get all cells for newer androids
+
+            List<CellInfo> cells = telephonyManager.getAllCellInfo();
+
+            if (cells != null && !cells.isEmpty()) { // this check is necessary since Samsung devices do not return any cell via getAllCellInfo
+                for (CellInfo cell : cells) {
+                    cellsInRange.add(PrimitiveCellInfo.getPrimitiveCellInfo(cell));
+                }
+            } else {
+                cellsInRange = getLegacyCellInfo(telephonyManager);
+            }
+        } else {
+            cellsInRange = getLegacyCellInfo(telephonyManager);
+        }
+
+        return cellsInRange;
+    }
+
+    static PrimitiveCellInfoTreeSet getLegacyCellInfo(TelephonyManager telephonyManager) {
+        PrimitiveCellInfoTreeSet cellsInRange = new PrimitiveCellInfoTreeSet();
+        int cellId = Integer.MIN_VALUE;
+
+        // get connected cell
+        CellLocation location = telephonyManager.getCellLocation();
+
+        if (location instanceof GsmCellLocation) {
+            cellId = ((GsmCellLocation) location).getCid();
+        } else if (location instanceof CdmaCellLocation) {
+            cellId = ((CdmaCellLocation) location).getBaseStationId();
+        }
+
+        // TODO this is not the real strength, but as we are connected we can assume that it is the strongest available to us (in db)
+        cellsInRange.add(new PrimitiveCellInfo(cellId, 0));
+
+        // get neighboring cells
+        List<NeighboringCellInfo> cells = telephonyManager.getNeighboringCellInfo();
+        for (NeighboringCellInfo cell : cells) {
+            cellsInRange.add(PrimitiveCellInfo.getPrimitiveCellInfo(cell));
+        }
+
+        return cellsInRange;
     }
 }

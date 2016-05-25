@@ -1,77 +1,68 @@
 package secuso.org.privacyfriendlywifi.logic.preconditions;
 
 import android.content.Context;
-import android.os.Build;
-import android.telephony.CellInfo;
-import android.telephony.CellLocation;
-import android.telephony.NeighboringCellInfo;
-import android.telephony.TelephonyManager;
-import android.telephony.cdma.CdmaCellLocation;
-import android.telephony.gsm.GsmCellLocation;
-import android.util.Log;
+import android.os.Parcel;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-import secuso.org.privacyfriendlywifi.logic.PrimitiveCellInfo;
+import secuso.org.privacyfriendlywifi.logic.types.PrimitiveCellInfo;
 
 /**
  *
  */
 public class CellLocationCondition implements Precondition {
-    List<PrimitiveCellInfo> allowedCells;
+    private Set<PrimitiveCellInfo> allowedCells;
+
+    public CellLocationCondition() {
+        super();
+    }
 
     @Override
     public boolean check(Context context) {
 
-        // read cells in reach
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        List<PrimitiveCellInfo> cellsInRange = new LinkedList<>();
 
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) { // get all cells for newer androids
-
-            List<CellInfo> cells = telephonyManager.getAllCellInfo();
-
-            if (cells != null && !cells.isEmpty()) { // this check is necessary since Samsung devices do not return any cell via getAllCellInfo
-                for (CellInfo cell : cells) {
-                    cellsInRange.add(PrimitiveCellInfo.getPrimitiveCellInfo(cell));
-                }
-            } else {
-                cellsInRange = getLegacyCellInfo(telephonyManager);
-            }
-        } else {
-            cellsInRange = getLegacyCellInfo(telephonyManager);
-        }
-        Log.i("TAG", "Number of cells detected: " + cellsInRange.size());
         // TODO: DO STUFF with cellsInRange
 
 
         return false;
     }
 
-    List<PrimitiveCellInfo> getLegacyCellInfo(TelephonyManager telephonyManager) {
-        List<PrimitiveCellInfo> cellsInRange = new LinkedList<>();
-        int cellId = Integer.MIN_VALUE;
+    public void addKBestSurroundingCells(Context context, int k) {
+        int i = 0;
+        for (PrimitiveCellInfo cell : PrimitiveCellInfo.getAllCells(context)) {
+            if (i >= k) {
+                break;
+            }
 
-        // get connected cell
-        CellLocation location = telephonyManager.getCellLocation();
-
-        if (location instanceof GsmCellLocation) {
-            cellId = ((GsmCellLocation) location).getCid();
-        } else if (location instanceof CdmaCellLocation) {
-            cellId = ((CdmaCellLocation) location).getBaseStationId();
+            this.allowedCells.add(cell);
         }
-
-        // TODO this is not the real strength, but as we are connected we can assume that it is the strongest available to us
-        cellsInRange.add(new PrimitiveCellInfo(cellId, Double.MAX_VALUE));
-
-        // get neighboring cells
-        List<NeighboringCellInfo> cells = telephonyManager.getNeighboringCellInfo();
-        for (NeighboringCellInfo cell : cells) {
-            cellsInRange.add(PrimitiveCellInfo.getPrimitiveCellInfo(cell));
-        }
-
-        return cellsInRange;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedArray(this.allowedCells.toArray(new PrimitiveCellInfo[this.allowedCells.size()]), 0);
+    }
+
+    protected CellLocationCondition(Parcel in) {
+        this.allowedCells = new HashSet<PrimitiveCellInfo>(Arrays.asList(in.createTypedArray(PrimitiveCellInfo.CREATOR)));
+    }
+
+    public static final Creator<CellLocationCondition> CREATOR = new Creator<CellLocationCondition>() {
+        @Override
+        public CellLocationCondition createFromParcel(Parcel in) {
+            return new CellLocationCondition(in);
+        }
+
+        @Override
+        public CellLocationCondition[] newArray(int size) {
+            return new CellLocationCondition[size];
+        }
+    };
 }
