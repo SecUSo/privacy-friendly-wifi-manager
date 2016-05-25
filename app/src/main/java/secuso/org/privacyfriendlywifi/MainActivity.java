@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import secuso.org.privacyfriendlywifi.view.FragmentAbout;
 import secuso.org.privacyfriendlywifi.view.FragmentSchedule;
 import secuso.org.privacyfriendlywifi.view.FragmentWhitelist;
 
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_help:
                 break;
             case R.id.nav_about:
+                fragmentClass = FragmentAbout.class;
                 break;
             default:
                 fragmentClass = FragmentWhitelist.class;
