@@ -119,44 +119,6 @@ public class PrimitiveCellInfo implements Parcelable {
         return new PrimitiveCellInfo(cellId, dBm);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.cellId);
-        dest.writeDouble(this.signalStrength);
-    }
-
-    protected PrimitiveCellInfo(Parcel in) {
-        cellId = in.readInt();
-        signalStrength = in.readDouble();
-    }
-
-    public static final Creator<PrimitiveCellInfo> CREATOR = new Creator<PrimitiveCellInfo>() {
-        @Override
-        public PrimitiveCellInfo createFromParcel(Parcel in) {
-            return new PrimitiveCellInfo(in);
-        }
-
-        @Override
-        public PrimitiveCellInfo[] newArray(int size) {
-            return new PrimitiveCellInfo[size];
-        }
-    };
-
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof PrimitiveCellInfo && ((PrimitiveCellInfo) o).getCellId() == this.getCellId();
-    }
-
-    @Override
-    public int hashCode() {
-        return this.getCellId();
-    }
-
     public static PrimitiveCellInfoTreeSet getAllCells(Context context) {
 
         // read cells in reach
@@ -206,4 +168,44 @@ public class PrimitiveCellInfo implements Parcelable {
 
         return cellsInRange;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof PrimitiveCellInfo && ((PrimitiveCellInfo) o).getCellId() == this.getCellId();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getCellId();
+    }
+
+    protected PrimitiveCellInfo(Parcel in) {
+        cellId = in.readInt();
+        signalStrength = in.readDouble();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.cellId);
+        dest.writeDouble(this.signalStrength);
+    }
+
+    public static final Creator<PrimitiveCellInfo> CREATOR = new Creator<PrimitiveCellInfo>() {
+        @Override
+        public PrimitiveCellInfo createFromParcel(Parcel in) {
+            return new PrimitiveCellInfo(in);
+        }
+
+        @Override
+        public PrimitiveCellInfo[] newArray(int size) {
+            return new PrimitiveCellInfo[size];
+        }
+    };
+
 }

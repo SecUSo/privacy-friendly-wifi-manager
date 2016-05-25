@@ -20,6 +20,7 @@ public class ManagerService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try {
             // DO STUFF
+            // getFilesDir()
 
             // testing here, TODO: remove
             CellLocationCondition test = new CellLocationCondition();
@@ -28,10 +29,5 @@ public class ManagerService extends IntentService {
             // tell everyone that we are done
             WakefulBroadcastReceiver.completeWakefulIntent(intent);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 }
