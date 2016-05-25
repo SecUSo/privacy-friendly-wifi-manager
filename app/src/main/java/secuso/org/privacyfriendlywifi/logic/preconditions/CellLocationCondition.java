@@ -18,7 +18,9 @@ import secuso.org.privacyfriendlywifi.logic.PrimitiveCellInfo;
 /**
  *
  */
-public class WifiLocationCondition implements Precondition {
+public class CellLocationCondition implements Precondition {
+    List<PrimitiveCellInfo> allowedCells;
+
     @Override
     public boolean check(Context context) {
 

@@ -4,7 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
-import secuso.org.privacyfriendlywifi.logic.preconditions.WifiLocationCondition;
+import secuso.org.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 
 /**
  *
@@ -22,7 +22,7 @@ public class ManagerService extends IntentService {
             // DO STUFF
 
             // testing here, TODO: remove
-            WifiLocationCondition test = new WifiLocationCondition();
+            CellLocationCondition test = new CellLocationCondition();
             test.check(this);
         } finally {
             // tell everyone that we are done

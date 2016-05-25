@@ -25,10 +25,10 @@
             android:layout_gravity="right|bottom"
             android:text="New Switch" />
 
-        <ListView
-            android:id="@+id/listView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/timeslotRecycleView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

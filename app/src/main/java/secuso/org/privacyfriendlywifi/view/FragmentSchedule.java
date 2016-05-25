@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ListView;
 import android.widget.Switch;
 
 import java.util.ArrayList;
@@ -74,7 +75,9 @@ public class FragmentSchedule extends Fragment {
         // ### end switch ###
 
         // setup example list
-        ListView listView = (ListView) rootView.findViewById(R.id.listView);
+        RecyclerView listView = (RecyclerView) rootView.findViewById(R.id.timeslotRecycleView);
+
+
         // example list
         List<String> items = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
@@ -86,6 +89,7 @@ public class FragmentSchedule extends Fragment {
 
         ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity(), R.layout.list_item_schedule, itemsArr);
         listView.setAdapter(itemsAdapter);
+        listView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return rootView;
     }
