@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.view.adapter.WifiListAdapter;
+import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +60,10 @@ public class WifiListFragment extends Fragment {
             });
         }
 
-        // setup example list
-        RecyclerView listView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        // setup recycler view
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+
         // example list
         List<WifiLocationEntry> wifiLocationEntries = new ArrayList<>();
         wifiLocationEntries.add(new WifiLocationEntry("eduroam", "11:22:33:44:55:66"));
@@ -69,11 +72,25 @@ public class WifiListFragment extends Fragment {
         wifiLocationEntries.add(new WifiLocationEntry("edunotroam2", "11:22:33:44:55:66"));
         wifiLocationEntries.add(new WifiLocationEntry("edunotroam3", "11:22:33:44:55:66"));
         wifiLocationEntries.add(new WifiLocationEntry("edunotroam4", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("eduroam", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam1", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam2", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam3", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam4", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("eduroam", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam1", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam2", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam3", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam4", "11:22:33:44:55:66"));
 
         WifiListAdapter itemsAdapter = new WifiListAdapter(getContext(), wifiLocationEntries);
-        listView.setAdapter(itemsAdapter);
-        listView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(itemsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return rootView;
     }
+
+    //TODO fade out fab on scroll
 }

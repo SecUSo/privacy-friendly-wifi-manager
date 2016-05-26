@@ -17,6 +17,7 @@ import android.widget.Switch;
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.service.Controller;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
+import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,24 +81,36 @@ public class ScheduleFragment extends Fragment {
         });
         // ### end switch ###
 
-        // setup example list
-        RecyclerView listView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-
-        // example list
-        List<String> items = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            items.add("TimeSlot Nr. " + i);
-            items.add("From To Nr. " + i);
-        }
+        // setup recycler view
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
 
         List<ScheduleEntry> scheduleEntries = new ArrayList<>();
         scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
-        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 155));
+        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
+        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
+        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 55));
+        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
+        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
+        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
+        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 55));
+        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
+        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
+        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
+        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 55));
+        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
+        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
+        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
+        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 55));
+        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
+        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
 
         ScheduleAdapter itemsAdapter = new ScheduleAdapter(getContext(), scheduleEntries);
-        listView.setAdapter(itemsAdapter);
-        listView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(itemsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return rootView;
     }
+
+    //TODO fade out fab on scroll
 }
