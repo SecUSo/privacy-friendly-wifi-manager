@@ -16,18 +16,23 @@ import java.util.Set;
 public class CellLocationCondition implements Precondition {
     public final int MIN_CELLS = 3;
     public final double MIN_CELL_PERCENTAGE = 0.3;
-    private Set<PrimitiveCellInfo> allowedCells;
+    private Set<PrimitiveCellInfo> relatedCells;
 
     public CellLocationCondition() {
         super();
+        this.relatedCells = new HashSet<>();
+    }
+
+    public int getNumberOfRelatedCells() {
+        return relatedCells.size();
     }
 
     @Override
     public boolean check(Context context, Object obj) {
         Set<PrimitiveCellInfo> currentCells = (Set<PrimitiveCellInfo>) obj;
         HashSet<PrimitiveCellInfo> union = new HashSet<>(currentCells);
-        union.retainAll(this.allowedCells);
-        return ((double) union.size() / (double) this.allowedCells.size()) > MIN_CELL_PERCENTAGE || union.size() > MIN_CELLS;
+        union.retainAll(this.relatedCells);
+        return ((double) union.size() / (double) this.relatedCells.size()) > MIN_CELL_PERCENTAGE || union.size() > MIN_CELLS;
     }
 
     public void addKBestSurroundingCells(Context context, int k, PrimitiveCellInfoTreeSet cells) {
@@ -36,7 +41,7 @@ public class CellLocationCondition implements Precondition {
             if (i >= k) {
                 break;
             }
-            this.allowedCells.add(cell);
+            this.relatedCells.add(cell);
         }
     }
 
@@ -52,11 +57,11 @@ public class CellLocationCondition implements Precondition {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedArray(this.allowedCells.toArray(new PrimitiveCellInfo[this.allowedCells.size()]), 0);
+        dest.writeTypedArray(this.relatedCells.toArray(new PrimitiveCellInfo[this.relatedCells.size()]), 0);
     }
 
     protected CellLocationCondition(Parcel in) {
-        this.allowedCells = new HashSet<PrimitiveCellInfo>(Arrays.asList(in.createTypedArray(PrimitiveCellInfo.CREATOR)));
+        this.relatedCells = new HashSet<PrimitiveCellInfo>(Arrays.asList(in.createTypedArray(PrimitiveCellInfo.CREATOR)));
     }
 
     public static final Creator<CellLocationCondition> CREATOR = new Creator<CellLocationCondition>() {

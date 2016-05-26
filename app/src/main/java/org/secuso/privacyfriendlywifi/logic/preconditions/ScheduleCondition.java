@@ -9,35 +9,45 @@ import android.util.Pair;
  */
 public class ScheduleCondition implements Precondition {
     private final int start_hour, start_minute, end_hour, end_minute;
+    private boolean isActive;
 
-    public ScheduleCondition(int start_hour, int start_minute, int end_hour, int end_minute) {
+    public ScheduleCondition(int start_hour, int start_minute, int end_hour, int end_minute, boolean isActive) {
         this.start_hour = start_hour;
         this.start_minute = start_minute;
         this.end_hour = end_hour;
         this.end_minute = end_minute;
+        this.isActive = isActive;
     }
 
-    public int getStart_hour() {
+    public int getStartHour() {
         return start_hour;
     }
 
-    public int getStart_minute() {
+    public int getStartMinute() {
         return start_minute;
     }
 
-    public int getEnd_hour() {
+    public int getEndHour() {
         return end_hour;
     }
 
-    public int getEnd_minute() {
+    public int getEndMinute() {
         return end_minute;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     @Override
     public boolean check(Context context, Object obj) {
         Pair<Integer, Integer> hourAndMinute = (Pair<Integer, Integer>) obj;
-        // check, whether the given (current) time lies in between the start and end time
-        return start_hour <= hourAndMinute.first && hourAndMinute.first <= end_hour
+        // check, whether isActive and the given (current) time lies in between the start and end time
+        return isActive && start_hour <= hourAndMinute.first && hourAndMinute.first <= end_hour
                 && start_minute <= hourAndMinute.second && hourAndMinute.second <= end_minute;
     }
 
@@ -52,6 +62,7 @@ public class ScheduleCondition implements Precondition {
         dest.writeInt(start_minute);
         dest.writeInt(end_hour);
         dest.writeInt(end_minute);
+        dest.writeInt(isActive ? 1 : 0);
     }
 
     protected ScheduleCondition(Parcel in) {
@@ -59,6 +70,7 @@ public class ScheduleCondition implements Precondition {
         this.start_minute = in.readInt();
         this.end_hour = in.readInt();
         this.end_minute = in.readInt();
+        this.isActive = in.readInt() != 0;
     }
 
     public static final Creator<ScheduleCondition> CREATOR = new Creator<ScheduleCondition>() {

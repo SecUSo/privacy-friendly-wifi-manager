@@ -1,20 +1,23 @@
-package org.secuso.privacyfriendlywifi.view;
+package org.secuso.privacyfriendlywifi.view.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.view.adapter.WifiListAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
-import org.secuso.privacyfriendlywifi.view.adapter.WifiListAdapter;
 
 public class WifiListFragment extends Fragment {
 
@@ -40,6 +43,9 @@ public class WifiListFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
 
+        // Set substring in actionbar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.fragment_wifilist);
+
         // setup the floating action button
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
@@ -54,17 +60,17 @@ public class WifiListFragment extends Fragment {
         }
 
         // setup example list
-        RecyclerView listView = (RecyclerView) rootView.findViewById(R.id.listView);
+        RecyclerView listView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         // example list
-        List<String> items = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            items.add("Wifi Nr. " + i);
-            items.add("MAC Nr. " + i);
-        }
-        String[] itemsArr = new String[items.size()];
-        itemsArr = items.toArray(itemsArr);
+        List<WifiLocationEntry> wifiLocationEntries = new ArrayList<>();
+        wifiLocationEntries.add(new WifiLocationEntry("eduroam", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam1", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam2", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam3", "11:22:33:44:55:66"));
+        wifiLocationEntries.add(new WifiLocationEntry("edunotroam4", "11:22:33:44:55:66"));
 
-        WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity(), R.layout.list_item_wifilist, itemsArr);
+        WifiListAdapter itemsAdapter = new WifiListAdapter(getContext(), wifiLocationEntries);
         listView.setAdapter(itemsAdapter);
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
 

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="org.secuso.privacyfriendlywifi.view.AboutFragment">
+    tools:context="org.secuso.privacyfriendlywifi.view.fragment.AboutFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,7 +15,6 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -23,13 +22,20 @@
                 android:src="@drawable/privacyfriendlyappslogo" />
 
             <TextView
-                android:id="@+id/nav_about"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:text="@string/header_about"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/about_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -66,7 +72,6 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <ImageView
-                android:id="@+id/imageView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"

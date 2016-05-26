@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="org.secuso.privacyfriendlywifi.view.WifiListFragment">
+    tools:context="org.secuso.privacyfriendlywifi.view.fragment.WifiListFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,13 +22,14 @@
             android:id="@+id/switch1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
+            android:layout_gravity="end|bottom"
             android:text="New Switch" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/timeslotRecycleView"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

@@ -14,7 +14,7 @@ public class ScheduleEntry implements Parcelable {
 
     public ScheduleEntry(String title, int start_hour, int start_minute, int end_hour, int end_minute) {
         this.title = title;
-        scheduleCondition = new ScheduleCondition(start_hour, start_minute, end_hour, end_minute);
+        scheduleCondition = new ScheduleCondition(start_hour, start_minute, end_hour, end_minute, true);
     }
 
     protected ScheduleEntry(Parcel in) {

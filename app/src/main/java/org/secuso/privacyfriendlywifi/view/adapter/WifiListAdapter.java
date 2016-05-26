@@ -1,53 +1,41 @@
 package org.secuso.privacyfriendlywifi.view.adapter;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.view.viewholder.WifiItemViewHolder;
+
+import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
-public class WifiListAdapter extends RecyclerView.Adapter<WifiListAdapter.ViewHolder> {
-    private Activity context;
-    private String[] items;
+public class WifiListAdapter extends RecyclerView.Adapter<WifiItemViewHolder> {
+    private Context context;
+    private List<WifiLocationEntry> wifiLocationEntries;
 
-    public WifiListAdapter(Activity context, int resource, String[] items) {
+    public WifiListAdapter(Context context, List<WifiLocationEntry> wifiLocationEntries) {
         this.context = context;
-        this.items = items;
+        this.wifiLocationEntries = wifiLocationEntries;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public WifiItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_schedule, parent, false);
-        return new ViewHolder(v);
+                .inflate(R.layout.list_item_wifilist, parent, false);
+        return new WifiItemViewHolder(v);
     }
 
-
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.text1.setText(items[position]);
-        holder.text2.setText(items[position]);
+    public void onBindViewHolder(WifiItemViewHolder holder, int position) {
+        holder.setupItem(this.context, this.wifiLocationEntries.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return items.length;
+        return this.wifiLocationEntries.size();
     }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView text1;
-        public TextView text2;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            text1 = (TextView) itemView.findViewById(R.id.text1);
-            text2 = (TextView) itemView.findViewById(R.id.text2);
-        }
-
-        // onClickListener should be here
-    }
-
 }

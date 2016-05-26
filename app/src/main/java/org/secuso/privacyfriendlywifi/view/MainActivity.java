@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlywifi;
+package org.secuso.privacyfriendlywifi.view;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,35 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
-import org.secuso.privacyfriendlywifi.view.AboutFragment;
-import org.secuso.privacyfriendlywifi.view.ScheduleFragment;
-import org.secuso.privacyfriendlywifi.view.WifiListFragment;
+import org.secuso.privacyfriendlywifi.view.fragment.AboutFragment;
+import org.secuso.privacyfriendlywifi.view.fragment.ScheduleFragment;
+import org.secuso.privacyfriendlywifi.view.fragment.SettingsFragment;
+import org.secuso.privacyfriendlywifi.view.fragment.WifiListFragment;
 
 import secuso.org.privacyfriendlywifi.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private final static String TAG = "Main Activity";
-
-    private void switchToFragment(Class<? extends Fragment> fragmentClass) {
-
-        // TODO check for fragmentClass != null ???
-
-        try {
-            if (fragmentClass != null) {
-                // Insert the fragment by replacing any existing fragment
-                Fragment fragment = fragmentClass.newInstance();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
-            }
-        } catch (InstantiationException e) {
-            Log.e(TAG, "InstantiationException");
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            Log.e(TAG, "IllegalAccessException");
-            e.printStackTrace();
-        }
-
-    }
+    private final static String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentClass = ScheduleFragment.class;
                 break;
             case R.id.nav_settings:
+                fragmentClass = SettingsFragment.class;
                 break;
             case R.id.nav_help:
                 break;
@@ -116,5 +97,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return true;
+    }
+
+    private void switchToFragment(Class<? extends Fragment> fragmentClass) {
+
+        // TODO check for fragmentClass != null ???
+
+        try {
+            if (fragmentClass != null) {
+                // Insert the fragment by replacing any existing fragment
+                Fragment fragment = fragmentClass.newInstance();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+            }
+        } catch (InstantiationException e) {
+            Log.e(TAG, "InstantiationException");
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            Log.e(TAG, "IllegalAccessException");
+            e.printStackTrace();
+        }
     }
 }

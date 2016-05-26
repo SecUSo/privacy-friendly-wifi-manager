@@ -9,14 +9,22 @@ import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
  *
  */
 public class WifiLocationEntry implements Parcelable {
-    private final String bssid;
     private final String ssid;
+    private final String bssid;
     private final CellLocationCondition cellLocationCondition;
 
-    public WifiLocationEntry(String bssid, String ssid) {
-        this.bssid = bssid;
+    public WifiLocationEntry(String ssid, String bssid) {
         this.ssid = ssid;
+        this.bssid = bssid;
         this.cellLocationCondition = new CellLocationCondition();
+    }
+
+    public String getSsid() {
+        return ssid;
+    }
+
+    public String getBssid() {
+        return bssid;
     }
 
     public CellLocationCondition getCellLocationCondition() {
@@ -30,15 +38,15 @@ public class WifiLocationEntry implements Parcelable {
     }*/
 
     protected WifiLocationEntry(Parcel in) {
-        bssid = in.readString();
         ssid = in.readString();
+        bssid = in.readString();
         cellLocationCondition = in.readParcelable(CellLocationCondition.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(bssid);
         dest.writeString(ssid);
+        dest.writeString(bssid);
         dest.writeParcelable(cellLocationCondition, flags);
     }
 
