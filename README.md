@@ -9,6 +9,6 @@ Triggers include cell location and a time schedule.
 ##License
 Licensed under the Apache License, Version 2.0, see LICENSE file.
 ##Contributors
-bigwern
-jonny08152
+bigwern<br />
+jonny08152<br />
 patrickjauernig
