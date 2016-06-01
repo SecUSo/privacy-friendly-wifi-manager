@@ -7,7 +7,7 @@ import android.net.wifi.WifiManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Pair;
 
-import org.secuso.privacyfriendlywifi.logic.WifiToggleEffect;
+import org.secuso.privacyfriendlywifi.logic.effects.WifiToggleEffect;
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfo;
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfoTreeSet;
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
