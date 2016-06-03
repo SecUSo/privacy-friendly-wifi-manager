@@ -85,6 +85,7 @@ public class ScheduleFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
 
+        // TODO example list
         List<ScheduleEntry> scheduleEntries = new ArrayList<>();
         scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
         scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
