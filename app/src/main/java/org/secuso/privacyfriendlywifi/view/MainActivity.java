@@ -16,7 +16,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.view.fragment.AboutFragment;
@@ -62,6 +66,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.ACCESS_COARSE_LOCATION},
                 DYN_PERMISSION);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // inflate menu
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        // get action view
+        final MenuItem toggleservice = menu.findItem(R.id.main_switch);
+        final RelativeLayout switchOuter = (RelativeLayout) toggleservice.getActionView();
+        final Switch actionView = (Switch) switchOuter.findViewById(R.id.switchAB);
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Main switch state: " + (actionView.isChecked() ? "ON" : "OFF"));
+
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
