@@ -2,8 +2,8 @@ package org.secuso.privacyfriendlywifi.view.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,8 +58,13 @@ public class ScheduleFragment extends Fragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your second action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    FragmentManager manager = getFragmentManager();
+                    Fragment frag = manager.findFragmentByTag("TimePickerFragment"); //TODO check relevance
+                    if (frag != null) {
+                        manager.beginTransaction().remove(frag).commit();
+                    }
+                    TimePickerFragment fragment = new TimePickerFragment();
+                    fragment.show(manager, "TimePickerFragment");
                 }
             });
         }
@@ -72,10 +77,10 @@ public class ScheduleFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     Log.i("TAG", "register all the receivers");
-                    Controller.registerReceivers(getContext());
+                    Controller.registerReceivers(getActivity().getBaseContext());
                 } else {
                     Log.i("TAG", "UNregister all the receivers");
-                    Controller.unregisterReceivers(getContext());
+                    Controller.unregisterReceivers(getActivity().getBaseContext());
                 }
             }
         });
@@ -83,7 +88,7 @@ public class ScheduleFragment extends Fragment {
 
         // setup recycler view
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
         List<ScheduleEntry> scheduleEntries = new ArrayList<>();
         scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
@@ -105,9 +110,9 @@ public class ScheduleFragment extends Fragment {
         scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
         scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
 
-        ScheduleAdapter itemsAdapter = new ScheduleAdapter(getContext(), scheduleEntries);
+        ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), scheduleEntries);
         recyclerView.setAdapter(itemsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
 
         return rootView;
     }

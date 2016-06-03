@@ -62,7 +62,7 @@ public class WifiListFragment extends Fragment {
 
         // setup recycler view
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
         // example list
         List<WifiLocationEntry> wifiLocationEntries = new ArrayList<>();
@@ -85,9 +85,9 @@ public class WifiListFragment extends Fragment {
         wifiLocationEntries.add(new WifiLocationEntry("edunotroam3", "11:22:33:44:55:66"));
         wifiLocationEntries.add(new WifiLocationEntry("edunotroam4", "11:22:33:44:55:66"));
 
-        WifiListAdapter itemsAdapter = new WifiListAdapter(getContext(), wifiLocationEntries);
+        WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), wifiLocationEntries);
         recyclerView.setAdapter(itemsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
 
         return rootView;
     }
