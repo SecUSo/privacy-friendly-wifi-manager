@@ -1,7 +1,10 @@
 package org.secuso.privacyfriendlywifi.logic.preconditions;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Parcel;
+import android.support.v4.content.ContextCompat;
 
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfo;
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfoTreeSet;
@@ -48,6 +51,12 @@ public class CellLocationCondition implements Precondition {
 
     public void addKBestSurroundingCells(Context context, int k) {
         addKBestSurroundingCells(context, k, PrimitiveCellInfo.getAllCells(context));
+    }
+
+    public static boolean hasCoarseLocationPermission(Context context) {
+        return (ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED);
     }
 
     @Override

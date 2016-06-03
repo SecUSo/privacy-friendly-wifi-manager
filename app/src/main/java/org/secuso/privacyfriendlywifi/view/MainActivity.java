@@ -1,9 +1,15 @@
 package org.secuso.privacyfriendlywifi.view;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.view.fragment.AboutFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.ScheduleFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.SettingsFragment;
@@ -21,16 +28,15 @@ import secuso.org.privacyfriendlywifi.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
+    private final static int DYN_PERMISSION = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // switch to initial fragment
-        this.switchToFragment(WifiListFragment.class);
 
         // setup the drawer layout
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -47,6 +53,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
+        }
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            Log.d(TAG, "SHOW SOME EXPLANATION FOR LOCATION"); // TODO show some explanatory dialog
+        }
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.ACCESS_COARSE_LOCATION},
+                DYN_PERMISSION);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case DYN_PERMISSION: {
+                if (grantResults.length >= 3) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                        // we got wifi permissions
+
+                        if (grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                            // we got coarse location permission
+                            // switch to list of allowed wifis
+                            this.switchToFragment(WifiListFragment.class, true);
+                        } else {
+                            // switch to an explaining dialog
+                            this.switchToFragment(AboutFragment.class, true);
+                        }
+                    }
+
+
+                }
+
+                break;
+            }
         }
     }
 
@@ -71,7 +112,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()) {
             case R.id.nav_whitelist:
-                fragmentClass = WifiListFragment.class;
+                if (CellLocationCondition.hasCoarseLocationPermission(this)) {
+                    fragmentClass = WifiListFragment.class;
+                } else {
+                    fragmentClass = AboutFragment.class;
+                }
                 break;
             case R.id.nav_schedule:
                 fragmentClass = ScheduleFragment.class;
@@ -100,15 +145,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void switchToFragment(Class<? extends Fragment> fragmentClass) {
+        this.switchToFragment(fragmentClass, false);
+    }
 
-        // TODO check for fragmentClass != null ???
-
+    private void switchToFragment(Class<? extends Fragment> fragmentClass, boolean force) {
         try {
             if (fragmentClass != null) {
                 // Insert the fragment by replacing any existing fragment
                 Fragment fragment = fragmentClass.newInstance();
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+                @SuppressLint("CommitTransaction") FragmentTransaction trans = fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment);
+
+                if (force) {
+                    trans.commitAllowingStateLoss();
+                } else {
+                    trans.commit();
+                }
             }
         } catch (InstantiationException e) {
             Log.e(TAG, "InstantiationException");
