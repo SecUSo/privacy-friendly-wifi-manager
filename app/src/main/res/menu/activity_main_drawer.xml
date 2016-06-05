@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nav_menu">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/nav_upper"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_whitelist"
             android:icon="@drawable/ic_menu_whitelist"
@@ -14,19 +17,19 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_schedule"
             android:title="@string/fragment_settings" />
+
     </group>
-
-    <item android:title="@string/group_communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_help"
-                android:icon="@drawable/ic_menu_help"
-                android:title="@string/activity_help" />
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_about"
-                android:title="@string/fragment_about" />
-        </menu>
-    </item>
-
+    <group
+        android:id="@+id/nav_lower"
+        android:checkableBehavior="single"
+        android:title="@string/group_communicate">
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_menu_help"
+            android:title="@string/activity_help" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_about"
+            android:title="@string/fragment_about" />
+    </group>
 </menu>

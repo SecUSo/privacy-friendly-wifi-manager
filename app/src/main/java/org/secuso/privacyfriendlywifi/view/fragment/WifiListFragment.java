@@ -64,7 +64,7 @@ public class WifiListFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        // example list
+        // TODO example list
         List<WifiLocationEntry> wifiLocationEntries = new ArrayList<>();
         wifiLocationEntries.add(new WifiLocationEntry("eduroam", "11:22:33:44:55:66"));
         wifiLocationEntries.add(new WifiLocationEntry("edunotroam", "11:22:33:44:55:66"));
