@@ -6,6 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +32,8 @@ public class TimePickerFragment extends DialogFragment implements OnDialogClosed
     private int startMinute = 0;
     private int endHour = 8;
     private int endMinute = 0;
-    private int currentPage = 0;
 
+    private ViewPager pager;
     private LinearLayout linearLayout;
     private LinearLayout contentView;
     private EditText titleEditText;
@@ -50,37 +54,56 @@ public class TimePickerFragment extends DialogFragment implements OnDialogClosed
         this.endTimePicker = new TimePicker(inflater.getContext());
         this.initPicker(endTimePicker, endHour, endMinute);
 
-        this.nextButton = new Button(inflater.getContext(), null, android.support.design.R.attr.borderlessButtonStyle);
-        this.nextButton.setText("Weiter");
-        this.nextButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        this.nextButton.setTextColor(getResources().getColor(R.color.white));
-        this.nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // store new dates and type in preferences
-                if (currentPage == 2) {
-                    onDialogClosed(DialogInterface.BUTTON_POSITIVE, title, startHour, startMinute, endHour, endMinute);
-                    getDialog().dismiss();
-                } else {
-                    showDialog(++currentPage);
-                }
-            }
-        });
 
         this.titleEditText = new EditText(inflater.getContext());
         this.titleEditText.setHint(title);
         this.titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         this.titleEditText.setMaxLines(1);
 
-        this.contentView = new LinearLayout(context);
-        this.contentView.setOrientation(LinearLayout.VERTICAL);
+        this.linearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_timepicker_dialog, container);
 
-        this.linearLayout = new LinearLayout(context);
-        this.linearLayout.setOrientation(LinearLayout.VERTICAL);
-        this.linearLayout.addView(contentView);
-        this.linearLayout.addView(nextButton);
+        this.pager = (ViewPager) this.linearLayout.findViewById(R.id.viewpager_dialog);
+        this.pager.setAdapter(new FragPageAdapter(getChildFragmentManager()));
+        this.pager.setOffscreenPageLimit(2);
+        ViewPager.OnPageChangeListener listener = new ViewPager.SimpleOnPageChangeListener() {
+            public void onPageSelected(int position) {
+                adaptPagerLayoutHeight();
+                setDialogTitle(position);
 
-        return this.showDialog(0);
+                if (position == 2) {
+                    titleEditText.requestFocus();
+                    ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
+                            .showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT);
+                } else {
+                    ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(titleEditText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+                }
+            }
+        };
+        this.pager.addOnPageChangeListener(listener);
+        this.pager.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                adaptPagerLayoutHeight();
+            }
+        });
+
+        this.nextButton = (Button) this.linearLayout.findViewById(R.id.button_next);
+        this.nextButton.setText("Weiter");
+        this.nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pager.getCurrentItem() == 2) {
+                    onDialogClosed(DialogInterface.BUTTON_POSITIVE, title, startHour, startMinute, endHour, endMinute);
+                    getDialog().dismiss();
+                } else {
+                    pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+                }
+            }
+        });
+
+        listener.onPageSelected(0);
+        return this.linearLayout;
     }
 
     @Override
@@ -94,27 +117,6 @@ public class TimePickerFragment extends DialogFragment implements OnDialogClosed
         Toast.makeText(getActivity().getApplicationContext(), "Code: " + returnCode, Toast.LENGTH_SHORT).show();
     }
 
-    private View showDialog(int page) {
-        this.contentView.removeAllViewsInLayout();
-
-        if (page == 0) {
-            this.getDialog().setTitle("Choose start time");
-            this.contentView.addView(startTimePicker);
-        } else if (page == 1) {
-            this.getDialog().setTitle("Choose end time");
-            this.contentView.addView(endTimePicker);
-        } else if (page == 2) {
-            this.getDialog().setTitle("Choose title");
-            this.contentView.addView(titleEditText);
-            this.titleEditText.requestFocus();
-
-            ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
-                    .showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT);
-        }
-
-        return this.linearLayout;
-    }
-
     private void initPicker(TimePicker picker, int hour, int minute) {
         picker.setIs24HourView(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -123,6 +125,43 @@ public class TimePickerFragment extends DialogFragment implements OnDialogClosed
         } else {
             picker.setCurrentHour(hour);
             picker.setCurrentMinute(minute);
+        }
+    }
+
+    private void adaptPagerLayoutHeight() {
+        View view = pager.getChildAt(pager.getCurrentItem());
+        if (view != null) {
+            view.measure(0, 0);
+            pager.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, view.getMeasuredHeight()));
+        }
+    }
+
+    private void setDialogTitle(int page) {
+        if (page == 0) {
+            getDialog().setTitle("Choose start time");
+        } else if (page == 1) {
+            getDialog().setTitle("Choose end time");
+        } else if (page == 2) {
+            getDialog().setTitle("Choose title");
+        }
+    }
+
+    private class FragPageAdapter extends FragmentStatePagerAdapter {
+
+        public FragPageAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            MyFrag frag = new MyFrag();
+            frag.setValues(position, startTimePicker, endTimePicker, titleEditText);
+            return frag;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
         }
     }
 }
