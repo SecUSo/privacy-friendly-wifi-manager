@@ -47,7 +47,6 @@ public class WifiToggleEffect implements Effect {
         if (this.hasWifiPermission()) {
             WifiManager wifiManager = (WifiManager) this.context.getSystemService(Context.WIFI_SERVICE);
             wifiManager.setWifiEnabled(state);
-            boolean wifiEnabled = wifiManager.isWifiEnabled();
         } else {
             Log.e(TAG, "No wifi permission granted"); // TODO reminder notification
         }

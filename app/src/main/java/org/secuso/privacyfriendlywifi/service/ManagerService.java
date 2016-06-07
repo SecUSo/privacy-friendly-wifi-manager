@@ -24,9 +24,6 @@ public class ManagerService extends IntentService {
     public static final String FN_SCHEDULE_ENTRIES = "fn_schedule_entries";
     public static final String FN_LOCATION_ENTRIES = "fn_location_entries";
 
-    private List<ScheduleEntry> scheduleEntries;
-    private List<WifiLocationEntry> wifiLocationEntries;
-
     public ManagerService() {
         super(ManagerService.class.getSimpleName());
     }
@@ -35,59 +32,64 @@ public class ManagerService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try {
             boolean wifiState = false; // check if Wifi is scheduled to be on (true) / off (false)
-            if (!this.checkSchedule()) {
-                // Check whether Wifi is On/Off
-                if (WifiToggleEffect.hasWifiPermission(getApplicationContext())) {
-                    PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
-
-                    // TODO Handle CellInformation to trigger WifiToggleEvent
-                    try {
-                        Object o = FileHandler.loadObject(this, FN_LOCATION_ENTRIES, false);
-                        if (o instanceof List) {
-                            this.wifiLocationEntries = (List<WifiLocationEntry>) o;
-                        }
-                    } catch (IOException e) {
-                        // File does not exist
-                        this.wifiLocationEntries = new ArrayList<>();
-                    }
-
-                    for (WifiLocationEntry entry : this.wifiLocationEntries) {
-                        if (entry.getCellLocationCondition().check(this, allCells)) {
-                            wifiState = true;
-                            break;
-                        }
-                    }
-
-                    try {
-                        FileHandler.storeObject(this, FN_LOCATION_ENTRIES, this.wifiLocationEntries);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } else {
+            if (this.checkSchedule()) {
                 wifiState = true;
+            } else {
+                if (!WifiToggleEffect.isWifiConnected(this)) {
+                    // Check whether Wifi is On/Off
+                    wifiState = WifiToggleEffect.hasWifiPermission(getApplicationContext()) && checkCells();
+                }
             }
 
             // apply state to wifi
             WifiToggleEffect wifiToggleEffect = new WifiToggleEffect(this);
             wifiToggleEffect.apply(wifiState);
-
         } finally {
             // tell everyone that we are done
             WakefulBroadcastReceiver.completeWakefulIntent(intent);
         }
     }
 
+    private boolean checkCells() {
+        boolean active = false;
+        List<WifiLocationEntry> wifiLocationEntries;
+        PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
+
+        // TODO Handle CellInformation to trigger WifiToggleEvent
+        try {
+            Object o = FileHandler.loadObject(this, FN_LOCATION_ENTRIES, false);
+            wifiLocationEntries = (List<WifiLocationEntry>) o;
+        } catch (IOException e) {
+            // File does not exist
+            wifiLocationEntries = new ArrayList<>();
+        }
+
+        for (WifiLocationEntry entry : wifiLocationEntries) {
+            if (entry.getCellLocationCondition().check(this, allCells)) {
+                active = true;
+                break;
+            }
+        }
+
+        try {
+            FileHandler.storeObject(this, FN_LOCATION_ENTRIES, wifiLocationEntries);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return active;
+    }
+
     private boolean checkSchedule() {
+        List<ScheduleEntry> scheduleEntries;
+
         // load or create schedule
         try {
             Object o = FileHandler.loadObject(this, FN_SCHEDULE_ENTRIES, false);
-            if (o instanceof List) {
-                this.scheduleEntries = (List<ScheduleEntry>) o;
-            }
+            scheduleEntries = (List<ScheduleEntry>) o;
         } catch (IOException e) {
             // File does not exist
-            this.scheduleEntries = new ArrayList<>();
+            scheduleEntries = new ArrayList<>();
         }
 
         Calendar cal = Calendar.getInstance();
@@ -95,7 +97,7 @@ public class ManagerService extends IntentService {
         int currentMinute = cal.get(Calendar.MINUTE);
         Pair<Integer, Integer> time = new Pair<>(currentHour, currentMinute);
 
-        for (ScheduleEntry entry : this.scheduleEntries) {
+        for (ScheduleEntry entry : scheduleEntries) {
             if (entry.getScheduleCondition().check(this, time)) {
                 return true; // schedule active, skip the rest
             }
