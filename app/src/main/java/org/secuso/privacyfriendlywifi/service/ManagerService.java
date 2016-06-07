@@ -38,6 +38,9 @@ public class ManagerService extends IntentService {
                 if (!WifiToggleEffect.isWifiConnected(this)) {
                     // Check whether Wifi is On/Off
                     wifiState = WifiToggleEffect.hasWifiPermission(getApplicationContext()) && checkCells();
+                } else {
+                    // Update  best cells
+                    updateCells();
                 }
             }
 
@@ -50,12 +53,35 @@ public class ManagerService extends IntentService {
         }
     }
 
+    private void updateCells() {
+        List<WifiLocationEntry> wifiLocationEntries;
+        boolean modified = false;
+        try {
+            Object o = FileHandler.loadObject(this, FN_LOCATION_ENTRIES, false);
+            wifiLocationEntries = (List<WifiLocationEntry>) o;
+        } catch (IOException e) {
+            // File does not exist
+            wifiLocationEntries = new ArrayList<>();
+        }
+
+        for (WifiLocationEntry entry : wifiLocationEntries) {
+            modified |= entry.getCellLocationCondition().addKBestSurroundingCells(this, 3);
+        }
+
+        if (modified) {
+            try {
+                FileHandler.storeObject(this, FN_LOCATION_ENTRIES, wifiLocationEntries);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private boolean checkCells() {
         boolean active = false;
         List<WifiLocationEntry> wifiLocationEntries;
         PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
 
-        // TODO Handle CellInformation to trigger WifiToggleEvent
         try {
             Object o = FileHandler.loadObject(this, FN_LOCATION_ENTRIES, false);
             wifiLocationEntries = (List<WifiLocationEntry>) o;
@@ -69,12 +95,6 @@ public class ManagerService extends IntentService {
                 active = true;
                 break;
             }
-        }
-
-        try {
-            FileHandler.storeObject(this, FN_LOCATION_ENTRIES, wifiLocationEntries);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         return active;

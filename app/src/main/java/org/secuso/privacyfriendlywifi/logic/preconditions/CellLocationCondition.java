@@ -53,20 +53,24 @@ public class CellLocationCondition extends Precondition {
         return false; // condition not active
     }
 
-    public void addKBestSurroundingCells(int k, PrimitiveCellInfoTreeSet cells) {
+    public boolean addKBestSurroundingCells(int k, PrimitiveCellInfoTreeSet cells) {
+        boolean modified = false;
         int i = 0;
         for (PrimitiveCellInfo cell : cells) {
             if (i >= k) {
                 break;
             }
 
-            this.relatedCells.add(cell);
+            modified |= this.relatedCells.add(cell);
+            i++;
         }
+
+        return modified;
     }
 
 
-    public void addKBestSurroundingCells(Context context, int k) {
-        addKBestSurroundingCells(k, PrimitiveCellInfo.getAllCells(context));
+    public boolean addKBestSurroundingCells(Context context, int k) {
+        return addKBestSurroundingCells(k, PrimitiveCellInfo.getAllCells(context));
     }
 
     public static boolean hasCoarseLocationPermission(Context context) {
