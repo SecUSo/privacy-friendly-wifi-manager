@@ -15,5 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:text="@string/dialog_button_next"
         android:textColor="@color/white" />
 </LinearLayout>

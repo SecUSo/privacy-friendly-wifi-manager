@@ -63,7 +63,7 @@ public class ScheduleFragment extends Fragment {
                     if (frag != null) {
                         manager.beginTransaction().remove(frag).commit();
                     }
-                    TimePickerFragment fragment = new TimePickerFragment();
+                    TimePickerDialogFragment fragment = new TimePickerDialogFragment();
                     fragment.show(manager, "TimePickerFragment");
                 }
             });
