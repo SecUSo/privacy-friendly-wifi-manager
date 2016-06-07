@@ -1,9 +1,7 @@
 package org.secuso.privacyfriendlywifi.service;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Pair;
 
@@ -36,40 +34,42 @@ public class ManagerService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-            // check if Wifi is scheduled to be off
-            boolean scheduleIsActive = this.checkSchedule();
-
-            if (!scheduleIsActive) {
+            boolean wifiState = false; // check if Wifi is scheduled to be on (true) / off (false)
+            if (!this.checkSchedule()) {
                 // Check whether Wifi is On/Off
-                WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-                //TODO do something with:
-                wifiManager.isWifiEnabled();
+                if (WifiToggleEffect.hasWifiPermission(getApplicationContext())) {
+                    PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
 
-
-                // TODO Handle CellInformation to trigger WifiToggleEvent
-                try {
-                    Object o = FileHandler.loadObject(this, FN_LOCATION_ENTRIES, false);
-                    if (o instanceof List) {
-                        this.wifiLocationEntries = (List<WifiLocationEntry>) o;
+                    // TODO Handle CellInformation to trigger WifiToggleEvent
+                    try {
+                        Object o = FileHandler.loadObject(this, FN_LOCATION_ENTRIES, false);
+                        if (o instanceof List) {
+                            this.wifiLocationEntries = (List<WifiLocationEntry>) o;
+                        }
+                    } catch (IOException e) {
+                        // File does not exist
+                        this.wifiLocationEntries = new ArrayList<>();
                     }
-                } catch (IOException e) {
-                    // File does not exist
-                    this.wifiLocationEntries = new ArrayList<>();
-                }
 
-                PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
+                    for (WifiLocationEntry entry : this.wifiLocationEntries) {
+                        if (entry.getCellLocationCondition().check(this, allCells)) {
+                            wifiState = true;
+                            break;
+                        }
+                    }
 
-                for (WifiLocationEntry entry : this.wifiLocationEntries) {
-                    // TODO do something with the checked info
-                    entry.getCellLocationCondition().check(this, allCells);
-                }
-
-                try {
-                    FileHandler.storeObject(this, FN_LOCATION_ENTRIES, this.wifiLocationEntries);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    try {
+                        FileHandler.storeObject(this, FN_LOCATION_ENTRIES, this.wifiLocationEntries);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+
+            // apply state to wifi
+            WifiToggleEffect wifiToggleEffect = new WifiToggleEffect(this);
+            wifiToggleEffect.apply(wifiState);
+
         } finally {
             // tell everyone that we are done
             WakefulBroadcastReceiver.completeWakefulIntent(intent);
@@ -91,14 +91,14 @@ public class ManagerService extends IntentService {
         Calendar cal = Calendar.getInstance();
         int currentHour = cal.get(Calendar.HOUR);
         int currentMinute = cal.get(Calendar.MINUTE);
+        Pair<Integer, Integer> time = new Pair<>(currentHour, currentMinute);
 
         for (ScheduleEntry entry : this.scheduleEntries) {
-            if (entry.getScheduleCondition().check(this, new Pair<Integer, Integer>(currentHour, currentMinute))) {
-                WifiToggleEffect wifiToggleEffect = new WifiToggleEffect(this);
-                wifiToggleEffect.apply(false); // turn off wifi
+            if (entry.getScheduleCondition().check(this, time)) {
                 return true; // schedule active, skip the rest
             }
         }
+
         return false; // no schedule active
     }
 }

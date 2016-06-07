@@ -19,7 +19,7 @@ public class Controller {
 
         IntentFilter screenStateFilter = new IntentFilter();
         screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
-        context.registerReceiver(screenOnReceiver, screenStateFilter);
+        context.registerReceiver(Controller.screenOnReceiver, screenStateFilter);
 
         AlarmReceiver.setupAlarm(context);
     }
