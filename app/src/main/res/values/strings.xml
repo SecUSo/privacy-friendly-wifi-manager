@@ -28,7 +28,7 @@
     <string name="dialog_title_choose_start_time">Choose start time</string>
     <string name="dialog_title_choose_end_time">Choose end time</string>
     <string name="dialog_title_choose_title">Choose title</string>
-    <string name="dialog_text_title_hint">Time slot %1%02d</string>
+    <string name="dialog_text_title_hint">Time slot %1$d</string>
     <string name="dialog_button_next">Next</string>
 
     <!-- ABOUT STRINGS -->

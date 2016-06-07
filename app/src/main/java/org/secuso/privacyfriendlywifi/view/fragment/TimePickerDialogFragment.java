@@ -24,18 +24,19 @@ import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import secuso.org.privacyfriendlywifi.R;
 
 public class TimePickerDialogFragment extends DialogFragment implements OnDialogClosedListener {
     private Context context;
-    private String titleHint = "Testblabbla"; //TODO generate hint from schedule list (TimeSlot x)
     private int startHour = 22;
     private int startMinute = 0;
     private int endHour = 8;
     private int endMinute = 0;
 
     private ArrayList<OnDialogClosedListener> onDialogClosedListeners;
+    private int currentListSize = 0;
 
     private ViewPager pager;
     private TimePicker startTimePicker;
@@ -60,7 +61,7 @@ public class TimePickerDialogFragment extends DialogFragment implements OnDialog
         this.initPicker(endTimePicker, endHour, endMinute);
 
         this.titleEditText = new EditText(inflater.getContext());
-        this.titleEditText.setHint(titleHint);
+        this.titleEditText.setHint(String.format(Locale.getDefault(), getString(R.string.dialog_text_title_hint), this.currentListSize));
         this.titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         this.titleEditText.setMaxLines(1);
 
@@ -97,7 +98,7 @@ public class TimePickerDialogFragment extends DialogFragment implements OnDialog
             @Override
             public void onClick(View v) {
                 if (pager.getCurrentItem() == 2) {
-                    onDialogClosed(DialogInterface.BUTTON_POSITIVE, titleHint, startHour, startMinute, endHour, endMinute);
+                    onDialogClosed(DialogInterface.BUTTON_POSITIVE);
                     getDialog().dismiss();
                 } else {
                     pager.setCurrentItem(pager.getCurrentItem() + 1, true);
@@ -158,6 +159,10 @@ public class TimePickerDialogFragment extends DialogFragment implements OnDialog
 
     public boolean removeOnDialogClosedListener(OnDialogClosedListener listener) {
         return this.onDialogClosedListeners.remove(listener);
+    }
+
+    public void setCurrentListSize(int currentListSize) {
+        this.currentListSize = currentListSize;
     }
 
     private void initPicker(TimePicker picker, int hour, int minute) {

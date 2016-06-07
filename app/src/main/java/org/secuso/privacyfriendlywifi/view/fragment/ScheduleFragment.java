@@ -88,6 +88,7 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
                     }
                     TimePickerDialogFragment fragment = new TimePickerDialogFragment();
                     fragment.addOnDialogClosedListener(thisClass);
+                    fragment.setCurrentListSize(scheduleEntries.size());
                     fragment.show(manager, "TimePickerFragment");
                 }
             });
