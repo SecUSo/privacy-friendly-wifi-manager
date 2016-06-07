@@ -5,10 +5,12 @@ import android.os.Parcelable;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.ScheduleCondition;
 
+import java.io.Serializable;
+
 /**
  *
  */
-public class ScheduleEntry implements Parcelable {
+public class ScheduleEntry implements Parcelable, Serializable {
     private String title;
     private ScheduleCondition scheduleCondition;
 

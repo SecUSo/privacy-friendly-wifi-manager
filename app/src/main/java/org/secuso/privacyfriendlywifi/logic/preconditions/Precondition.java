@@ -4,10 +4,12 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Interface representing a precondition to check for.
  */
-public class Precondition implements Parcelable {
+public class Precondition implements Parcelable, Serializable{
     protected boolean isActive = true; // by default a user created precondition is active
 
     public Precondition() {

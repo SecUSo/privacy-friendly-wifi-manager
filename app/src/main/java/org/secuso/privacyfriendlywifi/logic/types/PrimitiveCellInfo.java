@@ -16,12 +16,13 @@ import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  */
-public class PrimitiveCellInfo implements Parcelable {
+public class PrimitiveCellInfo implements Parcelable, Serializable {
     private int cellId; // the ID of the cell
     private double signalStrength; // in dBm
 

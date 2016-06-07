@@ -5,10 +5,12 @@ import android.os.Parcelable;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 
+import java.io.Serializable;
+
 /**
  *
  */
-public class WifiLocationEntry implements Parcelable {
+public class WifiLocationEntry implements Parcelable, Serializable {
     private final String ssid;
     private final String bssid;
     private final CellLocationCondition cellLocationCondition;

@@ -35,6 +35,8 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
     private List<ScheduleEntry> scheduleEntries;
     private OnDialogClosedListener thisClass;
 
+    private RecyclerView recyclerView;
+
     public ScheduleFragment() {
         // Required empty public constructor
         thisClass = this;
@@ -109,7 +111,7 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
         // ### end switch ###
 
         // setup recycler view
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
         ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), scheduleEntries);
@@ -128,6 +130,7 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            this.recyclerView.invalidate();
         }
     }
 }
