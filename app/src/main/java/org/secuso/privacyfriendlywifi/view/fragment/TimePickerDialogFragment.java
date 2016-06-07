@@ -19,9 +19,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
+import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
+
+import java.util.ArrayList;
 
 import secuso.org.privacyfriendlywifi.R;
 
@@ -33,10 +35,16 @@ public class TimePickerDialogFragment extends DialogFragment implements OnDialog
     private int endHour = 8;
     private int endMinute = 0;
 
+    private ArrayList<OnDialogClosedListener> onDialogClosedListeners;
+
     private ViewPager pager;
     private TimePicker startTimePicker;
     private TimePicker endTimePicker;
     private EditText titleEditText;
+
+    public TimePickerDialogFragment() {
+        this.onDialogClosedListeners = new ArrayList<>();
+    }
 
     @Nullable
     @Override
@@ -109,13 +117,47 @@ public class TimePickerDialogFragment extends DialogFragment implements OnDialog
 
     @Override
     public void onDialogClosed(int returnCode, Object... returnValue) {
-        Toast.makeText(getActivity().getApplicationContext(), "Code: " + returnCode, Toast.LENGTH_SHORT).show();
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
-            Toast.makeText(getActivity().getApplicationContext(),
-                    "Start: " + startTimePicker.getCurrentHour() + ":" + startTimePicker.getCurrentMinute()
-                            + " Ende: " + endTimePicker.getCurrentHour() + ":" + endTimePicker.getCurrentMinute()
-                            + " Titel: " + (titleEditText.getText().toString().trim().isEmpty() ? titleEditText.getHint() : titleEditText.getText()), Toast.LENGTH_SHORT).show();
+            ScheduleEntry newEntry;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                newEntry = new ScheduleEntry(
+                        (titleEditText.getText().toString().trim().isEmpty() ?
+                                titleEditText.getHint().toString()
+                                : titleEditText.getText().toString()),
+                        startTimePicker.getHour(),
+                        startTimePicker.getMinute(),
+                        endTimePicker.getHour(),
+                        endTimePicker.getMinute()
+                );
+            } else {
+                newEntry = new ScheduleEntry(
+                        (titleEditText.getText().toString().trim().isEmpty() ?
+                                titleEditText.getHint().toString()
+                                : titleEditText.getText().toString()),
+                        startTimePicker.getCurrentHour(),
+                        startTimePicker.getCurrentMinute(),
+                        endTimePicker.getCurrentHour(),
+                        endTimePicker.getCurrentMinute()
+                );
+            }
+
+            for (OnDialogClosedListener listener : onDialogClosedListeners) {
+                listener.onDialogClosed(returnCode, newEntry);
+            }
+        } else {
+            for (OnDialogClosedListener listener : onDialogClosedListeners) {
+                listener.onDialogClosed(returnCode, returnValue);
+            }
         }
+    }
+
+    public boolean addOnDialogClosedListener(OnDialogClosedListener listener) {
+        return this.onDialogClosedListeners.add(listener);
+    }
+
+    public boolean removeOnDialogClosedListener(OnDialogClosedListener listener) {
+        return this.onDialogClosedListeners.remove(listener);
     }
 
     private void initPicker(TimePicker picker, int hour, int minute) {

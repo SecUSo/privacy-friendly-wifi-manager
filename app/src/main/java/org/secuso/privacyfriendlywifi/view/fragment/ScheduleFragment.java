@@ -1,5 +1,7 @@
 package org.secuso.privacyfriendlywifi.view.fragment;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -15,19 +17,27 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
+import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
+import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.service.Controller;
+import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends Fragment implements OnDialogClosedListener {
+
+    private List<ScheduleEntry> scheduleEntries;
+    private OnDialogClosedListener thisClass;
 
     public ScheduleFragment() {
         // Required empty public constructor
+        thisClass = this;
     }
 
     public static ScheduleFragment newInstance() {
@@ -35,6 +45,17 @@ public class ScheduleFragment extends Fragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            scheduleEntries = (List<ScheduleEntry>) FileHandler.loadObject(context, ManagerService.FN_SCHEDULE_ENTRIES, false);
+        } catch (IOException e) {
+            scheduleEntries = new ArrayList<>();
+        }
     }
 
     @Override
@@ -64,12 +85,13 @@ public class ScheduleFragment extends Fragment {
                         manager.beginTransaction().remove(frag).commit();
                     }
                     TimePickerDialogFragment fragment = new TimePickerDialogFragment();
+                    fragment.addOnDialogClosedListener(thisClass);
                     fragment.show(manager, "TimePickerFragment");
                 }
             });
         }
 
-        // TODO Switch for debugging. Removefor release
+        // TODO Switch for debugging. Remove for release
         // ### begin switch ###
         Switch asdfg = (Switch) rootView.findViewById(R.id.switch1);
         asdfg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -90,27 +112,6 @@ public class ScheduleFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        // TODO example list
-        List<ScheduleEntry> scheduleEntries = new ArrayList<>();
-        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
-        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
-        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
-        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 55));
-        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
-        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
-        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
-        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 55));
-        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
-        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
-        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
-        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 55));
-        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
-        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
-        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
-        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 55));
-        scheduleEntries.add(new ScheduleEntry("Test nummer 1", 1, 2, 3, 4));
-        scheduleEntries.add(new ScheduleEntry("Test blabla 1", 2, 3, 4, 15));
-
         ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), scheduleEntries);
         recyclerView.setAdapter(itemsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
@@ -118,5 +119,15 @@ public class ScheduleFragment extends Fragment {
         return rootView;
     }
 
-    //TODO fade out fab on scroll
+    @Override
+    public void onDialogClosed(int returnCode, Object... returnValue) {
+        if (returnCode == DialogInterface.BUTTON_POSITIVE) {
+            this.scheduleEntries.add((ScheduleEntry) returnValue[0]);
+            try {
+                FileHandler.storeObject(getActivity(), ManagerService.FN_SCHEDULE_ENTRIES, scheduleEntries);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
