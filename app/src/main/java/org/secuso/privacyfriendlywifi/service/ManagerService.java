@@ -21,8 +21,8 @@ import java.util.List;
  *
  */
 public class ManagerService extends IntentService {
-    private static final String FN_SCHEDULE_ENTRIES = "fn_schedule_entries";
-    private static final String FN_LOCATION_ENTRIES = "fn_location_entries";
+    public static final String FN_SCHEDULE_ENTRIES = "fn_schedule_entries";
+    public static final String FN_LOCATION_ENTRIES = "fn_location_entries";
 
     private List<ScheduleEntry> scheduleEntries;
     private List<WifiLocationEntry> wifiLocationEntries;
@@ -64,6 +64,8 @@ public class ManagerService extends IntentService {
                         e.printStackTrace();
                     }
                 }
+            } else {
+                wifiState = true;
             }
 
             // apply state to wifi
