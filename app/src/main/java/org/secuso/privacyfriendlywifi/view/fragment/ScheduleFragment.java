@@ -106,12 +106,23 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
     public void onDialogClosed(int returnCode, Object... returnValue) {
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
             this.scheduleEntries.add((ScheduleEntry) returnValue[0]);
-            try {
-                FileHandler.storeObject(getActivity(), ManagerService.FN_SCHEDULE_ENTRIES, scheduleEntries);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            this.saveSchedule();
             this.recyclerView.invalidate();
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        this.saveSchedule();
+    }
+
+    private boolean saveSchedule() {
+        try {
+            return FileHandler.storeObject(getActivity(), ManagerService.FN_SCHEDULE_ENTRIES, scheduleEntries);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

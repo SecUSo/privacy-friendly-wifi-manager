@@ -20,21 +20,31 @@ public class ScheduleItemViewHolder extends RecyclerView.ViewHolder {
     private TextView titleTextView;
     private TextView timeTextView;
     private Switch statusSwitch;
+    private ScheduleCondition scheduleCondition;
 
     public ScheduleItemViewHolder(View itemView) {
         super(itemView);
         this.titleTextView = (TextView) itemView.findViewById(R.id.title);
         this.timeTextView = (TextView) itemView.findViewById(R.id.time_text);
         this.statusSwitch = (Switch) itemView.findViewById(R.id.status_switch);
-        // onClickListener should be here
     }
 
     public void setupItem(Context context, ScheduleEntry entry) {
         String timeText = context.getString(R.string.schedule_time_text);
-        ScheduleCondition condition = entry.getScheduleCondition();
+
+        this.scheduleCondition = entry.getScheduleCondition();
 
         this.titleTextView.setText(entry.getTitle());
-        this.timeTextView.setText(String.format(Locale.getDefault(), timeText, condition.getStartHour(), condition.getStartMinute(), condition.getEndHour(), condition.getEndMinute()));
-        this.statusSwitch.setChecked(condition.isActive());
+        this.timeTextView.setText(String.format(Locale.getDefault(), timeText,
+                this.scheduleCondition.getStartHour(), this.scheduleCondition.getStartMinute(),
+                this.scheduleCondition.getEndHour(), this.scheduleCondition.getEndMinute()));
+
+        this.statusSwitch.setChecked(this.scheduleCondition.isActive());
+        this.statusSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scheduleCondition.setActive(statusSwitch.isChecked());
+            }
+        });
     }
 }
