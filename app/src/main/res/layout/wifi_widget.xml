@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:orientation="horizontal"
+    android:padding="@dimen/widget_margin">
+
+    <Button
+        android:id="@+id/appwidget_switch"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="top"
+        android:elevation="5dp"
+        android:background="@color/colorPrimary" />
+
+
+</LinearLayout>

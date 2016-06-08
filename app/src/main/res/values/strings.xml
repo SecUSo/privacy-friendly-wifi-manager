@@ -53,4 +53,10 @@
     <string name="notification_unknown_wifi_title_format">New unmanaged Wi-Fi: %1$s</string>
     <string name="notification_button_add">Manage this connection automatically</string>
     <string name="notification_main_text">Touch to manage connections</string>
+    <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>
+    <string name="add_widget">Add widget</string>
+
+    <!-- GENERAL -->
+    <string name="on">On</string>
+    <string name="off">Off</string>
 </resources>

@@ -2,7 +2,10 @@ package org.secuso.privacyfriendlywifi.view;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -36,13 +39,15 @@ import secuso.org.privacyfriendlywifi.R;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
     private final static int DYN_PERMISSION = 0;
-    private final static String PREF_SETTINGS = "SHARED_PREF_SETTINGS";
-    private final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
+    public final static String PREF_SETTINGS = "SHARED_PREF_SETTINGS";
+    public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
+    private SharedPreferences settings;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.settings = getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,28 +83,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // inflate menu
         getMenuInflater().inflate(R.menu.main, menu);
 
-        final SharedPreferences settings = getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
-
+        this.menu = menu;
 
         // get action view
         final MenuItem toggleservice = menu.findItem(R.id.main_switch);
         final RelativeLayout switchOuter = (RelativeLayout) toggleservice.getActionView();
         final Switch mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
+
+        // intent to update all widgets
+        final Intent updateWidgetsIntent = new Intent(this, WifiWidget.class);
+        updateWidgetsIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), WifiWidget.class));
+        updateWidgetsIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+
         mainSwitch.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         if (mainSwitch.isChecked()) {
-                            Log.i(TAG, "Register all receivers.");
-
                             settings.edit().putBoolean(PREF_ENTRY_SERVICE_ACTIVE, true).apply();
                             Controller.registerReceivers(getApplicationContext());
                         } else {
-                            Log.i(TAG, "Unregister all receivers.");
                             settings.edit().putBoolean(PREF_ENTRY_SERVICE_ACTIVE, false).apply();
                             Controller.unregisterReceivers(getApplicationContext());
                         }
+
+                        // now update the widgets
+                        sendBroadcast(updateWidgetsIntent);
 
                     }
                 }
@@ -136,6 +147,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 break;
             }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // handle resume to ensure that a state change caused by the widget leads to updated UI
+        if (this.menu != null) {
+
+            // get action view
+            final MenuItem toggleservice = this.menu.findItem(R.id.main_switch);
+            final RelativeLayout switchOuter = (RelativeLayout) toggleservice.getActionView();
+            final Switch mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
+
+            // update state switch´s state
+            mainSwitch.setChecked(this.settings.getBoolean(PREF_ENTRY_SERVICE_ACTIVE, false));
         }
     }
 

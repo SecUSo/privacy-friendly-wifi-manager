@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name="org.secuso.privacyfriendlywifi.service.receivers.ManagerService"
+            android:name="org.secuso.privacyfriendlywifi.service.ManagerService"
             android:enabled="true"
             android:exported="false" />
 
@@ -26,23 +26,34 @@
         <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver" />
         <receiver android:name="org.secuso.privacyfriendlywifi.service.NewWifiNotification$NotificationButtonListener" />
         <receiver android:name="org.secuso.privacyfriendlywifi.service.NewWifiNotification$NotificationClickListener" />
+        <receiver android:name="org.secuso.privacyfriendlywifi.view.WifiWidget$WidgetClickListener" />
         <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.WifiChangedReceiver">
             <intent-filter android:priority="100">
                 <action android:name="android.net.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name="org.secuso.privacyfriendlywifi.view.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name="org.secuso.privacyfriendlywifi.view.WifiWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/wifi_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
