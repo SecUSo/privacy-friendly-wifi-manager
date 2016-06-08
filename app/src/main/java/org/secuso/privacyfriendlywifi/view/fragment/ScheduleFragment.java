@@ -9,17 +9,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
 import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
-import org.secuso.privacyfriendlywifi.service.Controller;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
@@ -94,23 +90,6 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
             });
         }
 
-        // TODO Switch for debugging. Remove for release
-        // ### begin switch ###
-        Switch asdfg = (Switch) rootView.findViewById(R.id.switch1);
-        asdfg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Log.i("TAG", "register all the receivers");
-                    Controller.registerReceivers(getActivity().getBaseContext());
-                } else {
-                    Log.i("TAG", "UNregister all the receivers");
-                    Controller.unregisterReceivers(getActivity().getBaseContext());
-                }
-            }
-        });
-        // ### end switch ###
-
         // setup recycler view
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
@@ -118,6 +97,7 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
         ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), scheduleEntries);
         recyclerView.setAdapter(itemsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+        recyclerView.setPadding(recyclerView.getPaddingLeft(), recyclerView.getPaddingTop(), recyclerView.getPaddingRight(), fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom());
 
         return rootView;
     }
