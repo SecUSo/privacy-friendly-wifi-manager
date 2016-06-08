@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlywifi.service.receivers;
+package org.secuso.privacyfriendlywifi.service;
 
 import android.app.ActivityManager;
 import android.app.IntentService;

@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
+import org.secuso.privacyfriendlywifi.service.ManagerService;
+
 /**
  *
  */
