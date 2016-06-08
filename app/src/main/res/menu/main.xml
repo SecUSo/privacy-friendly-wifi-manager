@@ -5,7 +5,7 @@
     <item
         android:id="@+id/main_switch"
         android:actionViewClass="android.support.v7.widget.SwitchCompat"
-        android:title="test"
+        android:title="@string/global_on_off_switch"
         app:showAsAction="always"
         app:actionLayout="@layout/layout_actionbar_switch" />
 </menu>

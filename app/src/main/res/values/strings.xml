@@ -43,4 +43,6 @@
     <string name="about_moreinfo">More information can be found at:</string>
     <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
     <string name="about_version">Version: %1$s</string>
+
+    <string name="global_on_off_switch">On/Off</string>
 </resources>
