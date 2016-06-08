@@ -54,6 +54,16 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/wifi_widget_info" />
         </receiver>
+
+        <activity
+            android:name="org.secuso.privacyfriendlywifi.view.HelpActivity"
+            android:label="@string/title_activity_help"
+            android:parentActivityName="org.secuso.privacyfriendlywifi.view.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.secuso.privacyfriendlywifi.view.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

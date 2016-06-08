@@ -11,7 +11,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 
 /**
- *
+ * BroadcastReceiver for own alarms. Triggers ManagerService.
  */
 public class AlarmReceiver extends WakefulBroadcastReceiver {
     private static final int TIMEOUT_IN_SECONDS = 5;
@@ -19,6 +19,11 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     private static PendingIntent alarmIntent;
 
 
+    /**
+     * Initializes alarmManager and alarmIntent instance variables.
+     *
+     * @param context A context.
+     */
     private static void initAlarmManager(Context context) {
         if (AlarmReceiver.alarmManager == null) {
             AlarmReceiver.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -30,6 +35,11 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         }
     }
 
+    /**
+     *  Sets a pending alarm. This alarm is either repeating (below SDK level 23) or
+     *  will manually schedule a new alarm after invokation.
+     * @param context A context.
+     */
     public static void setupAlarm(Context context) {
         AlarmReceiver.initAlarmManager(context);
 
@@ -43,6 +53,10 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         }
     }
 
+    /**
+     * Cancels the pending alarm.
+     * @param context A context.
+     */
     public static void cancelAlarm(Context context) {
         AlarmReceiver.initAlarmManager(context);
         AlarmReceiver.alarmManager.cancel(AlarmReceiver.alarmIntent);

@@ -200,7 +200,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentClass = SettingsFragment.class;
                 break;
             case R.id.nav_help:
-                break;
+                Intent startHelpIntent = new Intent(this, HelpActivity.class);
+                startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                this.startActivity(startHelpIntent);
+                return true;
             case R.id.nav_about:
                 fragmentClass = AboutFragment.class;
                 break;

@@ -8,7 +8,7 @@ import android.util.Log;
 import org.secuso.privacyfriendlywifi.service.Controller;
 
 /**
- *
+ * BroadcastReceiver for BootCompleted event
  */
 public class BootCompletedReceiver extends BroadcastReceiver {
 
