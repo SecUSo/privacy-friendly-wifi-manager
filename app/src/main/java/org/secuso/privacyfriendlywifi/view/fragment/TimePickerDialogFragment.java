@@ -185,14 +185,9 @@ public class TimePickerDialogFragment extends DialogFragment implements OnDialog
     }
 
     private void setDialogTitle(int page) {
-        if (page == 0) {
-            getDialog().setTitle(getResources().getString(R.string.dialog_title_choose_start_time));
-        } else if (page == 1) {
-            getDialog().setTitle(getResources().getString(R.string.dialog_title_choose_end_time));
-        } else if (page == 2) {
-            getDialog().setTitle(getResources().getString(R.string.dialog_title_choose_title));
-        }
+        getDialog().setTitle(this.pager.getAdapter().getPageTitle(page));
     }
+
 
     private class FragPageAdapter extends FragmentStatePagerAdapter {
 
@@ -205,6 +200,18 @@ public class TimePickerDialogFragment extends DialogFragment implements OnDialog
             TimePickerFragment frag = new TimePickerFragment();
             frag.setValues(position, startTimePicker, endTimePicker, titleEditText);
             return frag;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position == 0) {
+                return getResources().getString(R.string.dialog_title_choose_start_time);
+            } else if (position == 1) {
+                return getResources().getString(R.string.dialog_title_choose_end_time);
+            } else if (position == 2) {
+                return getResources().getString(R.string.dialog_title_choose_title);
+            }
+            return "";
         }
 
         @Override
