@@ -14,17 +14,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name="org.secuso.privacyfriendlywifi.service.ManagerService"
+            android:name="org.secuso.privacyfriendlywifi.service.receivers.ManagerService"
             android:enabled="true"
             android:exported="false" />
 
-        <receiver android:name="org.secuso.privacyfriendlywifi.service.BootCompletedReceiver">
+        <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.secuso.privacyfriendlywifi.service.AlarmReceiver" />
-
+        <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver" />
+        <receiver android:name="org.secuso.privacyfriendlywifi.service.NewWifiNotification$NotificationButtonListener" />
+        <receiver android:name="org.secuso.privacyfriendlywifi.service.NewWifiNotification$NotificationClickListener" />
+        <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.WifiChangedReceiver">
+            <intent-filter android:priority="100">
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name="org.secuso.privacyfriendlywifi.view.MainActivity"
             android:configChanges="orientation|screenSize"

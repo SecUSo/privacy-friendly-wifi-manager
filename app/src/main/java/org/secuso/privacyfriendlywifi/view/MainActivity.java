@@ -157,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
 
         Class<? extends Fragment> fragmentClass = null;
-
         switch (item.getItemId()) {
             case R.id.nav_whitelist:
                 if (CellLocationCondition.hasCoarseLocationPermission(this)) {

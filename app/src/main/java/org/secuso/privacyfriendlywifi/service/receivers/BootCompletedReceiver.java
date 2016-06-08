@@ -1,9 +1,11 @@
-package org.secuso.privacyfriendlywifi.service;
+package org.secuso.privacyfriendlywifi.service.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import org.secuso.privacyfriendlywifi.service.Controller;
 
 /**
  *

@@ -1,4 +1,4 @@
-package org.secuso.privacyfriendlywifi.service;
+package org.secuso.privacyfriendlywifi.service.receivers;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

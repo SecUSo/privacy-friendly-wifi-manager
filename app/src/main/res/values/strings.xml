@@ -45,4 +45,12 @@
     <string name="about_version">Version: %1$s</string>
 
     <string name="global_on_off_switch">On/Off</string>
+
+    <!-- NOTIFICATION -->
+    <string name="notification_content_text">An unmanaged Wi-Fi connection has been established</string>
+    <string name="notification_content_info">Unmanaged connection</string>
+    <string name="notification_unknown_wifi_title">New unmanaged Wi-Fi:</string>
+    <string name="notification_unknown_wifi_title_format">New unmanaged Wi-Fi: %1$s</string>
+    <string name="notification_button_add">Manage this connection automatically</string>
+    <string name="notification_main_text">Touch to manage connections</string>
 </resources>

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
+import org.secuso.privacyfriendlywifi.service.receivers.ScreenOnReceiver;
+
 /**
  *
  */
