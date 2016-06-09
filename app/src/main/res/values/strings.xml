@@ -21,17 +21,22 @@
     <string name="wifi_bssid_text">MAC: %1$s</string>
     <string name="wifi_num_cells_text">Related cells: %1$d</string>
 
+    <!-- WIFI PICKER DIALOG STRINGS -->
+    <string name="wifi_picker_dialog_title">Select network</string>
+    <string name="wifi_picker_dialog_button_cancel">Cancel</string>
+
     <!-- SCHEDULE STRINGS -->
     <string name="schedule_time_text">From %1$d:%2$02d to %3$d:%4$02d</string>
 
     <!-- TIME PICKER DIALOG STRINGS -->
-    <string name="dialog_title_choose_start_time">Choose start time</string>
-    <string name="dialog_title_choose_end_time">Choose end time</string>
-    <string name="dialog_title_choose_title">Choose title</string>
-    <string name="dialog_text_title_hint">Time slot %1$d</string>
-    <string name="dialog_button_next">Next</string>
-    <string name="dialog_button_finish">Finish</string>
-    <string name="dialog_button_cancel">Cancel</string>
+    <string name="time_picker_dialog_title_choose_start_time">Choose start time</string>
+    <string name="time_picker_dialog_title_choose_end_time">Choose end time</string>
+    <string name="time_picker_dialog_title_choose_title">Choose title</string>
+    <string name="time_picker_dialog_text_title_hint">Time slot %1$d</string>
+    <string name="time_picker_dialog_button_next">Next</string>
+    <string name="time_picker_dialog_button_finish">Finish</string>
+    <string name="time_picker_dialog_button_cancel">Cancel</string>
+    <!-- TIME PICKER DIALOG STRINGS -->
 
     <!-- ABOUT STRINGS -->
     <string name="about_whatdoesitdo"><b>Goal:</b> Privacy friendly WiFi keeps track of the CellIDs in your areay while you are in a Wifi. By keeping this information, the app tries to learn

@@ -67,7 +67,7 @@ public class TimePickerDialogFragment extends AppCompatDialogFragment implements
         this.initPicker(endTimePicker, endHour, endMinute);
 
         this.titleEditText = (EditText) view.findViewById(R.id.title_edit_text);
-        this.titleEditText.setHint(String.format(Locale.getDefault(), this.context.getString(R.string.dialog_text_title_hint), this.currentListSize));
+        this.titleEditText.setHint(String.format(Locale.getDefault(), this.context.getString(R.string.time_picker_dialog_text_title_hint), this.currentListSize));
 
         this.titleText = (TextView) view.findViewById(R.id.dialog_title_text);
 
@@ -83,12 +83,12 @@ public class TimePickerDialogFragment extends AppCompatDialogFragment implements
                 setDialogTitle(position);
 
                 if (position == 2) {
-                    nextButton.setText(R.string.dialog_button_finish);
+                    nextButton.setText(R.string.time_picker_dialog_button_finish);
                     titleEditText.requestFocus();
                     ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
                             .showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT);
                 } else {
-                    nextButton.setText(R.string.dialog_button_next);
+                    nextButton.setText(R.string.time_picker_dialog_button_next);
                     ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(titleEditText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
                 }
@@ -214,11 +214,11 @@ public class TimePickerDialogFragment extends AppCompatDialogFragment implements
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return context.getString(R.string.dialog_title_choose_start_time);
+                    return context.getString(R.string.time_picker_dialog_title_choose_start_time);
                 case 1:
-                    return context.getString(R.string.dialog_title_choose_end_time);
+                    return context.getString(R.string.time_picker_dialog_title_choose_end_time);
                 case 2:
-                    return context.getString(R.string.dialog_title_choose_title);
+                    return context.getString(R.string.time_picker_dialog_title_choose_title);
             }
             return super.getPageTitle(position);
         }

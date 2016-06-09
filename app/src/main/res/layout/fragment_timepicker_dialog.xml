@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/viewpager_dialog"
         android:background="@color/colorPrimary"
-        android:text="@string/dialog_button_next"
+        android:text="@string/time_picker_dialog_button_next"
         android:textColor="@color/white" />
     <!--android:layout_alignParentBottom="true"-->
 </RelativeLayout>

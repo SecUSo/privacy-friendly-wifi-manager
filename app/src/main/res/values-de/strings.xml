@@ -25,11 +25,11 @@
     <string name="schedule_time_text">Von %1$d:%2$02d bis %3$d:%4$02d</string>
 
     <!-- TIME PICKER DIALOG STRINGS -->
-    <string name="dialog_title_choose_start_time">Wähle Starzeit</string>
-    <string name="dialog_title_choose_end_time">Wähle Endzeit</string>
-    <string name="dialog_title_choose_title">Wähle Titel</string>
-    <string name="dialog_text_title_hint">Zeitslot %1$d</string>
-    <string name="dialog_button_next">Weiter</string>
+    <string name="time_picker_dialog_title_choose_start_time">Wähle Starzeit</string>
+    <string name="time_picker_dialog_title_choose_end_time">Wähle Endzeit</string>
+    <string name="time_picker_dialog_title_choose_title">Wähle Titel</string>
+    <string name="time_picker_dialog_text_title_hint">Zeitslot %1$d</string>
+    <string name="time_picker_dialog_button_next">Weiter</string>
 
     <!-- ABOUT STRINGS -->
     <string name="about_whatdoesitdo"><b>Das Ziel:</b> Privacy friendly WiFi merkt sich die sog. CellIDs

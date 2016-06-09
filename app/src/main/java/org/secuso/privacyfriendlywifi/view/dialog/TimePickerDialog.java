@@ -13,7 +13,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
@@ -59,7 +58,7 @@ public class TimePickerDialog implements OnDialogClosedListener, DialogInterface
         this.initPicker(endTimePicker, endHour, endMinute);
 
         this.titleEditText = (EditText) view.findViewById(R.id.title_edit_text);
-        this.titleEditText.setHint(String.format(Locale.getDefault(), this.context.getString(R.string.dialog_text_title_hint), this.currentListSize));
+        this.titleEditText.setHint(String.format(Locale.getDefault(), this.context.getString(R.string.time_picker_dialog_text_title_hint), this.currentListSize));
 
 //        this.titleText = (TextView) view.findViewById(R.id.dialog_title_text);
 
@@ -73,12 +72,12 @@ public class TimePickerDialog implements OnDialogClosedListener, DialogInterface
                 setDialogTitle(position);
 
                 if (position == 2) {
-                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.dialog_button_finish);
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.time_picker_dialog_button_finish);
                     titleEditText.requestFocus();
                     ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
                             .showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT);
                 } else {
-                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.dialog_button_next);
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.time_picker_dialog_button_next);
                     ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(titleEditText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
                 }
@@ -92,9 +91,9 @@ public class TimePickerDialog implements OnDialogClosedListener, DialogInterface
         } else {
             builder = new AlertDialog.Builder(context);
         }
-        builder.setPositiveButton(R.string.dialog_button_next, null);
-        builder.setNegativeButton(R.string.dialog_button_cancel, null);
-        builder.setTitle("test");
+        builder.setPositiveButton(R.string.time_picker_dialog_button_next, null);
+        builder.setNegativeButton(R.string.time_picker_dialog_button_cancel, null);
+        builder.setTitle(R.string.time_picker_dialog_title_choose_start_time);
         builder.setView(view);
 
         this.alertDialog = builder.create();
@@ -140,7 +139,6 @@ public class TimePickerDialog implements OnDialogClosedListener, DialogInterface
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        Toast.makeText(context, "BLABLA", Toast.LENGTH_SHORT).show();
         this.alertDialog.dismiss();
         this.onDialogClosed(DialogInterface.BUTTON_NEGATIVE);
     }
@@ -219,11 +217,11 @@ public class TimePickerDialog implements OnDialogClosedListener, DialogInterface
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return context.getString(R.string.dialog_title_choose_start_time);
+                    return context.getString(R.string.time_picker_dialog_title_choose_start_time);
                 case 1:
-                    return context.getString(R.string.dialog_title_choose_end_time);
+                    return context.getString(R.string.time_picker_dialog_title_choose_end_time);
                 case 2:
-                    return context.getString(R.string.dialog_title_choose_title);
+                    return context.getString(R.string.time_picker_dialog_title_choose_title);
             }
             return super.getPageTitle(position);
         }
