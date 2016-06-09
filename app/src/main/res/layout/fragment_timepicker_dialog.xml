@@ -4,20 +4,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
+<!--    <TextView
         android:id="@+id/dialog_title_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLargePopupMenu" />
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_above="@+id/viewpager_dialog"-->
+        android:textAppearance="?android:attr/textAppearanceLargePopupMenu" />-->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dialog_title_text">
-        <!--android:layout_above="@+id/button_next"-->
 
         <TimePicker
             android:id="@+id/start_time_picker"
@@ -45,15 +42,4 @@
                 android:maxLines="1" />
         </RelativeLayout>
     </android.support.v4.view.ViewPager>
-
-    <Button
-        android:id="@+id/button_next"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/viewpager_dialog"
-        android:background="@color/colorPrimary"
-        android:text="@string/time_picker_dialog_button_next"
-        android:textColor="@color/white" />
-    <!--android:layout_alignParentBottom="true"-->
 </RelativeLayout>

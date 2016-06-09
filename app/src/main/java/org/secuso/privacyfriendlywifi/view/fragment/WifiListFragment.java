@@ -1,8 +1,9 @@
 package org.secuso.privacyfriendlywifi.view.fragment;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,18 +13,30 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
+import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
+import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.adapter.WifiListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
+import org.secuso.privacyfriendlywifi.view.dialog.WifiPickerDialog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
-public class WifiListFragment extends Fragment {
+public class WifiListFragment extends Fragment implements OnDialogClosedListener {
+
+    private List<WifiLocationEntry> wifiLocationEntries;
+    private OnDialogClosedListener thisClass;
+
+    private RecyclerView recyclerView;
 
     public WifiListFragment() {
         // Required empty public constructor
+        thisClass = this;
     }
 
     public static WifiListFragment newInstance() {
@@ -31,6 +44,17 @@ public class WifiListFragment extends Fragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            this.wifiLocationEntries = (List<WifiLocationEntry>) FileHandler.loadObject(context, ManagerService.FN_LOCATION_ENTRIES, false);
+        } catch (IOException e) {
+            this.wifiLocationEntries = new ArrayList<>();
+        }
     }
 
     @Override
@@ -54,8 +78,12 @@ public class WifiListFragment extends Fragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your first action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+//                    Snackbar.make(view, "Replace with your first action", Snackbar.LENGTH_LONG)
+//                            .setAction("Action", null).show();
+                    WifiPickerDialog dialog = new WifiPickerDialog(getContext());
+                    dialog.addOnDialogClosedListener(thisClass);
+                    dialog.setManagedWifis(wifiLocationEntries);
+                    dialog.show();
                 }
             });
         }
@@ -64,33 +92,40 @@ public class WifiListFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        // TODO example list
-        List<WifiLocationEntry> wifiLocationEntries = new ArrayList<>();
-        wifiLocationEntries.add(new WifiLocationEntry("eduroam", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam1", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam2", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam3", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam4", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("eduroam", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam1", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam2", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam3", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam4", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("eduroam", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam1", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam2", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam3", "11:22:33:44:55:66"));
-        wifiLocationEntries.add(new WifiLocationEntry("edunotroam4", "11:22:33:44:55:66"));
-
         WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), wifiLocationEntries);
         recyclerView.setAdapter(itemsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+        recyclerView.setPadding(
+                recyclerView.getPaddingLeft(),
+                recyclerView.getPaddingTop(),
+                recyclerView.getPaddingRight(),
+                ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), this.getContext()));
 
         return rootView;
     }
 
-    //TODO fade out fab on scroll
+    @Override
+    public void onDialogClosed(int returnCode, Object... returnValue) {
+        if (returnCode == DialogInterface.BUTTON_POSITIVE) {
+            this.wifiLocationEntries.add((WifiLocationEntry) returnValue[0]);
+            this.saveWifiLocationEntries();
+            this.recyclerView.requestLayout();
+            this.recyclerView.invalidate();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        this.saveWifiLocationEntries();
+    }
+
+    private boolean saveWifiLocationEntries() {
+        try {
+            return FileHandler.storeObject(this.getActivity(), ManagerService.FN_LOCATION_ENTRIES, this.wifiLocationEntries);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

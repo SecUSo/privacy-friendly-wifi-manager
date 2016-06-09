@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
 import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
@@ -92,7 +93,11 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
         ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), scheduleEntries);
         recyclerView.setAdapter(itemsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
-        recyclerView.setPadding(recyclerView.getPaddingLeft(), recyclerView.getPaddingTop(), recyclerView.getPaddingRight(), getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom()));
+        recyclerView.setPadding(
+                recyclerView.getPaddingLeft(),
+                recyclerView.getPaddingTop(),
+                recyclerView.getPaddingRight(),
+                ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), this.getContext()));
 
         return rootView;
     }
@@ -116,17 +121,10 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
     private boolean saveSchedule() {
         //TODO sometimes list is not loaded correctly (alternating switch statuses)
         try {
-            return FileHandler.storeObject(getActivity(), ManagerService.FN_SCHEDULE_ENTRIES, scheduleEntries);
+            return FileHandler.storeObject(getActivity(), ManagerService.FN_SCHEDULE_ENTRIES, this.scheduleEntries);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return false;
-    }
-
-    /**
-     * Convert dp to px
-     */
-    public /*static*/ int getPXFromDP(int dp) {//}, Context context) {
-        return (int) (getResources().getDisplayMetrics().density * dp);
     }
 }

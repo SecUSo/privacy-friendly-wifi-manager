@@ -55,7 +55,7 @@ public class WifiWidget extends AppWidgetProvider {
      * @return RemoveViews referring to the button instances.
      */
     private static RemoteViews updateButton(Context context, boolean active) {
-        RemoteViews buttonView = new RemoteViews(context.getPackageName(), R.layout.wifi_widget);
+        RemoteViews buttonView = new RemoteViews(context.getPackageName(), R.layout.widget_wifi);
         buttonView.setTextViewText(R.id.appwidget_switch, context.getString(R.string.appwidget_text, active ? context.getString(R.string.on) : context.getString(R.string.off)));
 
         final Intent updateWidgetsIntent = new Intent(context, WifiWidget.class);
