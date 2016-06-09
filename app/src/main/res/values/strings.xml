@@ -30,6 +30,8 @@
     <string name="dialog_title_choose_title">Choose title</string>
     <string name="dialog_text_title_hint">Time slot %1$d</string>
     <string name="dialog_button_next">Next</string>
+    <string name="dialog_button_finish">Finish</string>
+    <string name="dialog_button_cancel">Cancel</string>
 
     <!-- ABOUT STRINGS -->
     <string name="about_whatdoesitdo"><b>Goal:</b> Privacy friendly WiFi keeps track of the CellIDs in your areay while you are in a Wifi. By keeping this information, the app tries to learn

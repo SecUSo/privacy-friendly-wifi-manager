@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +18,7 @@ import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
+import org.secuso.privacyfriendlywifi.view.dialog.TimePickerDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,15 +77,10 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentManager manager = getFragmentManager();
-                    Fragment frag = manager.findFragmentByTag("TimePickerFragment"); //TODO check relevance
-                    if (frag != null) {
-                        manager.beginTransaction().remove(frag).commit();
-                    }
-                    TimePickerDialogFragment fragment = new TimePickerDialogFragment();
-                    fragment.addOnDialogClosedListener(thisClass);
-                    fragment.setCurrentListSize(scheduleEntries.size());
-                    fragment.show(manager, "TimePickerFragment");
+                    TimePickerDialog dialog = new TimePickerDialog(getContext());
+                    dialog.addOnDialogClosedListener(thisClass);
+                    dialog.setCurrentListSize(scheduleEntries.size());
+                    dialog.show();
                 }
             });
         }
@@ -97,7 +92,7 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
         ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), scheduleEntries);
         recyclerView.setAdapter(itemsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
-        recyclerView.setPadding(recyclerView.getPaddingLeft(), recyclerView.getPaddingTop(), recyclerView.getPaddingRight(), fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom());
+        recyclerView.setPadding(recyclerView.getPaddingLeft(), recyclerView.getPaddingTop(), recyclerView.getPaddingRight(), getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom()));
 
         return rootView;
     }
@@ -107,6 +102,7 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
             this.scheduleEntries.add((ScheduleEntry) returnValue[0]);
             this.saveSchedule();
+            this.recyclerView.requestLayout();
             this.recyclerView.invalidate();
         }
     }
@@ -118,11 +114,19 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
     }
 
     private boolean saveSchedule() {
+        //TODO sometimes list is not loaded correctly (alternating switch statuses)
         try {
             return FileHandler.storeObject(getActivity(), ManagerService.FN_SCHEDULE_ENTRIES, scheduleEntries);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * Convert dp to px
+     */
+    public /*static*/ int getPXFromDP(int dp) {//}, Context context) {
+        return (int) (getResources().getDisplayMetrics().density * dp);
     }
 }

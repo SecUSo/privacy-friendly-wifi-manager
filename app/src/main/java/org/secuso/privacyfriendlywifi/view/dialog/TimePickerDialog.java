@@ -1,23 +1,19 @@
-package org.secuso.privacyfriendlywifi.view.fragment;
+package org.secuso.privacyfriendlywifi.view.dialog;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
@@ -27,8 +23,11 @@ import java.util.Locale;
 
 import secuso.org.privacyfriendlywifi.R;
 
-public class TimePickerDialogFragment extends AppCompatDialogFragment implements OnDialogClosedListener {
-    private Context context;
+/**
+ *
+ */
+public class TimePickerDialog implements OnDialogClosedListener, DialogInterface.OnCancelListener {
+    private final Context context;
     private int startHour = 22;
     private int startMinute = 0;
     private int endHour = 8;
@@ -41,24 +40,17 @@ public class TimePickerDialogFragment extends AppCompatDialogFragment implements
     private TimePicker startTimePicker;
     private TimePicker endTimePicker;
     private EditText titleEditText;
-    private TextView titleText;
-    private Button nextButton;
-    private RelativeLayout dialogWrapper;
+//    private TextView titleText;
 
-    public TimePickerDialogFragment() {
+    private AlertDialog alertDialog;
+
+    public TimePickerDialog(Context context) {
         this.onDialogClosedListeners = new ArrayList<>();
+        this.context = context;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-
-        this.context = inflater.getContext();
-
+    public void show() {
         View view = LayoutInflater.from(context).inflate(R.layout.fragment_timepicker_dialog, null, false);
-
-        this.dialogWrapper = (RelativeLayout) view.findViewById(R.id.dialog_wrapper);
 
         this.startTimePicker = (TimePicker) view.findViewById(R.id.start_time_picker);
         this.initPicker(startTimePicker, startHour, startMinute);
@@ -69,26 +61,24 @@ public class TimePickerDialogFragment extends AppCompatDialogFragment implements
         this.titleEditText = (EditText) view.findViewById(R.id.title_edit_text);
         this.titleEditText.setHint(String.format(Locale.getDefault(), this.context.getString(R.string.dialog_text_title_hint), this.currentListSize));
 
-        this.titleText = (TextView) view.findViewById(R.id.dialog_title_text);
+//        this.titleText = (TextView) view.findViewById(R.id.dialog_title_text);
 
         this.viewPager = (ViewPager) view.findViewById(R.id.viewpager_dialog);
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new MyAdapter());
-        ViewPager.OnPageChangeListener listener = new ViewPager.SimpleOnPageChangeListener() {
+        final ViewPager.OnPageChangeListener listener = new ViewPager.SimpleOnPageChangeListener() {
             public void onPageSelected(int position) {
-                adaptPagerLayoutHeight();
-
-                // TODO use this in marshmallow?
+                // TODO use this in marshmallow? -> does special alertdialog style work?
                 //titleText.setText(viewPager.getAdapter().getPageTitle(position));
                 setDialogTitle(position);
 
                 if (position == 2) {
-                    nextButton.setText(R.string.dialog_button_finish);
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.dialog_button_finish);
                     titleEditText.requestFocus();
                     ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
                             .showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT);
                 } else {
-                    nextButton.setText(R.string.dialog_button_next);
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.dialog_button_next);
                     ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(titleEditText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
                 }
@@ -96,28 +86,63 @@ public class TimePickerDialogFragment extends AppCompatDialogFragment implements
         };
         viewPager.addOnPageChangeListener(listener);
 
-        nextButton = (Button) view.findViewById(R.id.button_next);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (viewPager.getCurrentItem() == 2) {
-                    onDialogClosed(DialogInterface.BUTTON_POSITIVE);
-                    getDialog().dismiss();
-                } else {
-                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
-                }
-            }
-        });
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(context);
+        }
+        builder.setPositiveButton(R.string.dialog_button_next, null);
+        builder.setNegativeButton(R.string.dialog_button_cancel, null);
+        builder.setTitle("test");
+        builder.setView(view);
 
-        listener.onPageSelected(0);
-        return view;
+        this.alertDialog = builder.create();
+        this.alertDialog.setCancelable(true);
+        this.alertDialog.setCanceledOnTouchOutside(true);
+        this.alertDialog.setOnCancelListener(this);
+        this.alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        this.alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+                                               @Override
+                                               public void onShow(DialogInterface dialog) {
+
+                                                   alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(
+                                                           new View.OnClickListener() {
+                                                               @Override
+                                                               public void onClick(View v) {
+                                                                   if (viewPager.getCurrentItem() == 2) {
+                                                                       onDialogClosed(DialogInterface.BUTTON_POSITIVE);
+                                                                       alertDialog.dismiss();
+                                                                   } else {
+                                                                       viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+                                                                   }
+                                                               }
+                                                           });
+
+                                                   alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(
+                                                           new View.OnClickListener() {
+                                                               @Override
+                                                               public void onClick(View v) {
+                                                                   alertDialog.cancel();
+                                                               }
+                                                           });
+
+                                                   listener.onPageSelected(0);
+                                               }
+                                           }
+
+        );
+
+
+        alertDialog.show();
     }
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        super.onCancel(dialog);
-        onDialogClosed(DialogInterface.BUTTON_NEGATIVE);
+        Toast.makeText(context, "BLABLA", Toast.LENGTH_SHORT).show();
+        this.alertDialog.dismiss();
+        this.onDialogClosed(DialogInterface.BUTTON_NEGATIVE);
     }
 
     @Override
@@ -180,28 +205,8 @@ public class TimePickerDialogFragment extends AppCompatDialogFragment implements
         }
     }
 
-    private void adaptPagerLayoutHeight() {
-        View view = viewPager.getChildAt(viewPager.getCurrentItem());
-
-        if (view != null) {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                if (!(view instanceof TimePicker)) {
-//                    view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-//                    viewPager.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, view.getMeasuredHeight()));
-//                }
-//            } else {
-//            view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-//            viewPager.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, view.getLayoutParams().height)); // view.getMeasuredHeight()));
-//            this.dialogWrapper.requestLayout();
-//            this.dialogWrapper.invalidate();
-//                this.dialogWrapper.setLayoutParams();
-//            }
-//            getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        }
-    }
-
     private void setDialogTitle(int page) {
-        getDialog().setTitle(this.viewPager.getAdapter().getPageTitle(page));
+        alertDialog.setTitle(this.viewPager.getAdapter().getPageTitle(page));
     }
 
     private class MyAdapter extends PagerAdapter {
