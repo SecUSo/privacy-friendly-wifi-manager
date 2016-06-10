@@ -8,7 +8,6 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -31,9 +30,7 @@ public class WifiPickerDialog implements OnDialogClosedListener, DialogInterface
     //    private TextView titleText;
     private AlertDialog alertDialog;
 
-    private RecyclerView recyclerView;
     private List<WifiLocationEntry> managedWifis;
-    private List<WifiConfiguration> configuredNetworks;
 
     public WifiPickerDialog(Context context) {
         this.onDialogClosedListeners = new ArrayList<>();
@@ -43,39 +40,30 @@ public class WifiPickerDialog implements OnDialogClosedListener, DialogInterface
     public void show() {
         View view = LayoutInflater.from(this.context).inflate(R.layout.fragment_wifi_dialog, null, false);
 
-//        this.titleText = (TextView) view.findViewById(R.id.dialog_title_text);
+        // this.titleText = (TextView) view.findViewById(R.id.dialog_title_text);
 
         // get known wifi networks and setup recycler view
         WifiManager wifiMan = (WifiManager) this.context.getSystemService(Context.WIFI_SERVICE);
-        this.configuredNetworks = wifiMan.getConfiguredNetworks();
-        if (this.configuredNetworks == null) {
-            this.configuredNetworks = new ArrayList<>();
+        List<WifiConfiguration> configuredNetworks = wifiMan.getConfiguredNetworks();
+        if (configuredNetworks == null) {
+            configuredNetworks = new ArrayList<>();
         }
 
         for (WifiLocationEntry entry : this.managedWifis) {
-            for (WifiConfiguration config : this.configuredNetworks) {
+            for (WifiConfiguration config : configuredNetworks) {
                 if (entry.getSsid() == config.SSID && entry.getBssid() == config.BSSID) {
-                    this.configuredNetworks.remove(config);
+                    configuredNetworks.remove(config);
                     break;
                 }
             }
         }
 
-        final DialogWifiListAdapter itemsAdapter = new DialogWifiListAdapter(this.context, this.configuredNetworks);
+        DialogWifiListAdapter itemsAdapter = new DialogWifiListAdapter(this.context, configuredNetworks, this);
 
-        this.recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        this.recyclerView.addItemDecoration(new DividerItemDecoration(this.context));
-        this.recyclerView.setAdapter(itemsAdapter);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(this.context));
-        this.recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("TAG", "DUMIDUMIDUM");
-                WifiConfiguration conf = configuredNetworks.get(recyclerView.getChildLayoutPosition(v));
-                onDialogClosed(DialogInterface.BUTTON_POSITIVE, new WifiLocationEntry(conf.SSID, conf.BSSID));
-                alertDialog.dismiss();
-            }
-        });
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this.context));
+        recyclerView.setAdapter(itemsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.context));
 
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -133,5 +121,9 @@ public class WifiPickerDialog implements OnDialogClosedListener, DialogInterface
 
     public void setManagedWifis(List<WifiLocationEntry> managedWifis) {
         this.managedWifis = managedWifis;
+    }
+
+    public void addNewEntryToList(WifiLocationEntry entry){
+
     }
 }

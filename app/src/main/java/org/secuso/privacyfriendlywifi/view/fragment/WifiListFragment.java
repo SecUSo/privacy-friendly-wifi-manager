@@ -3,6 +3,7 @@ package org.secuso.privacyfriendlywifi.view.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -102,17 +103,19 @@ public class WifiListFragment extends Fragment implements OnDialogClosedListener
         }
 
         // setup recycler view
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
+        this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
         WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), wifiLocationEntries);
-        recyclerView.setAdapter(itemsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
-        recyclerView.setPadding(
-                recyclerView.getPaddingLeft(),
-                recyclerView.getPaddingTop(),
-                recyclerView.getPaddingRight(),
-                ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), this.getContext()));
+        this.recyclerView.setAdapter(itemsAdapter);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+        this.recyclerView.setPadding(
+                this.recyclerView.getPaddingLeft(),
+                this.recyclerView.getPaddingTop(),
+                this.recyclerView.getPaddingRight(),
+                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
+                        ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), this.getContext())
+                        : fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom()));
 
         return rootView;
     }

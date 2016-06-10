@@ -2,6 +2,7 @@ package org.secuso.privacyfriendlywifi.view.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -97,7 +98,9 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
                 recyclerView.getPaddingLeft(),
                 recyclerView.getPaddingTop(),
                 recyclerView.getPaddingRight(),
-                ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), this.getContext()));
+                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
+                        ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), this.getContext())
+                        : fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom()));
 
         return rootView;
     }

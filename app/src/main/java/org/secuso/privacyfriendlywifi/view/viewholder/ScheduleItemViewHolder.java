@@ -16,7 +16,7 @@ import secuso.org.privacyfriendlywifi.R;
 /**
  *
  */
-public class ScheduleItemViewHolder extends RecyclerView.ViewHolder {
+public class ScheduleItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
     private TextView titleTextView;
     private TextView timeTextView;
     private Switch statusSwitch;
@@ -46,5 +46,15 @@ public class ScheduleItemViewHolder extends RecyclerView.ViewHolder {
                 scheduleCondition.setActive(statusSwitch.isChecked());
             }
         });
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
