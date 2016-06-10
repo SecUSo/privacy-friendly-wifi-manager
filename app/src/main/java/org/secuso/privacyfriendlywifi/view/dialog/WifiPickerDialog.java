@@ -8,6 +8,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -51,7 +52,12 @@ public class WifiPickerDialog implements OnDialogClosedListener, DialogInterface
 
         for (WifiLocationEntry entry : this.managedWifis) {
             for (WifiConfiguration config : configuredNetworks) {
-                if (entry.getSsid() == config.SSID && entry.getBssid() == config.BSSID) {
+                String confSSID = config.SSID;
+                if (confSSID.startsWith("\"") && confSSID.endsWith("\"")) {
+                    confSSID = confSSID.substring(1, confSSID.length() - 1);
+                }
+                Log.i("TAG", "entry: " + entry.getSsid() + " - conf: " + confSSID);
+                if (entry.getSsid().equals(confSSID)) { // BSSID=null && entry.getBssid() == config.BSSID) {
                     configuredNetworks.remove(config);
                     break;
                 }
@@ -106,6 +112,7 @@ public class WifiPickerDialog implements OnDialogClosedListener, DialogInterface
 
     @Override
     public void onDialogClosed(int returnCode, Object... returnValue) {
+        this.alertDialog.dismiss();
         for (OnDialogClosedListener listener : onDialogClosedListeners) {
             listener.onDialogClosed(returnCode, returnValue);
         }
@@ -121,9 +128,5 @@ public class WifiPickerDialog implements OnDialogClosedListener, DialogInterface
 
     public void setManagedWifis(List<WifiLocationEntry> managedWifis) {
         this.managedWifis = managedWifis;
-    }
-
-    public void addNewEntryToList(WifiLocationEntry entry){
-
     }
 }

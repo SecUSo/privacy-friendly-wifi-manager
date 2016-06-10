@@ -27,11 +27,20 @@ public class DialogWifiItemViewHolder extends RecyclerView.ViewHolder implements
     public void setupItem(WifiConfiguration conf, DialogWifiListAdapter adapter) {
         this.conf = conf;
         this.adapter = adapter;
-        this.ssidTextView.setText(conf.SSID);
+
+        String confSSID = conf.SSID;
+        if (confSSID.startsWith("\"") && confSSID.endsWith("\"")) {
+            confSSID = confSSID.substring(1, confSSID.length() - 1);
+        }
+        this.ssidTextView.setText(confSSID);
     }
 
     @Override
     public void onClick(View v) {
-        this.adapter.onListItemClicked(new WifiLocationEntry(conf.SSID, conf.BSSID));
+        String confSSID = conf.SSID;
+        if (confSSID.startsWith("\"") && confSSID.endsWith("\"")) {
+            confSSID = confSSID.substring(1, confSSID.length() - 1);
+        }
+        this.adapter.onListItemClicked(new WifiLocationEntry(confSSID, conf.BSSID));
     }
 }
