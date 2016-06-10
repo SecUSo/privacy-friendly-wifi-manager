@@ -20,6 +20,8 @@
     <string name="wifi_ssid_text">Name: %1$s</string>
     <string name="wifi_bssid_text">MAC: %1$s</string>
     <string name="wifi_num_cells_text">Related cells: %1$d</string>
+    <string name="wifi_enable_wifi_to_scan">You have to enable Wi-Fi in order to add a new network</string>
+    <string name="wifi_enable_wifi">Enable Wi-Fi</string>
 
     <!-- WIFI PICKER DIALOG STRINGS -->
     <string name="wifi_picker_dialog_title">Select network</string>

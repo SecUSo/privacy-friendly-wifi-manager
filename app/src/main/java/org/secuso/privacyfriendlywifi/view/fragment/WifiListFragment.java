@@ -2,8 +2,10 @@ package org.secuso.privacyfriendlywifi.view.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -72,18 +74,29 @@ public class WifiListFragment extends Fragment implements OnDialogClosedListener
         ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.fragment_wifilist);
 
         // setup the floating action button
-        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Snackbar.make(view, "Replace with your first action", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
-                    WifiPickerDialog dialog = new WifiPickerDialog(getContext());
-                    dialog.addOnDialogClosedListener(thisClass);
-                    dialog.setManagedWifis(wifiLocationEntries);
-                    dialog.show();
+                    final WifiManager wifiMan = (WifiManager) getContext().getSystemService(Context.WIFI_SERVICE);
+                    if (!wifiMan.isWifiEnabled()) {
+                        Snackbar.make(view, R.string.wifi_enable_wifi_to_scan, Snackbar.LENGTH_LONG)
+                                .setAction(R.string.wifi_enable_wifi, new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                wifiMan.setWifiEnabled(true);
+                                                fab.callOnClick();
+                                            }
+                                        }
+                                ).show();
+                    } else {
+                        WifiPickerDialog dialog = new WifiPickerDialog(getContext());
+                        dialog.addOnDialogClosedListener(thisClass);
+                        dialog.setManagedWifis(wifiLocationEntries);
+                        dialog.show();
+                    }
                 }
             });
         }

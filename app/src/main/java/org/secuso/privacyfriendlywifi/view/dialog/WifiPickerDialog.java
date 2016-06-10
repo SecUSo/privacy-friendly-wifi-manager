@@ -8,6 +8,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -69,6 +70,7 @@ public class WifiPickerDialog implements OnDialogClosedListener, DialogInterface
         this.recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("TAG", "DUMIDUMIDUM");
                 WifiConfiguration conf = configuredNetworks.get(recyclerView.getChildLayoutPosition(v));
                 onDialogClosed(DialogInterface.BUTTON_POSITIVE, new WifiLocationEntry(conf.SSID, conf.BSSID));
                 alertDialog.dismiss();
