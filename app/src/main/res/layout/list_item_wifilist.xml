@@ -15,16 +15,9 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:background="@color/transparent"
-        android:contentDescription="Remove entry"
+        android:contentDescription="@string/remove_entry"
         android:padding="2dp"
         android:src="@android:drawable/ic_menu_delete" />
-    <!--style="?android:attr/buttonBarButtonStyle"-->
-    <!--style="?android:attr/buttonBarButtonStyle"-->
-    <!--android:drawableLeft="@android:drawable/ic_menu_delete"-->
-    <!--android:drawableStart="@android:drawable/ic_menu_delete"-->
-    <!--android:gravity="center|start"-->
-    <!--android:padding="0dp" />-->
-    <!--android:visibility="gone" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
