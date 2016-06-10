@@ -13,8 +13,8 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_dialog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dialog_title_text">
+        android:layout_height="wrap_content">
+        <!--android:layout_below="@+id/dialog_title_text">-->
 
         <TimePicker
             android:id="@+id/start_time_picker"

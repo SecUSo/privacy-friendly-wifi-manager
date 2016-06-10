@@ -29,12 +29,12 @@ public class DialogWifiListAdapter extends RecyclerView.Adapter<DialogWifiItemVi
     public DialogWifiItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_dialog_wifilist, parent, false);
-        return new DialogWifiItemViewHolder(v, this);
+        return new DialogWifiItemViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(DialogWifiItemViewHolder holder, int position) {
-        holder.setupItem(this.knownWifis.get(position));
+        holder.setupItem(this.knownWifis.get(position), this);
     }
 
     @Override

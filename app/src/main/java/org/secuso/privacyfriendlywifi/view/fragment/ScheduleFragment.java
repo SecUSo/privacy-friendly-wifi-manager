@@ -50,11 +50,10 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         try {
-            scheduleEntries = (List<ScheduleEntry>) FileHandler.loadObject(context, ManagerService.FN_SCHEDULE_ENTRIES, false);
+            this.scheduleEntries = (List<ScheduleEntry>) FileHandler.loadObject(context, ManagerService.FN_SCHEDULE_ENTRIES, false);
         } catch (IOException e) {
-            scheduleEntries = new ArrayList<>();
+            this.scheduleEntries = new ArrayList<>();
         }
     }
 
@@ -64,8 +63,7 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_schedule, container, false);
 
@@ -88,16 +86,17 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
         }
 
         // setup recycler view
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), scheduleEntries);
-        recyclerView.setAdapter(itemsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
-        recyclerView.setPadding(
-                recyclerView.getPaddingLeft(),
-                recyclerView.getPaddingTop(),
-                recyclerView.getPaddingRight(),
+        this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
+
+        ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), this.scheduleEntries, this.recyclerView);
+        this.recyclerView.setAdapter(itemsAdapter);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+        this.recyclerView.setPadding(
+                this.recyclerView.getPaddingLeft(),
+                this.recyclerView.getPaddingTop(),
+                this.recyclerView.getPaddingRight(),
                 (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
                         ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), this.getContext())
                         : fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom()));
@@ -110,8 +109,11 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
             this.scheduleEntries.add((ScheduleEntry) returnValue[0]);
             this.saveSchedule();
-            this.recyclerView.requestLayout();
-            this.recyclerView.invalidate();
+            int currentItemCount = this.recyclerView.getAdapter().getItemCount();
+            this.recyclerView.getAdapter().notifyItemInserted(currentItemCount - 1);
+            this.recyclerView.getAdapter().notifyItemRangeChanged(currentItemCount - 1, currentItemCount);
+            //this.recyclerView.requestLayout();
+            //this.recyclerView.invalidate();
         }
     }
 

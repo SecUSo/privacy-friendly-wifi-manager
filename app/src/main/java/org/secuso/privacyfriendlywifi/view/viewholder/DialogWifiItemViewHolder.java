@@ -18,15 +18,15 @@ public class DialogWifiItemViewHolder extends RecyclerView.ViewHolder implements
     private WifiConfiguration conf;
     private DialogWifiListAdapter adapter;
 
-    public DialogWifiItemViewHolder(View itemView, DialogWifiListAdapter adapter) {
+    public DialogWifiItemViewHolder(View itemView) {
         super(itemView);
         this.ssidTextView = (TextView) itemView.findViewById(R.id.wifi_ssid);
-        this.adapter = adapter;
         itemView.setOnClickListener(this);
     }
 
-    public void setupItem(WifiConfiguration conf) {
+    public void setupItem(WifiConfiguration conf, DialogWifiListAdapter adapter) {
         this.conf = conf;
+        this.adapter = adapter;
         this.ssidTextView.setText(conf.SSID);
     }
 

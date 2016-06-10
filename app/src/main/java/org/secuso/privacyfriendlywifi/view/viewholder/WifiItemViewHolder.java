@@ -14,7 +14,7 @@ import secuso.org.privacyfriendlywifi.R;
 /**
  *
  */
-public class WifiItemViewHolder extends RecyclerView.ViewHolder {
+public class WifiItemViewHolder extends RecyclerView.ViewHolder {//} implements View.OnClickListener, View.OnLongClickListener {
     private TextView ssidTextView;
     private TextView bssidTextView;
     private TextView numCellsTextView;
