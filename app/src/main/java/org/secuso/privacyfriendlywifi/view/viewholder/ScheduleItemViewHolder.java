@@ -3,7 +3,7 @@ package org.secuso.privacyfriendlywifi.view.viewholder;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -20,7 +20,7 @@ import secuso.org.privacyfriendlywifi.R;
  *
  */
 public class ScheduleItemViewHolder extends RecyclerView.ViewHolder implements /*View.OnClickListener,*/ View.OnLongClickListener {
-    private Button deleteButton;
+    private ImageButton deleteButton;
     private TextView titleTextView;
     private TextView timeTextView;
     private Switch statusSwitch;
@@ -31,7 +31,7 @@ public class ScheduleItemViewHolder extends RecyclerView.ViewHolder implements /
 
     public ScheduleItemViewHolder(View itemView) {
         super(itemView);
-        this.deleteButton = (Button) itemView.findViewById(R.id.button_delete);
+        this.deleteButton = (ImageButton) itemView.findViewById(R.id.button_delete);
         this.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

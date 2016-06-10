@@ -16,7 +16,10 @@
         android:layout_centerVertical="true"
         android:background="@color/transparent"
         android:contentDescription="@string/remove_entry"
-        android:padding="2dp"
+        android:paddingEnd="5dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="5dp"
+        android:paddingStart="0dp"
         android:src="@android:drawable/ic_menu_delete" />
 
     <LinearLayout

@@ -9,16 +9,18 @@
     android:layout_marginStart="10dp"
     android:layout_marginTop="2dp">
 
-    <Button
+    <ImageButton
         android:id="@+id/button_delete"
-        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:drawableLeft="@android:drawable/ic_menu_delete"
-        android:drawableStart="@android:drawable/ic_menu_delete"
-        android:gravity="center|start"
-        android:padding="0dp"
-        android:visibility="gone" />
+        android:layout_centerVertical="true"
+        android:background="@color/transparent"
+        android:contentDescription="@string/remove_entry"
+        android:paddingEnd="5dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="5dp"
+        android:paddingStart="0dp"
+        android:src="@android:drawable/ic_menu_delete" />
 
     <LinearLayout
         android:layout_width="wrap_content"
