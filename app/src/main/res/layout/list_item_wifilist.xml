@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="2dp"
@@ -7,33 +7,57 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginStart="10dp"
-    android:layout_marginTop="2dp"
-    android:orientation="vertical">
+    android:layout_marginTop="2dp">
 
-    <TextView
-        android:id="@+id/wifi_ssid"
+    <ImageButton
+        android:id="@+id/button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@color/transparent"
+        android:contentDescription="Remove entry"
+        android:padding="2dp"
+        android:src="@android:drawable/ic_menu_delete" />
+    <!--style="?android:attr/buttonBarButtonStyle"-->
+    <!--style="?android:attr/buttonBarButtonStyle"-->
+    <!--android:drawableLeft="@android:drawable/ic_menu_delete"-->
+    <!--android:drawableStart="@android:drawable/ic_menu_delete"-->
+    <!--android:gravity="center|start"-->
+    <!--android:padding="0dp" />-->
+    <!--android:visibility="gone" />-->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceListItem" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_toEndOf="@+id/button_delete"
+        android:layout_toRightOf="@+id/button_delete"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/wifi_bssid"
-            android:layout_width="wrap_content"
+            android:id="@+id/wifi_ssid"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+            android:textAppearance="?android:attr/textAppearanceListItem" />
 
-        <TextView
-            android:id="@+id/num_cells"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
-    </RelativeLayout>
-</LinearLayout>
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/wifi_bssid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+
+            <TextView
+                android:id="@+id/num_cells"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>
