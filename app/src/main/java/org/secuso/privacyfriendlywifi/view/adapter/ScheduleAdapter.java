@@ -77,8 +77,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleItemViewHolder
             vh.setDeleteButtonVisible(isActive);
         }
         // refresh RecyclerView
-        this.recyclerView.requestLayout();
-        this.recyclerView.invalidate();
+        this.notifyDataSetChanged();
     }
 
     @Override
