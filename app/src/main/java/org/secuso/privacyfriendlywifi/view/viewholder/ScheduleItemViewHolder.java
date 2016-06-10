@@ -19,7 +19,7 @@ import secuso.org.privacyfriendlywifi.R;
 /**
  *
  */
-public class ScheduleItemViewHolder extends RecyclerView.ViewHolder implements /*View.OnClickListener,*/ View.OnLongClickListener {
+public class ScheduleItemViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
     private ImageButton deleteButton;
     private TextView titleTextView;
     private TextView timeTextView;

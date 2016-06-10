@@ -2,7 +2,6 @@ package org.secuso.privacyfriendlywifi.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,10 +58,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleItemViewHolder
         return this.scheduleEntries.size();
     }
 
-
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
-        Log.i("TAG", "ONKEYONEKYNEONYKENYOENYEONYEKLNYOE-" + keyCode);
         if (this.isDeleteModeActive() && keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             this.setDeleteModeActive(false);
             return true;
