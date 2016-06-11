@@ -90,7 +90,7 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), this.scheduleEntries, this.recyclerView);
+        ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), this.scheduleEntries, this.recyclerView, fab);
         this.recyclerView.setAdapter(itemsAdapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
         this.recyclerView.setPadding(

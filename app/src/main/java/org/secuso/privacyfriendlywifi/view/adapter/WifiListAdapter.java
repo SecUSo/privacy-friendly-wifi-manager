@@ -1,6 +1,7 @@
 package org.secuso.privacyfriendlywifi.view.adapter;
 
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,8 +23,9 @@ public class WifiListAdapter extends RecyclerView.Adapter<WifiItemViewHolder> im
     private List<WifiItemViewHolder> children;
     private boolean isDeleteModeActive;
     private RecyclerView recyclerView;
+    private FloatingActionButton fab;
 
-    public WifiListAdapter(Context context, List<WifiLocationEntry> wifiLocationEntries, RecyclerView recyclerView) {
+    public WifiListAdapter(Context context, List<WifiLocationEntry> wifiLocationEntries, RecyclerView recyclerView, FloatingActionButton fab) {
         this.context = context;
         this.wifiLocationEntries = wifiLocationEntries;
         this.children = new ArrayList<>();
@@ -32,6 +34,7 @@ public class WifiListAdapter extends RecyclerView.Adapter<WifiItemViewHolder> im
         this.recyclerView.setFocusableInTouchMode(true);
         this.recyclerView.requestFocus();
         this.recyclerView.setOnKeyListener(this);
+        this.fab = fab;
     }
 
     @Override
@@ -75,6 +78,12 @@ public class WifiListAdapter extends RecyclerView.Adapter<WifiItemViewHolder> im
         }
         // refresh RecyclerView
         this.notifyDataSetChanged();
+
+        if (isActive) {
+            this.fab.hide();
+        } else {
+            this.fab.show();
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.secuso.privacyfriendlywifi.view.adapter;
 
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,8 +23,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleItemViewHolder
     private List<ScheduleItemViewHolder> children;
     private boolean isDeleteModeActive;
     private RecyclerView recyclerView;
+    private FloatingActionButton fab;
 
-    public ScheduleAdapter(Context context, List<ScheduleEntry> scheduleEntries, RecyclerView recyclerView) {
+    public ScheduleAdapter(Context context, List<ScheduleEntry> scheduleEntries, RecyclerView recyclerView, FloatingActionButton fab) {
         this.context = context;
         this.scheduleEntries = scheduleEntries;
         this.children = new ArrayList<>();
@@ -32,6 +34,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleItemViewHolder
         this.recyclerView.setFocusableInTouchMode(true);
         this.recyclerView.requestFocus();
         this.recyclerView.setOnKeyListener(this);
+        this.fab = fab;
     }
 
     @Override
@@ -75,6 +78,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleItemViewHolder
         }
         // refresh RecyclerView
         this.notifyDataSetChanged();
+
+        if (isActive) {
+            this.fab.hide();
+        } else {
+            this.fab.show();
+        }
     }
 
     @Override
