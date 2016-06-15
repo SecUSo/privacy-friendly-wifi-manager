@@ -46,6 +46,7 @@ public class ManagerService extends IntentService {
                 } else {
                     // Update  best cells
                     updateCells();
+                    wifiState = true;
                 }
             }
 
