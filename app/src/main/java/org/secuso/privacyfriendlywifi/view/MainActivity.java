@@ -4,9 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +27,7 @@ import android.widget.Switch;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.service.Controller;
+import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.fragment.AboutFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.ScheduleFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.SettingsFragment;
@@ -39,15 +38,11 @@ import secuso.org.privacyfriendlywifi.R;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
     private final static int DYN_PERMISSION = 0;
-    public final static String PREF_SETTINGS = "SHARED_PREF_SETTINGS";
-    public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
-    private SharedPreferences settings;
     private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.settings = getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -102,10 +97,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void onClick(View v) {
 
                         if (mainSwitch.isChecked()) {
-                            settings.edit().putBoolean(PREF_ENTRY_SERVICE_ACTIVE, true).apply();
+                            ManagerService.setRunningFlag(getApplicationContext(), true);
                             Controller.registerReceivers(getApplicationContext());
                         } else {
-                            settings.edit().putBoolean(PREF_ENTRY_SERVICE_ACTIVE, false).apply();
+                            ManagerService.setRunningFlag(getApplicationContext(), false);
                             Controller.unregisterReceivers(getApplicationContext());
                         }
 
@@ -117,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         );
 
         // update state switch´s state
-        mainSwitch.setChecked(settings.getBoolean(PREF_ENTRY_SERVICE_ACTIVE, false));
+        mainSwitch.setChecked(ManagerService.isServiceRunning(this));
 
         return super.onCreateOptionsMenu(menu);
 
@@ -163,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             final Switch mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
 
             // update state switch´s state
-            mainSwitch.setChecked(this.settings.getBoolean(PREF_ENTRY_SERVICE_ACTIVE, false));
+            mainSwitch.setChecked(ManagerService.isServiceRunning(this));
         }
     }
 
