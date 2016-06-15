@@ -100,6 +100,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleItemViewHolder
             this.notifyItemRemoved(position);
             this.notifyItemRangeChanged(position, this.getItemCount());
         }
+        if (this.scheduleEntries.isEmpty()) {
+            this.setDeleteModeActive(false);
+        }
         return ret;
     }
 }
