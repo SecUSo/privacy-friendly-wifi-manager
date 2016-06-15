@@ -106,7 +106,7 @@ public class WifiListFragment extends Fragment implements OnDialogClosedListener
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), this.wifiLocationEntries, this.recyclerView, fab);
+        WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), R.layout.list_item_wifilist, this.wifiLocationEntries, this.recyclerView, fab);
         this.recyclerView.setAdapter(itemsAdapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
         this.recyclerView.setPadding(
