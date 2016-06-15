@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.ScheduleCondition;
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
-import org.secuso.privacyfriendlywifi.logic.util.OnDeleteModeChangedListener;
+import org.secuso.privacyfriendlywifi.logic.util.IOnDeleteModeChangedListener;
 import org.secuso.privacyfriendlywifi.view.adapter.RemovableRecyclerViewAdapter;
 
 import java.util.Locale;
@@ -30,7 +30,7 @@ public class ScheduleItemViewHolder extends RemovableItemViewHolder<ScheduleEntr
         this.statusSwitch = (Switch) itemView.findViewById(R.id.status_switch);
     }
 
-    public void setupItem(Context context, ScheduleEntry entry, RemovableRecyclerViewAdapter<ScheduleEntry> adapter, OnDeleteModeChangedListener listener) {
+    public void setupItem(Context context, ScheduleEntry entry, RemovableRecyclerViewAdapter<ScheduleEntry> adapter, IOnDeleteModeChangedListener listener) {
         super.setupItem(context, entry, adapter, listener);
 
         String timeText = context.getString(R.string.schedule_time_text);

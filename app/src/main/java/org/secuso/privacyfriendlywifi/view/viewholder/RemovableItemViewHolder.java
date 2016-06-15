@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 
-import org.secuso.privacyfriendlywifi.logic.util.OnDeleteModeChangedListener;
+import org.secuso.privacyfriendlywifi.logic.util.IOnDeleteModeChangedListener;
 import org.secuso.privacyfriendlywifi.view.adapter.RemovableRecyclerViewAdapter;
 
 import secuso.org.privacyfriendlywifi.R;
@@ -17,7 +17,7 @@ public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder 
     private ImageButton deleteButton;
     protected EntryType recyclerViewEntry;
     private RemovableRecyclerViewAdapter<EntryType> adapter;
-    private OnDeleteModeChangedListener listener;
+    private IOnDeleteModeChangedListener listener;
 
     public RemovableItemViewHolder(View itemView) {
         super(itemView);
@@ -31,7 +31,7 @@ public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder 
         itemView.setOnLongClickListener(this);
     }
 
-    public void setupItem(Context context, EntryType recyclerViewEntry, RemovableRecyclerViewAdapter<EntryType> adapter, OnDeleteModeChangedListener listener) {
+    public void setupItem(Context context, EntryType recyclerViewEntry, RemovableRecyclerViewAdapter<EntryType> adapter, IOnDeleteModeChangedListener listener) {
         this.recyclerViewEntry = recyclerViewEntry;
         this.adapter = adapter;
         this.listener = listener;

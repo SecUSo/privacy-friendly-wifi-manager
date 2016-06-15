@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
-import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
@@ -28,10 +28,10 @@ import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
-public class ScheduleFragment extends Fragment implements OnDialogClosedListener {
+public class ScheduleFragment extends Fragment implements IOnDialogClosedListener {
 
     private List<ScheduleEntry> scheduleEntries;
-    private OnDialogClosedListener thisClass;
+    private IOnDialogClosedListener thisClass;
 
     private RecyclerView recyclerView;
 

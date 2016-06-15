@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
-import org.secuso.privacyfriendlywifi.logic.util.OnDeleteModeChangedListener;
+import org.secuso.privacyfriendlywifi.logic.util.IOnDeleteModeChangedListener;
 import org.secuso.privacyfriendlywifi.view.adapter.RemovableRecyclerViewAdapter;
 
 import java.util.Locale;
@@ -28,7 +28,7 @@ public class WifiItemViewHolder extends RemovableItemViewHolder<WifiLocationEntr
         this.numCellsTextView = (TextView) itemView.findViewById(R.id.num_cells);
     }
 
-    public void setupItem(Context context, WifiLocationEntry entry, RemovableRecyclerViewAdapter<WifiLocationEntry> adapter, OnDeleteModeChangedListener listener) {
+    public void setupItem(Context context, WifiLocationEntry entry, RemovableRecyclerViewAdapter<WifiLocationEntry> adapter, IOnDeleteModeChangedListener listener) {
         super.setupItem(context, entry, adapter, listener);
 
         String ssidText = context.getString(R.string.wifi_ssid_text);

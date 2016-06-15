@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
-import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.adapter.WifiListAdapter;
@@ -30,10 +30,10 @@ import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
-public class WifiListFragment extends Fragment implements OnDialogClosedListener {
+public class WifiListFragment extends Fragment implements IOnDialogClosedListener {
 
     private List<WifiLocationEntry> wifiLocationEntries;
-    private OnDialogClosedListener thisClass;
+    private IOnDialogClosedListener thisClass;
 
     private RecyclerView recyclerView;
 
