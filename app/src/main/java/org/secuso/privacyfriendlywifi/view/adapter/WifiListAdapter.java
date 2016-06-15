@@ -100,6 +100,9 @@ public class WifiListAdapter extends RecyclerView.Adapter<WifiItemViewHolder> im
             this.notifyItemRemoved(position);
             this.notifyItemRangeChanged(position, this.getItemCount());
         }
+        if (this.wifiLocationEntries.isEmpty()) {
+            this.setDeleteModeActive(false);
+        }
         return ret;
     }
 }
