@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 
 import org.secuso.privacyfriendlywifi.service.Controller;
+import org.secuso.privacyfriendlywifi.service.ManagerService;
 
 import secuso.org.privacyfriendlywifi.R;
 
@@ -30,10 +31,7 @@ public class WifiWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        SharedPreferences preferences = context.getSharedPreferences(MainActivity.PREF_SETTINGS, Context.MODE_PRIVATE);
-        boolean active = preferences.getBoolean(MainActivity.PREF_ENTRY_SERVICE_ACTIVE, false);
-
-        RemoteViews widgetActiveButtonView = updateButton(context, active);
+        RemoteViews widgetActiveButtonView = updateButton(context, ManagerService.isServiceRunning(context));
 
         // intent for widget button click
         Intent buttonIntent = new Intent(context, WidgetClickListener.class);
@@ -75,10 +73,8 @@ public class WifiWidget extends AppWidgetProvider {
     public static class WidgetClickListener extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            SharedPreferences preferences = context.getSharedPreferences(MainActivity.PREF_SETTINGS, Context.MODE_PRIVATE);
-            boolean active = !preferences.getBoolean(MainActivity.PREF_ENTRY_SERVICE_ACTIVE, false);
-            preferences.edit().putBoolean(MainActivity.PREF_ENTRY_SERVICE_ACTIVE, active).apply();
-
+            boolean active = !ManagerService.isServiceRunning(context);
+            ManagerService.setRunningFlag(context, active);
 
             if (active) {
                 Controller.registerReceivers(context.getApplicationContext());

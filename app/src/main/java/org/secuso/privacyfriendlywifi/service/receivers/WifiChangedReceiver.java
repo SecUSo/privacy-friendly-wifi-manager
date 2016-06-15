@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
+import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.service.NewWifiNotification;
 
 /**
@@ -16,16 +17,19 @@ import org.secuso.privacyfriendlywifi.service.NewWifiNotification;
 public class WifiChangedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+        if (ManagerService.isServiceRunning(context)) {
 
-        if (info != null && info.isConnected()) {
+            NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 
-            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-            String ssid = wifiInfo.getSSID();
+            if (info != null && info.isConnected()) {
 
-            if (!ssid.equals("<unknown ssid>")) { // wait till connected correctly
-                NewWifiNotification.show(context, ssid);
+                WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+                String ssid = wifiInfo.getSSID();
+
+                if (!ssid.equals("<unknown ssid>") && !ssid.equals("0x")) { // wait till connected correctly
+                    NewWifiNotification.show(context, ssid);
+                }
             }
         }
     }

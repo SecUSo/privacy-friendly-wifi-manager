@@ -1,9 +1,9 @@
 package org.secuso.privacyfriendlywifi.service;
 
-import android.app.ActivityManager;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Pair;
 
@@ -26,6 +26,9 @@ public class ManagerService extends IntentService {
     public static final String FN_SCHEDULE_ENTRIES = "fn_schedule_entries";
     public static final String FN_LOCATION_ENTRIES = "fn_location_entries";
 
+    public final static String PREF_SETTINGS = "SHARED_PREF_SETTINGS";
+    public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
+
     public ManagerService() {
         super(ManagerService.class.getSimpleName());
     }
@@ -43,6 +46,7 @@ public class ManagerService extends IntentService {
                 } else {
                     // Update  best cells
                     updateCells();
+                    wifiState = true;
                 }
             }
 
@@ -128,14 +132,14 @@ public class ManagerService extends IntentService {
         return false; // no schedule active
     }
 
-    public static boolean isServiceRunning(Context context) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (ManagerService.class.getCanonicalName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
+    public static void setRunningFlag(Context context, boolean state) {
+        SharedPreferences settings = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
+        settings.edit().putBoolean(ManagerService.PREF_ENTRY_SERVICE_ACTIVE, state).apply();
+    }
 
-        return false;
+    public static boolean isServiceRunning(Context context) {
+        SharedPreferences settings = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
+
+        return settings.getBoolean(PREF_ENTRY_SERVICE_ACTIVE, false);
     }
 }
