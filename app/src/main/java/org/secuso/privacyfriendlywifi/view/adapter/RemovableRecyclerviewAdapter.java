@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.secuso.privacyfriendlywifi.logic.util.OnDeleteModeChangedListener;
+import org.secuso.privacyfriendlywifi.logic.util.IOnDeleteModeChangedListener;
 import org.secuso.privacyfriendlywifi.view.viewholder.RemovableItemViewHolder;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  *
  */
-public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapter<RemovableItemViewHolder<EntryType>> implements OnDeleteModeChangedListener, View.OnKeyListener {
+public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapter<RemovableItemViewHolder<EntryType>> implements IOnDeleteModeChangedListener, View.OnKeyListener {
     private Context context;
     private List<EntryType> recyclerViewEntries;
     private List<RemovableItemViewHolder<EntryType>> children;
