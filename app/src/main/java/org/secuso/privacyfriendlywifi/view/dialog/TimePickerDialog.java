@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
-import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -25,14 +25,14 @@ import secuso.org.privacyfriendlywifi.R;
 /**
  *
  */
-public class TimePickerDialog implements OnDialogClosedListener, DialogInterface.OnCancelListener {
+public class TimePickerDialog implements IOnDialogClosedListener, DialogInterface.OnCancelListener {
     private final Context context;
     private int startHour = 22;
     private int startMinute = 0;
     private int endHour = 8;
     private int endMinute = 0;
 
-    private ArrayList<OnDialogClosedListener> onDialogClosedListeners;
+    private ArrayList<IOnDialogClosedListener> onDialogClosedListeners;
     private int currentListSize = 0;
 
     private ViewPager viewPager;
@@ -170,21 +170,21 @@ public class TimePickerDialog implements OnDialogClosedListener, DialogInterface
                 );
             }
 
-            for (OnDialogClosedListener listener : onDialogClosedListeners) {
+            for (IOnDialogClosedListener listener : onDialogClosedListeners) {
                 listener.onDialogClosed(returnCode, newEntry);
             }
         } else {
-            for (OnDialogClosedListener listener : onDialogClosedListeners) {
+            for (IOnDialogClosedListener listener : onDialogClosedListeners) {
                 listener.onDialogClosed(returnCode, returnValue);
             }
         }
     }
 
-    public boolean addOnDialogClosedListener(OnDialogClosedListener listener) {
+    public boolean addOnDialogClosedListener(IOnDialogClosedListener listener) {
         return this.onDialogClosedListeners.add(listener);
     }
 
-    public boolean removeOnDialogClosedListener(OnDialogClosedListener listener) {
+    public boolean removeOnDialogClosedListener(IOnDialogClosedListener listener) {
         return this.onDialogClosedListeners.remove(listener);
     }
 

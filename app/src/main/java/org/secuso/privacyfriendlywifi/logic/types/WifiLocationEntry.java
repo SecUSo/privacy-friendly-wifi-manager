@@ -11,9 +11,9 @@ import java.io.Serializable;
  *
  */
 public class WifiLocationEntry implements Parcelable, Serializable {
-    private final String ssid;
-    private final String bssid;
-    private final CellLocationCondition cellLocationCondition;
+    private String ssid;
+    private String bssid;
+    private CellLocationCondition cellLocationCondition;
 
     public WifiLocationEntry(String ssid, String bssid) {
         this.ssid = ssid;

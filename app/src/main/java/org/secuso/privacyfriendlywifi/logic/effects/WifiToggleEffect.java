@@ -11,7 +11,7 @@ import android.util.Log;
 /**
  * (De-) Activate WiFi.
  */
-public class WifiToggleEffect implements Effect {
+public class WifiToggleEffect implements IEffect {
     static final String TAG = "WifiToggleEffect";
     Context context;
 

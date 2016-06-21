@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
-import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.view.viewholder.DialogWifiItemViewHolder;
 
 import java.util.List;
@@ -17,10 +17,10 @@ import java.util.List;
 import secuso.org.privacyfriendlywifi.R;
 
 public class DialogWifiListAdapter extends RecyclerView.Adapter<DialogWifiItemViewHolder> {
-    private final OnDialogClosedListener listener;
+    private final IOnDialogClosedListener listener;
     private List<WifiLocationEntry> knownWifis;
 
-    public DialogWifiListAdapter(Context context, List<WifiLocationEntry> knownWifis, OnDialogClosedListener listener) {
+    public DialogWifiListAdapter(Context context, List<WifiLocationEntry> knownWifis, IOnDialogClosedListener listener) {
         this.knownWifis = knownWifis;
         this.listener = listener;
     }

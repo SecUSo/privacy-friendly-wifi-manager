@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
-import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
@@ -28,10 +28,10 @@ import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
-public class ScheduleFragment extends Fragment implements OnDialogClosedListener {
+public class ScheduleFragment extends Fragment implements IOnDialogClosedListener {
 
     private List<ScheduleEntry> scheduleEntries;
-    private OnDialogClosedListener thisClass;
+    private IOnDialogClosedListener thisClass;
 
     private RecyclerView recyclerView;
 
@@ -90,7 +90,7 @@ public class ScheduleFragment extends Fragment implements OnDialogClosedListener
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), this.scheduleEntries, this.recyclerView, fab);
+        ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), R.layout.list_item_schedule, this.scheduleEntries, this.recyclerView, fab);
         this.recyclerView.setAdapter(itemsAdapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
         this.recyclerView.setPadding(

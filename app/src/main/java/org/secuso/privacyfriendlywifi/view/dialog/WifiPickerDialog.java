@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
-import org.secuso.privacyfriendlywifi.logic.util.OnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.view.adapter.DialogWifiListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 
@@ -28,9 +28,9 @@ import secuso.org.privacyfriendlywifi.R;
 /**
  *
  */
-public class WifiPickerDialog implements OnDialogClosedListener, DialogInterface.OnCancelListener {
+public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterface.OnCancelListener {
     private final Context context;
-    private ArrayList<OnDialogClosedListener> onDialogClosedListeners;
+    private ArrayList<IOnDialogClosedListener> onDialogClosedListeners;
     //    private TextView titleText;
     private AlertDialog alertDialog;
 
@@ -185,16 +185,16 @@ public class WifiPickerDialog implements OnDialogClosedListener, DialogInterface
     @Override
     public void onDialogClosed(int returnCode, Object... returnValue) {
         this.alertDialog.dismiss();
-        for (OnDialogClosedListener listener : onDialogClosedListeners) {
+        for (IOnDialogClosedListener listener : onDialogClosedListeners) {
             listener.onDialogClosed(returnCode, returnValue);
         }
     }
 
-    public boolean addOnDialogClosedListener(OnDialogClosedListener listener) {
+    public boolean addOnDialogClosedListener(IOnDialogClosedListener listener) {
         return this.onDialogClosedListeners.add(listener);
     }
 
-    public boolean removeOnDialogClosedListener(OnDialogClosedListener listener) {
+    public boolean removeOnDialogClosedListener(IOnDialogClosedListener listener) {
         return this.onDialogClosedListeners.remove(listener);
     }
 
