@@ -72,6 +72,12 @@ public class WifiLocationEntry implements Parcelable, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof WifiLocationEntry && this.getSsid().equals(((WifiLocationEntry) o).getSsid());
+        if (o instanceof WifiLocationEntry) {
+            WifiLocationEntry that = (WifiLocationEntry) o;
+            return this.getSsid().equals(that.getSsid())
+                    && this.getBssids().containsAll(that.getBssids())
+                    && that.getBssids().containsAll(this.getBssids());
+        }
+        return false;
     }
 }
