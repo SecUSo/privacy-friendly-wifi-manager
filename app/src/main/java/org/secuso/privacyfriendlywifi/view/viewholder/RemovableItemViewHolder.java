@@ -13,7 +13,7 @@ import secuso.org.privacyfriendlywifi.R;
 /**
  *
  */
-public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
     private ImageButton deleteButton;
     protected EntryType recyclerViewEntry;
     private RemovableRecyclerViewAdapter<EntryType> adapter;
@@ -29,6 +29,7 @@ public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder 
             }
         });
         itemView.setOnLongClickListener(this);
+        itemView.setOnClickListener(this);
     }
 
     public void setupItem(Context context, EntryType recyclerViewEntry, RemovableRecyclerViewAdapter<EntryType> adapter, IOnDeleteModeChangedListener listener) {
@@ -40,8 +41,15 @@ public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder 
 
     @Override
     public boolean onLongClick(View v) {
-        this.listener.setDeleteModeActive(true);
+        this.listener.setDeleteModeActive(!this.listener.isDeleteModeActive());
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (this.listener.isDeleteModeActive()) {
+            this.listener.setDeleteModeActive(false);
+        }
     }
 
     public void setDeleteButtonVisible(boolean visible) {

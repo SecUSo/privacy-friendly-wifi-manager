@@ -34,6 +34,7 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
     private IOnDialogClosedListener thisClass;
 
     private RecyclerView recyclerView;
+    private ScheduleAdapter itemsAdapter;
 
     public ScheduleFragment() {
         // Required empty public constructor
@@ -90,8 +91,8 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        ScheduleAdapter itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), R.layout.list_item_schedule, this.scheduleEntries, this.recyclerView, fab);
-        this.recyclerView.setAdapter(itemsAdapter);
+        this.itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), R.layout.list_item_schedule, this.scheduleEntries, this.recyclerView, fab);
+        this.recyclerView.setAdapter(this.itemsAdapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
         this.recyclerView.setPadding(
                 this.recyclerView.getPaddingLeft(),
@@ -112,8 +113,6 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
             int currentItemCount = this.recyclerView.getAdapter().getItemCount();
             this.recyclerView.getAdapter().notifyItemInserted(currentItemCount - 1);
             this.recyclerView.getAdapter().notifyItemRangeChanged(currentItemCount - 1, currentItemCount);
-            //this.recyclerView.requestLayout();
-            //this.recyclerView.invalidate();
         }
     }
 
