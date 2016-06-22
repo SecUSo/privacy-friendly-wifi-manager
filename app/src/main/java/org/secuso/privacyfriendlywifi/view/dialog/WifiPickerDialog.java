@@ -72,7 +72,7 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
 
                     for (WifiLocationEntry entry : managedWifis) {
                         if (confSSID.equals(entry.getSsid())) {
-                            entry.addCellLocationCondition(new CellLocationCondition(config.BSSID)); // FIXME: Do this here? Or rather trust updateCells()?
+                            entry.addCellLocationCondition(new CellLocationCondition(config.BSSID)); // FIXME: Don't do this here, handle new MACs in own method!
                             alreadyManaged = true;
                             break;
                         }
