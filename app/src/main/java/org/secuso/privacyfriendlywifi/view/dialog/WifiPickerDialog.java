@@ -68,19 +68,30 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
                 for (ScanResult config : scanResults) {
                     String confSSID = WifiHandler.getCleanSSID(config.SSID);
 
-                    boolean found = false;
+                    boolean alreadyManaged = false;
 
-                    //TODO check duplicates: irgrendwas passt da noch nicht
                     for (WifiLocationEntry entry : managedWifis) {
                         if (confSSID.equals(entry.getSsid())) {
-                            entry.addCellLocationCondition(new CellLocationCondition(config.BSSID));
-                            found = true;
+                            entry.addCellLocationCondition(new CellLocationCondition(config.BSSID)); // FIXME: Do this here? Or rather trust updateCells()?
+                            alreadyManaged = true;
                             break;
                         }
                     }
 
-                    if (!found) {
-                        unknownNetworks.add(new WifiLocationEntry(confSSID, config.BSSID));
+                    if (!alreadyManaged) {
+                        boolean isNewEntry = true;
+
+                        for (WifiLocationEntry entry : unknownNetworks) {
+                            if (confSSID.equals(entry.getSsid())) {
+                                entry.addCellLocationCondition(new CellLocationCondition(config.BSSID));
+                                isNewEntry = false;
+                                break;
+                            }
+                        }
+
+                        if (isNewEntry) {
+                            unknownNetworks.add(new WifiLocationEntry(confSSID, config.BSSID));
+                        }
                     }
                 }
 
