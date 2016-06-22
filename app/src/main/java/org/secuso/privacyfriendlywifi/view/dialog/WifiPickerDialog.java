@@ -72,6 +72,7 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
 
                     for (WifiLocationEntry entry : managedWifis) {
                         if (confSSID.equals(entry.getSsid())) {
+                            // ssid is already present, so we should add the MAC to the existing network
                             entry.addCellLocationCondition(new CellLocationCondition(config.BSSID)); // FIXME: Don't do this here, handle new MACs in own method!
                             alreadyManaged = true;
                             break;
@@ -97,6 +98,13 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
 
                 recyclerView.invalidate();
                 recyclerView.requestLayout();
+
+                // unregister this receiver
+                try {
+                    context.unregisterReceiver(this);
+                } catch (IllegalArgumentException e) {
+                    // Log.d("TAG", "not registered");
+                }
             }
         };
 

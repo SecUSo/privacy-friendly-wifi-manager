@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,27 +17,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
-import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
+import org.secuso.privacyfriendlywifi.service.Controller;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.adapter.WifiListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 import org.secuso.privacyfriendlywifi.view.dialog.WifiPickerDialog;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
 public class WifiListFragment extends Fragment implements IOnDialogClosedListener {
-
     private List<WifiLocationEntry> wifiLocationEntries;
     private IOnDialogClosedListener thisClass;
 
     private RecyclerView recyclerView;
-    private WifiListAdapter itemsAdapter;
 
     public WifiListFragment() {
         // Required empty public constructor
@@ -54,11 +51,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        try {
-            this.wifiLocationEntries = (List<WifiLocationEntry>) FileHandler.loadObject(context, ManagerService.FN_LOCATION_ENTRIES, false);
-        } catch (IOException e) {
-            this.wifiLocationEntries = new ArrayList<>();
-        }
+        this.wifiLocationEntries = ManagerService.getWifiLocationEntries(context);
     }
 
     @Override
@@ -73,7 +66,11 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         View rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
 
         // Set substring in actionbar
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.fragment_wifilist);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setSubtitle(R.string.fragment_wifilist);
+        }
 
         // setup the floating action button
         final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
@@ -94,6 +91,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                                         }
                                 ).show();
                     } else {
+                        Controller.unregisterReceivers(getActivity().getApplicationContext());
                         WifiPickerDialog dialog = new WifiPickerDialog(getContext());
                         dialog.addOnDialogClosedListener(thisClass);
                         dialog.setManagedWifis(wifiLocationEntries);
@@ -107,16 +105,29 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        this.itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), R.layout.list_item_wifilist, this.wifiLocationEntries, this.recyclerView, fab);
-        this.recyclerView.setAdapter(this.itemsAdapter);
+        WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), R.layout.list_item_wifilist, this.wifiLocationEntries, this.recyclerView, fab);
+
+        // save list after item deletion
+        itemsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                ManagerService.saveWifiLocationEntries(getContext(), wifiLocationEntries);
+            }
+        });
+
+        this.recyclerView.setAdapter(itemsAdapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
-        this.recyclerView.setPadding(
-                this.recyclerView.getPaddingLeft(),
-                this.recyclerView.getPaddingTop(),
-                this.recyclerView.getPaddingRight(),
-                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
-                        ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), this.getContext())
-                        : fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom()));
+
+        if (fab != null) {
+            this.recyclerView.setPadding(
+                    this.recyclerView.getPaddingLeft(),
+                    this.recyclerView.getPaddingTop(),
+                    this.recyclerView.getPaddingRight(),
+                    (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
+                            ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), this.getContext())
+                            : fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom()));
+        }
 
         return rootView;
     }
@@ -125,24 +136,24 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     public void onDialogClosed(int returnCode, Object... returnValue) {
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
             this.wifiLocationEntries.add((WifiLocationEntry) returnValue[0]);
-            this.saveWifiLocationEntries();
+            ManagerService.saveWifiLocationEntries(getContext(), this.wifiLocationEntries);
             this.recyclerView.requestLayout();
             this.recyclerView.invalidate();
         }
+
+        Controller.registerReceivers(getActivity().getApplicationContext());
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        this.saveWifiLocationEntries();
+        ManagerService.saveWifiLocationEntries(getContext(), this.wifiLocationEntries);
+        Controller.registerReceivers(getActivity().getApplicationContext());
     }
 
-    private boolean saveWifiLocationEntries() {
-        try {
-            return FileHandler.storeObject(this.getActivity(), ManagerService.FN_LOCATION_ENTRIES, this.wifiLocationEntries);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+    @Override
+    public void onPause() {
+        super.onPause();
+        Controller.registerReceivers(getActivity().getApplicationContext());
     }
 }

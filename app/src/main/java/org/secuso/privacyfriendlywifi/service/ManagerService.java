@@ -33,6 +33,8 @@ public class ManagerService extends IntentService {
     public final static String PREF_SETTINGS = "SHARED_PREF_SETTINGS";
     public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
 
+    private List<WifiLocationEntry> wifiLocationEntries;
+
     public ManagerService() {
         super(ManagerService.class.getSimpleName());
     }
@@ -73,33 +75,52 @@ public class ManagerService extends IntentService {
         }
     }
 
-    private void updateCells() {
-        List<WifiLocationEntry> wifiLocationEntries;
-
-        try {
-            Object o = FileHandler.loadObject(this, FN_LOCATION_ENTRIES, false);
-            wifiLocationEntries = (List<WifiLocationEntry>) o;
-        } catch (IOException e) {
-            // File does not exist
-            wifiLocationEntries = new ArrayList<>();
+    private List<WifiLocationEntry> getWifiLocationEntries() {
+        if (this.wifiLocationEntries == null) {
+            this.wifiLocationEntries = getWifiLocationEntries(this);
         }
 
+        return this.wifiLocationEntries;
+    }
+
+    public static List<WifiLocationEntry> getWifiLocationEntries(Context context) {
+        try {
+            Object o = FileHandler.loadObject(context, FN_LOCATION_ENTRIES, false);
+            return (List<WifiLocationEntry>) o;
+        } catch (IOException e) {
+            // File does not exist
+            return new ArrayList<>();
+        }
+    }
+
+    private boolean saveWifiLocationEntries() {
+        return ManagerService.saveWifiLocationEntries(this, this.wifiLocationEntries);
+    }
+
+    public static boolean saveWifiLocationEntries(Context context, List<WifiLocationEntry> wifiLocationEntries) {
+        try {
+            FileHandler.storeObject(context, FN_LOCATION_ENTRIES, wifiLocationEntries);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void updateCells() {
         WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
         WifiInfo currentConnection = wifiManager.getConnectionInfo();
         String currentSsid = WifiHandler.getCleanSSID(currentConnection.getSSID());
         String currentBssid = currentConnection.getBSSID();
 
-        for (WifiLocationEntry entry : wifiLocationEntries) {
+        for (WifiLocationEntry entry : this.getWifiLocationEntries()) {
             if (entry.getSsid().equals(currentSsid)) {
                 for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                     if (condition.getBssid().equals(currentBssid)) {
                         condition.addKBestSurroundingCells(this, 3);
 
-                        try {
-                            FileHandler.storeObject(this, FN_LOCATION_ENTRIES, wifiLocationEntries);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        saveWifiLocationEntries();
 
                         return;
                     }
@@ -109,18 +130,9 @@ public class ManagerService extends IntentService {
     }
 
     private boolean checkCells() {
-        List<WifiLocationEntry> wifiLocationEntries;
         PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
 
-        try {
-            Object o = FileHandler.loadObject(this, FN_LOCATION_ENTRIES, false);
-            wifiLocationEntries = (List<WifiLocationEntry>) o;
-        } catch (IOException e) {
-            // File does not exist
-            wifiLocationEntries = new ArrayList<>();
-        }
-
-        for (WifiLocationEntry entry : wifiLocationEntries) {
+        for (WifiLocationEntry entry : this.getWifiLocationEntries()) {
             for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                 if (condition.check(this, allCells)) {
                     return true;

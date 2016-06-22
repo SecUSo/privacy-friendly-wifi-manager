@@ -22,7 +22,6 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
     private List<EntryType> recyclerViewEntries;
     private List<RemovableItemViewHolder<EntryType>> children;
     private boolean isDeleteModeActive;
-    private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private int viewLayoutId;
 
@@ -32,10 +31,9 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
         this.recyclerViewEntries = recyclerViewEntries;
         this.children = new ArrayList<>();
         this.isDeleteModeActive = false;
-        this.recyclerView = recyclerView;
-        this.recyclerView.setFocusableInTouchMode(true);
-        this.recyclerView.requestFocus();
-        this.recyclerView.setOnKeyListener(this);
+        recyclerView.setFocusableInTouchMode(true);
+        recyclerView.requestFocus();
+        recyclerView.setOnKeyListener(this);
         this.fab = fab;
     }
 
@@ -69,6 +67,7 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
             this.setDeleteModeActive(false);
             return true;
         }
+
         return false;
     }
 
@@ -78,6 +77,7 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
         for (RemovableItemViewHolder<EntryType> vh : this.children) {
             vh.setDeleteButtonVisible(isActive);
         }
+
         // refresh RecyclerView
         this.notifyDataSetChanged();
 
@@ -98,6 +98,7 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
         int position = this.recyclerViewEntries.indexOf(recyclerViewEntry);
         if (position >= 0) {
             ret = this.recyclerViewEntries.remove(recyclerViewEntry);
+
             // refresh RecyclerView
             this.notifyItemRemoved(position);
             this.notifyItemRangeChanged(position, this.getItemCount());
