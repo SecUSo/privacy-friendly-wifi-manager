@@ -66,10 +66,10 @@ public class CellLocationCondition extends Precondition {
     }
 
     public boolean addKBestSurroundingCells(Context context, int k) {
-        return addKBestSurroundingCells(k, PrimitiveCellInfo.getAllCells(context));
+        return addKBestSurroundingCells(PrimitiveCellInfo.getAllCells(context), k);
     }
 
-    public boolean addKBestSurroundingCells(int k, PrimitiveCellInfoTreeSet cells) {
+    public boolean addKBestSurroundingCells(PrimitiveCellInfoTreeSet cells, int k) {
         boolean modified = false;
         int i = 0;
         for (PrimitiveCellInfo cell : cells) {

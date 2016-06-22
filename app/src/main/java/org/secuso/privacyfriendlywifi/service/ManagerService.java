@@ -75,7 +75,7 @@ public class ManagerService extends IntentService {
 
     private void updateCells() {
         List<WifiLocationEntry> wifiLocationEntries;
-        boolean modified = false;
+
         try {
             Object o = FileHandler.loadObject(this, FN_LOCATION_ENTRIES, false);
             wifiLocationEntries = (List<WifiLocationEntry>) o;
@@ -93,19 +93,17 @@ public class ManagerService extends IntentService {
             if (entry.getSsid().equals(currentSsid)) {
                 for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                     if (condition.getBssid().equals(currentBssid)) {
-                        modified |= condition.addKBestSurroundingCells(this, 3);
-                        break;
+                        condition.addKBestSurroundingCells(this, 3);
+
+                        try {
+                            FileHandler.storeObject(this, FN_LOCATION_ENTRIES, wifiLocationEntries);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        return;
                     }
                 }
-                break;
-            }
-        }
-
-        if (modified) {
-            try {
-                FileHandler.storeObject(this, FN_LOCATION_ENTRIES, wifiLocationEntries);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
