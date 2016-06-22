@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         // now update the widgets
                         sendBroadcast(updateWidgetsIntent);
-
                     }
                 }
         );
@@ -115,12 +114,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mainSwitch.setChecked(ManagerService.isServiceRunning(this));
 
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case DYN_PERMISSION: {
                 if (grantResults.length >= 3) {

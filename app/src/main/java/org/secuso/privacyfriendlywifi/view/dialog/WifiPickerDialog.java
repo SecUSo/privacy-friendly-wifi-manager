@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.view.adapter.DialogWifiListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 
@@ -65,13 +66,11 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
                 List<ScanResult> scanResults = wifiManager.getScanResults();
 
                 for (ScanResult config : scanResults) {
-                    String confSSID = config.SSID;
-                    if (confSSID.startsWith("\"") && confSSID.endsWith("\"")) {
-                        confSSID = confSSID.substring(1, confSSID.length() - 1);
-                    }
+                    String confSSID = WifiHandler.getCleanSSID(config.SSID);
 
                     boolean found = false;
 
+                    //TODO check duplicates: irgrendwas passt da noch nicht
                     for (WifiLocationEntry entry : managedWifis) {
                         if (confSSID.equals(entry.getSsid())) {
                             entry.addCellLocationCondition(new CellLocationCondition(config.BSSID));

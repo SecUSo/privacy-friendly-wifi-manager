@@ -4,6 +4,8 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Pair;
 
@@ -14,6 +16,7 @@ import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfoTreeSet;
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
+import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,23 +40,33 @@ public class ManagerService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-            boolean wifiState = false; // check if Wifi is scheduled to be on (true) / off (false)
+            boolean determinedWifiState = false; // check if Wifi is scheduled to be on (true) / off (false)
+
             if (this.checkSchedule()) {
-                wifiState = true;
-            } else {
-                if (!WifiToggleEffect.isWifiConnected(this)) {
-                    // Check whether Wifi is On/Off
-                    wifiState = WifiToggleEffect.hasWifiPermission(getApplicationContext()) && checkCells();
+                // Case 1: Wifi scheduled to be off, don't care about anything else
+                determinedWifiState = false; // TODO establish a more intuitive visualisation in UI
+            } else if (WifiHandler.hasWifiPermission(this)) {
+                WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+
+                if (wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED
+                        || wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING) {
+                    // Case 2: Wifi ON,disconnected (should be off? -> no known cells in range)
+                    if (!WifiHandler.isWifiConnected(this)) {
+                        determinedWifiState = this.checkCells();
+                    } else {
+                        // Case 3: Wifi ON,connected (ok to be on -> update cells)
+                        this.updateCells();
+                        determinedWifiState = true;
+                    }
                 } else {
-                    // Update  best cells
-                    updateCells();
-                    wifiState = true;
+                    // Case 4: Wifi OFF (should be on? -> known cells in range)
+                    determinedWifiState = this.checkCells();
                 }
             }
 
             // apply state to wifi
             WifiToggleEffect wifiToggleEffect = new WifiToggleEffect(this);
-            wifiToggleEffect.apply(wifiState);
+            wifiToggleEffect.apply(determinedWifiState);
         } finally {
             // tell everyone that we are done
             WakefulBroadcastReceiver.completeWakefulIntent(intent);
@@ -71,9 +84,20 @@ public class ManagerService extends IntentService {
             wifiLocationEntries = new ArrayList<>();
         }
 
+        WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+        WifiInfo currentConnection = wifiManager.getConnectionInfo();
+        String currentSsid = WifiHandler.getCleanSSID(currentConnection.getSSID());
+        String currentBssid = currentConnection.getBSSID();
+
         for (WifiLocationEntry entry : wifiLocationEntries) {
-            for (CellLocationCondition condition : entry.getCellLocationConditions()) {
-                modified |= condition.addKBestSurroundingCells(this, 3);
+            if (entry.getSsid().equals(currentSsid)) {
+                for (CellLocationCondition condition : entry.getCellLocationConditions()) {
+                    if (condition.getBssid().equals(currentBssid)) {
+                        modified |= condition.addKBestSurroundingCells(this, 3);
+                        break;
+                    }
+                }
+                break;
             }
         }
 
@@ -87,7 +111,6 @@ public class ManagerService extends IntentService {
     }
 
     private boolean checkCells() {
-        boolean active = false;
         List<WifiLocationEntry> wifiLocationEntries;
         PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
 
@@ -102,17 +125,12 @@ public class ManagerService extends IntentService {
         for (WifiLocationEntry entry : wifiLocationEntries) {
             for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                 if (condition.check(this, allCells)) {
-                    active = true;
-                    break;
+                    return true;
                 }
-            }
-
-            if (active) {
-                break;
             }
         }
 
-        return active;
+        return false;
     }
 
     private boolean checkSchedule() {

@@ -65,6 +65,10 @@ public class CellLocationCondition extends Precondition {
         return false; // condition not active
     }
 
+    public boolean addKBestSurroundingCells(Context context, int k) {
+        return addKBestSurroundingCells(k, PrimitiveCellInfo.getAllCells(context));
+    }
+
     public boolean addKBestSurroundingCells(int k, PrimitiveCellInfoTreeSet cells) {
         boolean modified = false;
         int i = 0;
@@ -78,11 +82,6 @@ public class CellLocationCondition extends Precondition {
         }
 
         return modified;
-    }
-
-
-    public boolean addKBestSurroundingCells(Context context, int k) {
-        return addKBestSurroundingCells(k, PrimitiveCellInfo.getAllCells(context));
     }
 
     public static boolean hasCoarseLocationPermission(Context context) {
@@ -106,7 +105,6 @@ public class CellLocationCondition extends Precondition {
         dest.writeString(this.bssid);
         dest.writeTypedArray(this.relatedCells.toArray(new PrimitiveCellInfo[this.relatedCells.size()]), 0);
     }
-
 
     public static final Creator<CellLocationCondition> CREATOR = new Creator<CellLocationCondition>() {
         @Override
