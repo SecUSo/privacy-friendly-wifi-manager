@@ -33,10 +33,15 @@ public class WifiItemViewHolder extends RemovableItemViewHolder<WifiLocationEntr
 
         String ssidText = context.getString(R.string.wifi_ssid_text);
         String bssidText = context.getString(R.string.wifi_bssid_text);
+        String multiBssidText = context.getString(R.string.wifi_multi_bssid_text);
         String numCellsText = context.getString(R.string.wifi_num_cells_text);
 
         this.ssidTextView.setText(String.format(Locale.getDefault(), ssidText, entry.getSsid()));
-        this.bssidTextView.setText(String.format(Locale.getDefault(), bssidText, entry.getBssids().get(0))); //TODO FIXME
+        if (entry.getBssids().size() > 1) {
+            this.bssidTextView.setText(String.format(Locale.getDefault(), multiBssidText, entry.getBssids().size()));
+        } else {
+            this.bssidTextView.setText(String.format(Locale.getDefault(), bssidText, entry.getBssids().get(0)));
+        }
         this.numCellsTextView.setText(String.format(Locale.getDefault(), numCellsText, entry.getCellLocationCondition().getNumberOfRelatedCells()));
     }
 }
