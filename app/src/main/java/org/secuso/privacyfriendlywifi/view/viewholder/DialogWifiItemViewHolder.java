@@ -31,6 +31,6 @@ public class DialogWifiItemViewHolder extends RecyclerView.ViewHolder implements
 
     @Override
     public void onClick(View v) {
-        this.adapter.onListItemClicked(new WifiLocationEntry(conf.getSsid(), conf.getBssids()));
+        this.adapter.onListItemClicked(this.conf);
     }
 }

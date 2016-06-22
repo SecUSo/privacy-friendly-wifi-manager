@@ -8,6 +8,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Pair;
 
 import org.secuso.privacyfriendlywifi.logic.effects.WifiToggleEffect;
+import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfo;
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfoTreeSet;
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
@@ -71,7 +72,9 @@ public class ManagerService extends IntentService {
         }
 
         for (WifiLocationEntry entry : wifiLocationEntries) {
-            modified |= entry.getCellLocationCondition().addKBestSurroundingCells(this, 3);
+            for (CellLocationCondition condition : entry.getCellLocationConditions()) {
+                modified |= condition.addKBestSurroundingCells(this, 3);
+            }
         }
 
         if (modified) {
@@ -97,8 +100,14 @@ public class ManagerService extends IntentService {
         }
 
         for (WifiLocationEntry entry : wifiLocationEntries) {
-            if (entry.getCellLocationCondition().check(this, allCells)) {
-                active = true;
+            for (CellLocationCondition condition : entry.getCellLocationConditions()) {
+                if (condition.check(this, allCells)) {
+                    active = true;
+                    break;
+                }
+            }
+
+            if (active) {
                 break;
             }
         }

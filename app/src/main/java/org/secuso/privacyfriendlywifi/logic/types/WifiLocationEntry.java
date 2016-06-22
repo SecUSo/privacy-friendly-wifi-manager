@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,8 +15,7 @@ import java.util.List;
  */
 public class WifiLocationEntry implements Parcelable, Serializable {
     private String ssid;
-    private List<String> bssidList;
-    private CellLocationCondition cellLocationCondition;
+    private List<CellLocationCondition> cellLocationConditions;
 
     public WifiLocationEntry(String ssid, String bssid) {
         this(ssid, Arrays.asList(new String[]{bssid}));
@@ -23,34 +23,37 @@ public class WifiLocationEntry implements Parcelable, Serializable {
 
     public WifiLocationEntry(String ssid, List<String> bssidList) {
         this.ssid = ssid;
-        this.bssidList = bssidList;
-        this.cellLocationCondition = new CellLocationCondition();
+        this.cellLocationConditions = new ArrayList<>();
+        for (String bssid : bssidList) {
+            this.addCellLocationCondition(new CellLocationCondition(bssid));
+        }
     }
 
+    public boolean addCellLocationCondition(CellLocationCondition newCondition) {
+        if (!this.cellLocationConditions.contains(newCondition)) {
+            this.cellLocationConditions.add(newCondition);
+            return true;
+        }
+        return false;
+    }
 
     public String getSsid() {
         return this.ssid;
     }
 
-    public List<String> getBssids() {
-        return this.bssidList;
-    }
-
-    public CellLocationCondition getCellLocationCondition() {
-        return this.cellLocationCondition;
+    public List<CellLocationCondition> getCellLocationConditions() {
+        return this.cellLocationConditions;
     }
 
     protected WifiLocationEntry(Parcel in) {
-        ssid = in.readString();
-        in.readList(this.bssidList, String.class.getClassLoader());
-        cellLocationCondition = in.readParcelable(CellLocationCondition.class.getClassLoader());
+        this.ssid = in.readString();
+        in.readList(this.cellLocationConditions, String.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.ssid);
-        dest.writeList(this.bssidList);
-        dest.writeParcelable(this.cellLocationCondition, flags);
+        dest.writeList(this.cellLocationConditions);
     }
 
     @Override
@@ -75,8 +78,8 @@ public class WifiLocationEntry implements Parcelable, Serializable {
         if (o instanceof WifiLocationEntry) {
             WifiLocationEntry that = (WifiLocationEntry) o;
             return this.getSsid().equals(that.getSsid())
-                    && this.getBssids().containsAll(that.getBssids())
-                    && that.getBssids().containsAll(this.getBssids());
+                    && this.getCellLocationConditions().containsAll(that.getCellLocationConditions())
+                    && that.getCellLocationConditions().containsAll(this.getCellLocationConditions());
         }
         return false;
     }

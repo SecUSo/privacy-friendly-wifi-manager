@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.view.adapter.DialogWifiListAdapter;
@@ -69,10 +70,18 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
                         confSSID = confSSID.substring(1, confSSID.length() - 1);
                     }
 
-                    WifiLocationEntry newEntry = new WifiLocationEntry(confSSID, config.BSSID);
+                    boolean found = false;
 
-                    if (!managedWifis.contains(newEntry)) {
-                        unknownNetworks.add(newEntry);
+                    for (WifiLocationEntry entry : managedWifis) {
+                        if (confSSID.equals(entry.getSsid())) {
+                            entry.addCellLocationCondition(new CellLocationCondition(config.BSSID));
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        unknownNetworks.add(new WifiLocationEntry(confSSID, config.BSSID));
                     }
                 }
 

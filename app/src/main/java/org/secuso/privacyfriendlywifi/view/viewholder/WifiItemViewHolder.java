@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDeleteModeChangedListener;
 import org.secuso.privacyfriendlywifi.view.adapter.RemovableRecyclerViewAdapter;
@@ -37,11 +38,16 @@ public class WifiItemViewHolder extends RemovableItemViewHolder<WifiLocationEntr
         String numCellsText = context.getString(R.string.wifi_num_cells_text);
 
         this.ssidTextView.setText(String.format(Locale.getDefault(), ssidText, entry.getSsid()));
-        if (entry.getBssids().size() > 1) {
-            this.bssidTextView.setText(String.format(Locale.getDefault(), multiBssidText, entry.getBssids().size()));
+        if (entry.getCellLocationConditions().size() > 1) {
+            this.bssidTextView.setText(String.format(Locale.getDefault(), multiBssidText, entry.getCellLocationConditions().size()));
         } else {
-            this.bssidTextView.setText(String.format(Locale.getDefault(), bssidText, entry.getBssids().get(0)));
+            this.bssidTextView.setText(String.format(Locale.getDefault(), bssidText, entry.getCellLocationConditions().get(0).getBssid()));
         }
-        this.numCellsTextView.setText(String.format(Locale.getDefault(), numCellsText, entry.getCellLocationCondition().getNumberOfRelatedCells()));
+
+        int numCells = 0;
+        for (CellLocationCondition condition : entry.getCellLocationConditions()) {
+            numCells += condition.getNumberOfRelatedCells();
+        }
+        this.numCellsTextView.setText(String.format(Locale.getDefault(), numCellsText, numCells));
     }
 }

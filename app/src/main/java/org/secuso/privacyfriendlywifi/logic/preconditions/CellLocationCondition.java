@@ -21,16 +21,28 @@ public class CellLocationCondition extends Precondition {
     private static final String TAG = CellLocationCondition.class.getCanonicalName();
     public final int MIN_CELLS = 3;
     public final double MIN_CELL_PERCENTAGE = 0.3;
+    private final String bssid;
     private Set<PrimitiveCellInfo> relatedCells;
 
-    public CellLocationCondition() {
+    public CellLocationCondition(String bssid) {
         super();
+        this.bssid = bssid;
         this.relatedCells = new HashSet<>();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof CellLocationCondition && this.getBssid().equals(((CellLocationCondition) o).getBssid());
     }
 
     protected CellLocationCondition(Parcel in) {
         super(in);
+        this.bssid = in.readString();
         this.relatedCells = new HashSet<PrimitiveCellInfo>(Arrays.asList(in.createTypedArray(PrimitiveCellInfo.CREATOR)));
+    }
+
+    public String getBssid() {
+        return this.bssid;
     }
 
     @Override
@@ -91,6 +103,7 @@ public class CellLocationCondition extends Precondition {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
+        dest.writeString(this.bssid);
         dest.writeTypedArray(this.relatedCells.toArray(new PrimitiveCellInfo[this.relatedCells.size()]), 0);
     }
 
