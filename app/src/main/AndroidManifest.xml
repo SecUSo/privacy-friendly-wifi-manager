@@ -24,8 +24,8 @@
             </intent-filter>
         </receiver>
         <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver" />
-        <receiver android:name="org.secuso.privacyfriendlywifi.service.NewWifiNotification$NotificationButtonListener" />
-        <receiver android:name="org.secuso.privacyfriendlywifi.service.NewWifiNotification$NotificationClickListener" />
+        <receiver android:name="org.secuso.privacyfriendlywifi.service.WifiNotification$NotificationButtonListener" />
+        <receiver android:name="org.secuso.privacyfriendlywifi.service.WifiNotification$NotificationClickListener" />
         <receiver android:name="org.secuso.privacyfriendlywifi.view.WifiWidget$WidgetClickListener" />
         <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.WifiChangedReceiver">
             <intent-filter android:priority="100">

@@ -23,11 +23,11 @@ import secuso.org.privacyfriendlywifi.R;
  * This class provides functionality to show a notification for newly connected wireless networks.
  * The user is able to add the current wifi to the managed connections using the action button.
  */
-public class NewWifiNotification {
+public class WifiNotification {
     private static WifiInfo wifiInfo;
 
     public static void show(Context context, WifiInfo wifiInfo) {
-        NewWifiNotification.wifiInfo = wifiInfo;
+        WifiNotification.wifiInfo = wifiInfo;
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 

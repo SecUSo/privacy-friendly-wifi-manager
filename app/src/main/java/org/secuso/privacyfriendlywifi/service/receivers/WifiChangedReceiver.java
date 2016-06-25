@@ -10,7 +10,7 @@ import android.net.wifi.WifiManager;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
-import org.secuso.privacyfriendlywifi.service.NewWifiNotification;
+import org.secuso.privacyfriendlywifi.service.WifiNotification;
 
 /**
  * BroadcastReceiver to listen for Wi-Fi state changes.
@@ -34,13 +34,15 @@ public class WifiChangedReceiver extends BroadcastReceiver {
                     return;
                 }
 
+                // check whether the wifi is already known
                 for (WifiLocationEntry entry : ManagerService.getWifiLocationEntries(context)) {
                     if (entry.getSsid().equals(ssid)) {
                         return;
                     }
                 }
 
-                NewWifiNotification.show(context, wifiInfo);
+                // if unknown, show notification
+                WifiNotification.show(context, wifiInfo);
             }
         }
     }
