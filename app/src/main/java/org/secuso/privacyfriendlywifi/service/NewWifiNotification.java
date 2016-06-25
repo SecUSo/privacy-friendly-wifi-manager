@@ -8,9 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.wifi.WifiInfo;
 import android.support.v7.app.NotificationCompat;
 
+import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.view.MainActivity;
+
+import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
@@ -19,8 +24,11 @@ import secuso.org.privacyfriendlywifi.R;
  * The user is able to add the current wifi to the managed connections using the action button.
  */
 public class NewWifiNotification {
+    private static WifiInfo wifiInfo;
 
-    public static void show(Context context, String wifiSsid) {
+    public static void show(Context context, WifiInfo wifiInfo) {
+        NewWifiNotification.wifiInfo = wifiInfo;
+
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // use InboxStyle to overcome layout issues
@@ -28,7 +36,7 @@ public class NewWifiNotification {
 
         // sets a title for the Inbox in expanded layout
         inboxStyle.setBigContentTitle(context.getString(R.string.notification_unknown_wifi_title));
-        inboxStyle.addLine(wifiSsid);
+        inboxStyle.addLine(WifiHandler.getCleanSSID(wifiInfo.getSSID()));
 
         // intent for action button click
         Intent buttonIntent = new Intent(context, NotificationButtonListener.class);
@@ -50,9 +58,9 @@ public class NewWifiNotification {
                 .setStyle(inboxStyle)
                 .setSmallIcon(R.drawable.ic_action_wifi)
                 .setLargeIcon(large_icon)
-                .setContentTitle(context.getString(R.string.notification_unknown_wifi_title_format, wifiSsid))
+                .setContentTitle(context.getString(R.string.notification_unknown_wifi_title_format, WifiHandler.getCleanSSID((wifiInfo.getSSID()))))
                 .setContentText(context.getString(R.string.notification_main_text))
-                .setTicker(context.getString(R.string.notification_unknown_wifi_title_format, wifiSsid))
+                .setTicker(context.getString(R.string.notification_unknown_wifi_title_format, WifiHandler.getCleanSSID((wifiInfo.getSSID()))))
                 .setContentInfo(context.getString(R.string.notification_content_info))
                 .setWhen(0) // first element in notification stack - needed to get expanded notification
                 .setPriority(NotificationCompat.PRIORITY_MAX) // enhance priority to get an expanded notification
@@ -94,12 +102,10 @@ public class NewWifiNotification {
             // clear notification since auto dismiss does not work with action buttons
             notificationManager.cancel(1);
 
-            // start activity
-            Intent notificationIntent = new Intent(context, MainActivity.class); // TODO add flag for "add Wi-Fi"
-            notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            context.startActivity(notificationIntent);
-
-
+            // add the new wifi to the list
+            List<WifiLocationEntry> wifiLocationEntries = ManagerService.getWifiLocationEntries(context);
+            wifiLocationEntries.add(new WifiLocationEntry(WifiHandler.getCleanSSID(wifiInfo.getSSID()), wifiInfo.getBSSID()));
+            ManagerService.saveWifiLocationEntries(context, wifiLocationEntries);
         }
     }
 }

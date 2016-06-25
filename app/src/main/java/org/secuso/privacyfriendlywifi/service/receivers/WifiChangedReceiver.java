@@ -8,6 +8,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.service.NewWifiNotification;
 
@@ -27,23 +28,19 @@ public class WifiChangedReceiver extends BroadcastReceiver {
                 // get current ssid
                 WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-                String ssid = wifiInfo.getSSID();
+                String ssid = WifiHandler.getCleanSSID(wifiInfo.getSSID());
 
                 if (ssid.equals("<unknown ssid>") || ssid.equals("0x")) { // check if connected correctly
                     return;
                 }
 
-                boolean found = false;
                 for (WifiLocationEntry entry : ManagerService.getWifiLocationEntries(context)) {
                     if (entry.getSsid().equals(ssid)) {
-                        found = true;
-                        break;
+                        return;
                     }
                 }
 
-                if (!found) {
-                    NewWifiNotification.show(context, ssid);
-                }
+                NewWifiNotification.show(context, wifiInfo);
             }
         }
     }
