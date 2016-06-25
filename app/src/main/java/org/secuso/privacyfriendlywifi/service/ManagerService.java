@@ -33,8 +33,6 @@ public class ManagerService extends IntentService {
     public final static String PREF_SETTINGS = "SHARED_PREF_SETTINGS";
     public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
 
-    private List<WifiLocationEntry> wifiLocationEntries;
-
     public ManagerService() {
         super(ManagerService.class.getSimpleName());
     }
@@ -75,14 +73,6 @@ public class ManagerService extends IntentService {
         }
     }
 
-    private List<WifiLocationEntry> getWifiLocationEntries() {
-        if (this.wifiLocationEntries == null) {
-            this.wifiLocationEntries = getWifiLocationEntries(this);
-        }
-
-        return this.wifiLocationEntries;
-    }
-
     public static List<WifiLocationEntry> getWifiLocationEntries(Context context) {
         try {
             Object o = FileHandler.loadObject(context, FN_LOCATION_ENTRIES, false);
@@ -91,10 +81,6 @@ public class ManagerService extends IntentService {
             // File does not exist
             return new ArrayList<>();
         }
-    }
-
-    private boolean saveWifiLocationEntries() {
-        return ManagerService.saveWifiLocationEntries(this, this.wifiLocationEntries);
     }
 
     public static boolean saveWifiLocationEntries(Context context, List<WifiLocationEntry> wifiLocationEntries) {
@@ -113,14 +99,15 @@ public class ManagerService extends IntentService {
         WifiInfo currentConnection = wifiManager.getConnectionInfo();
         String currentSsid = WifiHandler.getCleanSSID(currentConnection.getSSID());
         String currentBssid = currentConnection.getBSSID();
+        List<WifiLocationEntry> wifiLocationEntries = ManagerService.getWifiLocationEntries(this);
 
-        for (WifiLocationEntry entry : this.getWifiLocationEntries()) {
+        for (WifiLocationEntry entry : wifiLocationEntries) {
             if (entry.getSsid().equals(currentSsid)) {
                 for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                     if (condition.getBssid().equals(currentBssid)) {
                         condition.addKBestSurroundingCells(this, 3);
 
-                        saveWifiLocationEntries();
+                        ManagerService.saveWifiLocationEntries(this, wifiLocationEntries);
 
                         return;
                     }
@@ -132,7 +119,7 @@ public class ManagerService extends IntentService {
     private boolean checkCells() {
         PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
 
-        for (WifiLocationEntry entry : this.getWifiLocationEntries()) {
+        for (WifiLocationEntry entry : ManagerService.getWifiLocationEntries(this)) {
             for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                 if (condition.check(this, allCells)) {
                     return true;
