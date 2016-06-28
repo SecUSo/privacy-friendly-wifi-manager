@@ -19,6 +19,7 @@ import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
+import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class ManagerService extends IntentService {
                             @Override
                             public void onReceive(Context context, Intent i) {
                                 // fetch search results
-                                WifiHandler.scanAndUpdateWifis(context, WifiListHandler.getWifiLocationEntries(this), unknownNetworks); // TODO Commit & push WifiListHandler
+                                WifiHandler.scanAndUpdateWifis(context, WifiListHandler.getWifiLocationEntries(getBaseContext()), unknownNetworks);
                             }
                         };
 
@@ -86,41 +87,19 @@ public class ManagerService extends IntentService {
         }
     }
 
-    public static List<WifiLocationEntry> getWifiLocationEntries(Context context) {
-        try {
-            Object o = FileHandler.loadObject(context, FN_LOCATION_ENTRIES, false);
-            return (List<WifiLocationEntry>) o;
-        } catch (IOException e) {
-            // File does not exist
-            return new ArrayList<>();
-        }
-    }
-
-    public static boolean saveWifiLocationEntries(Context context, List<WifiLocationEntry> wifiLocationEntries) {
-        try {
-            FileHandler.storeObject(context, FN_LOCATION_ENTRIES, wifiLocationEntries);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
-
     private void updateCells() {
         WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
         WifiInfo currentConnection = wifiManager.getConnectionInfo();
         String currentSsid = WifiHandler.getCleanSSID(currentConnection.getSSID());
         String currentBssid = currentConnection.getBSSID();
-        List<WifiLocationEntry> wifiLocationEntries = ManagerService.getWifiLocationEntries(this);
 
-        for (WifiLocationEntry entry : wifiLocationEntries) {
+        for (WifiLocationEntry entry : WifiListHandler.getWifiLocationEntries(this)) {
             if (entry.getSsid().equals(currentSsid)) {
                 for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                     if (condition.getBssid().equals(currentBssid)) {
                         condition.addKBestSurroundingCells(this, 3);
 
-                        ManagerService.saveWifiLocationEntries(this, wifiLocationEntries);
+                        WifiListHandler.saveWifiLocationEntries(this, wifiLocationEntries);
 
                         return;
                     }
@@ -132,7 +111,7 @@ public class ManagerService extends IntentService {
     private boolean checkCells() {
         PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
 
-        for (WifiLocationEntry entry : ManagerService.getWifiLocationEntries(this)) {
+        for (WifiLocationEntry entry : WifiListHandler.getWifiLocationEntries(this)) {
             for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                 if (condition.check(this, allCells)) {
                     return true;

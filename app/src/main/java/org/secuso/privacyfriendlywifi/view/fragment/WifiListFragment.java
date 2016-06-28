@@ -19,18 +19,18 @@ import android.view.ViewGroup;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
+import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
 import org.secuso.privacyfriendlywifi.service.Controller;
-import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.adapter.WifiListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 import org.secuso.privacyfriendlywifi.view.dialog.WifiPickerDialog;
 
-import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import secuso.org.privacyfriendlywifi.R;
 
-public class WifiListFragment extends Fragment implements IOnDialogClosedListener {
-    private List<WifiLocationEntry> wifiLocationEntries;
+public class WifiListFragment extends Fragment implements IOnDialogClosedListener, Observer {
     private IOnDialogClosedListener thisClass;
 
     private RecyclerView recyclerView;
@@ -50,8 +50,6 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        this.wifiLocationEntries = ManagerService.getWifiLocationEntries(context);
     }
 
     @Override
@@ -94,7 +92,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                         Controller.unregisterReceivers(getActivity().getApplicationContext());
                         WifiPickerDialog dialog = new WifiPickerDialog(getContext());
                         dialog.addOnDialogClosedListener(thisClass);
-                        dialog.setManagedWifis(wifiLocationEntries);
+                        dialog.setManagedWifis(WifiListHandler.getWifiLocationEntries(getContext()));
                         dialog.show();
                     }
                 }
@@ -105,14 +103,13 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), R.layout.list_item_wifilist, this.wifiLocationEntries, this.recyclerView, fab);
+        WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), R.layout.list_item_wifilist, this.recyclerView, fab);
 
         // save list after item deletion
         itemsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
-                ManagerService.saveWifiLocationEntries(getContext(), wifiLocationEntries);
             }
         });
 
@@ -135,10 +132,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     @Override
     public void onDialogClosed(int returnCode, Object... returnValue) {
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
-            this.wifiLocationEntries.add((WifiLocationEntry) returnValue[0]);
-            ManagerService.saveWifiLocationEntries(this.getContext(), this.wifiLocationEntries);
-            this.recyclerView.requestLayout();
-            this.recyclerView.invalidate();
+            WifiListHandler.addWifiLocationEntry(getContext(), (WifiLocationEntry) returnValue[0]);
         }
 
         Controller.registerReceivers(getActivity().getApplicationContext()); // TODO: What does this do here?
@@ -147,7 +141,6 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     @Override
     public void onStop() {
         super.onStop();
-        ManagerService.saveWifiLocationEntries(getContext(), this.wifiLocationEntries);
         Controller.registerReceivers(getActivity().getApplicationContext());
     }
 
@@ -155,5 +148,11 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     public void onPause() {
         super.onPause();
         Controller.registerReceivers(getActivity().getApplicationContext());
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        this.recyclerView.requestLayout();
+        this.recyclerView.invalidate();
     }
 }
