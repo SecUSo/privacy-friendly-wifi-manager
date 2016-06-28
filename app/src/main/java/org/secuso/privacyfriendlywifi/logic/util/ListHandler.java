@@ -12,25 +12,27 @@ import java.util.Observable;
 /**
  *
  */
-public abstract class ListHandler<EntryType> {
+public class ListHandler<EntryType> implements IListHandler<EntryType>{
     public final Observable listObservable = new ListHandler.ListObservable();
-    private List<EntryType> wifiLocationEntries;
+    private List<EntryType> entries;
 
-    protected void initWifiLocationEntries(Context context) {
-        if (this.wifiLocationEntries == null) {
-            try {
-                Object o = FileHandler.loadObject(context, ManagerService.FN_LOCATION_ENTRIES, false);
-                this.wifiLocationEntries = (List<EntryType>) o;
-            } catch (IOException e) {
-                // File does not exist
-                this.wifiLocationEntries = new ArrayList<>();
-            }
+    private Context context;
+
+    public ListHandler(Context context) {
+        this.context = context;
+
+        try {
+            Object o = FileHandler.loadObject(this.context, ManagerService.FN_LOCATION_ENTRIES, false);
+            this.entries = (List<EntryType>) o;
+        } catch (IOException e) {
+            // File does not exist
+            this.entries = new ArrayList<>();
         }
     }
 
-    protected boolean saveWifiLocationEntries(Context context) {
+    public boolean save() {
         try {
-            FileHandler.storeObject(context, ManagerService.FN_LOCATION_ENTRIES, this.wifiLocationEntries);
+            FileHandler.storeObject(this.context, ManagerService.FN_LOCATION_ENTRIES, this.entries);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -39,26 +41,31 @@ public abstract class ListHandler<EntryType> {
         return true;
     }
 
-    public boolean addWifiLocationEntry(Context context, EntryType newEntry) {
-        this.initWifiLocationEntries(context);
-        boolean ret = this.wifiLocationEntries.add(newEntry);
-        this.saveWifiLocationEntries(context);
-        return ret;
-    }
-
-    public boolean addAllWifiLocationEntry(Context context, List<EntryType> newEntries) {
-        this.initWifiLocationEntries(context);
-        boolean ret = this.wifiLocationEntries.addAll(newEntries);
-        this.saveWifiLocationEntries(context);
+    public boolean add(EntryType newEntry) {
+        boolean ret = this.entries.add(newEntry);
+        this.save();
         this.listObservable.notifyObservers();
         return ret;
     }
 
-    public List<EntryType> getWifiLocationEntries(Context context) {
-        this.initWifiLocationEntries(context);
-        return this.wifiLocationEntries; // don't return copy of the list
+    public boolean addAll(List<EntryType> newEntries) {
+        boolean ret = this.entries.addAll(newEntries);
+        this.save();
+        this.listObservable.notifyObservers();
+        return ret;
     }
 
-    private static class ListObservable extends Observable {
+    public List<EntryType> getAll() {
+        return this.entries; // don't return copy of the list
+    }
+
+    public boolean remove(EntryType entry) {
+        boolean ret = this.entries.remove(entry);
+        this.save();
+        this.listObservable.notifyObservers();
+        return ret;
+    }
+
+    private class ListObservable extends Observable {
     }
 }

@@ -9,6 +9,9 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "0.6 Beta"
+        jackOptions {
+            enabled true
+        }
     }
     buildTypes {
         release {
@@ -17,6 +20,10 @@ android {
         }
     }
     productFlavors {
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 
