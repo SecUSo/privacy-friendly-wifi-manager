@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
@@ -62,39 +60,9 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
             @Override
             public void onReceive(Context context, Intent i) {
                 progressBar.setVisibility(View.GONE);
-                WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                List<ScanResult> scanResults = wifiManager.getScanResults();
 
-                for (ScanResult config : scanResults) {
-                    String confSSID = WifiHandler.getCleanSSID(config.SSID);
-
-                    boolean alreadyManaged = false;
-
-                    for (WifiLocationEntry entry : managedWifis) {
-                        if (confSSID.equals(entry.getSsid())) {
-                            // ssid is already present, so we should add the MAC to the existing network
-                            entry.addCellLocationCondition(new CellLocationCondition(config.BSSID)); // FIXME: Don't do this here, handle new MACs in own method!
-                            alreadyManaged = true;
-                            break;
-                        }
-                    }
-
-                    if (!alreadyManaged) {
-                        boolean isNewEntry = true;
-
-                        for (WifiLocationEntry entry : unknownNetworks) {
-                            if (confSSID.equals(entry.getSsid())) {
-                                entry.addCellLocationCondition(new CellLocationCondition(config.BSSID));
-                                isNewEntry = false;
-                                break;
-                            }
-                        }
-
-                        if (isNewEntry) {
-                            unknownNetworks.add(new WifiLocationEntry(confSSID, config.BSSID));
-                        }
-                    }
-                }
+                // fetch search results
+                WifiHandler.scanAndUpdateWifis(context, managedWifis, unknownNetworks);
 
                 recyclerView.invalidate();
                 recyclerView.requestLayout();

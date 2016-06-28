@@ -1,8 +1,10 @@
 package org.secuso.privacyfriendlywifi.service;
 
 import android.app.IntentService;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -46,12 +48,23 @@ public class ManagerService extends IntentService {
                 // Case 1: Wifi scheduled to be off, don't care about anything else
                 determinedWifiState = false; // TODO establish a more intuitive visualisation in UI
             } else if (WifiHandler.hasWifiPermission(this)) {
-                WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
-
-                if (wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED
-                        || wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING) {
+                if (WifiHandler.isWifiEnabled(this)) {
                     // Case 2: Wifi ON,disconnected (should be off? -> no known cells in range)
+
                     if (!WifiHandler.isWifiConnected(this)) {
+                        final List<WifiLocationEntry> unknownNetworks = new ArrayList<>();
+
+                        final BroadcastReceiver receiver = new BroadcastReceiver() {
+                            @Override
+                            public void onReceive(Context context, Intent i) {
+                                // fetch search results
+                                WifiHandler.scanAndUpdateWifis(context, WifiListHandler.getWifiLocationEntries(this), unknownNetworks); // TODO Commit & push WifiListHandler
+                            }
+                        };
+
+                        IntentFilter filter = new IntentFilter();
+                        filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+                        this.registerReceiver(receiver, filter);
                         determinedWifiState = this.checkCells();
                     } else {
                         // Case 3: Wifi ON,connected (ok to be on -> update cells)
