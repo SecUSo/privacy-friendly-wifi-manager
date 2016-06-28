@@ -12,7 +12,7 @@ import java.util.Observable;
 /**
  *
  */
-public class ListHandler<EntryType> implements IListHandler<EntryType>{
+public class ListHandler<EntryType> implements IListHandler<EntryType> {
     public final Observable listObservable = new ListHandler.ListObservable();
     private List<EntryType> entries;
 
@@ -59,11 +59,27 @@ public class ListHandler<EntryType> implements IListHandler<EntryType>{
         return this.entries; // don't return copy of the list
     }
 
+    public EntryType get(int location) {
+        return this.entries.get(location);
+    }
+
     public boolean remove(EntryType entry) {
         boolean ret = this.entries.remove(entry);
         this.save();
         this.listObservable.notifyObservers();
         return ret;
+    }
+
+    public int size() {
+        return this.entries.size();
+    }
+
+    public int indexOf(Object o) {
+        return this.entries.indexOf(o);
+    }
+
+    public boolean isEmpty() {
+        return this.entries.isEmpty();
     }
 
     private class ListObservable extends Observable {

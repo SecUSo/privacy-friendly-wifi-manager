@@ -34,10 +34,12 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     private IOnDialogClosedListener thisClass;
 
     private RecyclerView recyclerView;
+    private WifiListHandler wifiListHandler;
 
     public WifiListFragment() {
         // Required empty public constructor
-        thisClass = this;
+        this.thisClass = this;
+        this.wifiListHandler = new WifiListHandler(getContext());
     }
 
     public static WifiListFragment newInstance() {
@@ -92,7 +94,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                         Controller.unregisterReceivers(getActivity().getApplicationContext());
                         WifiPickerDialog dialog = new WifiPickerDialog(getContext());
                         dialog.addOnDialogClosedListener(thisClass);
-                        dialog.setManagedWifis(WifiListHandler.getWifiLocationEntries(getContext()));
+                        dialog.setManagedWifis(wifiListHandler.getAll());
                         dialog.show();
                     }
                 }
@@ -103,7 +105,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), R.layout.list_item_wifilist, this.recyclerView, fab);
+        WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), R.layout.list_item_wifilist, this.wifiListHandler, this.recyclerView, fab);
 
         // save list after item deletion
         itemsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -132,7 +134,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     @Override
     public void onDialogClosed(int returnCode, Object... returnValue) {
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
-            WifiListHandler.addWifiLocationEntry(getContext(), (WifiLocationEntry) returnValue[0]);
+            this.wifiListHandler.add((WifiLocationEntry) returnValue[0]);
         }
 
         Controller.registerReceivers(getActivity().getApplicationContext()); // TODO: What does this do here?

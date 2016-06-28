@@ -74,10 +74,9 @@ public class WifiHandler {
     /**
      * Fetches Wi-Fi scan results, adds MACs to already known wifis and updates passed unknownNetworks list.
      * @param context A context to use.
-     * @param managedWifis The already managed Wi-Fis. These will get updated with new MACs.
      * @param unknownNetworks The object to store the unknown networks in.
      */
-    public static void scanAndUpdateWifis(Context context, List<WifiLocationEntry> managedWifis, List<WifiLocationEntry> unknownNetworks) {
+    public static void scanAndUpdateWifis(Context context, List<WifiLocationEntry> unknownNetworks) {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> scanResults = wifiManager.getScanResults();
 
@@ -85,8 +84,9 @@ public class WifiHandler {
             String confSSID = WifiHandler.getCleanSSID(config.SSID);
 
             boolean alreadyManaged = false;
+            WifiListHandler handler = new WifiListHandler(context);
 
-            for (WifiLocationEntry knownEntry : managedWifis) {
+            for (WifiLocationEntry knownEntry : handler.getAll()) {
                 if (confSSID.equals(knownEntry.getSsid())) {
                     // ssid is already present, so we should add the MAC to the existing network
                     knownEntry.addCellLocationCondition(new CellLocationCondition(config.BSSID)); // FIXME: Don't do this here, handle new MACs in own method!

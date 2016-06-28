@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.logic.util.IListHandler;
 import org.secuso.privacyfriendlywifi.view.viewholder.WifiItemViewHolder;
 
 import java.util.ArrayList;
@@ -18,8 +19,8 @@ import secuso.org.privacyfriendlywifi.R;
 public class WifiListAdapter extends RemovableRecyclerViewAdapter<WifiLocationEntry> {
     private List<WifiItemViewHolder> children;
 
-    public WifiListAdapter(Context context, int viewItemLayoutId, List<WifiLocationEntry> wifiLocationEntries, RecyclerView recyclerView, FloatingActionButton fab) {
-        super(context, viewItemLayoutId, wifiLocationEntries, recyclerView, fab);
+    public WifiListAdapter(Context context, int viewItemLayoutId, IListHandler<WifiLocationEntry> wifiListHandler, RecyclerView recyclerView, FloatingActionButton fab) {
+        super(context, viewItemLayoutId, wifiListHandler, recyclerView, fab);
         this.children = new ArrayList<>();
     }
 

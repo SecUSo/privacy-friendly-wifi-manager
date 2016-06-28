@@ -10,31 +10,47 @@ import java.util.List;
  *
  */
 public class WifiListHandler implements IListHandler<WifiLocationEntry> {
-    static ListHandler<WifiLocationEntry> list;
+    private static ListHandler<WifiLocationEntry> list;
 
     public WifiListHandler(Context context) {
-        if (list == null) {
-            list = new ListHandler<>(context);
+        if (WifiListHandler.list == null) {
+            WifiListHandler.list = new ListHandler<>(context);
         }
     }
 
     public boolean save() {
-        return list.save();
+        return WifiListHandler.list.save();
     }
 
     public List<WifiLocationEntry> getAll() {
-        return list.getAll();
+        return WifiListHandler.list.getAll();
+    }
+
+    public WifiLocationEntry get(int location) {
+        return WifiListHandler.list.get(location);
     }
 
     public boolean add(WifiLocationEntry newEntry) {
-        return list.add(newEntry);
+        return WifiListHandler.list.add(newEntry);
     }
 
     public boolean addAll(List<WifiLocationEntry> newEntries) {
-        return list.addAll(newEntries);
+        return WifiListHandler.list.addAll(newEntries);
     }
 
     public boolean remove(WifiLocationEntry entry) {
-        return list.remove(entry);
+        return WifiListHandler.list.remove(entry);
+    }
+
+    public int size() {
+        return WifiListHandler.list.size();
+    }
+
+    public int indexOf(Object o) {
+        return WifiListHandler.list.indexOf(o);
+    }
+
+    public boolean isEmpty() {
+        return WifiListHandler.list.isEmpty();
     }
 }

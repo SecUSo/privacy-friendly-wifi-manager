@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.secuso.privacyfriendlywifi.logic.util.IListHandler;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDeleteModeChangedListener;
 import org.secuso.privacyfriendlywifi.view.viewholder.RemovableItemViewHolder;
 
@@ -19,22 +20,22 @@ import java.util.List;
  */
 public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapter<RemovableItemViewHolder<EntryType>> implements IOnDeleteModeChangedListener, View.OnKeyListener {
     private Context context;
-    private List<EntryType> recyclerViewEntries;
     private List<RemovableItemViewHolder<EntryType>> children;
     private boolean isDeleteModeActive;
     private FloatingActionButton fab;
     private int viewLayoutId;
+    private IListHandler<EntryType> listHandler;
 
-    public RemovableRecyclerViewAdapter(Context context, int viewLayoutId, List<EntryType> recyclerViewEntries, RecyclerView recyclerView, FloatingActionButton fab) {
+    public RemovableRecyclerViewAdapter(Context context, int viewLayoutId, IListHandler<EntryType> listHandler, RecyclerView recyclerView, FloatingActionButton fab) {
         this.context = context;
         this.viewLayoutId = viewLayoutId;
-        this.recyclerViewEntries = recyclerViewEntries;
         this.children = new ArrayList<>();
         this.isDeleteModeActive = false;
         recyclerView.setFocusableInTouchMode(true);
         recyclerView.requestFocus();
         recyclerView.setOnKeyListener(this);
         this.fab = fab;
+        this.listHandler = listHandler;
     }
 
     @Override
@@ -47,7 +48,7 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
 
     @Override
     public void onBindViewHolder(RemovableItemViewHolder<EntryType> holder, int position) {
-        holder.setupItem(this.context, this.recyclerViewEntries.get(position), this, this);
+        holder.setupItem(this.context, this.listHandler.get(position), this, this);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
 
     @Override
     public int getItemCount() {
-        return this.recyclerViewEntries.size();
+        return this.listHandler.size();
     }
 
     @Override
@@ -95,15 +96,15 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
 
     public boolean remove(EntryType recyclerViewEntry) {
         boolean ret = false;
-        int position = this.recyclerViewEntries.indexOf(recyclerViewEntry);
+        int position = this.listHandler.indexOf(recyclerViewEntry);
         if (position >= 0) {
-            ret = this.recyclerViewEntries.remove(recyclerViewEntry);
+            ret = this.listHandler.remove(recyclerViewEntry);
 
             // refresh RecyclerView
             this.notifyItemRemoved(position);
             this.notifyItemRangeChanged(position, this.getItemCount());
         }
-        if (this.recyclerViewEntries.isEmpty()) {
+        if (this.listHandler.isEmpty()) {
             this.setDeleteModeActive(false);
         }
         return ret;

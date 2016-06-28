@@ -36,8 +36,11 @@ public class ManagerService extends IntentService {
     public final static String PREF_SETTINGS = "SHARED_PREF_SETTINGS";
     public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
 
+    private WifiListHandler wifiListHandler;
+
     public ManagerService() {
         super(ManagerService.class.getSimpleName());
+        this.wifiListHandler = new WifiListHandler(this);
     }
 
     @Override
@@ -59,7 +62,7 @@ public class ManagerService extends IntentService {
                             @Override
                             public void onReceive(Context context, Intent i) {
                                 // fetch search results
-                                WifiHandler.scanAndUpdateWifis(context, WifiListHandler.getWifiLocationEntries(getBaseContext()), unknownNetworks);
+                                WifiHandler.scanAndUpdateWifis(context, unknownNetworks);
                             }
                         };
 
@@ -93,13 +96,13 @@ public class ManagerService extends IntentService {
         String currentSsid = WifiHandler.getCleanSSID(currentConnection.getSSID());
         String currentBssid = currentConnection.getBSSID();
 
-        for (WifiLocationEntry entry : WifiListHandler.getWifiLocationEntries(this)) {
+        for (WifiLocationEntry entry : this.wifiListHandler.getAll()) {
             if (entry.getSsid().equals(currentSsid)) {
                 for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                     if (condition.getBssid().equals(currentBssid)) {
+                        this.wifiListHandler.remove(entry);
                         condition.addKBestSurroundingCells(this, 3);
-
-                        WifiListHandler.saveWifiLocationEntries(this, wifiLocationEntries);
+                        this.wifiListHandler.add(entry);
 
                         return;
                     }
@@ -111,7 +114,7 @@ public class ManagerService extends IntentService {
     private boolean checkCells() {
         PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
 
-        for (WifiLocationEntry entry : WifiListHandler.getWifiLocationEntries(this)) {
+        for (WifiLocationEntry entry : this.wifiListHandler.getAll()) {
             for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                 if (condition.check(this, allCells)) {
                     return true;

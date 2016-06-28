@@ -16,4 +16,13 @@ public interface IListHandler<EntryType> {
 
     List<EntryType> getAll();
 
+    EntryType get(int location);
+
+    boolean remove(EntryType entry);
+
+    int size();
+
+    int indexOf(Object o);
+
+    boolean isEmpty();
 }
