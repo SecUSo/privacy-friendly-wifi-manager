@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.view.adapter.DialogWifiListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
@@ -71,7 +72,7 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
                 try {
                     context.unregisterReceiver(this);
                 } catch (IllegalArgumentException e) {
-                    // Log.d("TAG", "not registered");
+                    Logger.d("TAG", "not registered");
                 }
             }
         };
@@ -79,7 +80,7 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
         try {
             context.unregisterReceiver(receiver);
         } catch (IllegalArgumentException e) {
-            // Log.d("TAG", "not registered");
+            Logger.d("TAG", "not registered");
         }
 
         IntentFilter filter = new IntentFilter();

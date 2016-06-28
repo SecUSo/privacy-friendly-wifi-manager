@@ -37,6 +37,8 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
 
+    private Context context;
+
     public WifiListFragment() {
         // Required empty public constructor
         this.thisClass = this;
@@ -59,6 +61,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
 
+        this.context = getContext();
         this.wifiListHandler = new WifiListHandler(getContext());
         this.wifiListHandler.addObserver(this);
 
@@ -88,7 +91,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                                         }
                                 ).show();
                     } else {
-                        Controller.unregisterReceivers(getActivity().getApplicationContext());
+                        Controller.unregisterReceivers(context);
                         WifiPickerDialog dialog = new WifiPickerDialog(getContext());
                         dialog.addOnDialogClosedListener(thisClass);
                         dialog.setManagedWifis(wifiListHandler.getAll());
@@ -134,24 +137,24 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
             this.wifiListHandler.add((WifiLocationEntry) returnValue[0]);
         }
 
-        Controller.registerReceivers(getActivity().getApplicationContext()); // TODO: What does this do here?
+       Controller.registerReceivers(this.context); // TODO: What does this do here?
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Controller.registerReceivers(getActivity().getApplicationContext());
+        Controller.registerReceivers(this.context);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Controller.registerReceivers(getActivity().getApplicationContext());
+        Controller.registerReceivers(this.context);
     }
 
     @Override
     public void update(Observable observable, Object data) {
-        this.recyclerView.swapAdapter(new WifiListAdapter(getActivity().getBaseContext(), R.layout.list_item_wifilist, this.wifiListHandler, this.recyclerView, this.fab), false);
+        this.recyclerView.swapAdapter(new WifiListAdapter(this.context, R.layout.list_item_wifilist, this.wifiListHandler, this.recyclerView, this.fab), false);
         this.recyclerView.requestLayout();
         this.recyclerView.invalidate();
     }

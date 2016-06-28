@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -34,6 +35,8 @@ import org.secuso.privacyfriendlywifi.view.fragment.SettingsFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.WifiListFragment;
 
 import secuso.org.privacyfriendlywifi.R;
+
+import static android.os.StrictMode.setThreadPolicy;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.menu = menu;
 
+        setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
         // get action view
         final MenuItem toggleservice = menu.findItem(R.id.main_switch);
         final RelativeLayout switchOuter = (RelativeLayout) toggleservice.getActionView();

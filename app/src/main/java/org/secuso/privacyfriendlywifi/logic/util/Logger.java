@@ -6,7 +6,7 @@ import android.util.Log;
  *
  */
 public class Logger {
-    private static final boolean IS_ACTIVE = true;
+    private static final boolean IS_ACTIVE = false;
 
     public static void v(String tag, String msg) {
         if (IS_ACTIVE)
