@@ -10,12 +10,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.wifi.WifiInfo;
 import android.support.v7.app.NotificationCompat;
+import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.view.MainActivity;
+import org.secuso.privacyfriendlywifi.view.fragment.WifiListFragment;
 
 import java.util.List;
+import java.util.Locale;
 
 import secuso.org.privacyfriendlywifi.R;
 
@@ -106,6 +109,12 @@ public class WifiNotification {
             List<WifiLocationEntry> wifiLocationEntries = ManagerService.getWifiLocationEntries(context);
             wifiLocationEntries.add(new WifiLocationEntry(WifiHandler.getCleanSSID(wifiInfo.getSSID()), wifiInfo.getBSSID()));
             ManagerService.saveWifiLocationEntries(context, wifiLocationEntries);
+
+            Intent refreshList = new Intent(context.getApplicationContext(), WifiListFragment.class);
+            refreshList.setAction("REFRESH_LIST");
+            context.getApplicationContext().sendBroadcast(refreshList);
+
+            Toast.makeText(context, String.format(Locale.getDefault(), context.getString(R.string.toast_wifi_added), WifiHandler.getCleanSSID(wifiInfo.getSSID())), Toast.LENGTH_LONG).show();
         }
     }
 }

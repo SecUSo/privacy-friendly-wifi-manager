@@ -136,12 +136,12 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     public void onDialogClosed(int returnCode, Object... returnValue) {
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
             this.wifiLocationEntries.add((WifiLocationEntry) returnValue[0]);
-            ManagerService.saveWifiLocationEntries(getContext(), this.wifiLocationEntries);
+            ManagerService.saveWifiLocationEntries(this.getContext(), this.wifiLocationEntries);
             this.recyclerView.requestLayout();
             this.recyclerView.invalidate();
         }
 
-        Controller.registerReceivers(getActivity().getApplicationContext());
+        Controller.registerReceivers(getActivity().getApplicationContext()); // TODO: What does this do here?
     }
 
     @Override

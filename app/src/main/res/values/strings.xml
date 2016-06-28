@@ -65,6 +65,7 @@
     <string name="notification_main_text">Touch to manage connections</string>
     <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>
     <string name="add_widget">Add widget</string>
+    <string name="toast_wifi_added">Wi-Fi %1$s now managed.</string>
 
     <!-- GENERAL -->
     <string name="on">On</string>
