@@ -60,7 +60,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         View rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
 
         this.wifiListHandler = new WifiListHandler(getContext());
-        this.wifiListHandler.getListObservable().addObserver(this);
+        this.wifiListHandler.addObserver(this);
 
         // Set substring in actionbar
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -149,6 +149,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         Controller.registerReceivers(getActivity().getApplicationContext());
     }
 
+    @Override
     public void update(Observable observable, Object data) {
         this.recyclerView.swapAdapter(new WifiListAdapter(getActivity().getBaseContext(), R.layout.list_item_wifilist, this.wifiListHandler, this.recyclerView, this.fab), false);
         this.recyclerView.requestLayout();

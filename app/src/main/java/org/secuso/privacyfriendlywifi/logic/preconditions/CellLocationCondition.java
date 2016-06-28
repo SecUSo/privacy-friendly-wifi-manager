@@ -15,24 +15,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
+ * A condition that is true when the user is connected to a known cell.
  */
 public class CellLocationCondition extends Precondition {
     private static final String TAG = CellLocationCondition.class.getCanonicalName();
     public final int MIN_CELLS = 3;
     public final double MIN_CELL_PERCENTAGE = 0.3;
     private final String bssid;
-    private Set<PrimitiveCellInfo> relatedCells;
+    private Set<PrimitiveCellInfo> relatedCells; // cells
 
+    /**
+     * Creates a new {@link CellLocationCondition}.
+     *
+     * @param bssid The BSSID (which should be equivalent to a MAC address from this perspective
+     */
     public CellLocationCondition(String bssid) {
         super();
         this.bssid = bssid;
         this.relatedCells = new HashSet<>();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof CellLocationCondition && this.getBssid().equals(((CellLocationCondition) o).getBssid());
     }
 
     protected CellLocationCondition(Parcel in) {
@@ -41,8 +41,67 @@ public class CellLocationCondition extends Precondition {
         this.relatedCells = new HashSet<PrimitiveCellInfo>(Arrays.asList(in.createTypedArray(PrimitiveCellInfo.CREATOR)));
     }
 
+
+    /* GETTERS & SETTERS */
+    public int getNumberOfRelatedCells() {
+        return relatedCells.size();
+    }
+
     public String getBssid() {
         return this.bssid;
+    }
+
+    /**
+     * Adds the k best surrounding cells to the {@code relatedCells} using
+     * {@code addKBestSurroundingCells(PrimitiveCellInfoTreeSet cells, int k)}.
+     *
+     * @param context A context to use.
+     * @param k       Defines how many surrounding cells should be added.
+     * @return True if a cell has been added, false otherwise.
+     */
+    public boolean addKBestSurroundingCells(Context context, int k) {
+        return addKBestSurroundingCells(PrimitiveCellInfo.getAllCells(context), k);
+    }
+
+    /**
+     * Adds the k best surrounding cells to the {@code relatedCells}
+     *
+     * @param cells The cells to add.
+     * @param k     Defines how many surrounding cells should be added.
+     * @return True if a cell has been added, false otherwise.
+     */
+    public boolean addKBestSurroundingCells(PrimitiveCellInfoTreeSet cells, int k) {
+        boolean modified = false;
+        int i = 0;
+        for (PrimitiveCellInfo cell : cells) {
+            if (i >= k) {
+                break;
+            }
+
+            modified |= this.relatedCells.add(cell);
+            i++;
+        }
+
+        if (modified) {
+            this.setChanged();
+            this.notifyObservers();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check whether ACCESS_COARSE_LOCATION permission has been granted.
+     *
+     * @param context A context to use.
+     * @return True if ACCESS_COARSE_LOCATION permission has been granted, false otherwise.
+     */
+    public static boolean hasCoarseLocationPermission(Context context) {
+        return (ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED);
     }
 
     @Override
@@ -65,33 +124,9 @@ public class CellLocationCondition extends Precondition {
         return false; // condition not active
     }
 
-    public boolean addKBestSurroundingCells(Context context, int k) {
-        return addKBestSurroundingCells(PrimitiveCellInfo.getAllCells(context), k);
-    }
-
-    public boolean addKBestSurroundingCells(PrimitiveCellInfoTreeSet cells, int k) {
-        boolean modified = false;
-        int i = 0;
-        for (PrimitiveCellInfo cell : cells) {
-            if (i >= k) {
-                break;
-            }
-
-            modified |= this.relatedCells.add(cell);
-            i++;
-        }
-
-        return modified;
-    }
-
-    public static boolean hasCoarseLocationPermission(Context context) {
-        return (ContextCompat.checkSelfPermission(context,
-                Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED);
-    }
-
-    public int getNumberOfRelatedCells() {
-        return relatedCells.size();
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof CellLocationCondition && this.getBssid().equals(((CellLocationCondition) o).getBssid());
     }
 
     @Override

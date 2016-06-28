@@ -18,7 +18,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
+import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.service.Controller;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.fragment.AboutFragment;
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            Log.d(TAG, "SHOW SOME EXPLANATION FOR LOCATION"); // TODO show some explanatory dialog
+            Logger.d(TAG, "SHOW SOME EXPLANATION FOR LOCATION"); // TODO show some explanatory dialog
         }
 
         ActivityCompat.requestPermissions(this,
@@ -233,10 +233,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         } catch (InstantiationException e) {
-            Log.e(TAG, "InstantiationException");
+            Logger.e(TAG, "InstantiationException");
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            Log.e(TAG, "IllegalAccessException");
+            Logger.e(TAG, "IllegalAccessException");
             e.printStackTrace();
         }
     }

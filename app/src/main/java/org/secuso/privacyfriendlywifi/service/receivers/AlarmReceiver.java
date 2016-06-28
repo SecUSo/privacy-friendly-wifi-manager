@@ -53,6 +53,13 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         }
     }
 
+    public static void schedule(Context context) {
+        AlarmReceiver.initAlarmManager(context);
+
+        // pass all schedule entries, calculate pending alarm
+
+    }
+
     /**
      * Cancels the pending alarm.
      * @param context A context.

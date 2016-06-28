@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  *
  */
-public class ScheduleEntry implements Parcelable, Serializable {
+public class ScheduleEntry extends PreconditionEntry implements Parcelable, Serializable {
     private String title;
     private ScheduleCondition scheduleCondition;
 

@@ -6,7 +6,7 @@ import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 
 import java.util.List;
-import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
@@ -20,8 +20,8 @@ public class ScheduleListHandler implements IListHandler<ScheduleEntry> {
         }
     }
 
-    public Observable getListObservable() {
-        return ScheduleListHandler.list.getListObservable();
+    public void addObserver(Observer observer) {
+        ScheduleListHandler.list.addObserver(observer);
     }
 
     public boolean save() {

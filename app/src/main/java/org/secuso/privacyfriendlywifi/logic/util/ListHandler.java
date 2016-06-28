@@ -2,16 +2,19 @@ package org.secuso.privacyfriendlywifi.logic.util;
 
 import android.content.Context;
 
+import org.secuso.privacyfriendlywifi.logic.types.PreconditionEntry;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  */
-public class ListHandler<EntryType> implements IListHandler<EntryType> {
-    public final Observable listObservable = new ListHandler.ListObservable();
+public class ListHandler<EntryType extends PreconditionEntry> implements Observer, IListHandler<EntryType> {
+    private final ListHandler.ListObservable listObservable = new ListHandler.ListObservable();
     private List<EntryType> entries;
     private final String listFilePath;
 
@@ -30,9 +33,8 @@ public class ListHandler<EntryType> implements IListHandler<EntryType> {
         }
     }
 
-    @Override
-    public Observable getListObservable() {
-        return this.listObservable;
+    public void addObserver(Observer observer) {
+        this.listObservable.addObserver(observer);
     }
 
     public boolean save() {
@@ -49,6 +51,7 @@ public class ListHandler<EntryType> implements IListHandler<EntryType> {
     public boolean add(EntryType newEntry) {
         boolean ret = this.entries.add(newEntry);
         this.save();
+        this.listObservable.setChanged();
         this.listObservable.notifyObservers();
         return ret;
     }
@@ -56,6 +59,7 @@ public class ListHandler<EntryType> implements IListHandler<EntryType> {
     public boolean addAll(List<EntryType> newEntries) {
         boolean ret = this.entries.addAll(newEntries);
         this.save();
+        this.listObservable.setChanged();
         this.listObservable.notifyObservers();
         return ret;
     }
@@ -71,6 +75,7 @@ public class ListHandler<EntryType> implements IListHandler<EntryType> {
     public boolean remove(EntryType entry) {
         boolean ret = this.entries.remove(entry);
         this.save();
+        this.listObservable.setChanged();
         this.listObservable.notifyObservers();
         return ret;
     }
@@ -87,6 +92,16 @@ public class ListHandler<EntryType> implements IListHandler<EntryType> {
         return this.entries.isEmpty();
     }
 
+    @Override
+    public void update(Observable observable, Object data) {
+        this.save();
+        this.listObservable.setChanged();
+        this.listObservable.notifyObservers();
+    }
+
     private class ListObservable extends Observable {
+        public void setChanged() {
+            super.setChanged();
+        }
     }
 }

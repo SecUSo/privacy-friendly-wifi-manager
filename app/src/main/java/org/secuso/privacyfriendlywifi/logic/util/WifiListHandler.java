@@ -6,7 +6,7 @@ import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 
 import java.util.List;
-import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
@@ -20,8 +20,8 @@ public class WifiListHandler implements IListHandler<WifiLocationEntry> {
         }
     }
 
-    public Observable getListObservable() {
-        return WifiListHandler.list.getListObservable();
+    public void addObserver(Observer observer) {
+        WifiListHandler.list.addObserver(observer);
     }
 
     public boolean save() {

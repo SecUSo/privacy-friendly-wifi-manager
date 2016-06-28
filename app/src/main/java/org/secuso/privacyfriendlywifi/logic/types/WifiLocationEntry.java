@@ -13,7 +13,7 @@ import java.util.List;
 /**
  *
  */
-public class WifiLocationEntry implements Parcelable, Serializable {
+public class WifiLocationEntry extends PreconditionEntry implements Parcelable, Serializable {
     private String ssid;
     private List<CellLocationCondition> cellLocationConditions;
 

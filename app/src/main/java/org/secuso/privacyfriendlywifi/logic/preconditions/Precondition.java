@@ -5,11 +5,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.Observable;
 
 /**
  * Interface representing a precondition to check for.
  */
-public class Precondition implements Parcelable, Serializable{
+public class Precondition extends Observable implements Parcelable, Serializable{
     protected boolean isActive = true; // by default a user created precondition is active
 
     public Precondition() {
@@ -23,12 +24,23 @@ public class Precondition implements Parcelable, Serializable{
         this.isActive = in.readInt() != 0;
     }
 
+    /**
+     * Checks the active state of the precondition.
+     * @return Returns the active state of the precondition.
+     */
     public boolean isActive() {
         return isActive;
     }
 
+    /**
+     * Sets the active state of the precondition.
+     * If a precondition is not active, {@code check(Context context, Object obj)} returns always false.
+     * @param isActive True if the precondition should be evaluated, false otherwise.
+     */
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+        this.setChanged();
+        this.notifyObservers();
     }
 
 

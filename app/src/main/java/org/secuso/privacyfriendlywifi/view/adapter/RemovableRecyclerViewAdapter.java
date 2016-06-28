@@ -95,6 +95,7 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
     public boolean remove(EntryType recyclerViewEntry) {
         boolean ret = false;
         int position = this.listHandler.indexOf(recyclerViewEntry);
+
         if (position >= 0) {
             ret = this.listHandler.remove(recyclerViewEntry);
 
@@ -102,9 +103,11 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
             this.notifyItemRemoved(position);
             this.notifyItemRangeChanged(position, this.getItemCount());
         }
+
         if (this.listHandler.isEmpty()) {
             this.setDeleteModeActive(false);
         }
+
         return ret;
     }
 }

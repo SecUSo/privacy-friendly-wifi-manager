@@ -18,6 +18,7 @@ import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfoTreeSet;
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
+import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
 
@@ -30,6 +31,7 @@ import java.util.List;
  *
  */
 public class ManagerService extends IntentService {
+    public static final String TAG = "ManagerService";
     public static final String FN_SCHEDULE_ENTRIES = "fn_schedule_entries";
     public static final String FN_LOCATION_ENTRIES = "fn_location_entries";
 
@@ -45,6 +47,8 @@ public class ManagerService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Logger.d(TAG, "Incoming intent");
+
         try {
             boolean determinedWifiState = false; // check if Wifi is scheduled to be on (true) / off (false)
 
@@ -63,8 +67,22 @@ public class ManagerService extends IntentService {
                             public void onReceive(Context context, Intent i) {
                                 // fetch search results
                                 WifiHandler.scanAndUpdateWifis(context, unknownNetworks);
+
+                                // unregister this receiver
+                                try {
+                                    context.unregisterReceiver(this);
+                                } catch (IllegalArgumentException e) {
+                                    // Log.d("TAG", "not registered");
+                                }
                             }
                         };
+
+                        // unregister this receiver
+                        try {
+                            this.unregisterReceiver(receiver);
+                        } catch (IllegalArgumentException e) {
+                            // Log.d("TAG", "not registered");
+                        }
 
                         IntentFilter filter = new IntentFilter();
                         filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
@@ -96,14 +114,12 @@ public class ManagerService extends IntentService {
         String currentSsid = WifiHandler.getCleanSSID(currentConnection.getSSID());
         String currentBssid = currentConnection.getBSSID();
 
+        boolean modified = false;
         for (WifiLocationEntry entry : this.wifiListHandler.getAll()) {
             if (entry.getSsid().equals(currentSsid)) {
                 for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                     if (condition.getBssid().equals(currentBssid)) {
-                        this.wifiListHandler.remove(entry);
                         condition.addKBestSurroundingCells(this, 3);
-                        this.wifiListHandler.add(entry);
-
                         return;
                     }
                 }
