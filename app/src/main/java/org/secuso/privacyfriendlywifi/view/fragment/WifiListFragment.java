@@ -20,7 +20,6 @@ import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
-import org.secuso.privacyfriendlywifi.service.Controller;
 import org.secuso.privacyfriendlywifi.view.adapter.WifiListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 import org.secuso.privacyfriendlywifi.view.dialog.WifiPickerDialog;
@@ -91,7 +90,6 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                                         }
                                 ).show();
                     } else {
-                        Controller.unregisterReceivers(context);
                         WifiPickerDialog dialog = new WifiPickerDialog(getContext());
                         dialog.addOnDialogClosedListener(thisClass);
                         dialog.setManagedWifis(wifiListHandler.getAll());
@@ -136,20 +134,16 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
             this.wifiListHandler.add((WifiLocationEntry) returnValue[0]);
         }
-
-       Controller.registerReceivers(this.context); // TODO: What does this do here?
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Controller.registerReceivers(this.context);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Controller.registerReceivers(this.context);
     }
 
     @Override

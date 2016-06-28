@@ -46,7 +46,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         // in case of externally triggered setup function -> remove old alarms
         AlarmReceiver.alarmManager.cancel(AlarmReceiver.alarmIntent);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
             AlarmReceiver.alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, AlarmReceiver.TIMEOUT_IN_SECONDS * 1000, alarmIntent);
         } else {
             AlarmReceiver.alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), AlarmReceiver.TIMEOUT_IN_SECONDS * 1000, alarmIntent);
