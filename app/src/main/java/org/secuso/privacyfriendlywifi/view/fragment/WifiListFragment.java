@@ -32,14 +32,14 @@ import secuso.org.privacyfriendlywifi.R;
 
 public class WifiListFragment extends Fragment implements IOnDialogClosedListener, Observer {
     private IOnDialogClosedListener thisClass;
+    private WifiListHandler wifiListHandler;
 
     private RecyclerView recyclerView;
-    private WifiListHandler wifiListHandler;
+    private FloatingActionButton fab;
 
     public WifiListFragment() {
         // Required empty public constructor
         this.thisClass = this;
-        this.wifiListHandler = new WifiListHandler(getContext());
     }
 
     public static WifiListFragment newInstance() {
@@ -50,20 +50,17 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
+
+        this.wifiListHandler = new WifiListHandler(getContext());
+        this.wifiListHandler.getListObservable().addObserver(this);
 
         // Set substring in actionbar
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -73,10 +70,10 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         }
 
         // setup the floating action button
-        final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        this.fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
-        if (fab != null) {
-            fab.setOnClickListener(new View.OnClickListener() {
+        if (this.fab != null) {
+            this.fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     final WifiManager wifiMan = (WifiManager) getContext().getSystemService(Context.WIFI_SERVICE);
@@ -118,14 +115,14 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         this.recyclerView.setAdapter(itemsAdapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
 
-        if (fab != null) {
+        if (this.fab != null) {
             this.recyclerView.setPadding(
                     this.recyclerView.getPaddingLeft(),
                     this.recyclerView.getPaddingTop(),
                     this.recyclerView.getPaddingRight(),
                     (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
-                            ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), this.getContext())
-                            : fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom()));
+                            ScreenHandler.getPXFromDP(this.fab.getPaddingTop() + this.fab.getHeight() + fab.getPaddingBottom(), this.getContext())
+                            : this.fab.getPaddingTop() + this.fab.getHeight() + this.fab.getPaddingBottom()));
         }
 
         return rootView;
@@ -152,8 +149,8 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         Controller.registerReceivers(getActivity().getApplicationContext());
     }
 
-    @Override
     public void update(Observable observable, Object data) {
+        this.recyclerView.swapAdapter(new WifiListAdapter(getActivity().getBaseContext(), R.layout.list_item_wifilist, this.wifiListHandler, this.recyclerView, this.fab), false);
         this.recyclerView.requestLayout();
         this.recyclerView.invalidate();
     }

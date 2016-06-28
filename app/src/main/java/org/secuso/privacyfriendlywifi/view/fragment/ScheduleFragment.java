@@ -1,11 +1,11 @@
 package org.secuso.privacyfriendlywifi.view.fragment;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,31 +14,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
-import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.ScheduleListHandler;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
-import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 import org.secuso.privacyfriendlywifi.view.dialog.TimePickerDialog;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import secuso.org.privacyfriendlywifi.R;
 
-public class ScheduleFragment extends Fragment implements IOnDialogClosedListener {
-
-    private List<ScheduleEntry> scheduleEntries;
+public class ScheduleFragment extends Fragment implements IOnDialogClosedListener, Observer {
     private IOnDialogClosedListener thisClass;
 
     private RecyclerView recyclerView;
     private ScheduleAdapter itemsAdapter;
+    private ScheduleListHandler scheduleListHandler;
 
     public ScheduleFragment() {
         // Required empty public constructor
-        thisClass = this;
+        this.thisClass = this;
     }
 
     public static ScheduleFragment newInstance() {
@@ -46,16 +43,6 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            this.scheduleEntries = (List<ScheduleEntry>) FileHandler.loadObject(context, ManagerService.FN_SCHEDULE_ENTRIES, false);
-        } catch (IOException e) {
-            this.scheduleEntries = new ArrayList<>();
-        }
     }
 
     @Override
@@ -68,8 +55,14 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_schedule, container, false);
 
+        this.scheduleListHandler = new ScheduleListHandler(getContext());
+
         // Set substring in actionbar
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.fragment_schedule);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setSubtitle(R.string.fragment_schedule);
+        }
 
         // setup the floating action button
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
@@ -80,7 +73,7 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
                 public void onClick(View view) {
                     TimePickerDialog dialog = new TimePickerDialog(getContext());
                     dialog.addOnDialogClosedListener(thisClass);
-                    dialog.setCurrentListSize(scheduleEntries.size());
+                    dialog.setCurrentListSize(scheduleListHandler.size());
                     dialog.show();
                 }
             });
@@ -91,7 +84,7 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
 
-        this.itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), R.layout.list_item_schedule, this.scheduleEntries, this.recyclerView, fab);
+        this.itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), R.layout.list_item_schedule, this.scheduleListHandler, this.recyclerView, fab);
         this.recyclerView.setAdapter(this.itemsAdapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
         this.recyclerView.setPadding(
@@ -108,27 +101,15 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
     @Override
     public void onDialogClosed(int returnCode, Object... returnValue) {
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
-            this.scheduleEntries.add((ScheduleEntry) returnValue[0]);
-            this.saveSchedule();
+            this.scheduleListHandler.add((ScheduleEntry) returnValue[0]);
             int currentItemCount = this.recyclerView.getAdapter().getItemCount();
             this.recyclerView.getAdapter().notifyItemInserted(currentItemCount - 1);
             this.recyclerView.getAdapter().notifyItemRangeChanged(currentItemCount - 1, currentItemCount);
         }
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        this.saveSchedule();
-    }
-
-    private boolean saveSchedule() {
-        //TODO sometimes list is not loaded correctly (alternating switch statuses)
-        try {
-            return FileHandler.storeObject(getActivity(), ManagerService.FN_SCHEDULE_ENTRIES, this.scheduleEntries);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+    public void update(Observable observable, Object data) {
+        this.recyclerView.requestLayout();
+        this.recyclerView.invalidate();
     }
 }

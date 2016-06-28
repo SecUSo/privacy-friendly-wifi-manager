@@ -97,10 +97,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void onClick(View v) {
 
                         if (mainSwitch.isChecked()) {
-                            ManagerService.setRunningFlag(getApplicationContext(), true);
+                            ManagerService.setActiveFlag(getApplicationContext(), true);
                             Controller.registerReceivers(getApplicationContext());
                         } else {
-                            ManagerService.setRunningFlag(getApplicationContext(), false);
+                            ManagerService.setActiveFlag(getApplicationContext(), false);
                             Controller.unregisterReceivers(getApplicationContext());
                         }
 
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         );
 
         // update state switch´s state
-        mainSwitch.setChecked(ManagerService.isServiceRunning(this));
+        mainSwitch.setChecked(ManagerService.isServiceActive(this));
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             final Switch mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
 
             // update state switch´s state
-            mainSwitch.setChecked(ManagerService.isServiceRunning(this));
+            mainSwitch.setChecked(ManagerService.isServiceActive(this));
         }
     }
 

@@ -151,12 +151,12 @@ public class ManagerService extends IntentService {
         return false; // no schedule active
     }
 
-    public static void setRunningFlag(Context context, boolean state) {
+    public static void setActiveFlag(Context context, boolean state) {
         SharedPreferences settings = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
         settings.edit().putBoolean(ManagerService.PREF_ENTRY_SERVICE_ACTIVE, state).apply();
     }
 
-    public static boolean isServiceRunning(Context context) {
+    public static boolean isServiceActive(Context context) {
         SharedPreferences settings = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
 
         return settings.getBoolean(PREF_ENTRY_SERVICE_ACTIVE, false);

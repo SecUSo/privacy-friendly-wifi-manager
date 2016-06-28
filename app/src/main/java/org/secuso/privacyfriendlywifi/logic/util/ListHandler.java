@@ -2,8 +2,6 @@ package org.secuso.privacyfriendlywifi.logic.util;
 
 import android.content.Context;
 
-import org.secuso.privacyfriendlywifi.service.ManagerService;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +13,16 @@ import java.util.Observable;
 public class ListHandler<EntryType> implements IListHandler<EntryType> {
     public final Observable listObservable = new ListHandler.ListObservable();
     private List<EntryType> entries;
+    private final String listFilePath;
 
     private Context context;
 
-    public ListHandler(Context context) {
+    public ListHandler(Context context, String listFilePath) {
         this.context = context;
+        this.listFilePath = listFilePath;
 
         try {
-            Object o = FileHandler.loadObject(this.context, ManagerService.FN_LOCATION_ENTRIES, false);
+            Object o = FileHandler.loadObject(this.context, this.listFilePath, false);
             this.entries = (List<EntryType>) o;
         } catch (IOException e) {
             // File does not exist
@@ -30,9 +30,14 @@ public class ListHandler<EntryType> implements IListHandler<EntryType> {
         }
     }
 
+    @Override
+    public Observable getListObservable() {
+        return this.listObservable;
+    }
+
     public boolean save() {
         try {
-            FileHandler.storeObject(this.context, ManagerService.FN_LOCATION_ENTRIES, this.entries);
+            FileHandler.storeObject(this.context, this.listFilePath, this.entries);
         } catch (IOException e) {
             e.printStackTrace();
             return false;

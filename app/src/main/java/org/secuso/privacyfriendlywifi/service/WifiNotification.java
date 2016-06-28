@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
+import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
 import org.secuso.privacyfriendlywifi.view.MainActivity;
 import org.secuso.privacyfriendlywifi.view.fragment.WifiListFragment;
 
-import java.util.List;
 import java.util.Locale;
 
 import secuso.org.privacyfriendlywifi.R;
@@ -106,9 +106,8 @@ public class WifiNotification {
             notificationManager.cancel(1);
 
             // add the new wifi to the list
-            List<WifiLocationEntry> wifiLocationEntries = ManagerService.getWifiLocationEntries(context);
-            wifiLocationEntries.add(new WifiLocationEntry(WifiHandler.getCleanSSID(wifiInfo.getSSID()), wifiInfo.getBSSID()));
-            ManagerService.saveWifiLocationEntries(context, wifiLocationEntries);
+            WifiListHandler wifiListHandler = new WifiListHandler(context);
+            wifiListHandler.add(new WifiLocationEntry(WifiHandler.getCleanSSID(wifiInfo.getSSID()), wifiInfo.getBSSID()));
 
             Intent refreshList = new Intent(context.getApplicationContext(), WifiListFragment.class);
             refreshList.setAction("REFRESH_LIST");

@@ -72,7 +72,6 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
         return false;
     }
 
-    @Override
     public void setDeleteModeActive(boolean isActive) {
         this.isDeleteModeActive = isActive;
         for (RemovableItemViewHolder<EntryType> vh : this.children) {
@@ -89,7 +88,6 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
         }
     }
 
-    @Override
     public boolean isDeleteModeActive() {
         return this.isDeleteModeActive;
     }

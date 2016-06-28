@@ -30,7 +30,7 @@ public class WifiWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        RemoteViews widgetActiveButtonView = updateButton(context, ManagerService.isServiceRunning(context));
+        RemoteViews widgetActiveButtonView = updateButton(context, ManagerService.isServiceActive(context));
 
         // intent for widget button click
         Intent buttonIntent = new Intent(context, WidgetClickListener.class);
@@ -72,8 +72,8 @@ public class WifiWidget extends AppWidgetProvider {
     public static class WidgetClickListener extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean active = !ManagerService.isServiceRunning(context);
-            ManagerService.setRunningFlag(context, active);
+            boolean active = !ManagerService.isServiceActive(context);
+            ManagerService.setActiveFlag(context, active);
 
             if (active) {
                 Controller.registerReceivers(context.getApplicationContext());

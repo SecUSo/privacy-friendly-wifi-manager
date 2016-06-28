@@ -9,6 +9,7 @@ import android.net.wifi.WifiManager;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
+import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.service.WifiNotification;
 
@@ -19,8 +20,7 @@ import org.secuso.privacyfriendlywifi.service.WifiNotification;
 public class WifiChangedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (ManagerService.isServiceRunning(context)) { // check that the app is actually expected to manage wifi
-
+        if (ManagerService.isServiceActive(context)) { // check that the app is actually expected to manage wifi
             NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 
             if (info != null && info.isConnected()) { // wifi is connected
@@ -34,8 +34,10 @@ public class WifiChangedReceiver extends BroadcastReceiver {
                     return;
                 }
 
+                WifiListHandler wifiListHandler = new WifiListHandler(context);
+
                 // check whether the wifi is already known
-                for (WifiLocationEntry entry : ManagerService.getWifiLocationEntries(context)) {
+                for (WifiLocationEntry entry : wifiListHandler.getAll()) {
                     if (entry.getSsid().equals(ssid)) {
                         return;
                     }

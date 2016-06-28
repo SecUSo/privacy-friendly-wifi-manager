@@ -62,7 +62,7 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
                 progressBar.setVisibility(View.GONE);
 
                 // fetch search results
-                WifiHandler.scanAndUpdateWifis(context, managedWifis, unknownNetworks);
+                WifiHandler.scanAndUpdateWifis(context, unknownNetworks);
 
                 recyclerView.invalidate();
                 recyclerView.requestLayout();

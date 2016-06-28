@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
+import org.secuso.privacyfriendlywifi.logic.util.IListHandler;
 import org.secuso.privacyfriendlywifi.view.viewholder.ScheduleItemViewHolder;
 
 import java.util.ArrayList;
@@ -18,8 +19,8 @@ import secuso.org.privacyfriendlywifi.R;
 public class ScheduleAdapter extends RemovableRecyclerViewAdapter<ScheduleEntry> {
     private List<ScheduleItemViewHolder> children;
 
-    public ScheduleAdapter(Context context, int layoutResId, List<ScheduleEntry> scheduleEntries, RecyclerView recyclerView, FloatingActionButton fab) {
-        super(context, layoutResId, scheduleEntries, recyclerView, fab);
+    public ScheduleAdapter(Context context, int layoutResId, IListHandler<ScheduleEntry> scheduleListHandler, RecyclerView recyclerView, FloatingActionButton fab) {
+        super(context, layoutResId, scheduleListHandler, recyclerView, fab);
         this.children = new ArrayList<>();
     }
 

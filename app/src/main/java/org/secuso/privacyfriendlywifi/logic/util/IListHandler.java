@@ -1,12 +1,14 @@
 package org.secuso.privacyfriendlywifi.logic.util;
 
 import java.util.List;
+import java.util.Observable;
 
 /**
  *
  */
 public interface IListHandler<EntryType> {
 
+    Observable getListObservable();
 
     boolean save();
 

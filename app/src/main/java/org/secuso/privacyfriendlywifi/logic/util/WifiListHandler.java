@@ -3,8 +3,10 @@ package org.secuso.privacyfriendlywifi.logic.util;
 import android.content.Context;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.service.ManagerService;
 
 import java.util.List;
+import java.util.Observable;
 
 /**
  *
@@ -14,8 +16,12 @@ public class WifiListHandler implements IListHandler<WifiLocationEntry> {
 
     public WifiListHandler(Context context) {
         if (WifiListHandler.list == null) {
-            WifiListHandler.list = new ListHandler<>(context);
+            WifiListHandler.list = new ListHandler<>(context, ManagerService.FN_LOCATION_ENTRIES);
         }
+    }
+
+    public Observable getListObservable() {
+        return WifiListHandler.list.getListObservable();
     }
 
     public boolean save() {

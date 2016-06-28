@@ -37,6 +37,7 @@ public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder 
         this.adapter = adapter;
         this.listener = listener;
         this.setDeleteButtonVisible(this.adapter.isDeleteModeActive());
+
     }
 
     @Override
