@@ -27,7 +27,7 @@ public class Controller {
         screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
         context.registerReceiver(Controller.screenOnReceiver, screenStateFilter);
 
-        AlarmReceiver.setupAlarm(context);
+        AlarmReceiver.schedule(context);
     }
 
 
