@@ -47,9 +47,10 @@ public class ManagerService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleIntent(final Intent intent) {
         Logger.d(TAG, "Incoming intent");
         StaticContext.setContext(this);
+        boolean searchedForWifi = false;
 
         try {
             boolean determinedWifiState = false; // check if Wifi is scheduled to be on (true) / off (false)
@@ -76,6 +77,9 @@ public class ManagerService extends IntentService {
                                 } catch (IllegalArgumentException e) {
                                     // Log.d("TAG", "not registered");
                                 }
+
+                                // tell everyone that we are done
+                                WakefulBroadcastReceiver.completeWakefulIntent(intent);
                             }
                         };
 
@@ -88,6 +92,7 @@ public class ManagerService extends IntentService {
 
                         IntentFilter filter = new IntentFilter();
                         filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+                        searchedForWifi = true;
                         this.registerReceiver(receiver, filter);
                         determinedWifiState = this.checkCells();
                     } else {
@@ -105,8 +110,10 @@ public class ManagerService extends IntentService {
             WifiToggleEffect wifiToggleEffect = new WifiToggleEffect();
             wifiToggleEffect.apply(determinedWifiState);
         } finally {
-            // tell everyone that we are done
-            WakefulBroadcastReceiver.completeWakefulIntent(intent);
+            if (!searchedForWifi) {
+                // tell everyone that we are done
+                WakefulBroadcastReceiver.completeWakefulIntent(intent);
+            }
         }
     }
 

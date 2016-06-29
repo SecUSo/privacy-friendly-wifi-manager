@@ -1,5 +1,6 @@
 package org.secuso.privacyfriendlywifi.view.dialog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -47,8 +48,8 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
         this.onDialogClosedListeners = new ArrayList<>();
     }
 
-    public void show() {
-        View view = LayoutInflater.from(StaticContext.getContext()).inflate(R.layout.fragment_timepicker_dialog, null, false);
+    public void show(Activity activity, ViewGroup container) {
+        View view = LayoutInflater.from(activity).inflate(R.layout.fragment_timepicker_dialog, container, false);
 
         this.startTimePicker = (TimePicker) view.findViewById(R.id.start_time_picker);
         this.initPicker(startTimePicker, startHour, startMinute);
@@ -86,9 +87,9 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
 
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(StaticContext.getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+            builder = new AlertDialog.Builder(activity, android.R.style.Theme_Material_Light_Dialog_Alert);
         } else {
-            builder = new AlertDialog.Builder(StaticContext.getContext());
+            builder = new AlertDialog.Builder(activity);
         }
         builder.setPositiveButton(R.string.time_picker_dialog_button_next, null);
         builder.setNegativeButton(R.string.time_picker_dialog_button_cancel, null);

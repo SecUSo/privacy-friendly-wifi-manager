@@ -1,10 +1,12 @@
 package org.secuso.privacyfriendlywifi.view.fragment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +36,8 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
     private ScheduleAdapter itemsAdapter;
     private ScheduleListHandler scheduleListHandler;
 
+    protected FragmentActivity mActivity;
+
     public ScheduleFragment() {
         // Required empty public constructor
         this.thisClass = this;
@@ -52,7 +56,7 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         StaticContext.setContext(this.getContext());
 
@@ -62,7 +66,7 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         this.scheduleListHandler = new ScheduleListHandler();
 
         // Set substring in actionbar
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) this.mActivity).getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setSubtitle(R.string.fragment_schedule);
@@ -78,7 +82,7 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
                     TimePickerDialog dialog = new TimePickerDialog();
                     dialog.addOnDialogClosedListener(thisClass);
                     dialog.setCurrentListSize(scheduleListHandler.size());
-                    dialog.show();
+                    dialog.show(mActivity, container);
                 }
             });
         }
@@ -112,8 +116,22 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         }
     }
 
+    @Override
     public void update(Observable observable, Object data) {
-        this.recyclerView.requestLayout();
-        this.recyclerView.invalidate();
+        if (this.mActivity != null) {
+            this.mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.requestLayout();
+                    recyclerView.invalidate();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = getActivity();
     }
 }
