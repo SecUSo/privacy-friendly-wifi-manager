@@ -32,6 +32,9 @@ public class WifiLocationEntry extends PreconditionEntry implements Parcelable, 
     public boolean addCellLocationCondition(CellLocationCondition newCondition) {
         if (!this.cellLocationConditions.contains(newCondition)) {
             this.cellLocationConditions.add(newCondition);
+            newCondition.addObserver(this);
+            this.notifyChanged();
+
             return true;
         }
         return false;

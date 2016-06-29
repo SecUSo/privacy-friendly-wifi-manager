@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
+import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
+import org.secuso.privacyfriendlywifi.logic.util.ScheduleListHandler;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 
 /**
@@ -53,11 +55,13 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         }
     }
 
-    public static void schedule(Context context) {
+    public static void schedule(Context context, ScheduleListHandler scheduleEntries) {
         AlarmReceiver.initAlarmManager(context);
 
         // pass all schedule entries, calculate pending alarm
+        for (ScheduleEntry entry : scheduleEntries.getAll()) {
 
+        }
     }
 
     /**

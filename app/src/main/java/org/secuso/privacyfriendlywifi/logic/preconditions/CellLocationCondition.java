@@ -83,8 +83,7 @@ public class CellLocationCondition extends Precondition {
         }
 
         if (modified) {
-            this.setChanged();
-            this.notifyObservers();
+            this.notifyChanged();
 
             return true;
         }

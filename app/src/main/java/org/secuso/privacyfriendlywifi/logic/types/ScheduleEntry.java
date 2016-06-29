@@ -30,6 +30,7 @@ public class ScheduleEntry extends PreconditionEntry implements Parcelable, Seri
 
     public void setTitle(String title) {
         this.title = title;
+        this.notifyChanged();
     }
 
     public ScheduleCondition getScheduleCondition() {
@@ -38,6 +39,7 @@ public class ScheduleEntry extends PreconditionEntry implements Parcelable, Seri
 
     public void setScheduleCondition(ScheduleCondition scheduleCondition) {
         this.scheduleCondition = scheduleCondition;
+        this.notifyChanged();
     }
 
     @Override

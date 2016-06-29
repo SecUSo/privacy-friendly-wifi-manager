@@ -24,6 +24,11 @@ public class Precondition extends Observable implements Parcelable, Serializable
         this.isActive = in.readInt() != 0;
     }
 
+    protected void notifyChanged() {
+        this.setChanged();
+        this.notifyChanged();
+    }
+
     /**
      * Checks the active state of the precondition.
      * @return Returns the active state of the precondition.
@@ -39,8 +44,7 @@ public class Precondition extends Observable implements Parcelable, Serializable
      */
     public void setActive(boolean isActive) {
         this.isActive = isActive;
-        this.setChanged();
-        this.notifyObservers();
+        this.notifyChanged();
     }
 
 

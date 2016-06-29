@@ -49,6 +49,7 @@ public class ListHandler<EntryType extends PreconditionEntry> implements Observe
     }
 
     public boolean add(EntryType newEntry) {
+        newEntry.addObserver(this);
         boolean ret = this.entries.add(newEntry);
         this.save();
         this.listObservable.setChanged();
@@ -57,6 +58,10 @@ public class ListHandler<EntryType extends PreconditionEntry> implements Observe
     }
 
     public boolean addAll(List<EntryType> newEntries) {
+        for (EntryType entry : newEntries) {
+            entry.addObserver(this);
+        }
+
         boolean ret = this.entries.addAll(newEntries);
         this.save();
         this.listObservable.setChanged();
