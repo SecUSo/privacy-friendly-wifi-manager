@@ -10,7 +10,7 @@ public class StaticContext {
     private static Context context;
 
     public static void setContext(Context context) {
-        if (StaticContext.context == null && context != null) {
+        if (/*StaticContext.context == null && */context != null) {
             Log.d("TAG", "Static context set!");
             StaticContext.context = context;
         }

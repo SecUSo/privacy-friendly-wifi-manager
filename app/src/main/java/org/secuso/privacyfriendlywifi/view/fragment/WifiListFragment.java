@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         StaticContext.setContext(this.getContext());
 
@@ -95,7 +96,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                         WifiPickerDialog dialog = new WifiPickerDialog();
                         dialog.addOnDialogClosedListener(thisClass);
                         dialog.setManagedWifis(wifiListHandler.getAll());
-                        dialog.show();
+                        dialog.show(getActivity(), container);
                     }
                 }
             });
@@ -106,14 +107,6 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         this.recyclerView.addItemDecoration(new DividerItemDecoration(StaticContext.getContext()));
 
         WifiListAdapter itemsAdapter = new WifiListAdapter(R.layout.list_item_wifilist, this.wifiListHandler, this.recyclerView, fab);
-
-        // save list after item deletion
-        itemsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                super.onChanged();
-            }
-        });
 
         this.recyclerView.setAdapter(itemsAdapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(StaticContext.getContext()));
@@ -149,14 +142,18 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     }
 
     @Override
-    public void update(Observable observable, Object data) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.swapAdapter(new WifiListAdapter(R.layout.list_item_wifilist, wifiListHandler, recyclerView, fab), false);
-                recyclerView.requestLayout();
-                recyclerView.invalidate();
-            }
-        });
+    public void update(Observable o, Object data) {
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.swapAdapter(new WifiListAdapter(R.layout.list_item_wifilist, wifiListHandler, recyclerView, fab), false);
+                    recyclerView.requestLayout();
+                    recyclerView.invalidate();
+                }
+            });
+        } else {
+            Log.e("TAG", "Activity NULL, ParentActivity null: " + (getParentFragment().getActivity() == null)); // TODO check and remove
+        }
     }
 }

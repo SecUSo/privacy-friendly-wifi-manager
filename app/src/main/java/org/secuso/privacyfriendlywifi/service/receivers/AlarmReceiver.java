@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.SystemClock;
 import android.support.v4.content.WakefulBroadcastReceiver;
+import android.util.Log;
 import android.util.Pair;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.ScheduleCondition;
@@ -21,7 +22,7 @@ import java.util.Calendar;
  * BroadcastReceiver for own alarms. Triggers ManagerService.
  */
 public class AlarmReceiver extends WakefulBroadcastReceiver {
-    private static final int TIMEOUT_IN_SECONDS = 60;
+    private static final int TIMEOUT_IN_SECONDS = 5;
     private static AlarmManager alarmManager;
     private static PendingIntent alarmIntent;
 
@@ -44,14 +45,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
      * Sets a pending alarm. This alarm is either repeating (below SDK level 23) or
      * will manually schedule a new alarm after invocation.
      */
-    public static void setupAlarm() {
-        setupAlarm(AlarmReceiver.TIMEOUT_IN_SECONDS);
-    }
-
-    /**
-     * Sets a pending alarm. This alarm is either repeating (below SDK level 23) or
-     * will manually schedule a new alarm after invocation.
-     */
     public static void setupAlarm(int secondsToStart) {
         AlarmReceiver.initAlarmManager();
 
@@ -61,7 +54,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             AlarmReceiver.alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, secondsToStart * 1000, alarmIntent);
         } else {
-            AlarmReceiver.alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), secondsToStart * 1000, alarmIntent);
+            AlarmReceiver.alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + secondsToStart * 1000, alarmIntent);
         }
     }
 
@@ -91,10 +84,11 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         int diffSeconds = ((endHour - currentHour) * 60 + (endMinute - currentMinute)) * 60;
 
         // if there has not been any entry, we should set the timeout to its default value
-        if (diffSeconds <= 0) {
+        if (diffSeconds <= AlarmReceiver.TIMEOUT_IN_SECONDS) {
             diffSeconds = AlarmReceiver.TIMEOUT_IN_SECONDS;
         }
 
+        Log.d("TAG", "DIFF DIFF DIFF " + diffSeconds);
         // setup alarm
         setupAlarm(diffSeconds);
     }
@@ -114,10 +108,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         Intent startManagerService = new Intent(context, ManagerService.class);
         startWakefulService(context, startManagerService);
 
-        // Set next alarm (required for > Android 6 (support for Doze))
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            AlarmReceiver.initAlarmManager();
-            AlarmReceiver.alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, TIMEOUT_IN_SECONDS * 1000, alarmIntent);
-        }
+        AlarmReceiver.schedule();
     }
 }

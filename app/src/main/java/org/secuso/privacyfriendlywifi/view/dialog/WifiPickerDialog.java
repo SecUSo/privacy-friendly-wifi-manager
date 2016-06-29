@@ -1,5 +1,6 @@
 package org.secuso.privacyfriendlywifi.view.dialog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
@@ -41,17 +43,17 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
         this.onDialogClosedListeners = new ArrayList<>();
     }
 
-    public void show() {
+    public void show(Activity activity, ViewGroup container) {
         final List<WifiLocationEntry> unknownNetworks = new ArrayList<>();
         DialogWifiListAdapter itemsAdapter = new DialogWifiListAdapter(unknownNetworks, this);
 
-        View view = LayoutInflater.from(StaticContext.getContext()).inflate(R.layout.fragment_wifi_dialog, null, false);
+        View view = LayoutInflater.from(activity).inflate(R.layout.fragment_wifi_dialog, container, false);
         // this.titleText = (TextView) view.findViewById(R.id.dialog_title_text);
 
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        recyclerView.addItemDecoration(new DividerItemDecoration(StaticContext.getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(activity));
         recyclerView.setAdapter(itemsAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(StaticContext.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
         final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
         progressBar.setVisibility(View.VISIBLE);
@@ -91,9 +93,9 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
 
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(StaticContext.getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+            builder = new AlertDialog.Builder(activity, android.R.style.Theme_Material_Light_Dialog_Alert);
         } else {
-            builder = new AlertDialog.Builder(StaticContext.getContext());
+            builder = new AlertDialog.Builder(activity);
         }
         builder.setNegativeButton(R.string.wifi_picker_dialog_button_cancel, null);
         builder.setTitle(R.string.wifi_picker_dialog_title);
