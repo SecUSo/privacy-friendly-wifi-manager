@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.SystemClock;
 import android.support.v4.content.WakefulBroadcastReceiver;
-import android.util.Log;
 import android.util.Pair;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.ScheduleCondition;
@@ -22,7 +21,7 @@ import java.util.Calendar;
  * BroadcastReceiver for own alarms. Triggers ManagerService.
  */
 public class AlarmReceiver extends WakefulBroadcastReceiver {
-    private static final int TIMEOUT_IN_SECONDS = 5;
+    private static final int TIMEOUT_IN_SECONDS = 60;
     private static AlarmManager alarmManager;
     private static PendingIntent alarmIntent;
 
@@ -88,7 +87,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
             diffSeconds = AlarmReceiver.TIMEOUT_IN_SECONDS;
         }
 
-        Log.d("TAG", "DIFF DIFF DIFF " + diffSeconds);
         // setup alarm
         setupAlarm(diffSeconds);
     }

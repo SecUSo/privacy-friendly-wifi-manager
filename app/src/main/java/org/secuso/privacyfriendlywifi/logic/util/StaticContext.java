@@ -1,7 +1,6 @@
 package org.secuso.privacyfriendlywifi.logic.util;
 
 import android.content.Context;
-import android.util.Log;
 
 /**
  *
@@ -11,7 +10,7 @@ public class StaticContext {
 
     public static void setContext(Context context) {
         if (/*StaticContext.context == null && */context != null) {
-            Log.d("TAG", "Static context set!");
+            Logger.d("TAG", "Static context set!");
             StaticContext.context = context;
         }
     }
