@@ -34,6 +34,7 @@ import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.Controller;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
+import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 import org.secuso.privacyfriendlywifi.view.fragment.AboutFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.ScheduleFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.SettingsFragment;
@@ -60,25 +61,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         // setup the drawer layout
-        View drawerView = findViewById(R.id.drawer_layout);
-        DrawerLayout drawer = (DrawerLayout) drawerView;
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
         if (drawer != null) {
-            if (getResources().getBoolean(R.bool.isTablet)) {
-                // we are on a tablet
-                Logger.e(TAG, "TABLET");
-                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-                drawer.setScrimColor(Color.TRANSPARENT);
-                this.isDrawerLocked = true;
-            } else {
-
-                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                        R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
-                drawer.addDrawerListener(toggle);
-
-                toggle.syncState();
-            }
+            drawer.addDrawerListener(toggle);
         }
+
+        toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
@@ -91,8 +82,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.ACCESS_COARSE_LOCATION},
-                DYN_PERMISSION);
+                new String[]{Manifest.permission.ACCESS_WIFI_STATE,
+                        Manifest.permission.CHANGE_WIFI_STATE,
+                        Manifest.permission.ACCESS_COARSE_LOCATION}, DYN_PERMISSION);
     }
 
     @Override
@@ -135,6 +127,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // update state switch´s state
         mainSwitch.setChecked(ManagerService.isServiceActive());
+
+        if (ManagerService.isServiceActive()) {
+            AlarmReceiver.schedule();
+        }
 
         // set marginStart using measurement since drawer is locked
         if (this.isDrawerLocked) {
