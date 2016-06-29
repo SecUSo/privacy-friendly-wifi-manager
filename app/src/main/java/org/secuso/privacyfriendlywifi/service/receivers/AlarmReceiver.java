@@ -37,7 +37,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     /**
      *  Sets a pending alarm. This alarm is either repeating (below SDK level 23) or
-     *  will manually schedule a new alarm after invokation.
+     *  will manually schedule a new alarm after invocation.
      * @param context A context.
      */
     public static void setupAlarm(Context context) {

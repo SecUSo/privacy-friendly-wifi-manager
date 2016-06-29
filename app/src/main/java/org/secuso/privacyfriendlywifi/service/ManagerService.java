@@ -114,7 +114,6 @@ public class ManagerService extends IntentService {
         String currentSsid = WifiHandler.getCleanSSID(currentConnection.getSSID());
         String currentBssid = currentConnection.getBSSID();
 
-        boolean modified = false;
         for (WifiLocationEntry entry : this.wifiListHandler.getAll()) {
             if (entry.getSsid().equals(currentSsid)) {
                 for (CellLocationCondition condition : entry.getCellLocationConditions()) {
