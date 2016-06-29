@@ -16,6 +16,7 @@ import android.widget.TimePicker;
 
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -26,7 +27,6 @@ import secuso.org.privacyfriendlywifi.R;
  *
  */
 public class TimePickerDialog implements IOnDialogClosedListener, DialogInterface.OnCancelListener {
-    private final Context context;
     private int startHour = 22;
     private int startMinute = 0;
     private int endHour = 8;
@@ -43,13 +43,12 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
 
     private AlertDialog alertDialog;
 
-    public TimePickerDialog(Context context) {
+    public TimePickerDialog() {
         this.onDialogClosedListeners = new ArrayList<>();
-        this.context = context;
     }
 
     public void show() {
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_timepicker_dialog, null, false);
+        View view = LayoutInflater.from(StaticContext.getContext()).inflate(R.layout.fragment_timepicker_dialog, null, false);
 
         this.startTimePicker = (TimePicker) view.findViewById(R.id.start_time_picker);
         this.initPicker(startTimePicker, startHour, startMinute);
@@ -58,7 +57,7 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
         this.initPicker(endTimePicker, endHour, endMinute);
 
         this.titleEditText = (EditText) view.findViewById(R.id.title_edit_text);
-        this.titleEditText.setHint(String.format(Locale.getDefault(), this.context.getString(R.string.time_picker_dialog_text_title_hint), this.currentListSize));
+        this.titleEditText.setHint(String.format(Locale.getDefault(), StaticContext.getContext().getString(R.string.time_picker_dialog_text_title_hint), this.currentListSize));
 
 //        this.titleText = (TextView) view.findViewById(R.id.dialog_title_text);
 
@@ -74,11 +73,11 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
                 if (position == 2) {
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.time_picker_dialog_button_finish);
                     titleEditText.requestFocus();
-                    ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
+                    ((InputMethodManager) StaticContext.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT);
                 } else {
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.time_picker_dialog_button_next);
-                    ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
+                    ((InputMethodManager) StaticContext.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(titleEditText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
                 }
             }
@@ -87,9 +86,9 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
 
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert);
+            builder = new AlertDialog.Builder(StaticContext.getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
         } else {
-            builder = new AlertDialog.Builder(context);
+            builder = new AlertDialog.Builder(StaticContext.getContext());
         }
         builder.setPositiveButton(R.string.time_picker_dialog_button_next, null);
         builder.setNegativeButton(R.string.time_picker_dialog_button_cancel, null);
@@ -217,11 +216,11 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return context.getString(R.string.time_picker_dialog_title_choose_start_time);
+                    return StaticContext.getContext().getString(R.string.time_picker_dialog_title_choose_start_time);
                 case 1:
-                    return context.getString(R.string.time_picker_dialog_title_choose_end_time);
+                    return StaticContext.getContext().getString(R.string.time_picker_dialog_title_choose_end_time);
                 case 2:
-                    return context.getString(R.string.time_picker_dialog_title_choose_title);
+                    return StaticContext.getContext().getString(R.string.time_picker_dialog_title_choose_title);
             }
             return super.getPageTitle(position);
         }

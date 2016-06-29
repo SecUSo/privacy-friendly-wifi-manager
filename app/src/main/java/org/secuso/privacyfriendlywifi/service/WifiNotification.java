@@ -43,13 +43,11 @@ public class WifiNotification {
 
         // intent for action button click
         Intent buttonIntent = new Intent(context, NotificationButtonListener.class);
-        PendingIntent pendingButtonIntent = PendingIntent.getBroadcast(context, 0,
-                buttonIntent, 0);
+        PendingIntent pendingButtonIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, 0);
 
         // intent for main notification area click
         Intent clickIntent = new Intent(context, NotificationClickListener.class);
-        PendingIntent pendingClickIntent = PendingIntent.getBroadcast(context, 0,
-                clickIntent, 0);
+        PendingIntent pendingClickIntent = PendingIntent.getBroadcast(context, 0, clickIntent, 0);
 
         // load large icon
         Bitmap large_icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_action_wifi);
@@ -106,10 +104,10 @@ public class WifiNotification {
             notificationManager.cancel(1);
 
             // add the new wifi to the list
-            WifiListHandler wifiListHandler = new WifiListHandler(context);
+            WifiListHandler wifiListHandler = new WifiListHandler();
             wifiListHandler.add(new WifiLocationEntry(WifiHandler.getCleanSSID(wifiInfo.getSSID()), wifiInfo.getBSSID()));
 
-            Intent refreshList = new Intent(context.getApplicationContext(), WifiListFragment.class);
+            Intent refreshList = new Intent(context, WifiListFragment.class);
             refreshList.setAction("REFRESH_LIST");
             context.getApplicationContext().sendBroadcast(refreshList);
 

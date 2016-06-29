@@ -1,10 +1,10 @@
 package org.secuso.privacyfriendlywifi.service;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 import org.secuso.privacyfriendlywifi.service.receivers.ScreenOnReceiver;
 
@@ -15,8 +15,8 @@ public class Controller {
     private static final String TAG = "Controller";
     private static ScreenOnReceiver screenOnReceiver;
 
-    public static void registerReceivers(Context context) {
-        Controller.unregisterReceivers(context);
+    public static void registerReceivers() {
+        Controller.unregisterReceivers();
         Log.i(TAG, "Register all receivers.");
 
         if (Controller.screenOnReceiver == null) {
@@ -25,17 +25,17 @@ public class Controller {
 
         IntentFilter screenStateFilter = new IntentFilter();
         screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
-        context.registerReceiver(Controller.screenOnReceiver, screenStateFilter);
+        StaticContext.getContext().registerReceiver(Controller.screenOnReceiver, screenStateFilter);
 
-        AlarmReceiver.schedule(context);
+        AlarmReceiver.schedule();
     }
 
 
-    public static void unregisterReceivers(Context context) {
+    public static void unregisterReceivers() {
         Log.i(TAG, "Unregister all receivers.");
         if (Controller.screenOnReceiver != null) {
             try {
-                context.unregisterReceiver(Controller.screenOnReceiver);
+                StaticContext.getContext().unregisterReceiver(Controller.screenOnReceiver);
             } catch (IllegalArgumentException e) {
                 // expected in case receiver is not registered
             } finally {
@@ -43,6 +43,6 @@ public class Controller {
             }
         }
 
-        AlarmReceiver.cancelAlarm(context);
+        AlarmReceiver.cancelAlarm();
     }
 }

@@ -84,7 +84,7 @@ public class WifiHandler {
             String confSSID = WifiHandler.getCleanSSID(config.SSID);
 
             boolean alreadyManaged = false;
-            WifiListHandler handler = new WifiListHandler(context);
+            WifiListHandler handler = new WifiListHandler();
 
             for (WifiLocationEntry knownEntry : handler.getAll()) {
                 if (confSSID.equals(knownEntry.getSsid())) {

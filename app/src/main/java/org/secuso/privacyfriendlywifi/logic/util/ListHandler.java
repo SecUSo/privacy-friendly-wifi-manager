@@ -1,7 +1,5 @@
 package org.secuso.privacyfriendlywifi.logic.util;
 
-import android.content.Context;
-
 import org.secuso.privacyfriendlywifi.logic.types.PreconditionEntry;
 
 import java.io.IOException;
@@ -18,14 +16,11 @@ public class ListHandler<EntryType extends PreconditionEntry> implements Observe
     private List<EntryType> entries;
     private final String listFilePath;
 
-    private Context context;
-
-    public ListHandler(Context context, String listFilePath) {
-        this.context = context;
+    public ListHandler(String listFilePath) {
         this.listFilePath = listFilePath;
 
         try {
-            Object o = FileHandler.loadObject(this.context, this.listFilePath, false);
+            Object o = FileHandler.loadObject(StaticContext.getContext(), this.listFilePath, false);
             this.entries = (List<EntryType>) o;
         } catch (IOException e) {
             // File does not exist
@@ -39,7 +34,7 @@ public class ListHandler<EntryType extends PreconditionEntry> implements Observe
 
     public boolean save() {
         try {
-            FileHandler.storeObject(this.context, this.listFilePath, this.entries);
+            FileHandler.storeObject(StaticContext.getContext(), this.listFilePath, this.entries);
         } catch (IOException e) {
             e.printStackTrace();
             return false;

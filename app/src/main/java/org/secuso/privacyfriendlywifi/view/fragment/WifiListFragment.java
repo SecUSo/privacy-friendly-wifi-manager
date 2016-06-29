@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
 import org.secuso.privacyfriendlywifi.view.adapter.WifiListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
@@ -35,8 +36,6 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
-
-    private Context context;
 
     public WifiListFragment() {
         // Required empty public constructor
@@ -57,11 +56,14 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        StaticContext.setContext(this.getContext());
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
 
-        this.context = getContext();
-        this.wifiListHandler = new WifiListHandler(getContext());
+
+        this.wifiListHandler = new WifiListHandler();
         this.wifiListHandler.addObserver(this);
 
         // Set substring in actionbar
@@ -78,7 +80,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
             this.fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final WifiManager wifiMan = (WifiManager) getContext().getSystemService(Context.WIFI_SERVICE);
+                    final WifiManager wifiMan = (WifiManager) StaticContext.getContext().getSystemService(Context.WIFI_SERVICE);
                     if (!wifiMan.isWifiEnabled()) {
                         Snackbar.make(view, R.string.wifi_enable_wifi_to_scan, Snackbar.LENGTH_LONG)
                                 .setAction(R.string.wifi_enable_wifi, new View.OnClickListener() {
@@ -90,7 +92,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                                         }
                                 ).show();
                     } else {
-                        WifiPickerDialog dialog = new WifiPickerDialog(getContext());
+                        WifiPickerDialog dialog = new WifiPickerDialog();
                         dialog.addOnDialogClosedListener(thisClass);
                         dialog.setManagedWifis(wifiListHandler.getAll());
                         dialog.show();
@@ -101,9 +103,9 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
         // setup recycler view
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
+        this.recyclerView.addItemDecoration(new DividerItemDecoration(StaticContext.getContext()));
 
-        WifiListAdapter itemsAdapter = new WifiListAdapter(getActivity().getBaseContext(), R.layout.list_item_wifilist, this.wifiListHandler, this.recyclerView, fab);
+        WifiListAdapter itemsAdapter = new WifiListAdapter(R.layout.list_item_wifilist, this.wifiListHandler, this.recyclerView, fab);
 
         // save list after item deletion
         itemsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -114,7 +116,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         });
 
         this.recyclerView.setAdapter(itemsAdapter);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(StaticContext.getContext()));
 
         if (this.fab != null) {
             this.recyclerView.setPadding(
@@ -122,7 +124,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                     this.recyclerView.getPaddingTop(),
                     this.recyclerView.getPaddingRight(),
                     (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
-                            ScreenHandler.getPXFromDP(this.fab.getPaddingTop() + this.fab.getHeight() + fab.getPaddingBottom(), this.getContext())
+                            ScreenHandler.getPXFromDP(this.fab.getPaddingTop() + this.fab.getHeight() + fab.getPaddingBottom(), StaticContext.getContext())
                             : this.fab.getPaddingTop() + this.fab.getHeight() + this.fab.getPaddingBottom()));
         }
 
@@ -148,7 +150,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
     @Override
     public void update(Observable observable, Object data) {
-        this.recyclerView.swapAdapter(new WifiListAdapter(this.context, R.layout.list_item_wifilist, this.wifiListHandler, this.recyclerView, this.fab), false);
+        this.recyclerView.swapAdapter(new WifiListAdapter(R.layout.list_item_wifilist, this.wifiListHandler, this.recyclerView, this.fab), false);
         this.recyclerView.requestLayout();
         this.recyclerView.invalidate();
     }

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfo;
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfoTreeSet;
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -104,9 +105,9 @@ public class CellLocationCondition extends Precondition {
     }
 
     @Override
-    public boolean check(Context context, Object obj) {
-        if (super.check(context, obj)) {
-            if (ContextCompat.checkSelfPermission(context,
+    public boolean check(Object obj) {
+        if (super.check(obj)) {
+            if (ContextCompat.checkSelfPermission(StaticContext.getContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 Set<PrimitiveCellInfo> currentCells = (Set<PrimitiveCellInfo>) obj;
                 HashSet<PrimitiveCellInfo> union = new HashSet<>(currentCells);

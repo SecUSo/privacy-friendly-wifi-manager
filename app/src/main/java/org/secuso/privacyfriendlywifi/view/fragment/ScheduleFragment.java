@@ -17,6 +17,7 @@ import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScheduleListHandler;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 import org.secuso.privacyfriendlywifi.view.dialog.TimePickerDialog;
@@ -52,10 +53,13 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        StaticContext.setContext(this.getContext());
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_schedule, container, false);
 
-        this.scheduleListHandler = new ScheduleListHandler(getContext());
+        this.scheduleListHandler = new ScheduleListHandler();
 
         // Set substring in actionbar
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -71,7 +75,7 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TimePickerDialog dialog = new TimePickerDialog(getContext());
+                    TimePickerDialog dialog = new TimePickerDialog();
                     dialog.addOnDialogClosedListener(thisClass);
                     dialog.setCurrentListSize(scheduleListHandler.size());
                     dialog.show();
@@ -82,17 +86,17 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         // setup recycler view
 
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity().getBaseContext()));
+        this.recyclerView.addItemDecoration(new DividerItemDecoration(StaticContext.getContext()));
 
-        this.itemsAdapter = new ScheduleAdapter(getActivity().getBaseContext(), R.layout.list_item_schedule, this.scheduleListHandler, this.recyclerView, fab);
+        this.itemsAdapter = new ScheduleAdapter(R.layout.list_item_schedule, this.scheduleListHandler, this.recyclerView, fab);
         this.recyclerView.setAdapter(this.itemsAdapter);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(StaticContext.getContext()));
         this.recyclerView.setPadding(
                 this.recyclerView.getPaddingLeft(),
                 this.recyclerView.getPaddingTop(),
                 this.recyclerView.getPaddingRight(),
                 (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
-                        ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), this.getContext())
+                        ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), StaticContext.getContext())
                         : fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom()));
 
         return rootView;

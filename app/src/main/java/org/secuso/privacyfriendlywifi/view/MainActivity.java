@@ -27,6 +27,7 @@ import android.widget.Switch;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.Controller;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.fragment.AboutFragment;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StaticContext.setContext(this);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -101,11 +104,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void onClick(View v) {
 
                         if (mainSwitch.isChecked()) {
-                            ManagerService.setActiveFlag(getApplicationContext(), true);
-                            Controller.registerReceivers(getApplicationContext());
+                            ManagerService.setActiveFlag(true);
+                            Controller.registerReceivers();
                         } else {
-                            ManagerService.setActiveFlag(getApplicationContext(), false);
-                            Controller.unregisterReceivers(getApplicationContext());
+                            ManagerService.setActiveFlag(false);
+                            Controller.unregisterReceivers();
                         }
 
                         // now update the widgets
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         );
 
         // update state switch´s state
-        mainSwitch.setChecked(ManagerService.isServiceActive(this));
+        mainSwitch.setChecked(ManagerService.isServiceActive());
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -159,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             final Switch mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
 
             // update state switch´s state
-            mainSwitch.setChecked(ManagerService.isServiceActive(this));
+            mainSwitch.setChecked(ManagerService.isServiceActive());
         }
     }
 

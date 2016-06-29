@@ -1,6 +1,5 @@
 package org.secuso.privacyfriendlywifi.view.adapter;
 
-import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,8 +18,8 @@ import secuso.org.privacyfriendlywifi.R;
 public class WifiListAdapter extends RemovableRecyclerViewAdapter<WifiLocationEntry> {
     private List<WifiItemViewHolder> children;
 
-    public WifiListAdapter(Context context, int viewItemLayoutId, IListHandler<WifiLocationEntry> wifiListHandler, RecyclerView recyclerView, FloatingActionButton fab) {
-        super(context, viewItemLayoutId, wifiListHandler, recyclerView, fab);
+    public WifiListAdapter(int viewItemLayoutId, IListHandler<WifiLocationEntry> wifiListHandler, RecyclerView recyclerView, FloatingActionButton fab) {
+        super(viewItemLayoutId, wifiListHandler, recyclerView, fab);
         this.children = new ArrayList<>();
     }
 

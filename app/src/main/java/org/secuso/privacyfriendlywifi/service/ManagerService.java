@@ -19,6 +19,7 @@ import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
 
@@ -42,12 +43,13 @@ public class ManagerService extends IntentService {
 
     public ManagerService() {
         super(ManagerService.class.getSimpleName());
-        this.wifiListHandler = new WifiListHandler(this);
+        this.wifiListHandler = new WifiListHandler();
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         Logger.d(TAG, "Incoming intent");
+        StaticContext.setContext(this);
 
         try {
             boolean determinedWifiState = false; // check if Wifi is scheduled to be on (true) / off (false)
@@ -100,7 +102,7 @@ public class ManagerService extends IntentService {
             }
 
             // apply state to wifi
-            WifiToggleEffect wifiToggleEffect = new WifiToggleEffect(this);
+            WifiToggleEffect wifiToggleEffect = new WifiToggleEffect();
             wifiToggleEffect.apply(determinedWifiState);
         } finally {
             // tell everyone that we are done
@@ -131,7 +133,7 @@ public class ManagerService extends IntentService {
 
         for (WifiLocationEntry entry : this.wifiListHandler.getAll()) {
             for (CellLocationCondition condition : entry.getCellLocationConditions()) {
-                if (condition.check(this, allCells)) {
+                if (condition.check(allCells)) {
                     return true;
                 }
             }
@@ -158,7 +160,7 @@ public class ManagerService extends IntentService {
         Pair<Integer, Integer> time = new Pair<>(currentHour, currentMinute);
 
         for (ScheduleEntry entry : scheduleEntries) {
-            if (entry.getScheduleCondition().check(this, time)) {
+            if (entry.getScheduleCondition().check(time)) {
                 return true; // schedule active, skip the rest
             }
         }
@@ -166,13 +168,13 @@ public class ManagerService extends IntentService {
         return false; // no schedule active
     }
 
-    public static void setActiveFlag(Context context, boolean state) {
-        SharedPreferences settings = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
+    public static void setActiveFlag(boolean state) {
+        SharedPreferences settings = StaticContext.getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
         settings.edit().putBoolean(ManagerService.PREF_ENTRY_SERVICE_ACTIVE, state).apply();
     }
 
-    public static boolean isServiceActive(Context context) {
-        SharedPreferences settings = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
+    public static boolean isServiceActive() {
+        SharedPreferences settings = StaticContext.getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
 
         return settings.getBoolean(PREF_ENTRY_SERVICE_ACTIVE, false);
     }

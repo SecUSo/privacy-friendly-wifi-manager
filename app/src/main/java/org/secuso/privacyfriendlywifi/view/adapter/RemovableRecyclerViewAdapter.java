@@ -1,6 +1,5 @@
 package org.secuso.privacyfriendlywifi.view.adapter;
 
-import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -10,6 +9,7 @@ import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.util.IListHandler;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDeleteModeChangedListener;
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.view.viewholder.RemovableItemViewHolder;
 
 import java.util.ArrayList;
@@ -19,15 +19,13 @@ import java.util.List;
  *
  */
 public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapter<RemovableItemViewHolder<EntryType>> implements IOnDeleteModeChangedListener, View.OnKeyListener {
-    private Context context;
     private List<RemovableItemViewHolder<EntryType>> children;
     private boolean isDeleteModeActive;
     private FloatingActionButton fab;
     private int viewLayoutId;
     private IListHandler<EntryType> listHandler;
 
-    public RemovableRecyclerViewAdapter(Context context, int viewLayoutId, IListHandler<EntryType> listHandler, RecyclerView recyclerView, FloatingActionButton fab) {
-        this.context = context;
+    public RemovableRecyclerViewAdapter(int viewLayoutId, IListHandler<EntryType> listHandler, RecyclerView recyclerView, FloatingActionButton fab) {
         this.viewLayoutId = viewLayoutId;
         this.children = new ArrayList<>();
         this.isDeleteModeActive = false;
@@ -48,7 +46,7 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
 
     @Override
     public void onBindViewHolder(RemovableItemViewHolder<EntryType> holder, int position) {
-        holder.setupItem(this.context, this.listHandler.get(position), this, this);
+        holder.setupItem(StaticContext.getContext(), this.listHandler.get(position), this, this);
     }
 
     @Override

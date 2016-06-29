@@ -12,6 +12,7 @@ import android.util.Pair;
 import org.secuso.privacyfriendlywifi.logic.preconditions.ScheduleCondition;
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.ScheduleListHandler;
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 
 import java.util.Calendar;
@@ -20,45 +21,39 @@ import java.util.Calendar;
  * BroadcastReceiver for own alarms. Triggers ManagerService.
  */
 public class AlarmReceiver extends WakefulBroadcastReceiver {
-    private static final int TIMEOUT_IN_SECONDS = 5;
+    private static final int TIMEOUT_IN_SECONDS = 60;
     private static AlarmManager alarmManager;
     private static PendingIntent alarmIntent;
 
 
     /**
      * Initializes alarmManager and alarmIntent instance variables.
-     *
-     * @param context A context.
      */
-    private static void initAlarmManager(Context context) {
+    private static void initAlarmManager() {
         if (AlarmReceiver.alarmManager == null) {
-            AlarmReceiver.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            AlarmReceiver.alarmManager = (AlarmManager) StaticContext.getContext().getSystemService(Context.ALARM_SERVICE);
         }
 
         if (AlarmReceiver.alarmIntent == null) {
-            Intent intent = new Intent(context, AlarmReceiver.class);
-            AlarmReceiver.alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent intent = new Intent(StaticContext.getContext(), AlarmReceiver.class);
+            AlarmReceiver.alarmIntent = PendingIntent.getBroadcast(StaticContext.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         }
     }
 
     /**
      * Sets a pending alarm. This alarm is either repeating (below SDK level 23) or
      * will manually schedule a new alarm after invocation.
-     *
-     * @param context A context.
      */
-    public static void setupAlarm(Context context) {
-        setupAlarm(context, AlarmReceiver.TIMEOUT_IN_SECONDS);
+    public static void setupAlarm() {
+        setupAlarm(AlarmReceiver.TIMEOUT_IN_SECONDS);
     }
 
     /**
      * Sets a pending alarm. This alarm is either repeating (below SDK level 23) or
      * will manually schedule a new alarm after invocation.
-     *
-     * @param context A context.
      */
-    public static void setupAlarm(Context context, int secondsToStart) {
-        AlarmReceiver.initAlarmManager(context);
+    public static void setupAlarm(int secondsToStart) {
+        AlarmReceiver.initAlarmManager();
 
         // in case of externally triggered setup function -> remove old alarms
         AlarmReceiver.alarmManager.cancel(AlarmReceiver.alarmIntent);
@@ -72,11 +67,9 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     /**
      * Schedule the next alarm using existing time schedule.
-     *
-     * @param context A context.
      */
-    public static void schedule(Context context) {
-        ScheduleListHandler scheduleEntries = new ScheduleListHandler(context);
+    public static void schedule() {
+        ScheduleListHandler scheduleEntries = new ScheduleListHandler();
 
         Calendar cal = Calendar.getInstance();
         int currentHour = cal.get(Calendar.HOUR);
@@ -89,7 +82,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         // check all schedule entries, calculate necessary timeout
         for (ScheduleEntry entry : scheduleEntries.getAll()) {
             ScheduleCondition schedCond = entry.getScheduleCondition();
-            if (schedCond.check(context, time)) {
+            if (schedCond.check(time)) {
                 endHour = schedCond.getEndHour();
                 endMinute = schedCond.getEndMinute();
             }
@@ -103,27 +96,27 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         }
 
         // setup alarm
-        setupAlarm(context, diffSeconds);
+        setupAlarm(diffSeconds);
     }
 
     /**
      * Cancels the pending alarm.
-     *
-     * @param context A context.
      */
-    public static void cancelAlarm(Context context) {
-        AlarmReceiver.initAlarmManager(context);
+    public static void cancelAlarm() {
+        AlarmReceiver.initAlarmManager();
         AlarmReceiver.alarmManager.cancel(AlarmReceiver.alarmIntent);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        StaticContext.setContext(context);
+
         Intent startManagerService = new Intent(context, ManagerService.class);
         startWakefulService(context, startManagerService);
 
         // Set next alarm (required for > Android 6 (support for Doze))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            AlarmReceiver.initAlarmManager(context);
+            AlarmReceiver.initAlarmManager();
             AlarmReceiver.alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, TIMEOUT_IN_SECONDS * 1000, alarmIntent);
         }
     }
