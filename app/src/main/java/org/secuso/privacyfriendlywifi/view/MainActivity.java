@@ -247,10 +247,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             e.printStackTrace();
         }
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Controller.unregisterReceivers();
-    }
 }

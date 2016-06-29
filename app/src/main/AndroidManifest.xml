@@ -16,7 +16,8 @@
         <service
             android:name="org.secuso.privacyfriendlywifi.service.ManagerService"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:stopWithTask="false" />
 
         <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.BootCompletedReceiver">
             <intent-filter>

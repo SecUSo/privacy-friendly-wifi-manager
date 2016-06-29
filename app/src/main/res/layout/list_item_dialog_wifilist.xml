@@ -17,6 +17,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
-        android:textAppearance="?android:attr/textAppearanceListItem" />
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:textColor="@color/black"/>
 
 </LinearLayout>

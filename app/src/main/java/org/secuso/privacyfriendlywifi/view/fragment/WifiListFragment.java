@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +37,8 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
+
+    protected FragmentActivity mActivity;
 
     public WifiListFragment() {
         // Required empty public constructor
@@ -68,7 +70,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         this.wifiListHandler.addObserver(this);
 
         // Set substring in actionbar
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) this.mActivity).getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setSubtitle(R.string.fragment_wifilist);
@@ -96,7 +98,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                         WifiPickerDialog dialog = new WifiPickerDialog();
                         dialog.addOnDialogClosedListener(thisClass);
                         dialog.setManagedWifis(wifiListHandler.getAll());
-                        dialog.show(getActivity(), container);
+                        dialog.show(mActivity, container);
                     }
                 }
             });
@@ -143,8 +145,8 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
     @Override
     public void update(Observable o, Object data) {
-        if (getActivity() != null) {
-            getActivity().runOnUiThread(new Runnable() {
+        if (this.mActivity != null) {
+            this.mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     if (!((WifiListAdapter) recyclerView.getAdapter()).isDeleteModeActive()) {
@@ -154,8 +156,12 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                     }
                 }
             });
-        } else {
-            Log.e("TAG", "Activity NULL, ParentActivity null: " + (getParentFragment().getActivity() == null)); // TODO check and remove
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = getActivity();
     }
 }
