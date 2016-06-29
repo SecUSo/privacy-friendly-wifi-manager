@@ -71,20 +71,28 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         int endHour = 0;
         int endMinute = 0;
 
+        boolean foundActiveSchedule = false;
+
         // check all schedule entries, calculate necessary timeout
         for (ScheduleEntry entry : scheduleEntries.getAll()) {
             ScheduleCondition schedCond = entry.getScheduleCondition();
             if (schedCond.check(time)) {
                 endHour = schedCond.getEndHour();
                 endMinute = schedCond.getEndMinute();
+                foundActiveSchedule = true;
+                break;
             }
         }
 
-        int diffSeconds = ((endHour - currentHour) * 60 + (endMinute - currentMinute)) * 60;
-
         // if there has not been any entry, we should set the timeout to its default value
-        if (diffSeconds <= AlarmReceiver.TIMEOUT_IN_SECONDS) {
-            diffSeconds = AlarmReceiver.TIMEOUT_IN_SECONDS;
+        int diffSeconds = AlarmReceiver.TIMEOUT_IN_SECONDS;
+
+        if (foundActiveSchedule) {
+            diffSeconds = ((endHour - currentHour) * 60 + (endMinute - currentMinute)) * 60;
+
+            if (diffSeconds < 0) { // e.g. endHour is 00:00 and currentHour is 23:00 -> change diff from -23:00 to +01:00
+                diffSeconds += 1440; // one day in minutes
+            }
         }
 
         // setup alarm

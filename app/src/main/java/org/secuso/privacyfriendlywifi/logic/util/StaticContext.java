@@ -17,7 +17,7 @@ public class StaticContext {
 
     public static Context getContext() {
         if (StaticContext.context == null) {
-            throw new NullPointerException("Context not yet set!");
+            throw new NullPointerException("Context has not been set yet!");
         }
         return StaticContext.context;
     }
