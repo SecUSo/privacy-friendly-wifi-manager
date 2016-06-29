@@ -7,7 +7,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -62,14 +61,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // setup the drawer layout
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
 
         if (drawer != null) {
-            drawer.addDrawerListener(toggle);
-        }
+            if (getResources().getBoolean(R.bool.isTablet)) {
+                // we are on a tablet
+                Logger.e(TAG, "TABLET");
+                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+                drawer.setScrimColor(Color.TRANSPARENT);
+                this.isDrawerLocked = true;
+            } else {
+                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                        R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {
+                        super.onDrawerSlide(drawerView, 0); // this disables the animation
+                    }
+                };
 
-        toggle.syncState();
+                drawer.addDrawerListener(toggle);
+
+                toggle.syncState();
+            }
+        }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
@@ -138,15 +152,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             FrameLayout fragmentContent = (FrameLayout) findViewById(R.id.fragmentContent);
             if (fragmentContent != null && navigationView != null) {
-                int width = navigationView.getWidth();
+                int width = navigationView.getMeasuredWidth();
+
+                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
                 ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fragmentContent.getLayoutParams();
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    layoutParams.setMarginStart(width);
-                } else {
-                    layoutParams.setMargins(width, 0, 0, 0);
-                }
+                layoutParams.setMargins(width + layoutParams.leftMargin, (toolbar != null ? toolbar.getHeight() : 0) + layoutParams.topMargin, layoutParams.rightMargin, layoutParams.bottomMargin);
 
                 fragmentContent.setLayoutParams(layoutParams);
             }
