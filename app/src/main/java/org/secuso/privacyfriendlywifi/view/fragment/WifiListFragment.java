@@ -147,9 +147,11 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    recyclerView.swapAdapter(new WifiListAdapter(R.layout.list_item_wifilist, wifiListHandler, recyclerView, fab), false);
-                    recyclerView.requestLayout();
-                    recyclerView.invalidate();
+                    if (!((WifiListAdapter) recyclerView.getAdapter()).isDeleteModeActive()) {
+                        recyclerView.swapAdapter(new WifiListAdapter(R.layout.list_item_wifilist, wifiListHandler, recyclerView, fab), false);
+                        recyclerView.requestLayout();
+                        recyclerView.invalidate();
+                    }
                 }
             });
         } else {
