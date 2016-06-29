@@ -6,7 +6,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="tablet_margin_left">0dp</dimen>
+    <dimen name="tablet_margin_left">250dp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information

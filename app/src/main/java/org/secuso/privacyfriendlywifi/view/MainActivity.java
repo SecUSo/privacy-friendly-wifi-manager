@@ -6,6 +6,8 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -22,6 +24,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 
@@ -44,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private final static int DYN_PERMISSION = 0;
     private Menu menu;
 
+    private boolean isDrawerLocked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,15 +60,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         // setup the drawer layout
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
+        View drawerView = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) drawerView;
         if (drawer != null) {
-            drawer.addDrawerListener(toggle);
-        }
+            if (getResources().getBoolean(R.bool.isTablet)) {
+                // we are on a tablet
+                Logger.e(TAG, "TABLET");
+                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+                drawer.setScrimColor(Color.TRANSPARENT);
+                this.isDrawerLocked = true;
+            } else {
 
-        toggle.syncState();
+                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                        R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+                drawer.addDrawerListener(toggle);
+
+                toggle.syncState();
+            }
+        }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
@@ -120,6 +136,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // update state switch´s state
         mainSwitch.setChecked(ManagerService.isServiceActive());
 
+        // set marginStart using measurement since drawer is locked
+        if (this.isDrawerLocked) {
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            FrameLayout fragmentContent = (FrameLayout) findViewById(R.id.fragmentContent);
+            if (fragmentContent != null && navigationView != null) {
+                int width = navigationView.getWidth();
+
+                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) fragmentContent.getLayoutParams();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    layoutParams.setMarginStart(width);
+                } else {
+                    layoutParams.setMargins(width, 0, 0, 0);
+                }
+
+                fragmentContent.setLayoutParams(layoutParams);
+            }
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -158,11 +194,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             // get action view
             final MenuItem toggleservice = this.menu.findItem(R.id.main_switch);
-            final RelativeLayout switchOuter = (RelativeLayout) toggleservice.getActionView();
-            final Switch mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
+            if (toggleservice != null) {
+                final RelativeLayout switchOuter = (RelativeLayout) toggleservice.getActionView();
+                final Switch mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
 
-            // update state switch´s state
-            mainSwitch.setChecked(ManagerService.isServiceActive());
+                // update state switch´s state
+                mainSwitch.setChecked(ManagerService.isServiceActive());
+            }
         }
     }
 
@@ -183,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
 
-        Class<? extends Fragment> fragmentClass = null;
+        Class<? extends Fragment> fragmentClass;
         switch (item.getItemId()) {
             case R.id.nav_whitelist:
                 if (CellLocationCondition.hasCoarseLocationPermission(this)) {
@@ -214,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (drawer != null) {
+        if (drawer != null && !this.isDrawerLocked) {
             drawer.closeDrawer(GravityCompat.START);
         }
 
