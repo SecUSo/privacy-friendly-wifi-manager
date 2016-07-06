@@ -20,6 +20,7 @@ import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScheduleListHandler;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
+import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 import org.secuso.privacyfriendlywifi.view.dialog.TimePickerDialog;
@@ -64,6 +65,7 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         View rootView = inflater.inflate(R.layout.fragment_schedule, container, false);
 
         this.scheduleListHandler = new ScheduleListHandler();
+        this.scheduleListHandler.addObserver(this);
 
         // Set substring in actionbar
         ActionBar actionBar = ((AppCompatActivity) this.mActivity).getSupportActionBar();
@@ -118,6 +120,10 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
 
     @Override
     public void update(Observable observable, Object data) {
+        // schedule next alarm to propagate changes directly
+        AlarmReceiver.schedule();
+
+        // update UI
         if (this.mActivity != null) {
             this.mActivity.runOnUiThread(new Runnable() {
                 @Override
