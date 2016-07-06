@@ -7,10 +7,11 @@ import android.content.Context;
  */
 public class StaticContext {
     private static Context context;
+    private static final String TAG = StaticContext.class.getSimpleName();
 
     public static void setContext(Context context) {
         if (/*StaticContext.context == null && */context != null) {
-            Logger.d("TAG", "Static context set!");
+            Logger.v(TAG, "Static context set!");
             StaticContext.context = context;
         }
     }

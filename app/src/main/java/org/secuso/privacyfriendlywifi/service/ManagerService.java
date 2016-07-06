@@ -32,7 +32,7 @@ import java.util.List;
  *
  */
 public class ManagerService extends IntentService {
-    public static final String TAG = "ManagerService";
+    public static final String TAG = ManagerService.class.getSimpleName();
     public static final String FN_SCHEDULE_ENTRIES = "fn_schedule_entries";
     public static final String FN_LOCATION_ENTRIES = "fn_location_entries";
 
@@ -48,7 +48,7 @@ public class ManagerService extends IntentService {
 
     @Override
     protected void onHandleIntent(final Intent intent) {
-        Logger.d(TAG, "Incoming intent");
+        Logger.v(TAG, "Incoming intent");
         StaticContext.setContext(this);
         boolean searchedForWifi = false;
 
