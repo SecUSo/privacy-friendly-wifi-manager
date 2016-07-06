@@ -1,7 +1,6 @@
 package org.secuso.privacyfriendlywifi.logic.types;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 
@@ -13,7 +12,7 @@ import java.util.List;
 /**
  *
  */
-public class WifiLocationEntry extends PreconditionEntry implements Parcelable, Serializable {
+public class WifiLocationEntry extends PreconditionEntry implements Serializable {
     private String ssid;
     private List<CellLocationCondition> cellLocationConditions;
 
@@ -52,29 +51,6 @@ public class WifiLocationEntry extends PreconditionEntry implements Parcelable, 
         this.ssid = in.readString();
         in.readList(this.cellLocationConditions, String.class.getClassLoader());
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.ssid);
-        dest.writeList(this.cellLocationConditions);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<WifiLocationEntry> CREATOR = new Creator<WifiLocationEntry>() {
-        @Override
-        public WifiLocationEntry createFromParcel(Parcel in) {
-            return new WifiLocationEntry(in);
-        }
-
-        @Override
-        public WifiLocationEntry[] newArray(int size) {
-            return new WifiLocationEntry[size];
-        }
-    };
 
     @Override
     public boolean equals(Object o) {

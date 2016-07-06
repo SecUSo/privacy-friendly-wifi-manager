@@ -49,7 +49,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
      */
     public static void setupAlarm(int secondsToStart) {
         AlarmReceiver.initAlarmManager();
-        Logger.d(TAG, "SECONDS: " + secondsToStart);
+        Logger.v(TAG, "Seconds until next alarm: " + secondsToStart);
         // in case of externally triggered setup function -> remove old alarms
         AlarmReceiver.alarmManager.cancel(AlarmReceiver.alarmIntent);
 

@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoCdma;
 import android.telephony.CellInfoGsm;
@@ -22,7 +21,7 @@ import java.util.List;
 /**
  *
  */
-public class PrimitiveCellInfo implements Parcelable, Serializable {
+public class PrimitiveCellInfo implements Serializable {
     private int cellId; // the ID of the cell
     private double signalStrength; // in dBm
 
@@ -30,7 +29,6 @@ public class PrimitiveCellInfo implements Parcelable, Serializable {
         this.cellId = cellId;
         this.signalStrength = signalStrength;
     }
-
 
     public int getCellId() {
         return this.cellId;
@@ -185,28 +183,4 @@ public class PrimitiveCellInfo implements Parcelable, Serializable {
         cellId = in.readInt();
         signalStrength = in.readDouble();
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.cellId);
-        dest.writeDouble(this.signalStrength);
-    }
-
-    public static final Creator<PrimitiveCellInfo> CREATOR = new Creator<PrimitiveCellInfo>() {
-        @Override
-        public PrimitiveCellInfo createFromParcel(Parcel in) {
-            return new PrimitiveCellInfo(in);
-        }
-
-        @Override
-        public PrimitiveCellInfo[] newArray(int size) {
-            return new PrimitiveCellInfo[size];
-        }
-    };
-
 }

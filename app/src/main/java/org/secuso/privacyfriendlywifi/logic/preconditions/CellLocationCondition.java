@@ -3,15 +3,13 @@ package org.secuso.privacyfriendlywifi.logic.preconditions;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Parcel;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfo;
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfoTreeSet;
+import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,13 +33,6 @@ public class CellLocationCondition extends Precondition {
         this.bssid = bssid;
         this.relatedCells = new HashSet<>();
     }
-
-    protected CellLocationCondition(Parcel in) {
-        super(in);
-        this.bssid = in.readString();
-        this.relatedCells = new HashSet<PrimitiveCellInfo>(Arrays.asList(in.createTypedArray(PrimitiveCellInfo.CREATOR)));
-    }
-
 
     /* GETTERS & SETTERS */
     public int getNumberOfRelatedCells() {
@@ -128,28 +119,4 @@ public class CellLocationCondition extends Precondition {
     public boolean equals(Object o) {
         return o instanceof CellLocationCondition && this.getBssid().equals(((CellLocationCondition) o).getBssid());
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.bssid);
-        dest.writeTypedArray(this.relatedCells.toArray(new PrimitiveCellInfo[this.relatedCells.size()]), 0);
-    }
-
-    public static final Creator<CellLocationCondition> CREATOR = new Creator<CellLocationCondition>() {
-        @Override
-        public CellLocationCondition createFromParcel(Parcel in) {
-            return new CellLocationCondition(in);
-        }
-
-        @Override
-        public CellLocationCondition[] newArray(int size) {
-            return new CellLocationCondition[size];
-        }
-    };
 }

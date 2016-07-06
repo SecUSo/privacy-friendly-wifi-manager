@@ -28,7 +28,7 @@ public class WifiUpdaterService extends Service {
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent i) {
-                Logger.d(TAG, "Scanning for new wifis/MACs.");
+                Logger.v(TAG, "Scanning for new wifis/MACs.");
 
                 // fetch search results
                 WifiHandler.scanAndUpdateWifis(context, new ArrayList<WifiLocationEntry>());

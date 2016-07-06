@@ -1,15 +1,12 @@
 package org.secuso.privacyfriendlywifi.logic.preconditions;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.Observable;
 
 /**
  * Interface representing a precondition to check for.
  */
-public class Precondition extends Observable implements Parcelable, Serializable {
+public class Precondition extends Observable implements Serializable {
     protected boolean isActive = true; // by default a user created precondition is active
 
     public Precondition() {
@@ -17,10 +14,6 @@ public class Precondition extends Observable implements Parcelable, Serializable
 
     public Precondition(boolean isActive) {
         this.isActive = isActive;
-    }
-
-    protected Precondition(Parcel in) {
-        this.isActive = in.readInt() != 0;
     }
 
     protected void notifyChanged() {
@@ -57,26 +50,4 @@ public class Precondition extends Observable implements Parcelable, Serializable
     boolean check(Object obj) {
         return this.isActive;
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(isActive ? 1 : 0);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<Precondition> CREATOR = new Creator<Precondition>() {
-        @Override
-        public Precondition createFromParcel(Parcel in) {
-            return new Precondition(in);
-        }
-
-        @Override
-        public Precondition[] newArray(int size) {
-            return new Precondition[size];
-        }
-    };
 }
