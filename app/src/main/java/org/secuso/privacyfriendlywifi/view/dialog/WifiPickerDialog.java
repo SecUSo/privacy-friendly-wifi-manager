@@ -79,14 +79,14 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
         };
 
         try {
-            StaticContext.getContext().unregisterReceiver(receiver);
+            activity.unregisterReceiver(receiver);
         } catch (IllegalArgumentException e) {
             Logger.d("TAG", "not registered");
         }
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-        StaticContext.getContext().registerReceiver(receiver, filter);
+        activity.registerReceiver(receiver, filter);
 
         WifiManager wifiMan = (WifiManager) StaticContext.getContext().getSystemService(Context.WIFI_SERVICE);
         wifiMan.startScan();
