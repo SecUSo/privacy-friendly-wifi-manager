@@ -18,6 +18,11 @@
             android:enabled="true"
             android:exported="false"/>
 
+        <service
+            android:name="org.secuso.privacyfriendlywifi.service.WifiUpdaterService"
+            android:enabled="true"
+            android:exported="false"/>
+
         <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

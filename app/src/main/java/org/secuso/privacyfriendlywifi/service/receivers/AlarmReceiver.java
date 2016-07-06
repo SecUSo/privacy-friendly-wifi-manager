@@ -11,6 +11,7 @@ import android.util.Pair;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.ScheduleCondition;
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
+import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.ScheduleListHandler;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
@@ -21,7 +22,9 @@ import java.util.Calendar;
  * BroadcastReceiver for own alarms. Triggers ManagerService.
  */
 public class AlarmReceiver extends WakefulBroadcastReceiver {
-    private static final int TIMEOUT_IN_SECONDS = 60;
+    private static final int DEFAULT_TIMEOUT_IN_SECONDS = 60;
+    private static final int ADDITIONAL_TIMEOUT_IN_SECONDS = 300;
+    private static final String TAG = AlarmReceiver.class.getSimpleName();
     private static AlarmManager alarmManager;
     private static PendingIntent alarmIntent;
 
@@ -46,12 +49,12 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
      */
     public static void setupAlarm(int secondsToStart) {
         AlarmReceiver.initAlarmManager();
-
+        Logger.d(TAG, "SECONDS: " + secondsToStart);
         // in case of externally triggered setup function -> remove old alarms
         AlarmReceiver.alarmManager.cancel(AlarmReceiver.alarmIntent);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            AlarmReceiver.alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, secondsToStart * 1000, alarmIntent);
+            AlarmReceiver.alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + secondsToStart * 1000, alarmIntent);
         } else {
             AlarmReceiver.alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + secondsToStart * 1000, alarmIntent);
         }
@@ -61,6 +64,15 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
      * Schedule the next alarm using existing time schedule.
      */
     public static void schedule() {
+        schedule(false);
+    }
+
+    /**
+     * Schedule the next alarm using existing time schedule.
+     *
+     * @param addDelay add {@code ADDITIONAL_TIMEOUT_IN_SECONDS} to delay.
+     */
+    public static void schedule(boolean addDelay) {
         ScheduleListHandler scheduleEntries = new ScheduleListHandler();
 
         Calendar cal = Calendar.getInstance();
@@ -73,6 +85,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
         boolean foundActiveSchedule = false;
 
+        int diffSeconds;
+
         // check all schedule entries, calculate necessary timeout
         for (ScheduleEntry entry : scheduleEntries.getAll()) {
             ScheduleCondition schedCond = entry.getScheduleCondition();
@@ -84,14 +98,17 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
             }
         }
 
-        // if there has not been any entry, we should set the timeout to its default value
-        int diffSeconds = AlarmReceiver.TIMEOUT_IN_SECONDS;
-
         if (foundActiveSchedule) {
             diffSeconds = ((endHour - currentHour) * 60 + (endMinute - currentMinute)) * 60;
 
             if (diffSeconds < 0) { // e.g. endHour is 00:00 and currentHour is 23:00 -> change diff from -23:00 to +01:00
                 diffSeconds += 1440; // one day in minutes
+            }
+        } else { // if there has not been any entry, we should set the timeout to its default value
+            diffSeconds = AlarmReceiver.DEFAULT_TIMEOUT_IN_SECONDS;
+
+            if (addDelay) {
+                diffSeconds += AlarmReceiver.ADDITIONAL_TIMEOUT_IN_SECONDS;
             }
         }
 

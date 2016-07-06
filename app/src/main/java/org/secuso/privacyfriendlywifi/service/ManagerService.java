@@ -1,10 +1,8 @@
 package org.secuso.privacyfriendlywifi.service;
 
 import android.app.IntentService;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -22,6 +20,7 @@ import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
+import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- *
+ * Service that handles effects of preconditions.
  */
 public class ManagerService extends IntentService {
     public static final String TAG = ManagerService.class.getSimpleName();
@@ -50,7 +49,6 @@ public class ManagerService extends IntentService {
     protected void onHandleIntent(final Intent intent) {
         Logger.v(TAG, "Incoming intent");
         StaticContext.setContext(this);
-        boolean searchedForWifi = false;
 
         try {
             boolean determinedWifiState = false; // check if Wifi is scheduled to be on (true) / off (false)
@@ -60,45 +58,21 @@ public class ManagerService extends IntentService {
                 determinedWifiState = false; // TODO establish a more intuitive visualisation in UI
             } else if (WifiHandler.hasWifiPermission(this)) {
                 if (WifiHandler.isWifiEnabled(this)) {
+
                     // Case 2: Wifi ON,disconnected (should be off? -> no known cells in range)
+                    Intent startWifiUpdaterService = new Intent(StaticContext.getContext(), WifiUpdaterService.class);
+                    startService(startWifiUpdaterService);
 
-                    if (!WifiHandler.isWifiConnected(this)) {
-                        final List<WifiLocationEntry> unknownNetworks = new ArrayList<>();
-
-                        final BroadcastReceiver receiver = new BroadcastReceiver() {
-                            @Override
-                            public void onReceive(Context context, Intent i) {
-                                // fetch search results
-                                WifiHandler.scanAndUpdateWifis(context, unknownNetworks);
-
-                                // unregister this receiver
-                                try {
-                                    context.unregisterReceiver(this);
-                                } catch (IllegalArgumentException e) {
-                                    // Log.d("TAG", "not registered");
-                                }
-
-                                // tell everyone that we are done
-                                WakefulBroadcastReceiver.completeWakefulIntent(intent);
-                            }
-                        };
-
-                        // unregister this receiver
-                        try {
-                            this.unregisterReceiver(receiver);
-                        } catch (IllegalArgumentException e) {
-                            // Log.d("TAG", "not registered");
+                    // Case 3: Wifi ON,connected (ok to be on -> update cells)
+                    if (WifiHandler.isWifiConnected(this)) {
+                        if (!this.updateCells()) {
+                            Logger.v(TAG, "No new cell -> delay next alarm");
+                            AlarmReceiver.schedule(true); // if no cell has been added -> increment delay until alarm
                         }
 
-                        IntentFilter filter = new IntentFilter();
-                        filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-                        searchedForWifi = true;
-                        this.registerReceiver(receiver, filter);
-                        determinedWifiState = this.checkCells();
-                    } else {
-                        // Case 3: Wifi ON,connected (ok to be on -> update cells)
-                        this.updateCells();
                         determinedWifiState = true;
+                    } else {
+                        determinedWifiState = this.checkCells();
                     }
                 } else {
                     // Case 4: Wifi OFF (should be on? -> known cells in range)
@@ -110,14 +84,12 @@ public class ManagerService extends IntentService {
             WifiToggleEffect wifiToggleEffect = new WifiToggleEffect();
             wifiToggleEffect.apply(determinedWifiState);
         } finally {
-            if (!searchedForWifi) {
-                // tell everyone that we are done
-                WakefulBroadcastReceiver.completeWakefulIntent(intent);
-            }
+            // tell everyone that we are done
+            WakefulBroadcastReceiver.completeWakefulIntent(intent);
         }
     }
 
-    private void updateCells() {
+    private boolean updateCells() {
         WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
         WifiInfo currentConnection = wifiManager.getConnectionInfo();
         String currentSsid = WifiHandler.getCleanSSID(currentConnection.getSSID());
@@ -127,12 +99,13 @@ public class ManagerService extends IntentService {
             if (entry.getSsid().equals(currentSsid)) {
                 for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                     if (condition.getBssid().equals(currentBssid)) {
-                        condition.addKBestSurroundingCells(this, 3);
-                        return;
+                        return condition.addKBestSurroundingCells(this, 3);
                     }
                 }
             }
         }
+
+        return false;
     }
 
     private boolean checkCells() {
