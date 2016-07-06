@@ -67,7 +67,6 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
         viewPager.setAdapter(new MyAdapter());
         final ViewPager.OnPageChangeListener listener = new ViewPager.SimpleOnPageChangeListener() {
             public void onPageSelected(int position) {
-                // TODO use this in marshmallow? -> does special alertdialog style work?
                 //titleText.setText(viewPager.getAdapter().getPageTitle(position));
                 setDialogTitle(position);
 

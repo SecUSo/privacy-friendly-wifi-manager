@@ -2,8 +2,8 @@ package org.secuso.privacyfriendlywifi.logic.effects;
 
 import android.content.Context;
 import android.net.wifi.WifiManager;
-import android.util.Log;
 
+import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 
@@ -19,7 +19,7 @@ public class WifiToggleEffect implements IEffect {
             WifiManager wifiManager = (WifiManager) StaticContext.getContext().getSystemService(Context.WIFI_SERVICE);
             wifiManager.setWifiEnabled(state);
         } else {
-            Log.e(TAG, "No wifi permission granted"); // TODO reminder notification
+            Logger.e(TAG, "No wifi permission granted"); // TODO reminder notification
         }
     }
 }

@@ -52,9 +52,9 @@ public class PrimitiveCellInfo implements Parcelable, Serializable {
             case TelephonyManager.NETWORK_TYPE_HSPA:
             case TelephonyManager.NETWORK_TYPE_HSDPA:
             case TelephonyManager.NETWORK_TYPE_HSUPA:
-                dBm = -115.5 + cellInfo.getRssi(); // CPICH RSCP to dBm //TODO: check this calculation
+                dBm = -115.5 + cellInfo.getRssi(); // CPICH RSCP to dBm
                 break;
-            // TODO: handle other cell types like LTE etc. (is it even possible?)
+            // handle other cell types like LTE etc. (is it even possible? -> no, not possible)
             case TelephonyManager.NETWORK_TYPE_1xRTT:
             case TelephonyManager.NETWORK_TYPE_CDMA:
             case TelephonyManager.NETWORK_TYPE_EHRPD:
@@ -89,7 +89,7 @@ public class PrimitiveCellInfo implements Parcelable, Serializable {
             return PrimitiveCellInfo.getPrimitiveCellInfo((CellInfoWcdma) cellInfo);
         }
 
-        return null; // TODO: maybe throw exception
+        return null;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -158,7 +158,7 @@ public class PrimitiveCellInfo implements Parcelable, Serializable {
             cellId = ((CdmaCellLocation) location).getBaseStationId();
         }
 
-        // TODO this is not the real strength, but as we are connected we can assume that it is the strongest available to us (in db)
+        // this is not the real strength, but as we are connected we can assume that it is the strongest available to us (in db)
         cellsInRange.add(new PrimitiveCellInfo(cellId, 0));
 
         // get neighboring cells

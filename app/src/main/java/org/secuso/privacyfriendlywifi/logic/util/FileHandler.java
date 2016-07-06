@@ -37,14 +37,14 @@ public class FileHandler {
                     file.delete();
                 }
             } catch (ClassNotFoundException e) {
-                Log.e(TAG, "Could not load file \"" + fileName + "\"");
+                Logger.e(TAG, "Could not load file \"" + fileName + "\"");
                 throw new IOException("Could not load file \"" + fileName + "\"");
             } finally {
                 in.close();
                 fin.close();
             }
         } else {
-            Log.d(TAG, "File \"" + fileName + "\" doesn't exist");
+            Logger.d(TAG, "File \"" + fileName + "\" doesn't exist");
             throw new IOException("File \"" + fileName + "\" doesn't exist");
         }
         return ret;
@@ -73,7 +73,7 @@ public class FileHandler {
         out.close();
         fos.close();
 
-        Log.d(TAG, "File " + fileName + (file.exists() ? " " : " not ") + "saved.");
+        Logger.d(TAG, "File " + fileName + (file.exists() ? " " : " not ") + "saved.");
 
         return file.exists();
     }
