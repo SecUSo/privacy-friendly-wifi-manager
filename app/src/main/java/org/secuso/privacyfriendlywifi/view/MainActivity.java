@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
@@ -39,6 +40,9 @@ import org.secuso.privacyfriendlywifi.view.fragment.ScheduleFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.SettingsFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.WifiListFragment;
 
+import java.util.Locale;
+
+import secuso.org.privacyfriendlywifi.BuildConfig;
 import secuso.org.privacyfriendlywifi.R;
 
 import static android.os.StrictMode.setThreadPolicy;
@@ -64,6 +68,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         if (drawer != null) {
+            // set version string in navigation header
+            NavigationView navigationView = (NavigationView) drawer.findViewById(R.id.nav_view);
+            View header = navigationView.getHeaderView(0);
+            TextView versionString = (TextView) header.findViewById(R.id.nav_header_versionString);
+            versionString.setText(String.format(Locale.getDefault(), this.getString(R.string.about_version), BuildConfig.VERSION_NAME));
+
             if (getResources().getBoolean(R.bool.isTablet)) {
                 // we are on a tablet
                 Logger.e(TAG, "TABLET");
