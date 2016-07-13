@@ -13,6 +13,7 @@ import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
 import org.secuso.privacyfriendlywifi.view.MainActivity;
@@ -98,6 +99,7 @@ public class WifiNotification {
     public static class NotificationButtonListener extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            StaticContext.setContext(context);
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             // clear notification since auto dismiss does not work with action buttons
