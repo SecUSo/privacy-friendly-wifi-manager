@@ -11,15 +11,16 @@ public class StaticContext {
 
     public static void setContext(Context context) {
         if (/*StaticContext.context == null && */context != null) {
-            Logger.v(TAG, "Static context set!");
+            Logger.logADB("v", TAG, "Static context set!");
             StaticContext.context = context;
         }
     }
 
     public static Context getContext() {
         if (StaticContext.context == null) {
-            throw new NullPointerException("Context has not been set yet!");
+            Logger.logADB("e", TAG, "Context has not been set yet!");
         }
+
         return StaticContext.context;
     }
 }

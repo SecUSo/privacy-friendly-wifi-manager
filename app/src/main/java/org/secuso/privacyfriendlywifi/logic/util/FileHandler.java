@@ -1,7 +1,6 @@
 package org.secuso.privacyfriendlywifi.logic.util;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,12 +8,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  *
  */
 public class FileHandler {
     private static final String TAG = FileHandler.class.getSimpleName();
+
 
     /**
      * Loads an object from a specified file path
@@ -50,12 +52,13 @@ public class FileHandler {
         return ret;
     }
 
+
     /**
      * Store object to a specified file path
      *
-     * @param context
-     * @param fileName Path to store the object to
-     * @param o        Object to store
+     * @param context A context to use.
+     * @param fileName Path to store the object to.
+     * @param o        Object to store.
      * @return Storage successful
      * @throws IOException
      */
@@ -63,19 +66,35 @@ public class FileHandler {
         File file = new File(context.getFilesDir().getAbsolutePath().concat(File.separator).concat(fileName));
 
         if (!file.exists()) {
-            file.createNewFile();
+            if (!file.createNewFile()) {
+                Logger.logADB("e", TAG, "File " + fileName + " could not be created.");
+            }
         }
 
-        FileOutputStream fos = new FileOutputStream(file);
-        ObjectOutputStream out = new ObjectOutputStream(fos);
-        out.writeObject(o);
-        out.flush();
-        out.close();
+        FileOutputStream fos = new FileOutputStream(file, true);
+
+        storeObject(fos, o);
+
         fos.close();
 
-        Logger.d(TAG, "File " + fileName + (file.exists() ? " " : " not ") + "saved.");
+        Logger.logADB("e", TAG, "File " + fileName + (file.exists() ? " " : " not ") + "saved.");
 
         return file.exists();
     }
 
+    public static boolean storeObject(OutputStream fos, Object o) throws IOException {
+        if (o instanceof String) {
+            OutputStreamWriter out = new OutputStreamWriter(fos);
+            out.write((String) o);
+            out.flush();
+            out.close();
+        } else {
+            ObjectOutputStream out = new ObjectOutputStream(fos);
+            out.writeObject(o);
+            out.flush();
+            out.close();
+        }
+
+        return true;
+    }
 }

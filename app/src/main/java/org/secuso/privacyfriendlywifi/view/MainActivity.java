@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -44,8 +43,6 @@ import java.util.Locale;
 
 import secuso.org.privacyfriendlywifi.BuildConfig;
 import secuso.org.privacyfriendlywifi.R;
-
-import static android.os.StrictMode.setThreadPolicy;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
@@ -118,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.menu = menu;
 
-        setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
+        // setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
         // get action view
         final MenuItem toggleservice = menu.findItem(R.id.main_switch);
         final RelativeLayout switchOuter = (RelativeLayout) toggleservice.getActionView();
@@ -302,5 +299,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Logger.e(TAG, "IllegalAccessException");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Logger.flush();
     }
 }

@@ -158,4 +158,10 @@ public class ManagerService extends IntentService {
 
         return settings.getBoolean(PREF_ENTRY_SERVICE_ACTIVE, false);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Logger.flush();
+    }
 }
