@@ -71,7 +71,7 @@ public class FileHandler {
             }
         }
 
-        FileOutputStream fos = new FileOutputStream(file, true);
+        FileOutputStream fos = new FileOutputStream(file);
 
         storeObject(fos, o);
 
