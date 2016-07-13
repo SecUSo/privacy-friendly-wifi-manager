@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -126,6 +127,17 @@ public class Logger {
             Logger.logADB("e", TAG, "Could not log data: " + tag + ": " + msg + "[" + level + "] because of: " + e.getClass().getSimpleName());
         }
 
+    }
+
+    /**
+     * Logs a date.
+     *
+     * @param level Log level out of {v,i,d,w,e}
+     * @param tag   A tag to use.
+     * @param date  Date to log in format "MM-dd, HH:mm:ss".
+     */
+    public static void logDate(String level, String tag, Date date) {
+        Logger.logADB(level, tag, Logger.df.format(date));
     }
 
     /**

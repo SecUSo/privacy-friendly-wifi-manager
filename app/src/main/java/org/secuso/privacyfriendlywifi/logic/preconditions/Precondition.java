@@ -10,6 +10,7 @@ public class Precondition extends Observable implements Serializable {
     protected boolean isActive = true; // by default a user created precondition is active
 
     public Precondition() {
+        this(true);
     }
 
     public Precondition(boolean isActive) {

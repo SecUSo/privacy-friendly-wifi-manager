@@ -14,9 +14,11 @@ import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.ScheduleListHandler;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
+import org.secuso.privacyfriendlywifi.logic.util.TimeHelper;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * BroadcastReceiver for own alarms. Triggers ManagerService.
@@ -75,40 +77,48 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     public static void schedule(boolean addDelay) {
         ScheduleListHandler scheduleEntries = new ScheduleListHandler();
 
-        Calendar cal = Calendar.getInstance();
-        int currentHour = cal.get(Calendar.HOUR);
+        Calendar cal = GregorianCalendar.getInstance();
+        int currentHour = cal.get(Calendar.HOUR_OF_DAY);
         int currentMinute = cal.get(Calendar.MINUTE);
         Pair<Integer, Integer> time = new Pair<>(currentHour, currentMinute);
-
-        int endHour = 0;
-        int endMinute = 0;
 
         boolean foundActiveSchedule = false;
 
         int diffSeconds;
 
+        ScheduleCondition currentSchedule = null;
         // check all schedule entries, calculate necessary timeout
         for (ScheduleEntry entry : scheduleEntries.getAll()) {
             ScheduleCondition schedCond = entry.getScheduleCondition();
             if (schedCond.check(time)) {
-                endHour = schedCond.getEndHour();
-                endMinute = schedCond.getEndMinute();
-                foundActiveSchedule = true;
+                currentSchedule = schedCond;
                 break;
             }
         }
 
-        if (foundActiveSchedule) {
-            diffSeconds = ((endHour - currentHour) * 60 + (endMinute - currentMinute)) * 60;
+        if (currentSchedule != null) {
+            diffSeconds = TimeHelper.getTimeDifference(currentHour, currentMinute, currentSchedule.getEndHour(), currentSchedule.getEndMinute());
 
             if (diffSeconds < 0) { // e.g. endHour is 00:00 and currentHour is 23:00 -> change diff from -23:00 to +01:00
-                diffSeconds += 1440; // one day in minutes
+                diffSeconds += 86400; // 60*60*24 = one day in seconds
             }
         } else { // if there has not been any entry, we should set the timeout to its default value
             diffSeconds = AlarmReceiver.DEFAULT_TIMEOUT_IN_SECONDS;
 
             if (addDelay) {
                 diffSeconds += AlarmReceiver.ADDITIONAL_TIMEOUT_IN_SECONDS;
+            }
+
+            // check all schedule entries, calculate necessary timeout
+            for (ScheduleEntry entry : scheduleEntries.getAll()) {
+                ScheduleCondition schedCond = entry.getScheduleCondition();
+
+                if (!schedCond.check(time)) {
+                    int val = TimeHelper.getTimeDifference(currentHour, currentMinute, schedCond.getStartHour(), schedCond.getStartMinute());
+                    if (val < diffSeconds) {
+                        diffSeconds = val;
+                    }
+                }
             }
         }
 

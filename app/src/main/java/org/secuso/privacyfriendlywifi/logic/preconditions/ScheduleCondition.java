@@ -2,6 +2,8 @@ package org.secuso.privacyfriendlywifi.logic.preconditions;
 
 import android.util.Pair;
 
+import org.secuso.privacyfriendlywifi.logic.util.TimeHelper;
+
 /**
  *
  */
@@ -18,12 +20,12 @@ public class ScheduleCondition extends Precondition {
 
     @Override
     public boolean check(Object obj) {
-        Pair<Integer, Integer> hourAndMinute = (Pair<Integer, Integer>) obj;
+        Pair<Integer, Integer> currentTime = (Pair<Integer, Integer>) obj;
         // check, whether isActive and the given (current) time lies in between the start and end time
         return super.check(obj)
-                && this.start_hour <= hourAndMinute.first && hourAndMinute.first <= this.end_hour
-                && this.start_minute <= hourAndMinute.second && hourAndMinute.second <= this.end_minute;
+                && TimeHelper.inTimespan(this.start_hour, this.start_minute, this.end_hour, this.end_minute, currentTime.first, currentTime.second);
     }
+
 
     public int getStartHour() {
         return this.start_hour;

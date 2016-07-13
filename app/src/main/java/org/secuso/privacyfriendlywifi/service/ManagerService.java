@@ -137,10 +137,11 @@ public class ManagerService extends IntentService {
         }
 
         Calendar cal = Calendar.getInstance();
+        Logger.logDate("d", TAG, cal.getTime());
         int currentHour = cal.get(Calendar.HOUR);
         int currentMinute = cal.get(Calendar.MINUTE);
         Pair<Integer, Integer> time = new Pair<>(currentHour, currentMinute);
-
+        Logger.d(TAG, "Number of schedule entries: " + scheduleEntries.size());
         for (ScheduleEntry entry : scheduleEntries) {
             if (entry.getScheduleCondition().check(time)) {
                 return true; // schedule active, skip the rest
