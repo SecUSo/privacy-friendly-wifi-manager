@@ -80,6 +80,8 @@ public class ManagerService extends IntentService {
                 }
             }
 
+
+            Logger.d(TAG, "Setting wifi state: " + determinedWifiState + "| Enabled: " + WifiHandler.isWifiEnabled(this) + "| Connected: " + WifiHandler.isWifiConnected(this));
             // apply state to wifi
             WifiToggleEffect wifiToggleEffect = new WifiToggleEffect();
             wifiToggleEffect.apply(determinedWifiState);
