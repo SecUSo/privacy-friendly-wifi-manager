@@ -63,6 +63,7 @@ public class CellLocationCondition extends Precondition {
      * @return True if a cell has been added, false otherwise.
      */
     public boolean addKBestSurroundingCells(PrimitiveCellInfoTreeSet cells, int k) {
+        Logger.d(TAG, "Adding " + k + " best of " + cells.size() + " surrounding cells.");
         boolean modified = false;
         int i = 0;
         for (PrimitiveCellInfo cell : cells) {
