@@ -104,6 +104,8 @@ public class CellLocationCondition extends Precondition {
                 HashSet<PrimitiveCellInfo> union = new HashSet<>(currentCells);
                 union.retainAll(this.relatedCells);
 
+                Logger.d(TAG, "size(UNION(cells ^ related)) = " + union.size());
+
                 // return true if there are enough known cells in neighborhood or if there are at least MIN_CELLS known cells
                 return ((double) union.size() / (double) this.relatedCells.size()) > MIN_CELL_PERCENTAGE || union.size() >= MIN_CELLS;
             } else {

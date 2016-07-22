@@ -75,14 +75,13 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
      * @param addDelay add {@code ADDITIONAL_TIMEOUT_IN_SECONDS} to delay.
      */
     public static void schedule(boolean addDelay) {
+        Logger.d(TAG, "Scheduling next alarm" + (addDelay ? " with additional delay" : "."));
         ScheduleListHandler scheduleEntries = new ScheduleListHandler();
 
         Calendar cal = GregorianCalendar.getInstance();
         int currentHour = cal.get(Calendar.HOUR_OF_DAY);
         int currentMinute = cal.get(Calendar.MINUTE);
         Pair<Integer, Integer> time = new Pair<>(currentHour, currentMinute);
-
-        boolean foundActiveSchedule = false;
 
         int diffSeconds;
 
@@ -134,12 +133,26 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         AlarmReceiver.alarmManager.cancel(AlarmReceiver.alarmIntent);
     }
 
+    public static void fire() {
+        Intent startManagerService = new Intent(StaticContext.getContext(), ManagerService.class);
+        startWakefulService(StaticContext.getContext(), startManagerService);
+    }
+
+    public static void fireAndSchedule() {
+        fire();
+        schedule();
+    }
+
+    public static void fireAndSchedule(boolean addDelay) {
+        fire();
+        schedule(addDelay);
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         StaticContext.setContext(context);
 
-        Intent startManagerService = new Intent(context, ManagerService.class);
-        startWakefulService(context, startManagerService);
+        fire();
 
         AlarmReceiver.schedule();
     }

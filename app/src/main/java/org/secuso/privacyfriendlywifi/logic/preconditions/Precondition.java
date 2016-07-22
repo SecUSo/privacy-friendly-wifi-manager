@@ -7,7 +7,7 @@ import java.util.Observable;
  * Interface representing a precondition to check for.
  */
 public class Precondition extends Observable implements Serializable {
-    protected boolean isActive = true; // by default a user created precondition is active
+    protected boolean isActive; // by default a user created precondition is active
 
     public Precondition() {
         this(true);

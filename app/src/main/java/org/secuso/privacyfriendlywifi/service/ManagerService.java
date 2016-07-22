@@ -55,6 +55,7 @@ public class ManagerService extends IntentService {
 
             if (this.checkSchedule()) {
                 // Case 1: Wifi scheduled to be off, don't care about anything else
+                Logger.d(TAG, "Wifi will be shut down according to schedule");
                 determinedWifiState = false; // TODO establish a more intuitive visualisation in UI
             } else if (WifiHandler.hasWifiPermission(this)) {
                 if (WifiHandler.isWifiEnabled(this)) {
@@ -101,6 +102,7 @@ public class ManagerService extends IntentService {
             if (entry.getSsid().equals(currentSsid)) {
                 for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                     if (condition.getBssid().equals(currentBssid)) {
+                        Logger.d(TAG, "Adding new cells.");
                         return condition.addKBestSurroundingCells(this, 3);
                     }
                 }

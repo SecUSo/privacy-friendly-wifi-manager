@@ -13,7 +13,8 @@ public class ScheduleEntry extends PreconditionEntry implements Serializable {
 
     public ScheduleEntry(String title, int start_hour, int start_minute, int end_hour, int end_minute) {
         this.title = title;
-        scheduleCondition = new ScheduleCondition(start_hour, start_minute, end_hour, end_minute);
+        this.scheduleCondition = new ScheduleCondition(start_hour, start_minute, end_hour, end_minute);
+        this.scheduleCondition.addObserver(this);
     }
 
     public String getTitle() {

@@ -12,7 +12,7 @@ public class Controller {
     public static void registerReceivers() {
         Controller.unregisterReceivers();
         Logger.v(TAG, "Register all receivers.");
-        AlarmReceiver.schedule();
+        AlarmReceiver.fireAndSchedule();
     }
 
     public static void unregisterReceivers() {

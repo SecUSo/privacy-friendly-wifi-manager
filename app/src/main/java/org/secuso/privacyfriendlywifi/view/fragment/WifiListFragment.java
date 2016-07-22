@@ -97,7 +97,6 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                     } else {
                         WifiPickerDialog dialog = new WifiPickerDialog();
                         dialog.addOnDialogClosedListener(thisClass);
-                        dialog.setManagedWifis(wifiListHandler.getAll());
                         dialog.show(mActivity, container);
                     }
                 }

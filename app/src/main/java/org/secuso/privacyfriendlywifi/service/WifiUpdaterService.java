@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
+import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,9 @@ public class WifiUpdaterService extends Service {
                 Logger.v(TAG, "Scanning for new wifis/MACs.");
 
                 // fetch search results
-                WifiHandler.scanAndUpdateWifis(context, new ArrayList<WifiLocationEntry>());
+                if (WifiHandler.scanAndUpdateWifis(context, new ArrayList<WifiLocationEntry>())) {
+                    AlarmReceiver.fire();
+                }
 
                 // unregister this receiver
                 try {

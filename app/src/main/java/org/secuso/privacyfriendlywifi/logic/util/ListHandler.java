@@ -11,8 +11,7 @@ import java.util.Observer;
 /**
  *
  */
-public class ListHandler<EntryType extends PreconditionEntry> implements Observer, IListHandler<EntryType> {
-    private final ListHandler.ListObservable listObservable = new ListHandler.ListObservable();
+public class ListHandler<EntryType extends PreconditionEntry> extends Observable implements Observer, IListHandler<EntryType> {
     private List<EntryType> entries;
     private final String listFilePath;
 
@@ -26,10 +25,6 @@ public class ListHandler<EntryType extends PreconditionEntry> implements Observe
             // File does not exist
             this.entries = new ArrayList<>();
         }
-    }
-
-    public void addObserver(Observer observer) {
-        this.listObservable.addObserver(observer);
     }
 
     public boolean save() {
@@ -46,9 +41,9 @@ public class ListHandler<EntryType extends PreconditionEntry> implements Observe
     public boolean add(EntryType newEntry) {
         newEntry.addObserver(this);
         boolean ret = this.entries.add(newEntry);
-        this.save();
-        this.listObservable.setChanged();
-        this.listObservable.notifyObservers();
+
+        this.notifyChanged();
+
         return ret;
     }
 
@@ -58,9 +53,9 @@ public class ListHandler<EntryType extends PreconditionEntry> implements Observe
         }
 
         boolean ret = this.entries.addAll(newEntries);
-        this.save();
-        this.listObservable.setChanged();
-        this.listObservable.notifyObservers();
+
+        this.notifyChanged();
+
         return ret;
     }
 
@@ -74,9 +69,9 @@ public class ListHandler<EntryType extends PreconditionEntry> implements Observe
 
     public boolean remove(EntryType entry) {
         boolean ret = this.entries.remove(entry);
-        this.save();
-        this.listObservable.setChanged();
-        this.listObservable.notifyObservers();
+
+        this.notifyChanged();
+
         return ret;
     }
 
@@ -92,16 +87,14 @@ public class ListHandler<EntryType extends PreconditionEntry> implements Observe
         return this.entries.isEmpty();
     }
 
-    @Override
-    public void update(Observable observable, Object data) {
+    private void notifyChanged() {
         this.save();
-        this.listObservable.setChanged();
-        this.listObservable.notifyObservers();
+        this.setChanged();
+        this.notifyObservers();
     }
 
-    private class ListObservable extends Observable {
-        public void setChanged() {
-            super.setChanged();
-        }
+    @Override
+    public void update(Observable observable, Object data) {
+        this.notifyChanged();
     }
 }

@@ -34,7 +34,6 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
     private IOnDialogClosedListener thisClass;
 
     private RecyclerView recyclerView;
-    private ScheduleAdapter itemsAdapter;
     private ScheduleListHandler scheduleListHandler;
 
     protected FragmentActivity mActivity;
@@ -94,8 +93,8 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(StaticContext.getContext()));
 
-        this.itemsAdapter = new ScheduleAdapter(R.layout.list_item_schedule, this.scheduleListHandler, this.recyclerView, fab);
-        this.recyclerView.setAdapter(this.itemsAdapter);
+        ScheduleAdapter itemsAdapter = new ScheduleAdapter(R.layout.list_item_schedule, this.scheduleListHandler, this.recyclerView, fab);
+        this.recyclerView.setAdapter(itemsAdapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(StaticContext.getContext()));
         this.recyclerView.setPadding(
                 this.recyclerView.getPaddingLeft(),
@@ -120,8 +119,8 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
 
     @Override
     public void update(Observable observable, Object data) {
-        // schedule next alarm to propagate changes directly
-        AlarmReceiver.schedule();
+        // execute ManagerService directly to propagate changes directly
+        AlarmReceiver.fireAndSchedule();
 
         // update UI
         if (this.mActivity != null) {

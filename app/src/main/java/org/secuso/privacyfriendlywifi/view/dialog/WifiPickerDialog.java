@@ -33,6 +33,7 @@ import secuso.org.privacyfriendlywifi.R;
  *
  */
 public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterface.OnCancelListener {
+    private static final String TAG = WifiPickerDialog.class.getSimpleName();
     private ArrayList<IOnDialogClosedListener> onDialogClosedListeners;
     //    private TextView titleText;
     private AlertDialog alertDialog;
@@ -73,7 +74,7 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
                 try {
                     context.unregisterReceiver(this);
                 } catch (IllegalArgumentException e) {
-                    Logger.d("TAG", "not registered");
+                    Logger.d(TAG, "not registered");
                 }
             }
         };
@@ -81,7 +82,7 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
         try {
             activity.unregisterReceiver(receiver);
         } catch (IllegalArgumentException e) {
-            Logger.d("TAG", "not registered");
+            Logger.d(TAG, "not registered");
         }
 
         IntentFilter filter = new IntentFilter();
@@ -140,9 +141,5 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
 
     public boolean removeOnDialogClosedListener(IOnDialogClosedListener listener) {
         return this.onDialogClosedListeners.remove(listener);
-    }
-
-    public void setManagedWifis(List<WifiLocationEntry> managedWifis) {
-        this.managedWifis = managedWifis;
     }
 }

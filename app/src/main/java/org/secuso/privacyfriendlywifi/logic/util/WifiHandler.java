@@ -76,9 +76,10 @@ public class WifiHandler {
      * @param context A context to use.
      * @param unknownNetworks The object to store the unknown networks in.
      */
-    public static void scanAndUpdateWifis(Context context, List<WifiLocationEntry> unknownNetworks) {
+    public static boolean scanAndUpdateWifis(Context context, List<WifiLocationEntry> unknownNetworks) {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> scanResults = wifiManager.getScanResults();
+        boolean modified = false;
 
         for (ScanResult config : scanResults) {
             String confSSID = WifiHandler.getCleanSSID(config.SSID);
@@ -91,6 +92,7 @@ public class WifiHandler {
                     // ssid is already present, so we should add the MAC to the existing network
                     knownEntry.addCellLocationCondition(new CellLocationCondition(config.BSSID)); // FIXME: Don't do this here, handle new MACs in own method!
                     alreadyManaged = true;
+                    modified = true;
                     break;
                 }
             }
@@ -98,6 +100,7 @@ public class WifiHandler {
             if (!alreadyManaged) {
                 boolean isNewEntry = true;
 
+                // check if current ssid is already present in unknown networks and add MAC accordingly
                 for (WifiLocationEntry unknownEntry : unknownNetworks) {
                     if (confSSID.equals(unknownEntry.getSsid())) {
                         unknownEntry.addCellLocationCondition(new CellLocationCondition(config.BSSID));
@@ -106,10 +109,13 @@ public class WifiHandler {
                     }
                 }
 
+                // current ssid has not been found -> new unknown wifi
                 if (isNewEntry) {
                     unknownNetworks.add(new WifiLocationEntry(confSSID, config.BSSID));
                 }
             }
         }
+
+        return modified;
     }
 }
