@@ -22,6 +22,8 @@ import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
+import org.secuso.privacyfriendlywifi.service.ManagerService;
+import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 import org.secuso.privacyfriendlywifi.view.adapter.WifiListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 import org.secuso.privacyfriendlywifi.view.dialog.WifiPickerDialog;
@@ -145,6 +147,10 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
     @Override
     public void update(Observable o, Object data) {
+        if (ManagerService.isServiceActive()) {
+            AlarmReceiver.fireAndSchedule();
+        }
+
         if (this.mActivity != null) {
             this.mActivity.runOnUiThread(new Runnable() {
                 @Override
