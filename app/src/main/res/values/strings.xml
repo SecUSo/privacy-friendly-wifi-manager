@@ -74,4 +74,7 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="remove_entry">Remove entry</string>
+    <string name="delete_logfile">Delete logfile</string>
+    <string name="info_logfile_deleted">Deleted logfile successfully.</string>
+    <string name="info_logfile_deletion_error">Logfile could not be deleted.</string>
 </resources>

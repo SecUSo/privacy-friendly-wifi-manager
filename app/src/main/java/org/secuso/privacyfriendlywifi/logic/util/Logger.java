@@ -65,6 +65,16 @@ public class Logger {
     }
 
     /**
+     * Deletes the logfile if there is one. No exception will be thrown if there is no logfile. Check return value instead.
+     * @return True, if logfile has been deleted, false otherwise.
+     */
+    public static boolean deleteLogFile() {
+        Context context = StaticContext.getContext();
+        File logfile = new File(context.getFilesDir().getAbsolutePath().concat(File.separator).concat(Logger.LOGFILE_NAME));
+        return logfile.delete();
+    }
+
+    /**
      * Flushes the log buffer used for file logging.
      */
     public static void flush() {

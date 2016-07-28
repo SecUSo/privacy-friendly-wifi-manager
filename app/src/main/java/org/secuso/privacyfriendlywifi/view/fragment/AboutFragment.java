@@ -2,6 +2,7 @@ package org.secuso.privacyfriendlywifi.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,11 @@ public class AboutFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_about, container, false);
 
         // Set substring in actionbar
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.fragment_about);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setSubtitle(R.string.fragment_about);
+        }
 
         TextView versionTextView = (TextView) rootView.findViewById(R.id.about_version);
         String versionText = getString(R.string.about_version);
