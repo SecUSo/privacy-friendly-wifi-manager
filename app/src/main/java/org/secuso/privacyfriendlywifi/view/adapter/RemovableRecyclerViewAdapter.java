@@ -4,6 +4,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,7 +26,7 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
     private int viewLayoutId;
     private IListHandler<EntryType> listHandler;
 
-    public RemovableRecyclerViewAdapter(int viewLayoutId, IListHandler<EntryType> listHandler, RecyclerView recyclerView, FloatingActionButton fab) {
+    public RemovableRecyclerViewAdapter(int viewLayoutId, IListHandler<EntryType> listHandler, final RecyclerView recyclerView, FloatingActionButton fab) {
         this.viewLayoutId = viewLayoutId;
         this.children = new ArrayList<>();
         this.isDeleteModeActive = false;
@@ -34,6 +35,19 @@ public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapte
         recyclerView.setOnKeyListener(this);
         this.fab = fab;
         this.listHandler = listHandler;
+
+        recyclerView.setOnTouchListener(new RecyclerView.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                View child = recyclerView.findChildViewUnder(event.getX(), event.getY());
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN && child == null) {
+                    setDeleteModeActive(false);
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override
