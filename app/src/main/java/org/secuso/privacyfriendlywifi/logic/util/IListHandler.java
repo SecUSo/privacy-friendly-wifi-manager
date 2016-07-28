@@ -12,9 +12,11 @@ public interface IListHandler<EntryType> {
 
     boolean save();
 
-    boolean add(EntryType newEntry);
+    void add(EntryType newEntry);
 
-    boolean addAll(List<EntryType> newEntries);
+    void addAll(List<EntryType> newEntries);
+
+    void sort();
 
     List<EntryType> getAll();
 

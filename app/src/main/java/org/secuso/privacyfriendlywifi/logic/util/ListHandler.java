@@ -4,6 +4,7 @@ import org.secuso.privacyfriendlywifi.logic.types.PreconditionEntry;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -38,25 +39,28 @@ public class ListHandler<EntryType extends PreconditionEntry> extends Observable
         return true;
     }
 
-    public boolean add(EntryType newEntry) {
+    public void add(EntryType newEntry) {
         newEntry.addObserver(this);
-        boolean ret = this.entries.add(newEntry);
+        this.entries.add(newEntry);
+        sort();
 
         this.notifyChanged();
-
-        return ret;
     }
 
-    public boolean addAll(List<EntryType> newEntries) {
+    public void addAll(List<EntryType> newEntries) {
         for (EntryType entry : newEntries) {
             entry.addObserver(this);
         }
 
-        boolean ret = this.entries.addAll(newEntries);
+        this.entries.addAll(newEntries);
+        sort();
 
         this.notifyChanged();
+    }
 
-        return ret;
+    public void sort() {
+        Collections.sort(this.entries);
+        this.notifyChanged();
     }
 
     public List<EntryType> getAll() {

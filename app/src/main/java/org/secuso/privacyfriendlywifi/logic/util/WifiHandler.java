@@ -17,9 +17,19 @@ import java.util.List;
  * Helper functions for Wifi.
  */
 public class WifiHandler {
+    private static WifiManager wifiManager;
+
+    private static WifiManager getWifiManager(Context context) {
+        if (WifiHandler.wifiManager == null) {
+            WifiHandler.wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        }
+
+        return WifiHandler.wifiManager;
+    }
 
     /**
      * Checks if Wi-Fi permission is granted.
+     *
      * @param context A context to use.
      * @return True if Wi-Fi permission has been granted, false otherwise.
      */
@@ -33,12 +43,12 @@ public class WifiHandler {
 
     /**
      * Checks if Wi-Fi is connected.
+     *
      * @param context A context to use.
      * @return True if Wi-Fi is connected, false otherwise.
      */
     public static boolean isWifiConnected(Context context) {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        WifiInfo wifiInfo = getWifiManager(context).getConnectionInfo();
         if (wifiInfo != null) {
             int nid = wifiInfo.getNetworkId();
             return wifiManager.isWifiEnabled() && nid != -1;
@@ -49,17 +59,30 @@ public class WifiHandler {
 
     /**
      * Checks if Wi-Fi is enabled.
+     *
      * @param context A context to use.
      * @return True if Wi-Fi is enabled, false otherwise.
      */
     public static boolean isWifiEnabled(Context context) {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = getWifiManager(context);
         return wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED
                 || wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING;
     }
 
     /**
+     * Returns the SSID of the currently connected Wi-Fi.
+     *
+     * @param context A context to use.
+     * @return The clean SSID of the Wi-Fi.
+     */
+    public static String getCurrentSSID(Context context) {
+        WifiInfo currentConnection = getWifiManager(context).getConnectionInfo();
+        return WifiHandler.getCleanSSID(currentConnection.getSSID());
+    }
+
+    /**
      * Cleans the passed string from quotes.
+     *
      * @param rawSSID Input SSID string to process.
      * @return The cleaned string.
      */
@@ -73,12 +96,12 @@ public class WifiHandler {
 
     /**
      * Fetches Wi-Fi scan results, adds MACs to already known wifis and updates passed unknownNetworks list.
-     * @param context A context to use.
+     *
+     * @param context         A context to use.
      * @param unknownNetworks The object to store the unknown networks in.
      */
     public static boolean scanAndUpdateWifis(Context context, List<WifiLocationEntry> unknownNetworks) {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        List<ScanResult> scanResults = wifiManager.getScanResults();
+        List<ScanResult> scanResults = getWifiManager(context).getScanResults();
         boolean modified = false;
 
         for (ScanResult config : scanResults) {

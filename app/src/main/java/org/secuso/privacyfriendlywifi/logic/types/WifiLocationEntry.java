@@ -1,8 +1,11 @@
 package org.secuso.privacyfriendlywifi.logic.types;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
+import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -61,5 +64,15 @@ public class WifiLocationEntry extends PreconditionEntry implements Serializable
                     && that.getCellLocationConditions().containsAll(this.getCellLocationConditions());
         }
         return false;
+    }
+
+    @Override
+    public int compareTo(@NonNull PreconditionEntry another) {
+        if (WifiHandler.getCurrentSSID(StaticContext.getContext()).equals(this.getSsid())) {
+            return -1;
+        } else {
+            return another instanceof WifiLocationEntry ? this.getSsid().compareTo(((WifiLocationEntry) another).getSsid()) : -1;
+        }
+
     }
 }

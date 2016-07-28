@@ -41,7 +41,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
         if (AlarmReceiver.alarmIntent == null) {
             Intent intent = new Intent(StaticContext.getContext(), AlarmReceiver.class);
-            AlarmReceiver.alarmIntent = PendingIntent.getBroadcast(StaticContext.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmReceiver.alarmIntent = PendingIntent.getBroadcast(StaticContext.getContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         }
     }
 

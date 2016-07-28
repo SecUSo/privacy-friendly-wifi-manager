@@ -34,4 +34,9 @@ public class ScheduleEntry extends PreconditionEntry implements Serializable {
         this.scheduleCondition = scheduleCondition;
         this.notifyChanged();
     }
+
+    @Override
+    public int compareTo(PreconditionEntry another) {
+        return 0;
+    }
 }

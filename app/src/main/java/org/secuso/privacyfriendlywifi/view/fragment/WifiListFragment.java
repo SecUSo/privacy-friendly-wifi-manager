@@ -67,6 +67,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
 
         this.wifiListHandler = new WifiListHandler();
+        this.wifiListHandler.sort(); // important here: we are sorting before we are waiting for changes since we are creating the list later anyway
         this.wifiListHandler.addObserver(this);
 
         // Set substring in actionbar

@@ -6,7 +6,7 @@ import java.util.Observer;
 /**
  *
  */
-public abstract class PreconditionEntry extends Observable implements Observer {
+public abstract class PreconditionEntry extends Observable implements Observer, Comparable<PreconditionEntry> {
     protected void notifyChanged() {
         this.setChanged();
         this.notifyObservers();

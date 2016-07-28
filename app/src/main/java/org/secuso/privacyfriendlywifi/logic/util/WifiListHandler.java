@@ -34,12 +34,16 @@ public class WifiListHandler implements IListHandler<WifiLocationEntry> {
         return WifiListHandler.list.get(location);
     }
 
-    public boolean add(WifiLocationEntry newEntry) {
-        return WifiListHandler.list.add(newEntry);
+    public void add(WifiLocationEntry newEntry) {
+        WifiListHandler.list.add(newEntry);
     }
 
-    public boolean addAll(List<WifiLocationEntry> newEntries) {
-        return WifiListHandler.list.addAll(newEntries);
+    public void addAll(List<WifiLocationEntry> newEntries) {
+        WifiListHandler.list.addAll(newEntries);
+    }
+
+    public void sort() {
+        WifiListHandler.list.sort();
     }
 
     public boolean remove(WifiLocationEntry entry) {

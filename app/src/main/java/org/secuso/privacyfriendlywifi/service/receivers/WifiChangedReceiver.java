@@ -22,6 +22,8 @@ public class WifiChangedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         StaticContext.setContext(context);
+        WifiListHandler wifiListHandler = new WifiListHandler();
+        wifiListHandler.sort(); // sort list in order to reflect state changes is Wi-Fi list fragment
 
         if (ManagerService.isServiceActive()) { // check that the app is actually expected to manage wifi
             NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
@@ -37,7 +39,6 @@ public class WifiChangedReceiver extends BroadcastReceiver {
                     return;
                 }
 
-                WifiListHandler wifiListHandler = new WifiListHandler();
 
                 // check whether the wifi is already known
                 for (WifiLocationEntry entry : wifiListHandler.getAll()) {

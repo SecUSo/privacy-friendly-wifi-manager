@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
+import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 
 import secuso.org.privacyfriendlywifi.R;
 
@@ -37,9 +38,9 @@ public class SettingsFragment extends Fragment {
             actionBar.setSubtitle(R.string.fragment_settings);
         }
 
-        Button versionTextView = (Button) rootView.findViewById(R.id.buttonDeleteLogfile);
+        Button buttonDeleteLogfile = (Button) rootView.findViewById(R.id.buttonDeleteLogfile);
 
-        versionTextView.setOnClickListener(new View.OnClickListener() {
+        buttonDeleteLogfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Logger.deleteLogFile()) {
@@ -47,6 +48,19 @@ public class SettingsFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext(), R.string.info_logfile_deletion_error, Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        Button buttonCheckWifiConnection = (Button) rootView.findViewById(R.id.buttonCheckWifiConnected);
+
+        buttonCheckWifiConnection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),
+                        String.format("Wifi status: enabled: %1$b, connected %2$b",
+                                WifiHandler.isWifiEnabled(getContext()),
+                                WifiHandler.isWifiConnected(getContext())),
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
