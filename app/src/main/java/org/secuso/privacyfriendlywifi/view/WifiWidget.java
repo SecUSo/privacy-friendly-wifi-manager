@@ -31,7 +31,7 @@ public class WifiWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        RemoteViews widgetActiveButtonView = updateButton(context, ManagerService.isServiceActive());
+        RemoteViews widgetActiveButtonView = updateButton(context, ManagerService.isServiceActive(), false);
 
         // intent for widget button click
         Intent buttonIntent = new Intent(context, WidgetClickListener.class);
@@ -52,6 +52,18 @@ public class WifiWidget extends AppWidgetProvider {
      * @return RemoveViews referring to the button instances.
      */
     private static RemoteViews updateButton(Context context, boolean active) {
+        return updateButton(context, active, true);
+    }
+
+    /**
+     * Updates the on/off button in every widget instance
+     *
+     * @param context A Context.
+     * @param active  Whether the button should be on (true) or off (false).
+     * @param broadcast Whether this update should trigger a broadcast or not.
+     * @return RemoveViews referring to the button instances.
+     */
+    private static RemoteViews updateButton(Context context, boolean active, boolean broadcast) {
         RemoteViews buttonView = new RemoteViews(context.getPackageName(), R.layout.widget_wifi);
         buttonView.setTextViewText(R.id.appwidget_switch, context.getString(R.string.appwidget_text, active ? context.getString(R.string.on) : context.getString(R.string.off)));
 
@@ -61,7 +73,9 @@ public class WifiWidget extends AppWidgetProvider {
         updateWidgetsIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
 
         // now update the widgets
-        context.sendBroadcast(updateWidgetsIntent);
+        if (broadcast) {
+            context.sendBroadcast(updateWidgetsIntent);
+        }
 
         return buttonView;
     }
