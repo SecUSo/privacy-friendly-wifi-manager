@@ -66,7 +66,7 @@ public class ManagerService extends IntentService {
 
                     // Case 3: Wifi ON,connected (ok to be on -> update cells)
                     if (WifiHandler.isWifiConnected(this)) {
-                        if (!this.updateCells()) {
+                        if (this.wifiListHandler.size() > 0 && !this.updateCells()) { // only update if Wi-Fis have been added
                             Logger.v(TAG, "No new cell -> delay next alarm");
                             AlarmReceiver.schedule(true); // if no cell has been added -> increment delay until alarm
                         }

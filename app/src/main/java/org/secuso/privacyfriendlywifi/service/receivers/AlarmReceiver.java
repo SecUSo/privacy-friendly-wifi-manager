@@ -50,10 +50,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
      * will manually schedule a new alarm after invocation.
      */
     public static void setupAlarm(int secondsToStart) {
-        AlarmReceiver.initAlarmManager();
+        AlarmReceiver.cancelAlarm(); // this also initializes AlarmManager, no need to call it twice
         Logger.v(TAG, "Seconds until next alarm: " + secondsToStart);
-        // in case of externally triggered setup function -> remove old alarms
-        AlarmReceiver.alarmManager.cancel(AlarmReceiver.alarmIntent);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             AlarmReceiver.alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + secondsToStart * 1000, alarmIntent);
@@ -133,27 +131,36 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         AlarmReceiver.alarmManager.cancel(AlarmReceiver.alarmIntent);
     }
 
+    /**
+     * Invokes {@link ManagerService}.
+     */
     public static void fire() {
         Intent startManagerService = new Intent(StaticContext.getContext(), ManagerService.class);
         startWakefulService(StaticContext.getContext(), startManagerService);
     }
 
+    /**
+     * Schedules a new alarm and invokes {@link ManagerService}.
+     */
     public static void fireAndSchedule() {
-        fire();
         schedule();
+        fire();
     }
 
+    /**
+     /**
+     * Schedules a new alarm with additional delay and invokes {@link ManagerService}.
+     * @param addDelay If true, {@code AlarmReceiver.ADDITIONAL_TIMEOUT_IN_SECONDS} will be added to delay.
+     */
     public static void fireAndSchedule(boolean addDelay) {
-        fire();
         schedule(addDelay);
+        fire();
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Logger.d(TAG, "AlarmReceiver received intent.");
         StaticContext.setContext(context);
-
-        fire();
-
-        AlarmReceiver.schedule();
+        AlarmReceiver.fireAndSchedule();
     }
 }
