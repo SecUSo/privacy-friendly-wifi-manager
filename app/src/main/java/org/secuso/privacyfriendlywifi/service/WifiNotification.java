@@ -17,6 +17,7 @@ import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
+import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 import org.secuso.privacyfriendlywifi.view.MainActivity;
 import org.secuso.privacyfriendlywifi.view.fragment.WifiListFragment;
 
@@ -114,6 +115,10 @@ public class WifiNotification {
             Intent refreshList = new Intent(context, WifiListFragment.class);
             refreshList.setAction("REFRESH_LIST");
             context.getApplicationContext().sendBroadcast(refreshList);
+
+            if (ManagerService.isServiceActive()) {
+                AlarmReceiver.fireAndSchedule();
+            }
 
             Toast.makeText(context, String.format(Locale.getDefault(), context.getString(R.string.toast_wifi_added), WifiHandler.getCleanSSID(wifiInfo[0])), Toast.LENGTH_LONG).show();
         }
