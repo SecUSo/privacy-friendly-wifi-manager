@@ -15,6 +15,8 @@ import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 
+import org.secuso.privacyfriendlywifi.logic.util.Logger;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -22,8 +24,10 @@ import java.util.List;
  *
  */
 public class PrimitiveCellInfo implements Serializable {
+    private static String TAG = PrimitiveCellInfo.class.getSimpleName();
     private int cellId; // the ID of the cell
     private double signalStrength; // in dBm
+    private double minStrength;
 
     public PrimitiveCellInfo(int cellId, double signalStrength) {
         this.cellId = cellId;
@@ -38,8 +42,22 @@ public class PrimitiveCellInfo implements Serializable {
         return this.signalStrength;
     }
 
-    public static PrimitiveCellInfo getPrimitiveCellInfo(NeighboringCellInfo cellInfo) {
-        int cellId = cellInfo.getCid();
+    public boolean updateRange(double strength) {
+        if (strength < this.minStrength) {
+            Logger.d(TAG, "Updated signal strength of '" + this.cellId + "' to " + strength + ".");
+            this.minStrength = strength;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean inRange(double strength) {
+        return strength > this.minStrength;
+    }
+
+    private static double getCurrentSignalStrength(NeighboringCellInfo cellInfo) {
         double dBm;
         switch (cellInfo.getNetworkType()) {
             case TelephonyManager.NETWORK_TYPE_GPRS:
@@ -66,6 +84,14 @@ public class PrimitiveCellInfo implements Serializable {
             default:
                 dBm = Double.MIN_VALUE;
         }
+
+        return dBm;
+    }
+
+    public static PrimitiveCellInfo getPrimitiveCellInfo(NeighboringCellInfo cellInfo) {
+        int cellId = cellInfo.getCid();
+        double dBm = getCurrentSignalStrength(cellInfo);
+
         return new PrimitiveCellInfo(cellId, dBm);
     }
 
@@ -123,7 +149,6 @@ public class PrimitiveCellInfo implements Serializable {
         // read cells in reach
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         PrimitiveCellInfoTreeSet cellsInRange = new PrimitiveCellInfoTreeSet();
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) { // get all cells for newer androids
 

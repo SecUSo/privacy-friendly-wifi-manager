@@ -71,7 +71,19 @@ public class CellLocationCondition extends Precondition {
                 break;
             }
 
-            modified |= this.relatedCells.add(cell);
+            if (this.relatedCells.contains(cell)) {
+                for (PrimitiveCellInfo cellToUpdate : this.relatedCells) {
+                    if (cellToUpdate.equals(cell)) {
+                        Logger.d(TAG, "Cell already known, updating range.");
+                        modified |= cellToUpdate.updateRange(cell.getSignalStrength());
+                        break;
+                    }
+                }
+            } else {
+                Logger.d(TAG, "Adding new cell.");
+                modified |= this.relatedCells.add(cell);
+            }
+
             i++;
         }
 
@@ -97,18 +109,36 @@ public class CellLocationCondition extends Precondition {
     }
 
     @Override
-    public boolean check(Object obj) {
+    public boolean check(Object... obj) {
         if (super.check(obj)) {
             if (ContextCompat.checkSelfPermission(StaticContext.getContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                Set<PrimitiveCellInfo> currentCells = (Set<PrimitiveCellInfo>) obj;
-                HashSet<PrimitiveCellInfo> union = new HashSet<>(currentCells);
-                union.retainAll(this.relatedCells);
 
+                boolean respectSignalStrength = (boolean) obj[1];
+                Set<PrimitiveCellInfo> currentCells = (Set<PrimitiveCellInfo>) obj[0];
+                HashSet<PrimitiveCellInfo> union = new HashSet<>();
+                HashSet<PrimitiveCellInfo> unionRange = new HashSet<>();
+
+                for (PrimitiveCellInfo cell : currentCells) { // union contains current cell information
+                    for (PrimitiveCellInfo savedCell : this.relatedCells) {
+                        if (savedCell.equals(cell)) {
+                            union.add(savedCell);
+                            if (savedCell.inRange(cell.getSignalStrength())) {
+                                unionRange.add(savedCell);
+                            }
+
+                            break; // break inner loop to add next cell
+                        }
+                    }
+                }
+
+                Logger.d(TAG, "size(unionRange) = " + unionRange.size() + ". Use it for calculation: " + respectSignalStrength);
                 Logger.d(TAG, "size(UNION(cells ^ related)) = " + union.size() + "; relatedCells.size() = " + this.relatedCells.size());
 
                 // return true if there are enough known cells in neighborhood or if there are at least MIN_CELLS known cells
-                return ((double) union.size() / (double) this.relatedCells.size()) > MIN_CELL_PERCENTAGE || union.size() >= MIN_CELLS;
+                boolean retVal = ((double) union.size() / (double) this.relatedCells.size()) > MIN_CELL_PERCENTAGE || union.size() >= MIN_CELLS;
+
+                return (respectSignalStrength && unionRange.size() > 0 && retVal) || (!respectSignalStrength && retVal);
             } else {
                 Logger.e(TAG, "ACCESS_COARSE_LOCATION not granted.");
                 return false;

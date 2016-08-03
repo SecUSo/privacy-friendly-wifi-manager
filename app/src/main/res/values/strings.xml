@@ -77,4 +77,5 @@
     <string name="delete_logfile">Delete logfile</string>
     <string name="info_logfile_deleted">Deleted logfile successfully.</string>
     <string name="info_logfile_deletion_error">Logfile could not be deleted.</string>
+    <string name="respect_signal_strength">Respect signal strength</string>
 </resources>

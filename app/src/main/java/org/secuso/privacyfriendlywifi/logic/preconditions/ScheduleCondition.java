@@ -19,8 +19,8 @@ public class ScheduleCondition extends Precondition {
     }
 
     @Override
-    public boolean check(Object obj) {
-        Pair<Integer, Integer> currentTime = (Pair<Integer, Integer>) obj;
+    public boolean check(Object... obj) {
+        Pair<Integer, Integer> currentTime = (Pair<Integer, Integer>) obj[0];
         // check, whether isActive and the given (current) time lies in between the start and end time
         return super.check(obj)
                 && TimeHelper.inTimespan(this.start_hour, this.start_minute, this.end_hour, this.end_minute, currentTime.first, currentTime.second);

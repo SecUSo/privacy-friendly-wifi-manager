@@ -48,7 +48,7 @@ public class Precondition extends Observable implements Serializable {
      *
      * @return True, if the precondition applies.
      */
-    boolean check(Object obj) {
+    boolean check(Object... obj) {
         return this.isActive;
     }
 }

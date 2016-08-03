@@ -33,7 +33,6 @@ import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.Controller;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
-import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 import org.secuso.privacyfriendlywifi.view.fragment.AboutFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.ScheduleFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.SettingsFragment;
@@ -148,10 +147,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // update state switch´s state
         mainSwitch.setChecked(ManagerService.isServiceActive());
-
-        if (ManagerService.isServiceActive()) {
-            AlarmReceiver.schedule();
-        }
 
         // set marginStart using measurement since drawer is locked
         if (this.isDrawerLocked) {

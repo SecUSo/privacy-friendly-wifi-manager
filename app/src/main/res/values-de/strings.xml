@@ -58,4 +58,5 @@
     <string name="notification_unknown_wifi_title_format">Neues ungemanagtes WLAN: %1$s</string>
     <string name="notification_button_add">Diese Verbindung automatisch managen</string>
     <string name="notification_main_text">Berühren um Verbindungen zu verwalten</string>
+    <string name="respect_signal_strength">Respect signal strength</string>
 </resources>

@@ -37,6 +37,7 @@ public class ManagerService extends IntentService {
 
     public final static String PREF_SETTINGS = "SHARED_PREF_SETTINGS";
     public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
+    public final static String PREF_ENTRY_USE_SIGNAL_STRENGTH = "SHARED_PREF_ENTRY_USE_SIGNAL_STRENGTH";
 
     private WifiListHandler wifiListHandler;
 
@@ -89,6 +90,7 @@ public class ManagerService extends IntentService {
         } finally {
             // tell everyone that we are done
             WakefulBroadcastReceiver.completeWakefulIntent(intent);
+            stopSelf();
         }
     }
 
@@ -114,10 +116,11 @@ public class ManagerService extends IntentService {
 
     private boolean checkCells() {
         PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
+        boolean respectSignalStrength = ManagerService.shouldRespectSignalStrength();
 
         for (WifiLocationEntry entry : this.wifiListHandler.getAll()) {
             for (CellLocationCondition condition : entry.getCellLocationConditions()) {
-                if (condition.check(allCells)) {
+                if (condition.check(allCells, respectSignalStrength)) {
                     Logger.d(TAG, "Activating Wi-Fi for: " + entry.getSsid());
                     return true;
                 }
@@ -154,15 +157,20 @@ public class ManagerService extends IntentService {
         return false; // no schedule active
     }
 
-    public static void setActiveFlag(boolean state) {
+    public static boolean shouldRespectSignalStrength() {
         SharedPreferences settings = StaticContext.getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
+        return settings.getBoolean(ManagerService.PREF_ENTRY_USE_SIGNAL_STRENGTH, true);
+    }
+
+    public static void setActiveFlag(boolean state) {
+        SharedPreferences settings = StaticContext.getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
         settings.edit().putBoolean(ManagerService.PREF_ENTRY_SERVICE_ACTIVE, state).apply();
     }
 
     public static boolean isServiceActive() {
-        SharedPreferences settings = StaticContext.getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences settings = StaticContext.getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
 
-        return settings.getBoolean(PREF_ENTRY_SERVICE_ACTIVE, false);
+        return settings.getBoolean(ManagerService.PREF_ENTRY_SERVICE_ACTIVE, false);
     }
 
     @Override
