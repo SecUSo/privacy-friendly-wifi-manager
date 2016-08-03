@@ -13,7 +13,6 @@ import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
-import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
@@ -32,8 +31,6 @@ import secuso.org.privacyfriendlywifi.R;
 public class WifiNotification {
 
     public static void show(Context context, WifiInfo wifiInfo) {
-        Logger.e("Wifinotification", "wifiInfo set, is null:" + (wifiInfo == null));
-
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // use InboxStyle to overcome layout issues
