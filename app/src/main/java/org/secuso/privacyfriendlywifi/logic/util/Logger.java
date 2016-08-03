@@ -66,6 +66,7 @@ public class Logger {
 
     /**
      * Deletes the logfile if there is one. No exception will be thrown if there is no logfile. Check return value instead.
+     *
      * @return True, if logfile has been deleted, false otherwise.
      */
     public static boolean deleteLogFile() {
@@ -140,6 +141,16 @@ public class Logger {
     }
 
     /**
+     * Formats a date using default time format provided.
+     *
+     * @param date Date to format.
+     * @return A formatted date string.
+     */
+    public static String formatDate(Date date) {
+        return Logger.df.format(date);
+    }
+
+    /**
      * Logs a date.
      *
      * @param level Log level out of {v,i,d,w,e}
@@ -147,7 +158,7 @@ public class Logger {
      * @param date  Date to log in format "MM-dd, HH:mm:ss".
      */
     public static void logDate(String level, String tag, Date date) {
-        Logger.logADB(level, tag, Logger.df.format(date));
+        Logger.logADB(level, tag, Logger.formatDate(date));
     }
 
     /**

@@ -55,7 +55,7 @@ public class ManagerService extends IntentService {
 
             if (this.checkSchedule()) {
                 // Case 1: Wifi scheduled to be off, don't care about anything else
-                Logger.d(TAG, "Wifi will be shut down according to schedule");
+                Logger.d(TAG, "Wifi will be shut down according to schedule.");
                 determinedWifiState = false; // TODO establish a more intuitive visualisation in UI
             } else if (WifiHandler.hasWifiPermission(this)) {
                 if (WifiHandler.isWifiEnabled(this)) {
@@ -67,7 +67,7 @@ public class ManagerService extends IntentService {
                     // Case 3: Wifi ON,connected (ok to be on -> update cells)
                     if (WifiHandler.isWifiConnected(this)) {
                         if (this.wifiListHandler.size() > 0 && !this.updateCells()) { // only update if Wi-Fis have been added
-                            Logger.v(TAG, "No new cell -> delay next alarm");
+                            Logger.v(TAG, "No new cell -> delay next alarm.");
                             AlarmReceiver.schedule(true); // if no cell has been added -> increment delay until alarm
                         }
 
@@ -102,7 +102,7 @@ public class ManagerService extends IntentService {
             if (entry.getSsid().equals(currentSsid)) {
                 for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                     if (condition.getBssid().equals(currentBssid)) {
-                        Logger.d(TAG, "Adding new cells.");
+                        Logger.d(TAG, "Adding new cells for: " + entry.getSsid());
                         return condition.addKBestSurroundingCells(this, 3);
                     }
                 }
@@ -118,6 +118,7 @@ public class ManagerService extends IntentService {
         for (WifiLocationEntry entry : this.wifiListHandler.getAll()) {
             for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                 if (condition.check(allCells)) {
+                    Logger.d(TAG, "Activating Wi-Fi for: " + entry.getSsid());
                     return true;
                 }
             }
@@ -139,13 +140,13 @@ public class ManagerService extends IntentService {
         }
 
         Calendar cal = Calendar.getInstance();
-        Logger.logDate("d", TAG, cal.getTime());
         int currentHour = cal.get(Calendar.HOUR_OF_DAY);
         int currentMinute = cal.get(Calendar.MINUTE);
         Pair<Integer, Integer> time = new Pair<>(currentHour, currentMinute);
         Logger.d(TAG, "Number of schedule entries: " + scheduleEntries.size());
         for (ScheduleEntry entry : scheduleEntries) {
             if (entry.getScheduleCondition().check(time)) {
+                Logger.d(TAG, "Active schedule - " + entry.toString());
                 return true; // schedule active, skip the rest
             }
         }

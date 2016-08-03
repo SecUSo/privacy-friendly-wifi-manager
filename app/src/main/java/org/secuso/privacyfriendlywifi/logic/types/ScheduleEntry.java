@@ -37,6 +37,22 @@ public class ScheduleEntry extends PreconditionEntry implements Serializable {
 
     @Override
     public int compareTo(PreconditionEntry another) {
-        return 0;
+        ScheduleCondition otherSchedCond;
+        ScheduleCondition ownSchedCond = this.getScheduleCondition();
+
+        if (another instanceof ScheduleEntry) {
+            otherSchedCond = ((ScheduleEntry) another).getScheduleCondition();
+        } else {
+            return -1;
+        }
+
+        return ownSchedCond.getStartHour() < otherSchedCond.getStartHour() ? -1 : 1;
+    }
+
+    @Override
+    public String toString() {
+        ScheduleCondition schedCond = this.getScheduleCondition();
+        return "Start: " + schedCond.getStartHour() + ":" + schedCond.getStartMinute() +
+                "; End: " + schedCond.getEndHour() + ":" + schedCond.getEndMinute();
     }
 }

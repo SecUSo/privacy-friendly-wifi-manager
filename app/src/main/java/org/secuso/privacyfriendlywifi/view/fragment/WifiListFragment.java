@@ -132,6 +132,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     public void onDialogClosed(int returnCode, Object... returnValue) {
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
             this.wifiListHandler.add((WifiLocationEntry) returnValue[0]);
+            this.recyclerView.getAdapter().notifyDataSetChanged();
         }
     }
 
@@ -157,9 +158,10 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                 public void run() {
                     if (!((WifiListAdapter) recyclerView.getAdapter()).isDeleteModeActive()) {
                         recyclerView.swapAdapter(new WifiListAdapter(R.layout.list_item_wifilist, wifiListHandler, recyclerView, fab), false);
-                        recyclerView.requestLayout();
-                        recyclerView.invalidate();
                     }
+
+                    recyclerView.requestLayout();
+                    recyclerView.invalidate();
                 }
             });
         }

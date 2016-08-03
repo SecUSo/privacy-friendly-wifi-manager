@@ -65,6 +65,7 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         View rootView = inflater.inflate(R.layout.fragment_schedule, container, false);
 
         this.scheduleListHandler = new ScheduleListHandler();
+        this.scheduleListHandler.sort();
         this.scheduleListHandler.addObserver(this);
 
         // Set substring in actionbar
@@ -112,20 +113,13 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
     public void onDialogClosed(int returnCode, Object... returnValue) {
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
             this.scheduleListHandler.add((ScheduleEntry) returnValue[0]);
-            int currentItemCount = this.recyclerView.getAdapter().getItemCount();
-            this.recyclerView.getAdapter().notifyItemInserted(currentItemCount - 1);
-            this.recyclerView.getAdapter().notifyItemRangeChanged(currentItemCount - 1, currentItemCount);
+            this.recyclerView.getAdapter().notifyDataSetChanged(); // this actually is against the purpose of a recyclerView, but we cannot avoid it at the moment
         }
     }
 
     @Override
     public void update(Observable observable, Object data) {
-        // execute ManagerService directly to propagate changes directly
-        if (ManagerService.isServiceActive()) {
-            AlarmReceiver.fireAndSchedule();
-        }
-
-        // update UI
+        // update UI first, since it is asynchronous anyway
         if (this.mActivity != null) {
             this.mActivity.runOnUiThread(new Runnable() {
                 @Override
@@ -134,6 +128,11 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
                     recyclerView.invalidate();
                 }
             });
+        }
+
+        // execute ManagerService to propagate changes directly
+        if (ManagerService.isServiceActive()) {
+            AlarmReceiver.fireAndSchedule();
         }
     }
 
