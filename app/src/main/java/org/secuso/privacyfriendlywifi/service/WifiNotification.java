@@ -13,6 +13,7 @@ import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
@@ -28,10 +29,9 @@ import secuso.org.privacyfriendlywifi.R;
  * The user is able to add the current wifi to the managed connections using the action button.
  */
 public class WifiNotification {
-    private static WifiInfo wifiInfo;
 
     public static void show(Context context, WifiInfo wifiInfo) {
-        WifiNotification.wifiInfo = wifiInfo;
+        Logger.e("Wifinotification", "wifiInfo set, is null:" + (wifiInfo == null));
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -44,6 +44,7 @@ public class WifiNotification {
 
         // intent for action button click
         Intent buttonIntent = new Intent(context, NotificationButtonListener.class);
+        buttonIntent.putExtra("NewWifiLocationEntry", new String[]{wifiInfo.getSSID(), wifiInfo.getBSSID()});
         PendingIntent pendingButtonIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, 0);
 
         // intent for main notification area click
@@ -107,13 +108,14 @@ public class WifiNotification {
 
             // add the new wifi to the list
             WifiListHandler wifiListHandler = new WifiListHandler();
-            wifiListHandler.add(new WifiLocationEntry(WifiHandler.getCleanSSID(wifiInfo.getSSID()), wifiInfo.getBSSID()));
+            String[] wifiInfo = intent.getStringArrayExtra("NewWifiLocationEntry");
+            wifiListHandler.add(new WifiLocationEntry(WifiHandler.getCleanSSID(wifiInfo[0]), wifiInfo[1]));
 
             Intent refreshList = new Intent(context, WifiListFragment.class);
             refreshList.setAction("REFRESH_LIST");
             context.getApplicationContext().sendBroadcast(refreshList);
 
-            Toast.makeText(context, String.format(Locale.getDefault(), context.getString(R.string.toast_wifi_added), WifiHandler.getCleanSSID(wifiInfo.getSSID())), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, String.format(Locale.getDefault(), context.getString(R.string.toast_wifi_added), WifiHandler.getCleanSSID(wifiInfo[0])), Toast.LENGTH_LONG).show();
         }
     }
 }
