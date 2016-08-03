@@ -175,7 +175,7 @@ public class ManagerService extends IntentService {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         Logger.flush();
+        super.onDestroy();
     }
 }
