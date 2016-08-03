@@ -89,6 +89,7 @@ public class ManagerService extends IntentService {
             wifiToggleEffect.apply(determinedWifiState);
         } finally {
             // tell everyone that we are done
+            Logger.flush();
             WakefulBroadcastReceiver.completeWakefulIntent(intent);
             stopSelf();
         }
@@ -171,11 +172,5 @@ public class ManagerService extends IntentService {
         SharedPreferences settings = StaticContext.getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
 
         return settings.getBoolean(ManagerService.PREF_ENTRY_SERVICE_ACTIVE, false);
-    }
-
-    @Override
-    public void onDestroy() {
-        Logger.flush();
-        super.onDestroy();
     }
 }
