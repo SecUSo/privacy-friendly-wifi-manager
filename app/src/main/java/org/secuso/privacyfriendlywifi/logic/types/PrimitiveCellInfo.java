@@ -25,6 +25,7 @@ import java.util.List;
  */
 public class PrimitiveCellInfo implements Serializable {
     private static String TAG = PrimitiveCellInfo.class.getSimpleName();
+    private static int DEFAULT_SIGNAL_STRENGTH = 0;
     private int cellId; // the ID of the cell
     private double signalStrength; // in dBm
     private double minStrength;
@@ -43,18 +44,19 @@ public class PrimitiveCellInfo implements Serializable {
     }
 
     public boolean updateRange(double strength) {
+
         if (strength < this.minStrength) {
             Logger.d(TAG, "Updated signal strength of '" + this.cellId + "' to " + strength + ".");
             this.minStrength = strength;
 
             return true;
         }
-
+        Logger.d(TAG, "Did not update - signal strength of " + strength + " > " + this.minStrength);
         return false;
     }
 
     public boolean inRange(double strength) {
-        return strength > this.minStrength;
+        return strength >= this.minStrength;
     }
 
     private static double getCurrentSignalStrength(NeighboringCellInfo cellInfo) {
@@ -181,13 +183,22 @@ public class PrimitiveCellInfo implements Serializable {
             cellId = ((CdmaCellLocation) location).getBaseStationId();
         }
 
-        // this is not the real strength, but as we are connected we can assume that it is the strongest available to us (in db)
-        cellsInRange.add(new PrimitiveCellInfo(cellId, 0));
+
+        boolean found = false;
 
         // get neighboring cells
         List<NeighboringCellInfo> cells = telephonyManager.getNeighboringCellInfo();
         for (NeighboringCellInfo cell : cells) {
             cellsInRange.add(PrimitiveCellInfo.getPrimitiveCellInfo(cell));
+            if (cell.getCid() == cellId) {
+                found = true;
+            }
+        }
+
+        if (!found) {
+            // this is not the real strength, but as we are connected we can assume that it is the strongest available to us (in db)
+            cellsInRange.add(new PrimitiveCellInfo(cellId, PrimitiveCellInfo.DEFAULT_SIGNAL_STRENGTH));
+            Logger.d(TAG, "Connected cell not found in neighboring cells. Adding it with a signal strength of " + PrimitiveCellInfo.DEFAULT_SIGNAL_STRENGTH);
         }
 
         return cellsInRange;
