@@ -152,6 +152,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
             AlarmReceiver.fireAndSchedule();
         }
 
+
         if (this.mActivity != null) {
             this.mActivity.runOnUiThread(new Runnable() {
                 @Override

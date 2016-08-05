@@ -34,12 +34,12 @@ public class ScheduleListHandler implements IListHandler<ScheduleEntry> {
         return ScheduleListHandler.list.get(location);
     }
 
-    public void add(ScheduleEntry newEntry) {
-        ScheduleListHandler.list.add(newEntry);
+    public boolean add(ScheduleEntry newEntry) {
+        return ScheduleListHandler.list.add(newEntry);
     }
 
-    public void addAll(List<ScheduleEntry> newEntries) {
-        ScheduleListHandler.list.addAll(newEntries);
+    public boolean addAll(List<ScheduleEntry> newEntries) {
+        return ScheduleListHandler.list.addAll(newEntries);
     }
 
     public void sort() {

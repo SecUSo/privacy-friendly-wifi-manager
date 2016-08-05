@@ -1,10 +1,12 @@
 package org.secuso.privacyfriendlywifi.logic.util;
 
 import org.secuso.privacyfriendlywifi.logic.types.PreconditionEntry;
+import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -39,23 +41,36 @@ public class ListHandler<EntryType extends PreconditionEntry> extends Observable
         return true;
     }
 
-    public void add(EntryType newEntry) {
-        newEntry.addObserver(this);
-        this.entries.add(newEntry);
-        sort();
+    public boolean add(EntryType newEntry) {
+        if (!this.entries.contains(newEntry)) {
+            newEntry.addObserver(this);
+            this.entries.add(newEntry);
+            sort();
 
-        this.notifyChanged();
-    }
-
-    public void addAll(List<EntryType> newEntries) {
-        for (EntryType entry : newEntries) {
-            entry.addObserver(this);
+            return true;
         }
 
-        this.entries.addAll(newEntries);
-        sort();
+        return false;
+    }
 
-        this.notifyChanged();
+    public boolean addAll(List<EntryType> newEntries) {
+        HashSet<EntryType> toAdd = new HashSet<>(this.entries);
+
+        toAdd.retainAll(newEntries);
+
+        if (toAdd.size() > 0) {
+
+            for (EntryType entry : toAdd) {
+                entry.addObserver(this);
+            }
+
+            this.entries.addAll(toAdd);
+            sort();
+
+            return true;
+        }
+
+        return false;
     }
 
     public void sort() {
@@ -72,11 +87,12 @@ public class ListHandler<EntryType extends PreconditionEntry> extends Observable
     }
 
     public boolean remove(EntryType entry) {
-        boolean ret = this.entries.remove(entry);
+        if (this.entries.remove(entry)) {
+            this.notifyChanged();
+            return true;
+        }
 
-        this.notifyChanged();
-
-        return ret;
+        return false;
     }
 
     public int size() {
@@ -99,6 +115,7 @@ public class ListHandler<EntryType extends PreconditionEntry> extends Observable
 
     @Override
     public void update(Observable observable, Object data) {
+        AlarmReceiver.fireAndSchedule();
         this.notifyChanged();
     }
 }

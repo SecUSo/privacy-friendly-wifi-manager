@@ -39,6 +39,7 @@ public class WifiLocationEntry extends PreconditionEntry implements Serializable
 
             return true;
         }
+
         return false;
     }
 

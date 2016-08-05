@@ -49,6 +49,8 @@ public class WifiChangedReceiver extends BroadcastReceiver {
 
                 // if unknown, show notification
                 WifiNotification.show(context, wifiInfo);
+            } else {
+                AlarmReceiver.fireAndSchedule(true); // not connected -> maybe we can already disable Wi-Fi
             }
         }
     }

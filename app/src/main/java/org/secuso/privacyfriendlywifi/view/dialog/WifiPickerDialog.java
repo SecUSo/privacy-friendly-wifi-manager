@@ -89,8 +89,7 @@ public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterfac
         filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
         activity.registerReceiver(receiver, filter);
 
-        WifiManager wifiMan = (WifiManager) StaticContext.getContext().getSystemService(Context.WIFI_SERVICE);
-        wifiMan.startScan();
+        WifiHandler.getWifiManager(StaticContext.getContext()).startScan();
 
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

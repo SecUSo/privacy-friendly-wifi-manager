@@ -20,8 +20,6 @@ import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScheduleListHandler;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
-import org.secuso.privacyfriendlywifi.service.ManagerService;
-import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 import org.secuso.privacyfriendlywifi.view.dialog.TimePickerDialog;
@@ -128,11 +126,6 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
                     recyclerView.invalidate();
                 }
             });
-        }
-
-        // execute ManagerService to propagate changes directly
-        if (ManagerService.isServiceActive()) {
-            AlarmReceiver.fireAndSchedule();
         }
     }
 

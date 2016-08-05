@@ -21,15 +21,26 @@ import java.util.ArrayList;
 public class WifiUpdaterService extends Service {
     public static final String TAG = WifiUpdaterService.class.getSimpleName();
 
+
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(Intent intent, int flags, final int startId) {
         int ret = super.onStartCommand(intent, flags, startId);
 
         Logger.d(TAG, "WifiUpdaterService invoked. Scanning for new MACs.");
 
+        final WifiUpdaterService self = this;
+
+
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent i) {
+                // unregister this receiver
+                try {
+                    self.unregisterReceiver(this);
+                } catch (IllegalArgumentException e) {
+                    Logger.d(TAG, "Unregister failed: WiFiUpdaterService has not been registered previously.");
+                }
+
                 Logger.v(TAG, "Scan completed.");
 
                 // fetch search results
@@ -40,15 +51,12 @@ public class WifiUpdaterService extends Service {
                     Logger.d(TAG, "No new MACs.");
                 }
 
-                // unregister this receiver
-                try {
-                    context.unregisterReceiver(this);
-                } catch (IllegalArgumentException e) {
-                    // Logger.d(TAG, "not registered");
-                }
+                Logger.d(TAG, "Finishing.");
+
 
                 // stop service
-                stopSelf();
+                stopForeground(false);
+                stopSelf(startId);
             }
         };
 
@@ -57,9 +65,11 @@ public class WifiUpdaterService extends Service {
 
         this.registerReceiver(receiver, filter);
 
+        WifiHandler.getWifiManager(this).startScan();
+
         return ret;
     }
-
+    
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

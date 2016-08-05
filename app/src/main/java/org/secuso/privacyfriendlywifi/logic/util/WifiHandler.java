@@ -19,7 +19,12 @@ import java.util.List;
 public class WifiHandler {
     private static WifiManager wifiManager;
 
-    private static WifiManager getWifiManager(Context context) {
+    /**
+     * Returns the system´s WifiManager.
+     * @param context A context to use.
+     * @return The WifiManager instance.
+     */
+    public static WifiManager getWifiManager(Context context) {
         if (WifiHandler.wifiManager == null) {
             WifiHandler.wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         }
@@ -113,9 +118,8 @@ public class WifiHandler {
             for (WifiLocationEntry knownEntry : handler.getAll()) {
                 if (confSSID.equals(knownEntry.getSsid())) {
                     // ssid is already present, so we should add the MAC to the existing network
-                    knownEntry.addCellLocationCondition(new CellLocationCondition(config.BSSID)); // FIXME: Don't do this here, handle new MACs in own method!
+                    modified = knownEntry.addCellLocationCondition(new CellLocationCondition(config.BSSID)); // FIXME: Don't do this here, handle new MACs in own method!
                     alreadyManaged = true;
-                    modified = true;
                     break;
                 }
             }
