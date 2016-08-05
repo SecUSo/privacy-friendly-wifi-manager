@@ -43,7 +43,8 @@ public class WifiNotification {
         // intent for action button click
         Intent buttonIntent = new Intent(context, NotificationButtonListener.class);
         buttonIntent.putExtra("NewWifiLocationEntry", new String[]{wifiInfo.getSSID(), wifiInfo.getBSSID()});
-        PendingIntent pendingButtonIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, 0);
+        // create new intent and UPDATE THE EXTRAS (important!)
+        PendingIntent pendingButtonIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // intent for main notification area click
         Intent clickIntent = new Intent(context, NotificationClickListener.class);
