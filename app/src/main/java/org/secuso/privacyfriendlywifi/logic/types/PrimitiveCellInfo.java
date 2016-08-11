@@ -111,6 +111,9 @@ public class PrimitiveCellInfo implements Serializable {
     public static PrimitiveCellInfo getPrimitiveCellInfo(NeighboringCellInfo cellInfo) {
         int cellId = cellInfo.getCid(); // the cellId or NeighboringCellInfo.UNKNOWN_CID (-1)
         double dBm = getCurrentSignalStrength(cellInfo);
+        if (cellId == NeighboringCellInfo.UNKNOWN_CID) {
+            dBm = Double.MIN_VALUE; // make it consistent
+        }
 
         return new PrimitiveCellInfo(cellId, dBm);
     }
@@ -157,7 +160,7 @@ public class PrimitiveCellInfo implements Serializable {
 
         if (cellId == Integer.MAX_VALUE) {
             cellId = -1; // a more obvious error number, identically to NeighboringCellInfo.UNKNOWN_CID
-            dBm = Double.MIN_VALUE; // make it consitent with NeighboringCellInfo
+            dBm = Double.MIN_VALUE; // make it consistent with NeighboringCellInfo
         }
 
         Logger.d(TAG, "(new API) CellType=GSM, cid=" + cellId + ", dBm=" + dBm);
@@ -172,7 +175,7 @@ public class PrimitiveCellInfo implements Serializable {
 
         if (cellId == Integer.MAX_VALUE) {
             cellId = -1; // a more obvious error number, identically to NeighboringCellInfo.UNKNOWN_CID
-            dBm = Double.MIN_VALUE; // make it consitent with NeighboringCellInfo
+            dBm = Double.MIN_VALUE; // make it consistent with NeighboringCellInfo
         }
 
         Logger.d(TAG, "(new API) CellType=LTE, cid=" + cellId + ", dBm=" + dBm);
@@ -186,7 +189,7 @@ public class PrimitiveCellInfo implements Serializable {
 
         if (cellId == Integer.MAX_VALUE) {
             cellId = -1; // a more obvious error number, identically to NeighboringCellInfo.UNKNOWN_CID
-            dBm = Double.MIN_VALUE; // make it consitent with NeighboringCellInfo
+            dBm = Double.MIN_VALUE; // make it consistent with NeighboringCellInfo
         }
 
         Logger.d(TAG, "(new API) CellType=WCDMA, cid=" + cellId + ", dBm=" + dBm);
