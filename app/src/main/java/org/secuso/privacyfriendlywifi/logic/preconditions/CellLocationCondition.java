@@ -132,6 +132,43 @@ public class CellLocationCondition extends Precondition {
                     }
                 }
 
+                //TODO DEBUGGING, REMOVE!
+                StringBuffer buf = new StringBuffer();
+                buf.append("currentCells = {");
+                for (PrimitiveCellInfo cell : currentCells) {
+                    buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
+                }
+                buf.delete(buf.length()-2,buf.length()-1);
+                buf.append("}");
+                Logger.d(TAG, buf.toString());
+
+                buf = new StringBuffer();
+                buf.append("union = {");
+                for (PrimitiveCellInfo cell : union) {
+                    buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
+                }
+                buf.delete(buf.length()-2,buf.length()-1);
+                buf.append("}");
+                Logger.d(TAG, buf.toString());
+
+                buf = new StringBuffer();
+                buf.append("unionRange = {");
+                for (PrimitiveCellInfo cell : unionRange) {
+                    buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
+                }
+                buf.delete(buf.length()-2,buf.length()-1);
+                buf.append("}");
+                Logger.d(TAG, buf.toString());
+
+                buf = new StringBuffer();
+                buf.append("this.relatedCells = {");
+                for (PrimitiveCellInfo cell : this.relatedCells) {
+                    buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
+                }
+                buf.delete(buf.length()-2,buf.length()-1);
+                buf.append("}");
+                Logger.d(TAG, buf.toString());
+
                 Logger.d(TAG, "size(unionRange) = " + unionRange.size() + ". Use it for calculation: " + respectSignalStrength);
                 Logger.d(TAG, "size(UNION(cells ^ related)) = " + union.size() + "; relatedCells.size() = " + this.relatedCells.size());
 

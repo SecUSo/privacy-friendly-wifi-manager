@@ -51,7 +51,7 @@ public class PrimitiveCellInfo implements Serializable {
 
             return true;
         }
-        Logger.d(TAG, "Did not update - signal strength of " + strength + " > " + this.minStrength);
+        Logger.d(TAG, "Did not update - signal strength of " + strength + " >= " + this.minStrength);
         return false;
     }
 
@@ -63,14 +63,30 @@ public class PrimitiveCellInfo implements Serializable {
         double dBm;
         switch (cellInfo.getNetworkType()) {
             case TelephonyManager.NETWORK_TYPE_GPRS:
+                Logger.d(TAG, "CellType=GPRS");
             case TelephonyManager.NETWORK_TYPE_EDGE:
-                dBm = -113 + 2 * cellInfo.getRssi(); //ASU to dBm conversion
+                Logger.d(TAG, "CellType=EDGE");
+                if (cellInfo.getRssi() != NeighboringCellInfo.UNKNOWN_RSSI) {
+                    dBm = -113 + 2 * cellInfo.getRssi(); //ASU to dBm conversion
+                } else {
+                    dBm = Double.MIN_VALUE;
+                }
                 break;
+
             case TelephonyManager.NETWORK_TYPE_UMTS:
+                Logger.d(TAG, "CellType=UMTS");
             case TelephonyManager.NETWORK_TYPE_HSPA:
+                Logger.d(TAG, "CellType=HSPA");
             case TelephonyManager.NETWORK_TYPE_HSDPA:
+                Logger.d(TAG, "CellType=HSDPA");
             case TelephonyManager.NETWORK_TYPE_HSUPA:
-                dBm = -115.5 + cellInfo.getRssi(); // CPICH RSCP to dBm
+                Logger.d(TAG, "CellType=HSUPA");
+                if (cellInfo.getRssi() != NeighboringCellInfo.UNKNOWN_RSSI) {
+                    dBm = -115.5 + cellInfo.getRssi(); // CPICH RSCP to dBm
+                    //dBm = cellInfo.getRssi(); // which one is right? no one knows
+                } else {
+                    dBm = Double.MIN_VALUE;
+                }
                 break;
             // handle other cell types like LTE etc. (is it even possible? -> no, not possible)
             case TelephonyManager.NETWORK_TYPE_1xRTT:
@@ -84,8 +100,10 @@ public class PrimitiveCellInfo implements Serializable {
             case TelephonyManager.NETWORK_TYPE_LTE:
             case TelephonyManager.NETWORK_TYPE_UNKNOWN:
             default:
+                Logger.d(TAG, "CellType=OTHER");
                 dBm = Double.MIN_VALUE;
         }
+        Logger.d(TAG, "Cell cid=" + cellInfo.getCid() + ", dBm=" + dBm);
 
         return dBm;
     }
@@ -122,6 +140,7 @@ public class PrimitiveCellInfo implements Serializable {
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoCdma cellInfo) {
         int cellId = cellInfo.getCellIdentity().getBasestationId();
         double dBm = cellInfo.getCellSignalStrength().getDbm();
+        Logger.d(TAG, "(new API) CellType=CDMA, cid=" + cellId + ", dBm=" + dBm);
         return new PrimitiveCellInfo(cellId, dBm);
     }
 
@@ -129,13 +148,16 @@ public class PrimitiveCellInfo implements Serializable {
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoGsm cellInfo) {
         int cellId = cellInfo.getCellIdentity().getCid();
         double dBm = cellInfo.getCellSignalStrength().getDbm();
+        Logger.d(TAG, "(new API) CellType=GSM, cid=" + cellId + ", dBm=" + dBm);
         return new PrimitiveCellInfo(cellId, dBm);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoLte cellInfo) {
         int cellId = cellInfo.getCellIdentity().getCi();
-        double dBm = cellInfo.getCellSignalStrength().getDbm();
+        //double dBm = cellInfo.getCellSignalStrength().getDbm(); // TODO Check for correctness
+        double dBm = cellInfo.getCellSignalStrength().getDbm() / -10.0; // TODO Check for correctness
+        Logger.d(TAG, "(new API) CellType=LTE, cid=" + cellId + ", dBm=" + dBm);
         return new PrimitiveCellInfo(cellId, dBm);
     }
 
@@ -143,6 +165,7 @@ public class PrimitiveCellInfo implements Serializable {
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoWcdma cellInfo) {
         int cellId = cellInfo.getCellIdentity().getCid();
         double dBm = cellInfo.getCellSignalStrength().getDbm();
+        Logger.d(TAG, "(new API) CellType=WCDMA, cid=" + cellId + ", dBm=" + dBm);
         return new PrimitiveCellInfo(cellId, dBm);
     }
 
