@@ -46,12 +46,12 @@ public class PrimitiveCellInfo implements Serializable {
     public boolean updateRange(double strength) {
 
         if (strength < this.minStrength) {
-            Logger.d(TAG, "Updated signal strength of '" + this.cellId + "' to " + strength + ".");
+            Logger.d(TAG, "Updated signal strength of cid='" + this.cellId + "' to dBm=" + strength + ".");
             this.minStrength = strength;
 
             return true;
         }
-        Logger.d(TAG, "Did not update - signal strength of " + strength + " >= " + this.minStrength);
+        Logger.d(TAG, "Did not update cid=" + this.cellId + " - signal strength of " + strength + "dBm >= " + this.minStrength + "dBm");
         return false;
     }
 
@@ -69,7 +69,7 @@ public class PrimitiveCellInfo implements Serializable {
                 if (cellInfo.getRssi() != NeighboringCellInfo.UNKNOWN_RSSI) {
                     dBm = -113 + 2 * cellInfo.getRssi(); //ASU to dBm conversion
                 } else {
-                    dBm = Double.MIN_VALUE;
+                    dBm = PrimitiveCellInfo.DEFAULT_SIGNAL_STRENGTH;
                 }
                 break;
 
@@ -85,7 +85,7 @@ public class PrimitiveCellInfo implements Serializable {
                     dBm = -115.5 + cellInfo.getRssi(); // CPICH RSCP to dBm
                     //dBm = cellInfo.getRssi(); // which one is right? no one knows
                 } else {
-                    dBm = Double.MIN_VALUE;
+                    dBm = PrimitiveCellInfo.DEFAULT_SIGNAL_STRENGTH;
                 }
                 break;
             // handle other cell types like LTE etc. (is it even possible? -> no, not possible)
@@ -101,7 +101,7 @@ public class PrimitiveCellInfo implements Serializable {
             case TelephonyManager.NETWORK_TYPE_UNKNOWN:
             default:
                 Logger.d(TAG, "CellType=OTHER");
-                dBm = Double.MIN_VALUE;
+                dBm = PrimitiveCellInfo.DEFAULT_SIGNAL_STRENGTH;
         }
         Logger.d(TAG, "Cell cid=" + cellInfo.getCid() + ", dBm=" + dBm);
 
@@ -110,10 +110,11 @@ public class PrimitiveCellInfo implements Serializable {
 
     public static PrimitiveCellInfo getPrimitiveCellInfo(NeighboringCellInfo cellInfo) {
         int cellId = cellInfo.getCid(); // the cellId or NeighboringCellInfo.UNKNOWN_CID (-1)
-        double dBm = getCurrentSignalStrength(cellInfo);
         if (cellId == NeighboringCellInfo.UNKNOWN_CID) {
-            dBm = Double.MIN_VALUE; // make it consistent
+            return null; // unknown ID -> cell should not be considered
         }
+
+        double dBm = getCurrentSignalStrength(cellInfo);
 
         return new PrimitiveCellInfo(cellId, dBm);
     }
@@ -121,7 +122,6 @@ public class PrimitiveCellInfo implements Serializable {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfo cellInfo) {
-
         /*
             There is no way to make this more appealing as Google did it like this themselves:
             https://github.com/android/platform_frameworks_base/blob/marshmallow-mr2-release/services/core/java/com/android/server/connectivity/NetworkMonitor.java
@@ -142,12 +142,11 @@ public class PrimitiveCellInfo implements Serializable {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoCdma cellInfo) {
         int cellId = cellInfo.getCellIdentity().getBasestationId();
-        double dBm = cellInfo.getCellSignalStrength().getDbm();
-
         if (cellId == Integer.MAX_VALUE) {
-            cellId = -1; // a more obvious error number, identically to NeighboringCellInfo.UNKNOWN_CID
-            dBm = Double.MIN_VALUE; // make it consitent with NeighboringCellInfo
+            return null; // unknown ID -> cell should not be considered
         }
+
+        double dBm = cellInfo.getCellSignalStrength().getDbm();
 
         Logger.d(TAG, "(new API) CellType=CDMA, cid=" + cellId + ", dBm=" + dBm);
         return new PrimitiveCellInfo(cellId, dBm);
@@ -156,12 +155,11 @@ public class PrimitiveCellInfo implements Serializable {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoGsm cellInfo) {
         int cellId = cellInfo.getCellIdentity().getCid();
-        double dBm = cellInfo.getCellSignalStrength().getDbm();
-
         if (cellId == Integer.MAX_VALUE) {
-            cellId = -1; // a more obvious error number, identically to NeighboringCellInfo.UNKNOWN_CID
-            dBm = Double.MIN_VALUE; // make it consistent with NeighboringCellInfo
+            return null; // unknown ID -> cell should not be considered
         }
+
+        double dBm = cellInfo.getCellSignalStrength().getDbm();
 
         Logger.d(TAG, "(new API) CellType=GSM, cid=" + cellId + ", dBm=" + dBm);
         return new PrimitiveCellInfo(cellId, dBm);
@@ -170,13 +168,12 @@ public class PrimitiveCellInfo implements Serializable {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoLte cellInfo) {
         int cellId = cellInfo.getCellIdentity().getCi();
+        if (cellId == Integer.MAX_VALUE) {
+            return null; // unknown ID -> cell should not be considered
+        }
+
         //double dBm = cellInfo.getCellSignalStrength().getDbm(); // TODO Check for correctness
         double dBm = cellInfo.getCellSignalStrength().getDbm() / -10.0; // TODO Check for correctness
-
-        if (cellId == Integer.MAX_VALUE) {
-            cellId = -1; // a more obvious error number, identically to NeighboringCellInfo.UNKNOWN_CID
-            dBm = Double.MIN_VALUE; // make it consistent with NeighboringCellInfo
-        }
 
         Logger.d(TAG, "(new API) CellType=LTE, cid=" + cellId + ", dBm=" + dBm);
         return new PrimitiveCellInfo(cellId, dBm);
@@ -185,12 +182,11 @@ public class PrimitiveCellInfo implements Serializable {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoWcdma cellInfo) {
         int cellId = cellInfo.getCellIdentity().getCid();
-        double dBm = cellInfo.getCellSignalStrength().getDbm();
-
         if (cellId == Integer.MAX_VALUE) {
-            cellId = -1; // a more obvious error number, identically to NeighboringCellInfo.UNKNOWN_CID
-            dBm = Double.MIN_VALUE; // make it consistent with NeighboringCellInfo
+            return null; // unknown ID -> cell should not be considered
         }
+
+        double dBm = cellInfo.getCellSignalStrength().getDbm();
 
         Logger.d(TAG, "(new API) CellType=WCDMA, cid=" + cellId + ", dBm=" + dBm);
         return new PrimitiveCellInfo(cellId, dBm);
@@ -208,7 +204,10 @@ public class PrimitiveCellInfo implements Serializable {
 
             if (cells != null && !cells.isEmpty()) { // this check is necessary since Samsung devices do not return any cell via getAllCellInfo
                 for (CellInfo cell : cells) {
-                    cellsInRange.add(PrimitiveCellInfo.getPrimitiveCellInfo(cell));
+                    PrimitiveCellInfo primitiveCellInfo = PrimitiveCellInfo.getPrimitiveCellInfo(cell);
+                    if (primitiveCellInfo != null) {
+                        cellsInRange.add(primitiveCellInfo);
+                    }
                 }
             } else {
                 cellsInRange = getLegacyCellInfo(telephonyManager);
@@ -222,7 +221,7 @@ public class PrimitiveCellInfo implements Serializable {
 
     static PrimitiveCellInfoTreeSet getLegacyCellInfo(TelephonyManager telephonyManager) {
         PrimitiveCellInfoTreeSet cellsInRange = new PrimitiveCellInfoTreeSet();
-        int cellId = Integer.MIN_VALUE;
+        int cellId = NeighboringCellInfo.UNKNOWN_CID;
 
         // get connected cell
         CellLocation location = telephonyManager.getCellLocation();
@@ -233,19 +232,22 @@ public class PrimitiveCellInfo implements Serializable {
             cellId = ((CdmaCellLocation) location).getBaseStationId();
         }
 
-
         boolean found = false;
 
         // get neighboring cells
         List<NeighboringCellInfo> cells = telephonyManager.getNeighboringCellInfo();
         for (NeighboringCellInfo cell : cells) {
-            cellsInRange.add(PrimitiveCellInfo.getPrimitiveCellInfo(cell));
-            if (cell.getCid() == cellId) {
-                found = true;
+            PrimitiveCellInfo primitiveCellInfo = PrimitiveCellInfo.getPrimitiveCellInfo(cell);
+            if (primitiveCellInfo != null) {
+                cellsInRange.add(primitiveCellInfo);
+
+                if (cell.getCid() == cellId) {
+                    found = true;
+                }
             }
         }
 
-        if (!found) {
+        if (!found && cellId != NeighboringCellInfo.UNKNOWN_CID) {
             // this is not the real strength, but as we are connected we can assume that it is the strongest available to us (in db)
             cellsInRange.add(new PrimitiveCellInfo(cellId, PrimitiveCellInfo.DEFAULT_SIGNAL_STRENGTH));
             Logger.d(TAG, "Connected cell not found in neighboring cells. Adding it with a signal strength of " + PrimitiveCellInfo.DEFAULT_SIGNAL_STRENGTH);
