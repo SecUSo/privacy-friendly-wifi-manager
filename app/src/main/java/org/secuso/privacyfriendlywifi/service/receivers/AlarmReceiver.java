@@ -34,14 +34,14 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     /**
      * Initializes alarmManager and alarmIntent instance variables.
      */
-    private static void initAlarmManager() {
+    private static void initAlarmManager(Context context) {
         if (AlarmReceiver.alarmManager == null) {
-            AlarmReceiver.alarmManager = (AlarmManager) StaticContext.getContext().getSystemService(Context.ALARM_SERVICE);
+            AlarmReceiver.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         }
 
         if (AlarmReceiver.alarmIntent == null) {
-            Intent intent = new Intent(StaticContext.getContext(), AlarmReceiver.class);
-            AlarmReceiver.alarmIntent = PendingIntent.getBroadcast(StaticContext.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent intent = new Intent(context, AlarmReceiver.class);
+            AlarmReceiver.alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         }
     }
 
@@ -49,8 +49,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
      * Sets a pending alarm. This alarm is either repeating (below SDK level 23) or
      * will manually schedule a new alarm after invocation.
      */
-    public static void setupAlarm(int secondsToStart) {
-        AlarmReceiver.cancelAlarm(); // this also initializes AlarmManager, no need to call it twice
+    public static void setupAlarm(Context context, int secondsToStart) {
+        AlarmReceiver.cancelAlarm(context); // this also initializes AlarmManager, no need to call it twice
         Logger.v(TAG, "Seconds until next alarm: " + secondsToStart);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -63,8 +63,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     /**
      * Schedule the next alarm using existing time schedule.
      */
-    public static void schedule() {
-        schedule(false);
+    public static void schedule(Context context) {
+        schedule(context, false);
     }
 
     /**
@@ -72,9 +72,9 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
      *
      * @param addDelay add {@code ADDITIONAL_TIMEOUT_IN_SECONDS} to delay.
      */
-    public static void schedule(boolean addDelay) {
+    public static void schedule(Context context, boolean addDelay) {
         Logger.d(TAG, "Scheduling next alarm" + (addDelay ? " with additional delay" : "."));
-        ScheduleListHandler scheduleEntries = new ScheduleListHandler();
+        ScheduleListHandler scheduleEntries = new ScheduleListHandler(context);
 
         Calendar cal = GregorianCalendar.getInstance();
         int currentHour = cal.get(Calendar.HOUR_OF_DAY);
@@ -120,14 +120,14 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         }
 
         // setup alarm
-        setupAlarm(diffSeconds);
+        setupAlarm(context, diffSeconds);
     }
 
     /**
      * Cancels the pending alarm.
      */
-    public static void cancelAlarm() {
-        AlarmReceiver.initAlarmManager();
+    public static void cancelAlarm(Context context) {
+        AlarmReceiver.initAlarmManager(context);
         AlarmReceiver.alarmManager.cancel(AlarmReceiver.alarmIntent);
     }
 
@@ -142,8 +142,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     /**
      * Schedules a new alarm and invokes {@link ManagerService}.
      */
-    public static void fireAndSchedule() {
-        schedule();
+    public static void fireAndSchedule(Context context) {
+        schedule(context);
         fire();
     }
 
@@ -152,8 +152,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
      * Schedules a new alarm with additional delay and invokes {@link ManagerService}.
      * @param addDelay If true, {@code AlarmReceiver.ADDITIONAL_TIMEOUT_IN_SECONDS} will be added to delay.
      */
-    public static void fireAndSchedule(boolean addDelay) {
-        schedule(addDelay);
+    public static void fireAndSchedule(Context context, boolean addDelay) {
+        schedule(context, addDelay);
         fire();
     }
 
@@ -161,6 +161,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Logger.d(TAG, "AlarmReceiver received intent.");
         StaticContext.setContext(context);
-        AlarmReceiver.fireAndSchedule();
+        AlarmReceiver.fireAndSchedule(context);
     }
 }

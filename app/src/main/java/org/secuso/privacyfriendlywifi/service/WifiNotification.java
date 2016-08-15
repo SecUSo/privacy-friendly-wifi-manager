@@ -106,7 +106,7 @@ public class WifiNotification {
             notificationManager.cancel(1);
 
             // add the new wifi to the list
-            WifiListHandler wifiListHandler = new WifiListHandler();
+            WifiListHandler wifiListHandler = new WifiListHandler(context);
             String[] wifiInfo = intent.getStringArrayExtra("NewWifiLocationEntry");
             wifiListHandler.add(new WifiLocationEntry(WifiHandler.getCleanSSID(wifiInfo[0]), wifiInfo[1]));
 
@@ -114,8 +114,8 @@ public class WifiNotification {
             refreshList.setAction("REFRESH_LIST");
             context.getApplicationContext().sendBroadcast(refreshList);
 
-            if (ManagerService.isServiceActive()) {
-                AlarmReceiver.fireAndSchedule();
+            if (ManagerService.isServiceActive(context)) {
+                AlarmReceiver.fireAndSchedule(context);
             }
 
             Toast.makeText(context, String.format(Locale.getDefault(), context.getString(R.string.toast_wifi_added), WifiHandler.getCleanSSID(wifiInfo[0])), Toast.LENGTH_LONG).show();

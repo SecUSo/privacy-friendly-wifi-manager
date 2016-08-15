@@ -31,7 +31,7 @@ public class WifiWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        RemoteViews widgetActiveButtonView = updateButton(context, ManagerService.isServiceActive(), false);
+        RemoteViews widgetActiveButtonView = updateButton(context, ManagerService.isServiceActive(context), false);
 
         // intent for widget button click
         Intent buttonIntent = new Intent(context, WidgetClickListener.class);
@@ -83,7 +83,7 @@ public class WifiWidget extends AppWidgetProvider {
     private static void broadcastUpdate(Context context) {
         final Intent updateWidgetsIntent = new Intent(context, WifiWidget.class);
         updateWidgetsIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        int[] ids = AppWidgetManager.getInstance(context.getApplicationContext()).getAppWidgetIds(new ComponentName(context.getApplicationContext(), WifiWidget.class));
+        int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, WifiWidget.class));
         updateWidgetsIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         context.sendBroadcast(updateWidgetsIntent);
     }
@@ -94,13 +94,13 @@ public class WifiWidget extends AppWidgetProvider {
     public static class WidgetClickListener extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean active = !ManagerService.isServiceActive();
-            ManagerService.setActiveFlag(active);
+            boolean active = !ManagerService.isServiceActive(context);
+            ManagerService.setActiveFlag(context, active);
 
             if (active) {
-                Controller.registerReceivers();
+                Controller.registerReceivers(context);
             } else {
-                Controller.unregisterReceivers();
+                Controller.unregisterReceivers(context);
             }
 
             updateButton(context, active);

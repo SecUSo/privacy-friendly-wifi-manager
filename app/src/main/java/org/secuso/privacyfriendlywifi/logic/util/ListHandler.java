@@ -1,5 +1,7 @@
 package org.secuso.privacyfriendlywifi.logic.util;
 
+import android.content.Context;
+
 import org.secuso.privacyfriendlywifi.logic.types.PreconditionEntry;
 import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 
@@ -18,11 +20,12 @@ public class ListHandler<EntryType extends PreconditionEntry> extends Observable
     private List<EntryType> entries;
     private final String listFilePath;
 
-    public ListHandler(String listFilePath) {
+    public ListHandler(Context context, String listFilePath) {
+        StaticContext.setContext(context);
         this.listFilePath = listFilePath;
 
         try {
-            Object o = FileHandler.loadObject(StaticContext.getContext(), this.listFilePath, false);
+            Object o = FileHandler.loadObject(context, this.listFilePath, false);
             this.entries = (List<EntryType>) o;
         } catch (IOException e) {
             // File does not exist
@@ -115,7 +118,7 @@ public class ListHandler<EntryType extends PreconditionEntry> extends Observable
 
     @Override
     public void update(Observable observable, Object data) {
-        AlarmReceiver.fireAndSchedule();
+        AlarmReceiver.fireAndSchedule(StaticContext.getContext());
         this.notifyChanged();
     }
 }

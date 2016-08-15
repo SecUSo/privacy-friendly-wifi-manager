@@ -56,7 +56,7 @@ public class FileHandler {
     /**
      * Store object to a specified file path
      *
-     * @param context A context to use.
+     * @param context  A context to use.
      * @param fileName Path to store the object to.
      * @param o        Object to store.
      * @return Storage successful

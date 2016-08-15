@@ -3,7 +3,6 @@ package org.secuso.privacyfriendlywifi.view.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,7 +18,6 @@ import android.view.ViewGroup;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
-import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
@@ -62,15 +60,9 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        StaticContext.setContext(this.getContext());
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
-
-
-        this.wifiListHandler = new WifiListHandler();
-        this.wifiListHandler.sort(); // important here: we are sorting before we are waiting for changes since we are creating the list later anyway
-        this.wifiListHandler.addObserver(this);
 
         // Set substring in actionbar
         ActionBar actionBar = ((AppCompatActivity) this.mActivity).getSupportActionBar();
@@ -108,24 +100,27 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
         // setup recycler view
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        this.recyclerView.addItemDecoration(new DividerItemDecoration(StaticContext.getContext()));
+        this.recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
 
         WifiListAdapter itemsAdapter = new WifiListAdapter(R.layout.list_item_wifilist, this.wifiListHandler, this.recyclerView, fab);
 
         this.recyclerView.setAdapter(itemsAdapter);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(StaticContext.getContext()));
-
-        if (this.fab != null) {
-            this.recyclerView.setPadding(
-                    this.recyclerView.getPaddingLeft(),
-                    this.recyclerView.getPaddingTop(),
-                    this.recyclerView.getPaddingRight(),
-                    (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
-                            ScreenHandler.getPXFromDP(this.fab.getPaddingTop() + this.fab.getHeight() + fab.getPaddingBottom(), StaticContext.getContext())
-                            : this.fab.getPaddingTop() + this.fab.getHeight() + this.fab.getPaddingBottom()));
-        }
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        StaticContext.setContext(context);
+
+        this.mActivity = getActivity();
+
+        this.wifiListHandler = new WifiListHandler(context);
+        this.wifiListHandler.sort(); // important here: we are sorting before we are waiting for changes since we are creating the list later anyway
+        this.wifiListHandler.addObserver(this);
     }
 
     @Override
@@ -148,8 +143,8 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
     @Override
     public void update(Observable o, Object data) {
-        if (ManagerService.isServiceActive()) {
-            AlarmReceiver.fireAndSchedule();
+        if (ManagerService.isServiceActive(StaticContext.getContext())) {
+            AlarmReceiver.fireAndSchedule(StaticContext.getContext());
         }
 
 
@@ -168,9 +163,5 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mActivity = getActivity();
-    }
+
 }

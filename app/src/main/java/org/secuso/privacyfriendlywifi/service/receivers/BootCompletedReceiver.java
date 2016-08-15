@@ -19,6 +19,6 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         StaticContext.setContext(context);
 
         Logger.i(TAG, "Boot completed");
-        Controller.registerReceivers();
+        Controller.registerReceivers(context);
     }
 }

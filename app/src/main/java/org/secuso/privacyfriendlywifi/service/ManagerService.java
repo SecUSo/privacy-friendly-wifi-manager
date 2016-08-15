@@ -43,13 +43,13 @@ public class ManagerService extends IntentService {
 
     public ManagerService() {
         super(ManagerService.class.getSimpleName());
-        this.wifiListHandler = new WifiListHandler();
     }
 
     @Override
     protected void onHandleIntent(final Intent intent) {
         Logger.v(TAG, "Incoming intent");
         StaticContext.setContext(this);
+        this.wifiListHandler = new WifiListHandler(this);
 
         boolean determinedWifiState = false; // check if Wifi is scheduled to be on (true) / off (false)
 
@@ -68,7 +68,7 @@ public class ManagerService extends IntentService {
                 if (WifiHandler.isWifiConnected(this)) {
                     if (this.wifiListHandler.size() > 0 && !this.updateCells()) { // only update if Wi-Fis have been added
                         Logger.v(TAG, "No new cell -> delay next alarm.");
-                        AlarmReceiver.schedule(true); // if no cell has been added -> increment delay until alarm
+                        AlarmReceiver.schedule(this, true); // if no cell has been added -> increment delay until alarm
                     }
 
                     determinedWifiState = true;
@@ -113,7 +113,7 @@ public class ManagerService extends IntentService {
 
     private boolean checkCells() {
         PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
-        boolean respectSignalStrength = ManagerService.shouldRespectSignalStrength();
+        boolean respectSignalStrength = ManagerService.shouldRespectSignalStrength(this);
 
         for (WifiLocationEntry entry : this.wifiListHandler.getAll()) {
             for (CellLocationCondition condition : entry.getCellLocationConditions()) {
@@ -154,19 +154,31 @@ public class ManagerService extends IntentService {
         return false; // no schedule active
     }
 
-    public static boolean shouldRespectSignalStrength() {
-        SharedPreferences settings = StaticContext.getContext().getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
+    public static boolean shouldRespectSignalStrength(Context context) {
+        SharedPreferences settings = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
         return settings.getBoolean(ManagerService.PREF_ENTRY_USE_SIGNAL_STRENGTH, true);
     }
 
-    public static void setActiveFlag(boolean state) {
-        SharedPreferences settings = StaticContext.getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
+    public static boolean shouldRespectSignalStrength() {
+        return ManagerService.shouldRespectSignalStrength(StaticContext.getContext());
+    }
+
+    public static void setActiveFlag(Context context, boolean state) {
+        SharedPreferences settings = context.getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
         settings.edit().putBoolean(ManagerService.PREF_ENTRY_SERVICE_ACTIVE, state).apply();
     }
 
-    public static boolean isServiceActive() {
-        SharedPreferences settings = StaticContext.getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
+    public static void setActiveFlag(boolean state) {
+        ManagerService.setActiveFlag(StaticContext.getContext(), state);
+    }
+
+    public static boolean isServiceActive(Context context) {
+        SharedPreferences settings = context.getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
 
         return settings.getBoolean(ManagerService.PREF_ENTRY_SERVICE_ACTIVE, false);
+    }
+
+    public static boolean isServiceActive() {
+        return ManagerService.isServiceActive(StaticContext.getContext());
     }
 }

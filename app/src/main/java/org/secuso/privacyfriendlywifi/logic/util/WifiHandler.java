@@ -113,7 +113,7 @@ public class WifiHandler {
             String confSSID = WifiHandler.getCleanSSID(config.SSID);
 
             boolean alreadyManaged = false;
-            WifiListHandler handler = new WifiListHandler();
+            WifiListHandler handler = new WifiListHandler(context);
 
             for (WifiLocationEntry knownEntry : handler.getAll()) {
                 if (confSSID.equals(knownEntry.getSsid())) {

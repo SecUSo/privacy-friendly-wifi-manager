@@ -62,7 +62,7 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_schedule, container, false);
 
-        this.scheduleListHandler = new ScheduleListHandler();
+        this.scheduleListHandler = new ScheduleListHandler(this.getContext());
         this.scheduleListHandler.sort();
         this.scheduleListHandler.addObserver(this);
 

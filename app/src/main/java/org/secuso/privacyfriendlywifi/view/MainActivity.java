@@ -126,17 +126,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), WifiWidget.class));
         updateWidgetsIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
 
+        final MainActivity self = this;
+
         mainSwitch.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         if (mainSwitch.isChecked()) {
-                            ManagerService.setActiveFlag(true);
-                            Controller.registerReceivers();
+                            ManagerService.setActiveFlag(self, true);
+                            Controller.registerReceivers(self);
                         } else {
-                            ManagerService.setActiveFlag(false);
-                            Controller.unregisterReceivers();
+                            ManagerService.setActiveFlag(self, false);
+                            Controller.unregisterReceivers(self);
                         }
 
                         // now update the widgets
@@ -146,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         );
 
         // update state switch´s state
-        mainSwitch.setChecked(ManagerService.isServiceActive());
+        mainSwitch.setChecked(ManagerService.isServiceActive(this));
 
         // set marginStart using measurement since drawer is locked
         if (this.isDrawerLocked) {
@@ -203,13 +205,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (this.menu != null) {
 
             // get action view
-            final MenuItem toggleservice = this.menu.findItem(R.id.main_switch);
+            MenuItem toggleservice = this.menu.findItem(R.id.main_switch);
             if (toggleservice != null) {
-                final RelativeLayout switchOuter = (RelativeLayout) toggleservice.getActionView();
-                final Switch mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
+                RelativeLayout switchOuter = (RelativeLayout) toggleservice.getActionView();
+                Switch mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
 
                 // update state switch´s state
-                mainSwitch.setChecked(ManagerService.isServiceActive());
+                mainSwitch.setChecked(ManagerService.isServiceActive(this));
             }
         }
     }

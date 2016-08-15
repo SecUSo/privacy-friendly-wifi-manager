@@ -1,5 +1,7 @@
 package org.secuso.privacyfriendlywifi.logic.util;
 
+import android.content.Context;
+
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 
@@ -12,9 +14,9 @@ import java.util.Observer;
 public class ScheduleListHandler implements IListHandler<ScheduleEntry> {
     private static ListHandler<ScheduleEntry> list;
 
-    public ScheduleListHandler() {
+    public ScheduleListHandler(Context context) {
         if (ScheduleListHandler.list == null) {
-            ScheduleListHandler.list = new ListHandler<>(ManagerService.FN_SCHEDULE_ENTRIES);
+            ScheduleListHandler.list = new ListHandler<>(context, ManagerService.FN_SCHEDULE_ENTRIES);
         }
     }
 
