@@ -10,14 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
-import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
+
+import java.util.Locale;
 
 import secuso.org.privacyfriendlywifi.R;
 
@@ -25,6 +28,8 @@ import secuso.org.privacyfriendlywifi.R;
  *
  */
 public class SettingsFragment extends Fragment {
+    SharedPreferences settings;
+    LinearLayout developerLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,31 @@ public class SettingsFragment extends Fragment {
             actionBar.setSubtitle(R.string.fragment_settings);
         }
 
+        this.settings = StaticContext.getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
+
+        boolean showDeveleoper = settings.getBoolean(ManagerService.PREF_ENTRY_DEVELOPER, false);
+        this.developerLayout = (LinearLayout) rootView.findViewById(R.id.layout_developer);
+        final TextView textViewGeneralSettings = (TextView) rootView.findViewById(R.id.textGeneralSettings);
+
+        if (showDeveleoper) {
+            developerLayout.setVisibility(View.VISIBLE);
+
+            final Button buttonHideDeveloper = (Button) rootView.findViewById(R.id.buttonHideDeveloperSettings);
+
+            buttonHideDeveloper.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    settings.edit().putBoolean(ManagerService.PREF_ENTRY_DEVELOPER, false).apply();
+                    developerLayout.setVisibility(View.GONE);
+
+                    // reset counter
+                    textViewGeneralSettings.setOnClickListener(new DeveloperClickListener());
+                }
+            });
+        } else {
+            textViewGeneralSettings.setOnClickListener(new DeveloperClickListener());
+        }
+
         final Switch signalStrengthSwitch = (Switch) rootView.findViewById(R.id.switchSignalStrength);
         signalStrengthSwitch.setChecked(ManagerService.shouldRespectSignalStrength());
 
@@ -51,7 +81,6 @@ public class SettingsFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SharedPreferences settings = StaticContext.getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
                         settings.edit().putBoolean(ManagerService.PREF_ENTRY_USE_SIGNAL_STRENGTH, signalStrengthSwitch.isChecked()).apply();
                     }
                 }
@@ -88,19 +117,34 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button buttonCheckWifiConnection = (Button) rootView.findViewById(R.id.buttonCheckWifiConnected);
-
-        buttonCheckWifiConnection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),
-                        String.format("Wifi status: enabled: %1$b, connected %2$b",
-                                WifiHandler.isWifiEnabled(getContext()),
-                                WifiHandler.isWifiConnected(getContext())),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
         return rootView;
+    }
+
+    class DeveloperClickListener implements View.OnClickListener {
+        int clicked = 0;
+        int clicksNeeded = 6;
+        Toast infoToast;
+
+
+        @Override
+        public void onClick(View v) {
+            clicked++;
+
+            if (clicked >= 3) {
+                int leftToDev = clicksNeeded - Math.min(clicked, clicksNeeded);
+
+                if (this.infoToast != null) {
+                    this.infoToast.cancel();
+                }
+
+                this.infoToast = Toast.makeText(getContext(), String.format(Locale.getDefault(), "%d steps to become a developer.", leftToDev), Toast.LENGTH_SHORT);
+                this.infoToast.show();
+
+                if (clicked >= clicksNeeded) {
+                    settings.edit().putBoolean(ManagerService.PREF_ENTRY_DEVELOPER, true).apply();
+                    developerLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 }

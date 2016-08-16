@@ -85,11 +85,12 @@
 
 
     <!-- SETTINGS STRINGS -->
+    <string name="general_settings">General Settings</string>
+    <string name="respect_signal_strength">Respect signal strength</string>
+    <string name="developer_settings">Developer Settings</string>
     <string name="delete_logfile">Delete logfile</string>
     <string name="info_logfile_deleted">Deleted logfile successfully.</string>
     <string name="info_logfile_deletion_error">Logfile could not be deleted.</string>
-    <string name="respect_signal_strength">Respect signal strength</string>
-
 
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>

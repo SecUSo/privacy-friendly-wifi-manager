@@ -80,9 +80,9 @@
 
 
     <!-- NOTIFICATION -->
-    <string name="notification_content_text">Eine ungemanagte WLAN-Verbindung wurde hergestellt</string>
-    <string name="notification_content_info">Ungemanagte Verbindung</string>
-    <string name="notification_unknown_wifi_title">Neues ungemanagtes WLAN:</string>
+    <string name="notification_content_text">Eine nicht verwaltet WLAN-Verbindung wurde hergestellt</string>
+    <string name="notification_content_info">Nicht verwaltete Verbindung</string>
+    <string name="notification_unknown_wifi_title">Nicht verwaltetes WLAN:</string>
     <string name="notification_unknown_wifi_title_format">Neues ungemanagtes WLAN: %1$s</string>
     <string name="notification_button_add">Diese Verbindung automatisch managen</string>
     <string name="notification_main_text">Berühren um Verbindungen zu verwalten</string>
@@ -90,11 +90,12 @@
 
 
     <!-- SETTINGS STRINGS -->
-    <string name="delete_logfile">Delete logfile</string>
-    <string name="info_logfile_deleted">Deleted logfile successfully.</string>
-    <string name="info_logfile_deletion_error">Logfile could not be deleted.</string>
     <string name="respect_signal_strength">Signalstärke berücksichtigen</string>
-
+    <string name="general_settings">Allgemeine Einstellungen</string>
+    <string name="developer_settings">Eintwickeroptionen</string>
+    <string name="delete_logfile">Logdatei löschen</string>
+    <string name="info_logfile_deleted">Logdatei erfolgreich gelöscht.</string>
+    <string name="info_logfile_deletion_error">Logdatei konnte nicht gelöscht werden.</string>
 
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>
