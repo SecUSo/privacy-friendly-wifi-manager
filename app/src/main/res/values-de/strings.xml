@@ -103,6 +103,8 @@
     <string name="details_ssid_placeholder">Unbekannte SSID</string>
     <string name="details_bssid_placeholder">Unbekannte MAC</string>
     <string name="details_cellid_placeholder">Unbekannte Zell-ID</string>
+    <string name="details_macs_header">MACs</string>
+    <string name="details_cellids_header">Zell-IDs</string>
 
 
     <!-- WIDGET STRINGS -->

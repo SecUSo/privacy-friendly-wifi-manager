@@ -98,6 +98,8 @@
     <string name="details_ssid_placeholder">SSID unknown</string>
     <string name="details_bssid_placeholder">MAC unknown</string>
     <string name="details_cellid_placeholder">Cell ID unknown</string>
+    <string name="details_macs_header">MACs</string>
+    <string name="details_cellids_header">Cell IDs</string>
 
 
     <!-- WIDGET STRINGS -->

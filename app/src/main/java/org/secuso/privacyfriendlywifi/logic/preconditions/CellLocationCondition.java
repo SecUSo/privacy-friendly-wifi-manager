@@ -36,7 +36,11 @@ public class CellLocationCondition extends Precondition {
 
     /* GETTERS & SETTERS */
     public int getNumberOfRelatedCells() {
-        return relatedCells.size();
+        return this.relatedCells.size();
+    }
+
+    public Set<PrimitiveCellInfo> getRelatedCells() {
+        return this.relatedCells;
     }
 
     public String getBssid() {
@@ -138,7 +142,7 @@ public class CellLocationCondition extends Precondition {
                 for (PrimitiveCellInfo cell : currentCells) {
                     buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
                 }
-                buf.delete(buf.length()-2,buf.length()-1);
+                buf.delete(buf.length() - 2, buf.length() - 1);
                 buf.append("}");
                 Logger.d(TAG, buf.toString());
 
@@ -147,7 +151,7 @@ public class CellLocationCondition extends Precondition {
                 for (PrimitiveCellInfo cell : union) {
                     buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
                 }
-                buf.delete(buf.length()-2,buf.length()-1);
+                buf.delete(buf.length() - 2, buf.length() - 1);
                 buf.append("}");
                 Logger.d(TAG, buf.toString());
 
@@ -156,7 +160,7 @@ public class CellLocationCondition extends Precondition {
                 for (PrimitiveCellInfo cell : unionRange) {
                     buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
                 }
-                buf.delete(buf.length()-2,buf.length()-1);
+                buf.delete(buf.length() - 2, buf.length() - 1);
                 buf.append("}");
                 Logger.d(TAG, buf.toString());
 
@@ -165,7 +169,7 @@ public class CellLocationCondition extends Precondition {
                 for (PrimitiveCellInfo cell : this.relatedCells) {
                     buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
                 }
-                buf.delete(buf.length()-2,buf.length()-1);
+                buf.delete(buf.length() - 2, buf.length() - 1);
                 buf.append("}");
                 Logger.d(TAG, buf.toString());
 
