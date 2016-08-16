@@ -79,6 +79,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         Calendar cal = GregorianCalendar.getInstance();
         int currentHour = cal.get(Calendar.HOUR_OF_DAY);
         int currentMinute = cal.get(Calendar.MINUTE);
+        int currentSecond = cal.get(Calendar.SECOND);
         Pair<Integer, Integer> time = new Pair<>(currentHour, currentMinute);
 
         int diffSeconds;
@@ -94,11 +95,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         }
 
         if (currentSchedule != null) {
-            diffSeconds = TimeHelper.getTimeDifference(currentHour, currentMinute, currentSchedule.getEndHour(), currentSchedule.getEndMinute());
-
-            if (diffSeconds < 0) { // e.g. endHour is 00:00 and currentHour is 23:00 -> change diff from -23:00 to +01:00
-                diffSeconds += 86400; // 60*60*24 = one day in seconds
-            }
+            diffSeconds = TimeHelper.getTimeDifference(currentHour, currentMinute, currentSecond, currentSchedule.getEndHour(), currentSchedule.getEndMinute(), 0);
         } else { // if there has not been any entry, we should set the timeout to its default value
             diffSeconds = AlarmReceiver.DEFAULT_TIMEOUT_IN_SECONDS;
 
@@ -111,11 +108,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
                 ScheduleCondition schedCond = entry.getScheduleCondition();
 
                 if (!schedCond.check(time)) {
-                    int timeDifference = TimeHelper.getTimeDifference(currentHour, currentMinute, schedCond.getStartHour(), schedCond.getStartMinute());
-
-                    if (timeDifference < 0) { // e.g. Hour is 00:00 and currentHour is 23:00 -> change diff from -23:00 to +01:00
-                        timeDifference += 86400; // 60*60*24 = one day in seconds
-                    }
+                    int timeDifference = TimeHelper.getTimeDifference(currentHour, currentMinute, currentSecond, schedCond.getStartHour(), schedCond.getStartMinute(), 0);
 
                     if (timeDifference < diffSeconds) {
                         diffSeconds = timeDifference;
@@ -153,8 +146,9 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     }
 
     /**
-     /**
+     * /**
      * Schedules a new alarm with additional delay and invokes {@link ManagerService}.
+     *
      * @param addDelay If true, {@code AlarmReceiver.ADDITIONAL_TIMEOUT_IN_SECONDS} will be added to delay.
      */
     public static void fireAndSchedule(Context context, boolean addDelay) {
