@@ -1,12 +1,13 @@
 package org.secuso.privacyfriendlywifi.logic.preconditions;
 
+import org.secuso.privacyfriendlywifi.logic.util.SerializationHelper;
+
 import java.io.Serializable;
-import java.util.Observable;
 
 /**
  * Interface representing a precondition to check for.
  */
-public class Precondition extends Observable implements Serializable {
+public abstract class Precondition extends SerializationHelper implements Serializable {
     protected boolean isActive; // by default a user created precondition is active
 
     public Precondition() {

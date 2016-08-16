@@ -5,9 +5,11 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
+import org.secuso.privacyfriendlywifi.logic.util.SerializationHelper;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,15 +23,37 @@ public class WifiLocationEntry extends PreconditionEntry implements Serializable
     private List<CellLocationCondition> cellLocationConditions;
 
     public WifiLocationEntry(String ssid, String bssid) {
-        this(ssid, Arrays.asList(new String[]{bssid}));
+        initialize(ssid, bssid);
     }
 
     public WifiLocationEntry(String ssid, List<String> bssidList) {
+        initialize(ssid, bssidList);
+    }
+
+    public void initialize(String ssid, String bssid) {
+        initialize(ssid, Arrays.asList(new String[]{bssid}));
+    }
+
+    public void initialize(Context context, Object[] args) throws IOException {
+        if (args[0] instanceof String && args[1] instanceof List) {
+            this.ssid = (String) args[0];
+            this.cellLocationConditions = (List<CellLocationCondition>) args[1];
+        } else {
+            throw new IOException(SerializationHelper.SERIALIZATION_ERROR);
+        }
+    }
+
+    public void initialize(String ssid, List<String> bssidList) {
         this.ssid = ssid;
-        this.cellLocationConditions = new ArrayList<>();
+        this.cellLocationConditions = new ArrayList<>(); // reset list
+
         for (String bssid : bssidList) {
             this.addCellLocationCondition(new CellLocationCondition(bssid));
         }
+    }
+
+    protected Object[] getPersistentFields() {
+        return new Object[]{this.ssid, this.cellLocationConditions};
     }
 
     public boolean addCellLocationCondition(CellLocationCondition newCondition) {

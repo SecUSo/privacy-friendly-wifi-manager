@@ -5,19 +5,33 @@ import android.content.Context;
 import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Observer;
 
 /**
  *
  */
-public class ScheduleListHandler implements IListHandler<ScheduleEntry> {
+public class ScheduleListHandler extends SerializationHelper implements IListHandler<ScheduleEntry> {
     private static ListHandler<ScheduleEntry> list;
 
     public ScheduleListHandler(Context context) {
         if (ScheduleListHandler.list == null) {
             ScheduleListHandler.list = new ListHandler<>(context, ManagerService.FN_SCHEDULE_ENTRIES);
         }
+    }
+
+    public void initialize(Context context, Object[] args) throws IOException {
+        if (args[0] instanceof ListHandler) {
+            ScheduleListHandler.list = (ListHandler<ScheduleEntry>) args[0];
+        } else {
+            throw new IOException(SerializationHelper.SERIALIZATION_ERROR);
+        }
+    }
+
+    @Override
+    protected Object[] getPersistentFields() {
+        return new Object[]{list};
     }
 
     public void addObserver(Observer observer) {

@@ -8,8 +8,10 @@ import android.support.v4.content.ContextCompat;
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfo;
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfoTreeSet;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
+import org.secuso.privacyfriendlywifi.logic.util.SerializationHelper;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +22,7 @@ public class CellLocationCondition extends Precondition {
     private static final String TAG = CellLocationCondition.class.getCanonicalName();
     public final int MIN_CELLS = 3;
     public final double MIN_CELL_PERCENTAGE = 0.3;
-    private final String bssid;
+    private String bssid;
     private Set<PrimitiveCellInfo> relatedCells; // cells
 
     /**
@@ -29,9 +31,34 @@ public class CellLocationCondition extends Precondition {
      * @param bssid The BSSID (which should be equivalent to a MAC address from this perspective
      */
     public CellLocationCondition(String bssid) {
-        super();
+        this(bssid, new HashSet<PrimitiveCellInfo>());
+    }
+
+    /**
+     * Creates a new {@link CellLocationCondition}.
+     *
+     * @param bssid        The BSSID (which should be equivalent to a MAC address from this perspective
+     * @param relatedCells All related cells.
+     */
+    public CellLocationCondition(String bssid, Set<PrimitiveCellInfo> relatedCells) {
+        initialize(bssid, relatedCells);
+    }
+
+    public void initialize(String bssid, Set<PrimitiveCellInfo> relatedCells) {
         this.bssid = bssid;
-        this.relatedCells = new HashSet<>();
+        this.relatedCells = relatedCells;
+    }
+
+    public void initialize(Context context, Object[] args) throws IOException {
+        if (args[0] instanceof String && args[1] instanceof Set) {
+            initialize((String) args[0], (Set<PrimitiveCellInfo>) args[1]);
+        } else {
+            throw new IOException(SerializationHelper.SERIALIZATION_ERROR);
+        }
+    }
+
+    protected Object[] getPersistentFields() {
+        return new Object[]{this.bssid, this.relatedCells};
     }
 
     /* GETTERS & SETTERS */
