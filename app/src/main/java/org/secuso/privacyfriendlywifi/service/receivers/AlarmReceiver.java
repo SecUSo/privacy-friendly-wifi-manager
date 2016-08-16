@@ -111,9 +111,14 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
                 ScheduleCondition schedCond = entry.getScheduleCondition();
 
                 if (!schedCond.check(time)) {
-                    int val = TimeHelper.getTimeDifference(currentHour, currentMinute, schedCond.getStartHour(), schedCond.getStartMinute());
-                    if (val < diffSeconds) {
-                        diffSeconds = val;
+                    int timeDifference = TimeHelper.getTimeDifference(currentHour, currentMinute, schedCond.getStartHour(), schedCond.getStartMinute());
+
+                    if (timeDifference < 0) { // e.g. Hour is 00:00 and currentHour is 23:00 -> change diff from -23:00 to +01:00
+                        timeDifference += 86400; // 60*60*24 = one day in seconds
+                    }
+
+                    if (timeDifference < diffSeconds) {
+                        diffSeconds = timeDifference;
                     }
                 }
             }
