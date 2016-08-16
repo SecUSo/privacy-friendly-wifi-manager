@@ -99,9 +99,9 @@
 
 
     <!-- DETAILS STRINGS -->
-    <string name="details_ssid_placeholder">SSID unknown</string>
-    <string name="details_bssid_placeholder">MAC unknown</string>
-    <string name="details_cellid_placeholder">Cell ID unknown</string>
+    <string name="details_ssid_placeholder">Unbekannte SSID</string>
+    <string name="details_bssid_placeholder">Unbekannte MAC</string>
+    <string name="details_cellid_placeholder">Unbekannte Zell-ID</string>
 
 
     <!-- WIDGET STRINGS -->
