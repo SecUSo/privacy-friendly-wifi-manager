@@ -3,6 +3,7 @@ package org.secuso.privacyfriendlywifi.service.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -47,8 +48,13 @@ public class WifiChangedReceiver extends BroadcastReceiver {
                     }
                 }
 
-                // if unknown, show notification
-                WifiNotification.show(context, wifiInfo);
+                // if unknown, show notification - check settings before
+
+                SharedPreferences settings = context.getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
+                if (settings.getBoolean(ManagerService.PREF_ENTRY_SHOW_NOTIFICATION, true)) {
+                    WifiNotification.show(context, wifiInfo);
+                }
+
             } else {
                 AlarmReceiver.fireAndSchedule(context, true); // not connected -> maybe we can already disable Wi-Fi
             }

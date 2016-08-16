@@ -23,6 +23,28 @@
         android:paddingTop="5dp">
 
         <TextView
+            android:id="@+id/textShowNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_notification_to_add_unmanaged_wi_fis" />
+
+        <Switch
+            android:id="@+id/switchNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:checked="true" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp">
+
+        <TextView
             android:id="@+id/textSignalStrength"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +57,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:checked="false" />
-
     </RelativeLayout>
 
     <Space
@@ -77,6 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Flush logfile" />
+
             <Button
                 android:id="@+id/buttonHideDeveloperSettings"
                 android:layout_width="wrap_content"

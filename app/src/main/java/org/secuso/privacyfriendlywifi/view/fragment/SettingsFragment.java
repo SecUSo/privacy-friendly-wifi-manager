@@ -51,11 +51,41 @@ public class SettingsFragment extends Fragment {
 
         this.settings = StaticContext.getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
 
-        boolean showDeveleoper = settings.getBoolean(ManagerService.PREF_ENTRY_DEVELOPER, false);
+        /* GENERAL SETTINGS - START */
+
+        final Switch signalStrengthSwitch = (Switch) rootView.findViewById(R.id.switchSignalStrength);
+        signalStrengthSwitch.setChecked(ManagerService.shouldRespectSignalStrength());
+
+        signalStrengthSwitch.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        settings.edit().putBoolean(ManagerService.PREF_ENTRY_USE_SIGNAL_STRENGTH, signalStrengthSwitch.isChecked()).apply();
+                    }
+                }
+        );
+
+        final Switch notificationSwitch = (Switch) rootView.findViewById(R.id.switchNotification);
+        notificationSwitch.setChecked(settings.getBoolean(ManagerService.PREF_ENTRY_SHOW_NOTIFICATION, true));
+
+        notificationSwitch.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        settings.edit().putBoolean(ManagerService.PREF_ENTRY_SHOW_NOTIFICATION, notificationSwitch.isChecked()).apply();
+                    }
+                }
+        );
+
+        /* GENERAL SETTINGS - END */
+
+        /* DEVELOPER SETTINGS - START */
+
+        boolean showDeveloper = settings.getBoolean(ManagerService.PREF_ENTRY_DEVELOPER, false);
         this.developerLayout = (LinearLayout) rootView.findViewById(R.id.layout_developer);
         final TextView textViewGeneralSettings = (TextView) rootView.findViewById(R.id.textGeneralSettings);
 
-        if (showDeveleoper) {
+        if (showDeveloper) {
             developerLayout.setVisibility(View.VISIBLE);
 
             final Button buttonHideDeveloper = (Button) rootView.findViewById(R.id.buttonHideDeveloperSettings);
@@ -73,18 +103,6 @@ public class SettingsFragment extends Fragment {
         } else {
             textViewGeneralSettings.setOnClickListener(new DeveloperClickListener());
         }
-
-        final Switch signalStrengthSwitch = (Switch) rootView.findViewById(R.id.switchSignalStrength);
-        signalStrengthSwitch.setChecked(ManagerService.shouldRespectSignalStrength());
-
-        signalStrengthSwitch.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        settings.edit().putBoolean(ManagerService.PREF_ENTRY_USE_SIGNAL_STRENGTH, signalStrengthSwitch.isChecked()).apply();
-                    }
-                }
-        );
 
         Button buttonTriggerService = (Button) rootView.findViewById(R.id.buttonTriggerService);
 
@@ -116,6 +134,8 @@ public class SettingsFragment extends Fragment {
                 Logger.flush();
             }
         });
+
+        /* DEVELOPER SETTINGS - END */
 
         return rootView;
     }

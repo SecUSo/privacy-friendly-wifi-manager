@@ -39,6 +39,7 @@ public class ManagerService extends IntentService {
     public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
     public final static String PREF_ENTRY_USE_SIGNAL_STRENGTH = "SHARED_PREF_ENTRY_USE_SIGNAL_STRENGTH";
     public final static String PREF_ENTRY_SERVICE_RUNNING = "SHARED_PREF_SERVICE_RUNNING";
+    public final static String PREF_ENTRY_SHOW_NOTIFICATION = "SHARED_PREF_SHOW_NOTIFICATION";
     public final static String PREF_ENTRY_DEVELOPER = "SHARED_PREF_DEVELOPER";
 
     private WifiListHandler wifiListHandler;
@@ -51,56 +52,47 @@ public class ManagerService extends IntentService {
     protected void onHandleIntent(final Intent intent) {
         Logger.v(TAG, "Incoming intent");
         StaticContext.setContext(this);
-        SharedPreferences settings = this.getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
-        boolean alreadyRunning = settings.getBoolean(ManagerService.PREF_ENTRY_SERVICE_RUNNING, false);
 
-        if (!alreadyRunning) {
-            settings.edit().putBoolean(ManagerService.PREF_ENTRY_SERVICE_RUNNING, true).apply();
+        this.wifiListHandler = new WifiListHandler(this);
 
-            this.wifiListHandler = new WifiListHandler(this);
+        boolean determinedWifiState = false; // check if Wifi is scheduled to be on (true) / off (false)
 
-            boolean determinedWifiState = false; // check if Wifi is scheduled to be on (true) / off (false)
+        if (this.checkSchedule()) {
+            // Case 1: Wifi scheduled to be off, don't care about anything else
+            Logger.d(TAG, "Wifi will be shut down according to schedule.");
+            determinedWifiState = false; // TODO establish a more intuitive visualisation in UI
+        } else if (WifiHandler.hasWifiPermission(this)) {
+            if (WifiHandler.isWifiEnabled(this)) {
 
-            if (this.checkSchedule()) {
-                // Case 1: Wifi scheduled to be off, don't care about anything else
-                Logger.d(TAG, "Wifi will be shut down according to schedule.");
-                determinedWifiState = false; // TODO establish a more intuitive visualisation in UI
-            } else if (WifiHandler.hasWifiPermission(this)) {
-                if (WifiHandler.isWifiEnabled(this)) {
+                // Case 2: Wifi ON,disconnected (should be off? -> no known cells in range)
+                Intent startWifiUpdaterService = new Intent(StaticContext.getContext(), WifiUpdaterService.class);
+                startService(startWifiUpdaterService);
 
-                    // Case 2: Wifi ON,disconnected (should be off? -> no known cells in range)
-                    Intent startWifiUpdaterService = new Intent(StaticContext.getContext(), WifiUpdaterService.class);
-                    startService(startWifiUpdaterService);
-
-                    // Case 3: Wifi ON,connected (ok to be on -> update cells)
-                    if (WifiHandler.isWifiConnected(this)) {
-                        if (this.wifiListHandler.size() > 0 && !this.updateCells()) { // only update if Wi-Fis have been added
-                            Logger.v(TAG, "No new cell -> delay next alarm.");
-                            AlarmReceiver.schedule(this, true); // if no cell has been added -> increment delay until alarm
-                        }
-
-                        determinedWifiState = true;
-                    } else {
-                        determinedWifiState = this.checkCells();
+                // Case 3: Wifi ON,connected (ok to be on -> update cells)
+                if (WifiHandler.isWifiConnected(this)) {
+                    if (this.wifiListHandler.size() > 0 && !this.updateCells()) { // only update if Wi-Fis have been added
+                        Logger.v(TAG, "No new cell -> delay next alarm.");
+                        AlarmReceiver.schedule(this, true); // if no cell has been added -> increment delay until alarm
                     }
+
+                    determinedWifiState = true;
                 } else {
-                    // Case 4: Wifi OFF (should be on? -> known cells in range)
                     determinedWifiState = this.checkCells();
                 }
+            } else {
+                // Case 4: Wifi OFF (should be on? -> known cells in range)
+                determinedWifiState = this.checkCells();
             }
-
-            Logger.d(TAG, "Setting wifi state: " + determinedWifiState + "| Enabled: " + WifiHandler.isWifiEnabled(this) + "| Connected: " + WifiHandler.isWifiConnected(this));
-            // apply state to wifi
-            WifiToggleEffect wifiToggleEffect = new WifiToggleEffect();
-            wifiToggleEffect.apply(determinedWifiState);
-
-            settings.edit().putBoolean(ManagerService.PREF_ENTRY_SERVICE_RUNNING, false).apply();
-        } else {
-            Logger.d(TAG, "ManagerService already running.");
         }
 
-        // tell everyone that we are done
+        Logger.d(TAG, "Setting wifi state: " + determinedWifiState + "| Enabled: " + WifiHandler.isWifiEnabled(this) + "| Connected: " + WifiHandler.isWifiConnected(this));
+        // apply state to wifi
+        WifiToggleEffect wifiToggleEffect = new WifiToggleEffect();
+        wifiToggleEffect.apply(determinedWifiState);
+
         Logger.flush();
+
+        // tell everyone that we are done
         WakefulBroadcastReceiver.completeWakefulIntent(intent);
     }
 
@@ -110,7 +102,10 @@ public class ManagerService extends IntentService {
         String currentSsid = WifiHandler.getCleanSSID(currentConnection.getSSID());
         String currentBssid = currentConnection.getBSSID();
 
-        for (WifiLocationEntry entry : this.wifiListHandler.getAll()) {
+        List<WifiLocationEntry> wifis = this.wifiListHandler.getAll();
+
+        for (int i = 0; i < wifis.size(); i++) {
+            WifiLocationEntry entry = wifis.get(i);
             if (entry.getSsid().equals(currentSsid)) {
                 for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                     if (condition.getBssid().equals(currentBssid)) {
@@ -128,7 +123,10 @@ public class ManagerService extends IntentService {
         PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
         boolean respectSignalStrength = ManagerService.shouldRespectSignalStrength(this);
 
-        for (WifiLocationEntry entry : this.wifiListHandler.getAll()) {
+        List<WifiLocationEntry> wifis = this.wifiListHandler.getAll();
+
+        for (int i = 0; i < wifis.size(); i++) {
+            WifiLocationEntry entry = wifis.get(i);
             for (CellLocationCondition condition : entry.getCellLocationConditions()) {
                 if (condition.check(allCells, respectSignalStrength)) {
                     Logger.d(TAG, "Activating Wi-Fi for: " + entry.getSsid());

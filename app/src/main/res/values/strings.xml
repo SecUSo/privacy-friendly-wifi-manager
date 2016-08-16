@@ -95,4 +95,5 @@
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>
     <string name="add_widget">Add widget</string>
+    <string name="show_notification_to_add_unmanaged_wi_fis">Show notification to add unmanaged Wi-Fis</string>
 </resources>
