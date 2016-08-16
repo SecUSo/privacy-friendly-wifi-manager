@@ -56,9 +56,6 @@
             android:stopWithTask="false" />
 
         <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver" />
-        <receiver android:name="org.secuso.privacyfriendlywifi.service.WifiNotification$NotificationButtonListener" />
-        <receiver android:name="org.secuso.privacyfriendlywifi.service.WifiNotification$NotificationClickListener" />
-        <receiver android:name="org.secuso.privacyfriendlywifi.view.WifiWidget$WidgetClickListener" />
         <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -69,6 +66,11 @@
                 <action android:name="android.net.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name="org.secuso.privacyfriendlywifi.service.WifiNotification$NotificationButtonListener" />
+        <receiver android:name="org.secuso.privacyfriendlywifi.service.WifiNotification$NotificationClickListener" />
+
+        <receiver android:name="org.secuso.privacyfriendlywifi.view.WifiWidget$WidgetClickListener" />
         <receiver android:name="org.secuso.privacyfriendlywifi.view.WifiWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

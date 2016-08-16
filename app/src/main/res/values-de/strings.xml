@@ -8,8 +8,6 @@
     <string name="navigation_drawer_open">Menü öffnen</string>
     <string name="navigation_drawer_close">Menü schließen</string>
     <string name="remove_entry">Eintrag löschen</string>
-    <!--<string name="action_settings">Settings</string>--> <!--TODO REMOVE!-->
-    <string name="section_format">Hello World from section: %1$d</string> <!--TODO REMOVE!-->
 
 
     <!-- DRAWER ENTRIES -->
@@ -107,6 +105,7 @@
     <string name="delete_logfile">Logdatei löschen</string>
     <string name="info_logfile_deleted">Logdatei erfolgreich gelöscht.</string>
     <string name="info_logfile_deletion_error">Logdatei konnte nicht gelöscht werden.</string>
+    <string name="show_notification_to_add_unmanaged_wi_fis">Notification zum Hinzufügen nicht verwalteter WLAN-Netzwerke anzeigen</string>
 
 
     <!-- DETAILS STRINGS -->
@@ -118,8 +117,6 @@
 
 
     <!-- WIDGET STRINGS -->
-    <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>
-    <string name="add_widget">Add widget</string>
-    <string name="show_notification_to_add_unmanaged_wi_fis">Show notification to add unmanaged Wi-Fis</string>
+    <string name="appwidget_text">Automatische WLAN-Steuerung:</string>
 
 </resources>

@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
@@ -28,17 +29,15 @@ public class WifiWidget extends AppWidgetProvider {
      * @param appWidgetManager An AppWidgetManager instance.
      * @param appWidgetId      The ID of the widget to update.
      */
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
-
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         RemoteViews widgetActiveButtonView = updateButton(context, ManagerService.isServiceActive(context), false);
 
         // intent for widget button click
         Intent buttonIntent = new Intent(context, WidgetClickListener.class);
-
         PendingIntent pendingButtonIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, 0);
 
         widgetActiveButtonView.setOnClickPendingIntent(R.id.appwidget_switch, pendingButtonIntent);
+        widgetActiveButtonView.setOnClickPendingIntent(R.id.appwidget_text, pendingButtonIntent);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, widgetActiveButtonView);
@@ -65,8 +64,8 @@ public class WifiWidget extends AppWidgetProvider {
      */
     private static RemoteViews updateButton(Context context, boolean active, boolean broadcast) {
         RemoteViews buttonView = new RemoteViews(context.getPackageName(), R.layout.widget_wifi);
-        buttonView.setTextViewText(R.id.appwidget_switch, context.getString(R.string.appwidget_text, active ? context.getString(R.string.on) : context.getString(R.string.off)));
-
+        buttonView.setTextViewText(R.id.appwidget_switch, active ? context.getString(R.string.on) : context.getString(R.string.off));
+        buttonView.setInt(R.id.appwidget_switch, "setBackgroundColor", active ? ContextCompat.getColor(context, R.color.colorAccent) : ContextCompat.getColor(context, R.color.colorPrimary));
 
         // now update the widgets
         if (broadcast) {
@@ -78,6 +77,7 @@ public class WifiWidget extends AppWidgetProvider {
 
     /**
      * Broadcasts that widget needs to be updated.
+     *
      * @param context A context to use.
      */
     private static void broadcastUpdate(Context context) {

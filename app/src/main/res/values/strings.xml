@@ -8,8 +8,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="remove_entry">Remove entry</string>
-    <!--<string name="action_settings">Settings</string>--> <!--TODO REMOVE!-->
-    <string name="section_format">Hello World from section: %1$d</string> <!--TODO REMOVE!-->
 
 
     <!-- DRAWER ENTRIES -->
@@ -102,6 +100,7 @@
     <string name="delete_logfile">Delete logfile</string>
     <string name="info_logfile_deleted">Deleted logfile successfully.</string>
     <string name="info_logfile_deletion_error">Logfile could not be deleted.</string>
+    <string name="show_notification_to_add_unmanaged_wi_fis">Show notification to add unmanaged Wi-Fis</string>
 
 
     <!-- DETAILS STRINGS -->
@@ -113,8 +112,6 @@
 
 
     <!-- WIDGET STRINGS -->
-    <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>
-    <string name="add_widget">Add widget</string>
-    <string name="show_notification_to_add_unmanaged_wi_fis">Show notification to add unmanaged Wi-Fis</string>
+    <string name="appwidget_text">Automatic Wi-Fi Management:</string>
 
 </resources>
