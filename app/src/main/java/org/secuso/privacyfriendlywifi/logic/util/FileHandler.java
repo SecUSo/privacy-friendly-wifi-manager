@@ -36,7 +36,9 @@ public class FileHandler {
             try {
                 ret = in.readObject();
                 if (deleteAfterRead) {
-                    file.delete();
+                    if (!file.delete()) {
+                        Logger.e(TAG, "Could not delete file \"" + fileName + "\"");
+                    }
                 }
             } catch (ClassNotFoundException e) {
                 Logger.e(TAG, "Could not load file \"" + fileName + "\"");
@@ -46,8 +48,8 @@ public class FileHandler {
                 fin.close();
             }
         } else {
-            Logger.d(TAG, "File \"" + fileName + "\" doesn't exist");
-            throw new IOException("File \"" + fileName + "\" doesn't exist");
+            Logger.d(TAG, "File \"" + fileName + "\" does not exist");
+            throw new IOException("File \"" + fileName + "\" does not exist");
         }
         return ret;
     }
@@ -77,7 +79,12 @@ public class FileHandler {
 
         fos.close();
 
-        Logger.logADB("e", TAG, "File " + fileName + (file.exists() ? " " : " not ") + "saved.");
+        if (file.exists()) {
+            Logger.logADB("d", TAG, "File " + fileName + " saved.");
+        } else {
+            Logger.logADB("e", TAG, "File " + fileName + " could not be saved.");
+        }
+
 
         return file.exists();
     }

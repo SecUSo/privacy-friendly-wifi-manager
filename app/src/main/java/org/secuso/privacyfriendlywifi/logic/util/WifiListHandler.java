@@ -5,19 +5,33 @@ import android.content.Context;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Observer;
 
 /**
  *
  */
-public class WifiListHandler implements IListHandler<WifiLocationEntry> {
+public class WifiListHandler extends SerializationHelper implements IListHandler<WifiLocationEntry> {
     private static ListHandler<WifiLocationEntry> list;
 
     public WifiListHandler(Context context) {
-        if (WifiListHandler.list == null) {
-            WifiListHandler.list = new ListHandler<>(context, ManagerService.FN_LOCATION_ENTRIES);
+        if (list == null) {
+            WifiListHandler.list = new ListHandler<WifiLocationEntry>(context, ManagerService.FN_LOCATION_ENTRIES);
         }
+    }
+
+    public void initialize(Context context, Object[] args) throws IOException {
+        if (args[0] instanceof ListHandler) {
+            WifiListHandler.list = (ListHandler<WifiLocationEntry>) args[0];
+        } else {
+            throw new IOException(SerializationHelper.SERIALIZATION_ERROR);
+        }
+    }
+
+    @Override
+    protected Object[] getPersistentFields() {
+        return new Object[]{list};
     }
 
     public void addObserver(Observer observer) {

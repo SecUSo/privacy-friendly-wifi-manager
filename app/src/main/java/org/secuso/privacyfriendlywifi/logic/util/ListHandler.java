@@ -18,9 +18,17 @@ import java.util.Observer;
  */
 public class ListHandler<EntryType extends PreconditionEntry> extends Observable implements Observer, IListHandler<EntryType> {
     private List<EntryType> entries;
-    private final String listFilePath;
+    private String listFilePath;
 
     public ListHandler(Context context, String listFilePath) {
+        initialize(context, listFilePath);
+    }
+
+    public void initialize(Context context, Object[] args) {
+        initialize(context, (String) args[0]);
+    }
+
+    public void initialize(Context context, String listFilePath) {
         StaticContext.setContext(context);
         this.listFilePath = listFilePath;
 

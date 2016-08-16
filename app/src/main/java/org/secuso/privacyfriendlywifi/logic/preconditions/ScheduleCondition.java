@@ -1,21 +1,40 @@
 package org.secuso.privacyfriendlywifi.logic.preconditions;
 
+import android.content.Context;
 import android.util.Pair;
 
+import org.secuso.privacyfriendlywifi.logic.util.SerializationHelper;
 import org.secuso.privacyfriendlywifi.logic.util.TimeHelper;
+
+import java.io.IOException;
 
 /**
  *
  */
 public class ScheduleCondition extends Precondition {
-    private final int start_hour, start_minute, end_hour, end_minute;
+    private int start_hour, start_minute, end_hour, end_minute;
 
     public ScheduleCondition(int start_hour, int start_minute, int end_hour, int end_minute) {
-        super();
+        initialize(start_hour, start_minute, end_hour, end_minute);
+    }
+
+    public void initialize(int start_hour, int start_minute, int end_hour, int end_minute) {
         this.start_hour = start_hour;
         this.start_minute = start_minute;
         this.end_hour = end_hour;
         this.end_minute = end_minute;
+    }
+
+    public void initialize(Context context, Object[] args) throws IOException {
+        if (args[0] instanceof Integer && args[1] instanceof Integer && args[2] instanceof Integer && args[3] instanceof Integer) {
+            initialize((int) args[0], (int) args[1], (int) args[2], (int) args[3]);
+        } else {
+            throw new IOException(SerializationHelper.SERIALIZATION_ERROR);
+        }
+    }
+
+    protected Object[] getPersistentFields() {
+        return new Object[]{this.start_hour, this.start_minute, this.end_hour, this.end_minute};
     }
 
     @Override
