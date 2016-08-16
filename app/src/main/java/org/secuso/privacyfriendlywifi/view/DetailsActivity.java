@@ -50,10 +50,11 @@ public class DetailsActivity extends AppCompatActivity {
                 TableRow borderRow = new TableRow(this);
                 borderRow.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 borderRow.setMinimumHeight(1);
-                borderRow.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+                borderRow.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
                 table.addView(borderRow);
 
                 TableRow contentRow = new TableRow(this);
+                contentRow.setPadding(contentRow.getPaddingLeft(), 6, contentRow.getPaddingRight(), 6);
 
                 // create MAC text cell
                 TextView macTextView = new TextView(this);
@@ -74,11 +75,16 @@ public class DetailsActivity extends AppCompatActivity {
                 } else {
                     cellIdsText.setTextAppearance(android.R.style.TextAppearance_Small);
                 }
-                StringBuilder sb = new StringBuilder();
-                for (PrimitiveCellInfo cellInfo : condition.getRelatedCells()) {
-                    sb.append(cellInfo.getCellId()).append("\n");
+                if (!condition.getRelatedCells().isEmpty()) {
+                    StringBuilder sb = new StringBuilder();
+                    for (PrimitiveCellInfo cellInfo : condition.getRelatedCells()) {
+                        sb.append(cellInfo.getCellId()).append("\n");
+                    }
+                    sb.delete(sb.length() - 1, sb.length());
+                    cellIdsText.setText(sb.toString());
+                } else {
+                    cellIdsText.setText("-");
                 }
-                cellIdsText.setText(sb.toString());
                 contentRow.addView(cellIdsText);
 
                 table.addView(contentRow);
