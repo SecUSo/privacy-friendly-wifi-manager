@@ -142,7 +142,7 @@ public class PrimitiveCellInfo implements Serializable {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoCdma cellInfo) {
         int cellId = cellInfo.getCellIdentity().getBasestationId();
-        if (cellId == Integer.MAX_VALUE) {
+        if (cellId == Integer.MAX_VALUE || cellId == NeighboringCellInfo.UNKNOWN_CID) {
             return null; // unknown ID -> cell should not be considered
         }
 
@@ -155,7 +155,7 @@ public class PrimitiveCellInfo implements Serializable {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoGsm cellInfo) {
         int cellId = cellInfo.getCellIdentity().getCid();
-        if (cellId == Integer.MAX_VALUE) {
+        if (cellId == Integer.MAX_VALUE || cellId == NeighboringCellInfo.UNKNOWN_CID) {
             return null; // unknown ID -> cell should not be considered
         }
 
@@ -168,7 +168,7 @@ public class PrimitiveCellInfo implements Serializable {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoLte cellInfo) {
         int cellId = cellInfo.getCellIdentity().getCi();
-        if (cellId == Integer.MAX_VALUE) {
+        if (cellId == Integer.MAX_VALUE || cellId == NeighboringCellInfo.UNKNOWN_CID) {
             return null; // unknown ID -> cell should not be considered
         }
 
@@ -182,7 +182,7 @@ public class PrimitiveCellInfo implements Serializable {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public static PrimitiveCellInfo getPrimitiveCellInfo(CellInfoWcdma cellInfo) {
         int cellId = cellInfo.getCellIdentity().getCid();
-        if (cellId == Integer.MAX_VALUE) {
+        if (cellId == Integer.MAX_VALUE || cellId == NeighboringCellInfo.UNKNOWN_CID) {
             return null; // unknown ID -> cell should not be considered
         }
 
