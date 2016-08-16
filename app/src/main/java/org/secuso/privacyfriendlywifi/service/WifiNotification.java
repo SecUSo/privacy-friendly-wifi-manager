@@ -38,11 +38,11 @@ public class WifiNotification {
 
         // sets a title for the Inbox in expanded layout
         inboxStyle.setBigContentTitle(context.getString(R.string.notification_unknown_wifi_title));
-        inboxStyle.addLine(WifiHandler.getCleanSSID(wifiInfo.getSSID()));
+        inboxStyle.addLine("".equals(WifiHandler.getCleanSSID(wifiInfo.getSSID()).trim()) ? context.getString(R.string.wifi_hidden_wifi_text) : WifiHandler.getCleanSSID(wifiInfo.getSSID()));
 
         // intent for action button click
         Intent buttonIntent = new Intent(context, NotificationButtonListener.class);
-        buttonIntent.putExtra("NewWifiLocationEntry", new String[]{wifiInfo.getSSID(), wifiInfo.getBSSID()});
+        buttonIntent.putExtra(WifiLocationEntry.class.getSimpleName(), new String[]{wifiInfo.getSSID(), wifiInfo.getBSSID()});
         // create new intent and UPDATE THE EXTRAS (important!)
         PendingIntent pendingButtonIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -107,7 +107,7 @@ public class WifiNotification {
 
             // add the new wifi to the list
             WifiListHandler wifiListHandler = new WifiListHandler(context);
-            String[] wifiInfo = intent.getStringArrayExtra("NewWifiLocationEntry");
+            String[] wifiInfo = intent.getStringArrayExtra(WifiLocationEntry.class.getSimpleName());
             wifiListHandler.add(new WifiLocationEntry(WifiHandler.getCleanSSID(wifiInfo[0]), wifiInfo[1]));
 
             Intent refreshList = new Intent(context, WifiListFragment.class);

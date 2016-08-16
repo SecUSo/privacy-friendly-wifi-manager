@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.view.adapter.DialogWifiListAdapter;
 
 import secuso.org.privacyfriendlywifi.R;
@@ -26,7 +27,7 @@ public class DialogWifiItemViewHolder extends RecyclerView.ViewHolder implements
     public void setupItem(WifiLocationEntry conf, DialogWifiListAdapter adapter) {
         this.conf = conf;
         this.adapter = adapter;
-        this.ssidTextView.setText(conf.getSsid());
+        this.ssidTextView.setText("".equals(conf.getSsid().trim()) ? StaticContext.getContext().getString(R.string.wifi_hidden_wifi_text) : conf.getSsid());
     }
 
     @Override

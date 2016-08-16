@@ -39,6 +39,7 @@
     <string name="wifi_num_cells_text">Related cells: %1$d</string>
     <string name="wifi_enable_wifi_to_scan">You have to enable Wi-Fi in order to add a new network</string>
     <string name="wifi_enable_wifi">Enable Wi-Fi</string>
+    <string name="wifi_hidden_wifi_text">--Hidden Wi-Fi--</string>
 
 
     <!-- WIFI PICKER DIALOG STRINGS -->

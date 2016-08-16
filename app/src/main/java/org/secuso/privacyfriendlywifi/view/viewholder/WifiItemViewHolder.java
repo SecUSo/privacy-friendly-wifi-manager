@@ -22,7 +22,9 @@ public class WifiItemViewHolder extends RemovableItemViewHolder<WifiLocationEntr
     private TextView ssidTextView;
     private TextView bssidTextView;
     private TextView numCellsTextView;
+
     private Context context;
+    private WifiLocationEntry entry;
 
     public WifiItemViewHolder(View itemView) {
         super(itemView);
@@ -36,13 +38,14 @@ public class WifiItemViewHolder extends RemovableItemViewHolder<WifiLocationEntr
         super.setupItem(context, entry, adapter, listener);
 
         this.context = context;
+        this.entry = entry;
 
         String ssidText = context.getString(R.string.wifi_ssid_text);
         String bssidText = context.getString(R.string.wifi_bssid_text);
         String multiBssidText = context.getString(R.string.wifi_multi_bssid_text);
         String numCellsText = context.getString(R.string.wifi_num_cells_text);
 
-        this.ssidTextView.setText(String.format(Locale.getDefault(), ssidText, entry.getSsid()));
+        this.ssidTextView.setText(String.format(Locale.getDefault(), ssidText, "".equals(entry.getSsid().trim()) ? context.getString(R.string.wifi_hidden_wifi_text) : entry.getSsid()));
         if (entry.getCellLocationConditions().size() > 1) {
             this.bssidTextView.setText(String.format(Locale.getDefault(), multiBssidText, entry.getCellLocationConditions().size()));
         } else {
@@ -63,6 +66,7 @@ public class WifiItemViewHolder extends RemovableItemViewHolder<WifiLocationEntr
             this.listener.setDeleteModeActive(false);
         } else {
             Intent startDetailsActivity = new Intent(context, DetailsActivity.class);
+            startDetailsActivity.putExtra(WifiLocationEntry.class.getSimpleName(), this.entry);
             startDetailsActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             context.startActivity(startDetailsActivity);
         }
