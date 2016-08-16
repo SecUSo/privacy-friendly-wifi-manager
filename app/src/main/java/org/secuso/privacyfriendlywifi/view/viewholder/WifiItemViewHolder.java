@@ -1,12 +1,14 @@
 package org.secuso.privacyfriendlywifi.view.viewholder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDeleteModeChangedListener;
+import org.secuso.privacyfriendlywifi.view.DetailsActivity;
 import org.secuso.privacyfriendlywifi.view.adapter.RemovableRecyclerViewAdapter;
 
 import java.util.Locale;
@@ -20,6 +22,7 @@ public class WifiItemViewHolder extends RemovableItemViewHolder<WifiLocationEntr
     private TextView ssidTextView;
     private TextView bssidTextView;
     private TextView numCellsTextView;
+    private Context context;
 
     public WifiItemViewHolder(View itemView) {
         super(itemView);
@@ -31,6 +34,8 @@ public class WifiItemViewHolder extends RemovableItemViewHolder<WifiLocationEntr
 
     public void setupItem(Context context, WifiLocationEntry entry, RemovableRecyclerViewAdapter<WifiLocationEntry> adapter, IOnDeleteModeChangedListener listener) {
         super.setupItem(context, entry, adapter, listener);
+
+        this.context = context;
 
         String ssidText = context.getString(R.string.wifi_ssid_text);
         String bssidText = context.getString(R.string.wifi_bssid_text);
@@ -49,5 +54,17 @@ public class WifiItemViewHolder extends RemovableItemViewHolder<WifiLocationEntr
             numCells += condition.getNumberOfRelatedCells();
         }
         this.numCellsTextView.setText(String.format(Locale.getDefault(), numCellsText, numCells));
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (this.listener.isDeleteModeActive()) {
+            this.listener.setDeleteModeActive(false);
+        } else {
+            Intent startDetailsActivity = new Intent(context, DetailsActivity.class);
+            startDetailsActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            context.startActivity(startDetailsActivity);
+        }
     }
 }
