@@ -1,28 +1,54 @@
 <resources>
-    <string name="app_name">Privacy Friendly WiFi</string>
 
-    <string name="navigation_drawer_open">Öffne Navigation</string>
-    <string name="navigation_drawer_close">Schließe Navigation</string>
+    <!-- GENERAL -->
+    <string name="app_name">Privacy Friendly WiFi</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="global_on_off_switch">On/Off</string>
+    <string name="navigation_drawer_open">Menü öffnen</string>
+    <string name="navigation_drawer_close">Menü schließen</string>
+    <string name="remove_entry">Eintrag löschen</string>
+    <!--<string name="action_settings">Settings</string>--> <!--TODO REMOVE!-->
+    <string name="section_format">Hello World from section: %1$d</string> <!--TODO REMOVE!-->
+
+
+    <!-- DRAWER ENTRIES -->
     <string name="fragment_wifilist">Erlaubte WLANs</string>
     <string name="fragment_schedule">Zeitplan</string>
     <string name="fragment_settings">Einstellungen</string>
-
     <string name="activity_help">Hilfe</string>
     <string name="fragment_about">Über</string>
     <string name="group_communicate">Kommunizieren</string>
+
+
+    <!-- ACTIVITY TITLES -->
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_details">Details</string>
+
 
     <!-- CONTENT STRINGS -->
     <string name="header_wifilist">Liste der gemanagten WLANs</string>
     <string name="header_schedule">Liste der aktiven Zeitslots</string>
     <string name="header_about">Über</string>
 
+
     <!-- WIFI STRINGS -->
     <string name="wifi_ssid_text">%1$s</string>
     <string name="wifi_bssid_text">MAC: %1$s</string>
     <string name="wifi_num_cells_text">Zugehörige Zellen: %1$d</string>
+    <string name="wifi_multi_bssid_text">%1$d zugehörige MACs</string>
+    <string name="wifi_enable_wifi_to_scan">You have to enable Wi-Fi in order to add a new network</string>
+    <string name="wifi_enable_wifi">Enable Wi-Fi</string>
+
+
+    <!-- WIFI PICKER DIALOG STRINGS -->
+    <string name="wifi_picker_dialog_title">Select network</string>
+    <string name="wifi_picker_dialog_button_cancel">Cancel</string>
+
 
     <!-- SCHEDULE STRINGS -->
     <string name="schedule_time_text">Von %1$d:%2$02d bis %3$d:%4$02d</string>
+
 
     <!-- TIME PICKER DIALOG STRINGS -->
     <string name="time_picker_dialog_title_choose_start_time">Wähle Starzeit</string>
@@ -30,6 +56,9 @@
     <string name="time_picker_dialog_title_choose_title">Wähle Titel</string>
     <string name="time_picker_dialog_text_title_hint">Zeitslot %1$d</string>
     <string name="time_picker_dialog_button_next">Weiter</string>
+    <string name="time_picker_dialog_button_finish">Fertig</string>
+    <string name="time_picker_dialog_button_cancel">Abbrechen</string>
+
 
     <!-- ABOUT STRINGS -->
     <string name="about_whatdoesitdo"><b>Das Ziel:</b> Privacy friendly WiFi merkt sich die sog. CellIDs
@@ -49,7 +78,6 @@
     <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
     <string name="about_version">Version: %1$s</string>
 
-    <string name="global_on_off_switch">On/Off</string>
 
     <!-- NOTIFICATION -->
     <string name="notification_content_text">Eine ungemanagte WLAN-Verbindung wurde hergestellt</string>
@@ -58,5 +86,18 @@
     <string name="notification_unknown_wifi_title_format">Neues ungemanagtes WLAN: %1$s</string>
     <string name="notification_button_add">Diese Verbindung automatisch managen</string>
     <string name="notification_main_text">Berühren um Verbindungen zu verwalten</string>
-    <string name="respect_signal_strength">Respect signal strength</string>
+    <string name="toast_wifi_added">Wi-Fi %1$s wird jetzt verwaltet.</string>
+
+
+    <!-- SETTINGS STRINGS -->
+    <string name="delete_logfile">Delete logfile</string>
+    <string name="info_logfile_deleted">Deleted logfile successfully.</string>
+    <string name="info_logfile_deletion_error">Logfile could not be deleted.</string>
+    <string name="respect_signal_strength">Signalstärke berücksichtigen</string>
+
+
+    <!-- WIDGET STRINGS -->
+    <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>
+    <string name="add_widget">Add widget</string>
+
 </resources>

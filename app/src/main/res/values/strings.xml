@@ -1,20 +1,36 @@
 <resources>
-    <string name="app_name">Privacy Friendly WiFi</string>
 
+    <!-- GENERAL -->
+    <string name="app_name">Privacy Friendly WiFi</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="global_on_off_switch">On/Off</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="remove_entry">Remove entry</string>
+    <!--<string name="action_settings">Settings</string>--> <!--TODO REMOVE!-->
+    <string name="section_format">Hello World from section: %1$d</string> <!--TODO REMOVE!-->
+
+
+    <!-- DRAWER ENTRIES -->
     <string name="fragment_wifilist">Allowed WiFi Networks</string>
     <string name="fragment_schedule">Schedule</string>
     <string name="fragment_settings">Settings</string>
-
     <string name="activity_help">Help</string>
     <string name="fragment_about">About</string>
     <string name="group_communicate">Communicate</string>
+
+
+    <!-- ACTIVITY TITLES -->
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_details">Details</string>
+
 
     <!-- CONTENT STRINGS -->
     <string name="header_wifilist">List of managed WiFi networks</string>
     <string name="header_schedule">List of active time slots</string>
     <string name="header_about">About</string>
+
 
     <!-- WIFI STRINGS -->
     <string name="wifi_ssid_text">%1$s</string>
@@ -24,12 +40,15 @@
     <string name="wifi_enable_wifi_to_scan">You have to enable Wi-Fi in order to add a new network</string>
     <string name="wifi_enable_wifi">Enable Wi-Fi</string>
 
+
     <!-- WIFI PICKER DIALOG STRINGS -->
     <string name="wifi_picker_dialog_title">Select network</string>
     <string name="wifi_picker_dialog_button_cancel">Cancel</string>
 
+
     <!-- SCHEDULE STRINGS -->
     <string name="schedule_time_text">From %1$d:%2$02d to %3$d:%4$02d</string>
+
 
     <!-- TIME PICKER DIALOG STRINGS -->
     <string name="time_picker_dialog_title_choose_start_time">Choose start time</string>
@@ -39,7 +58,7 @@
     <string name="time_picker_dialog_button_next">Next</string>
     <string name="time_picker_dialog_button_finish">Finish</string>
     <string name="time_picker_dialog_button_cancel">Cancel</string>
-    <!-- TIME PICKER DIALOG STRINGS -->
+
 
     <!-- ABOUT STRINGS -->
     <string name="about_whatdoesitdo"><b>Goal:</b> Privacy friendly WiFi keeps track of the CellIDs in your areay while you are in a Wifi. By keeping this information, the app tries to learn
@@ -54,7 +73,6 @@
     <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
     <string name="about_version">Version: %1$s</string>
 
-    <string name="global_on_off_switch">On/Off</string>
 
     <!-- NOTIFICATION -->
     <string name="notification_content_text">An unmanaged Wi-Fi connection has been established</string>
@@ -63,19 +81,17 @@
     <string name="notification_unknown_wifi_title_format">New unmanaged Wi-Fi: %1$s</string>
     <string name="notification_button_add">Manage this connection automatically</string>
     <string name="notification_main_text">Touch to manage connections</string>
-    <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>
-    <string name="add_widget">Add widget</string>
     <string name="toast_wifi_added">Wi-Fi %1$s now managed.</string>
 
-    <!-- GENERAL -->
-    <string name="on">On</string>
-    <string name="off">Off</string>
-    <string name="title_activity_help">HelpActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="remove_entry">Remove entry</string>
+
+    <!-- SETTINGS STRINGS -->
     <string name="delete_logfile">Delete logfile</string>
     <string name="info_logfile_deleted">Deleted logfile successfully.</string>
     <string name="info_logfile_deletion_error">Logfile could not be deleted.</string>
     <string name="respect_signal_strength">Respect signal strength</string>
+
+
+    <!-- WIDGET STRINGS -->
+    <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>
+    <string name="add_widget">Add widget</string>
 </resources>
