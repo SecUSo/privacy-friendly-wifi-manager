@@ -172,8 +172,10 @@ public class PrimitiveCellInfo implements Serializable {
             return null; // unknown ID -> cell should not be considered
         }
 
-        //double dBm = cellInfo.getCellSignalStrength().getDbm(); // TODO Check for correctness
-        double dBm = cellInfo.getCellSignalStrength().getDbm() / -10.0; // TODO Check for correctness
+        double dBm = cellInfo.getCellSignalStrength().getDbm();
+        if (dBm > 0) { // at least some manufacturers return values between 0 and +1130 instead of -113 to 0
+            dBm = dBm / -10.0;
+        }
 
         Logger.d(TAG, "(new API) CellType=LTE, cid=" + cellId + ", dBm=" + dBm);
         return new PrimitiveCellInfo(cellId, dBm);
