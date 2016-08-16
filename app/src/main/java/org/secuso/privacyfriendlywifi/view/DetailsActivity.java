@@ -15,6 +15,7 @@ import android.widget.TextView;
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.types.PrimitiveCellInfo;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class DetailsActivity extends AppCompatActivity {
                 table.addView(borderRow);
 
                 TableRow contentRow = new TableRow(this);
-                contentRow.setPadding(contentRow.getPaddingLeft(), 6, contentRow.getPaddingRight(), 6);
+                contentRow.setPadding(contentRow.getPaddingLeft(), ScreenHandler.getPXFromDP(4, this), contentRow.getPaddingRight(), ScreenHandler.getPXFromDP(4, this));
 
                 // create MAC text cell
                 TextView macTextView = new TextView(this);
