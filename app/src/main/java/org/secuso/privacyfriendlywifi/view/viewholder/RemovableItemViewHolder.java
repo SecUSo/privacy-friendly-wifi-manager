@@ -17,7 +17,7 @@ public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder 
     private ImageButton deleteButton;
     protected EntryType recyclerViewEntry;
     private RemovableRecyclerViewAdapter<EntryType> adapter;
-    private IOnDeleteModeChangedListener listener;
+    protected IOnDeleteModeChangedListener listener;
 
     public RemovableItemViewHolder(View itemView) {
         super(itemView);
