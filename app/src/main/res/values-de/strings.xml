@@ -79,6 +79,15 @@
     <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
     <string name="about_version">Version: %1$s</string>
 
+    <!-- HELP STRINGS -->
+    <string name="help_actionbar_string">Hilfe</string>
+    <string name="help_actionbar_substring_welcome">Willkommen beim WiFi-Manager</string>
+    <string name="help_actionbar_string_basics">Hilfe: Grundlagen</string>
+    <string name="help_actionbar_substring_step1">Schritt 1: Manager einschalten</string>
+    <string name="help_actionbar_substring_step2">Schritt 2: Ein WLAN auswählen</string>
+    <string name="help_actionbar_substring_step3">Schritt 3: MAC/Zellen kontrollieren</string>
+    <string name="help_content_step1_description">Um den Wi-Fi Manager zu benutzen, muss dieser erst eingeschaltet werden. Dazu einfach den On/Off-Schalter betätigen.</string>
+
 
     <!-- NOTIFICATION -->
     <string name="notification_content_text">Eine nicht verwaltet WLAN-Verbindung wurde hergestellt</string>
