@@ -39,6 +39,7 @@ public class ManagerService extends IntentService {
     public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
     public final static String PREF_ENTRY_USE_SIGNAL_STRENGTH = "SHARED_PREF_ENTRY_USE_SIGNAL_STRENGTH";
     public final static String PREF_ENTRY_SERVICE_RUNNING = "SHARED_PREF_SERVICE_RUNNING";
+    public final static String PREF_ENTRY_DEVELOPER = "SHARED_PREF_DEVELOPER";
 
     private WifiListHandler wifiListHandler;
 

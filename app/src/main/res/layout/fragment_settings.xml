@@ -3,36 +3,85 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:weightSum="1">
 
-    <Switch
+    <TextView
+        android:id="@+id/textGeneralSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/respect_signal_strength"
-        android:id="@+id/switchSignalStrength" />
+        android:text="@string/general_settings"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Trigger ManagerService"
-        android:id="@+id/buttonTriggerService" />
+        android:paddingTop="5dp">
 
-    <Button
+        <TextView
+            android:id="@+id/textSignalStrength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/respect_signal_strength" />
+
+        <Switch
+            android:id="@+id/switchSignalStrength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:checked="false" />
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <LinearLayout
+        android:id="@+id/layout_developer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check wifi connection status"
-        android:id="@+id/buttonCheckWifiConnected" />
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <Button
-        android:id="@+id/buttonDeleteLogfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/delete_logfile" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/developer_settings"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Flush logfile"
-        android:id="@+id/buttonFlushLog" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <Button
+                android:id="@+id/buttonTriggerService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trigger ManagerService" />
+
+            <Button
+                android:id="@+id/buttonDeleteLogfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_logfile" />
+
+            <Button
+                android:id="@+id/buttonFlushLog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Flush logfile" />
+            <Button
+                android:id="@+id/buttonHideDeveloperSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hide developer settings" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
