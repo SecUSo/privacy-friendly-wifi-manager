@@ -97,6 +97,13 @@
     <string name="info_logfile_deleted">Logdatei erfolgreich gelöscht.</string>
     <string name="info_logfile_deletion_error">Logdatei konnte nicht gelöscht werden.</string>
 
+
+    <!-- DETAILS STRINGS -->
+    <string name="details_ssid_placeholder">SSID unknown</string>
+    <string name="details_bssid_placeholder">MAC unknown</string>
+    <string name="details_cellid_placeholder">Cell ID unknown</string>
+
+
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>
     <string name="add_widget">Add widget</string>

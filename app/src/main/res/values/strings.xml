@@ -92,8 +92,16 @@
     <string name="info_logfile_deleted">Deleted logfile successfully.</string>
     <string name="info_logfile_deletion_error">Logfile could not be deleted.</string>
 
+
+    <!-- DETAILS STRINGS -->
+    <string name="details_ssid_placeholder">SSID unknown</string>
+    <string name="details_bssid_placeholder">MAC unknown</string>
+    <string name="details_cellid_placeholder">Cell ID unknown</string>
+
+
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Automatic Wi-Fi Management: %1$s</string>
     <string name="add_widget">Add widget</string>
     <string name="show_notification_to_add_unmanaged_wi_fis">Show notification to add unmanaged Wi-Fis</string>
+
 </resources>
