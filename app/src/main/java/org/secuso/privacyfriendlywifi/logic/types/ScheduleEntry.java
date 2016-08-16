@@ -1,5 +1,7 @@
 package org.secuso.privacyfriendlywifi.logic.types;
 
+import android.support.annotation.NonNull;
+
 import org.secuso.privacyfriendlywifi.logic.preconditions.ScheduleCondition;
 
 import java.io.Serializable;
@@ -36,7 +38,7 @@ public class ScheduleEntry extends PreconditionEntry implements Serializable {
     }
 
     @Override
-    public int compareTo(PreconditionEntry another) {
+    public int compareTo(@NonNull PreconditionEntry another) {
         ScheduleCondition otherSchedCond;
         ScheduleCondition ownSchedCond = this.getScheduleCondition();
 

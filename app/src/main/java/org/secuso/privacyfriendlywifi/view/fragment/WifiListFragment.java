@@ -32,6 +32,7 @@ import java.util.Observer;
 import secuso.org.privacyfriendlywifi.R;
 
 public class WifiListFragment extends Fragment implements IOnDialogClosedListener, Observer {
+    private static final String TAG = WifiListFragment.class.getSimpleName();
     private IOnDialogClosedListener thisClass;
     private WifiListHandler wifiListHandler;
 

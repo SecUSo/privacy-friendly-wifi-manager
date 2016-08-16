@@ -63,4 +63,17 @@ public class WifiListHandler implements IListHandler<WifiLocationEntry> {
     public boolean isEmpty() {
         return WifiListHandler.list.isEmpty();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        List<WifiLocationEntry> entries = this.getAll();
+
+        sb.append("### Wi-Fi List ###\n");
+        for (int i = 0; i < entries.size(); i++) {
+            sb.append("[").append(entries.get(i).toString()).append("]\n");
+        }
+
+        return sb.toString();
+    }
 }
