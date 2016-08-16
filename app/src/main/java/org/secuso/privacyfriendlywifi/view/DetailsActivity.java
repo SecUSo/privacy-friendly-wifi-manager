@@ -44,15 +44,18 @@ public class DetailsActivity extends AppCompatActivity {
 
             // insert content rows
             List<CellLocationCondition> cellLocationConditions = entry.getCellLocationConditions();
+
             for (CellLocationCondition condition : cellLocationConditions) {
+                // add row border
                 TableRow borderRow = new TableRow(this);
                 borderRow.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 borderRow.setMinimumHeight(1);
                 borderRow.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
                 table.addView(borderRow);
 
-                TableRow newRow = new TableRow(this);
+                TableRow contentRow = new TableRow(this);
 
+                // create MAC text cell
                 TextView macTextView = new TextView(this);
                 macTextView.setGravity(Gravity.START | Gravity.LEFT);
                 if (Build.VERSION.SDK_INT < 23) {
@@ -61,8 +64,9 @@ public class DetailsActivity extends AppCompatActivity {
                     macTextView.setTextAppearance(android.R.style.TextAppearance_Small);
                 }
                 macTextView.setText(condition.getBssid());
-                newRow.addView(macTextView);
+                contentRow.addView(macTextView);
 
+                // create cell IDs text cell
                 TextView cellIdsText = new TextView(this);
                 cellIdsText.setGravity(Gravity.END | Gravity.RIGHT);
                 if (Build.VERSION.SDK_INT < 23) {
@@ -75,9 +79,9 @@ public class DetailsActivity extends AppCompatActivity {
                     sb.append(cellInfo.getCellId()).append("\n");
                 }
                 cellIdsText.setText(sb.toString());
-                newRow.addView(cellIdsText);
+                contentRow.addView(cellIdsText);
 
-                table.addView(newRow);
+                table.addView(contentRow);
             }
         }
     }
