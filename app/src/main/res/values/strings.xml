@@ -75,6 +75,16 @@
     <string name="about_version">Version: %1$s</string>
 
 
+    <!-- HELP STRINGSS -->
+    <string name="help_actionbar_string">Help</string>
+    <string name="help_actionbar_substring_welcome">Welcome to WiFi Manger</string>
+    <string name="help_actionbar_string_basics">Help: Basics</string>
+    <string name="help_actionbar_substring_step1">Step 1: Enabling the Manager</string>
+    <string name="help_actionbar_substring_step2">Step 2: Selecting a wi-fi</string>
+    <string name="help_actionbar_substring_step3">Step 3: View MAC / Cells</string>
+
+    <string name="help_content_step1_description">To use the Wi-Fi manager, you have to enable it, by toggling the on/off button</string>
+
     <!-- NOTIFICATION -->
     <string name="notification_content_text">An unmanaged Wi-Fi connection has been established</string>
     <string name="notification_content_info">Unmanaged connection</string>

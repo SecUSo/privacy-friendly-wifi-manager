@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment0;
+import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment1;
+import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment2;
+
 import secuso.org.privacyfriendlywifi.R;
 
 public class HelpActivity extends AppCompatActivity {
@@ -22,6 +26,7 @@ public class HelpActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +35,13 @@ public class HelpActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        actionBar.setTitle(getString(R.string.help_actionbar_string));
+        actionBar.setSubtitle(getString(R.string.help_actionbar_substring_welcome));
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -56,6 +64,9 @@ public class HelpActivity extends AppCompatActivity {
                         case R.id.radioButton2:
                             mViewPager.setCurrentItem(2, true);
                             break;
+                        case R.id.radioButton3:
+                            mViewPager.setCurrentItem(3, true);
+                            break;
                     }
                 }
             });
@@ -73,12 +84,31 @@ public class HelpActivity extends AppCompatActivity {
                     switch (position) {
                         case 0:
                             radioGroup.check(R.id.radioButton0);
+                            if (actionBar != null) {
+                                actionBar.setTitle(getString(R.string.help_actionbar_string));
+                                actionBar.setSubtitle(getString(R.string.help_actionbar_substring_welcome));
+                            }
                             break;
                         case 1:
                             radioGroup.check(R.id.radioButton1);
+                            if (actionBar != null) {
+                                actionBar.setTitle(getString(R.string.help_actionbar_string_basics));
+                                actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step1));
+                            }
                             break;
                         case 2:
                             radioGroup.check(R.id.radioButton2);
+                            if (actionBar != null) {
+                                actionBar.setTitle(getString(R.string.help_actionbar_string_basics));
+                                actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step2));
+                            }
+                            break;
+                        case 3:
+                            radioGroup.check(R.id.radioButton3);
+                            if (actionBar != null) {
+                                actionBar.setTitle(getString(R.string.help_actionbar_string_basics));
+                                actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step3));
+                            }
                             break;
                     }
                 }
@@ -94,40 +124,6 @@ public class HelpActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_help, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -143,13 +139,23 @@ public class HelpActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+
+            switch(position) {
+                case 0:
+                    return HelpFragment0.newInstance("Help: Welcome");
+                case 1:
+                    return HelpFragment1.newInstance("Help: Step 1");
+                case 2:
+                    return HelpFragment2.newInstance("Help: Step 2");
+                default:
+                    return HelpFragment0.newInstance("Help: Step 3");
+            }
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 4 total pages.
+            return 4;
         }
 
         @Override
@@ -161,6 +167,8 @@ public class HelpActivity extends AppCompatActivity {
                     return "SECTION 2";
                 case 2:
                     return "SECTION 3";
+                case 3:
+                    return "SECTION 4";
             }
             return null;
         }
