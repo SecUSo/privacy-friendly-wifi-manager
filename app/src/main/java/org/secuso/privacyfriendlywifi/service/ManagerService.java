@@ -107,7 +107,9 @@ public class ManagerService extends IntentService {
         for (int i = 0; i < wifis.size(); i++) {
             WifiLocationEntry entry = wifis.get(i);
             if (entry.getSsid().equals(currentSsid)) {
-                for (CellLocationCondition condition : entry.getCellLocationConditions()) {
+                List<CellLocationCondition> cellLocationConditions = entry.getCellLocationConditions();
+                for (int j = 0; j < cellLocationConditions.size(); j++) {
+                    CellLocationCondition condition = cellLocationConditions.get(j);
                     if (condition.getBssid().equals(currentBssid)) {
                         Logger.d(TAG, "Adding new cells for: " + entry.getSsid());
                         return condition.addKBestSurroundingCells(this, 3);
@@ -127,7 +129,10 @@ public class ManagerService extends IntentService {
 
         for (int i = 0; i < wifis.size(); i++) {
             WifiLocationEntry entry = wifis.get(i);
-            for (CellLocationCondition condition : entry.getCellLocationConditions()) {
+            List<CellLocationCondition> cellLocationConditions = entry.getCellLocationConditions();
+
+            for (int j = 0; j < cellLocationConditions.size(); j++) {
+                CellLocationCondition condition = cellLocationConditions.get(j);
                 if (condition.check(allCells, respectSignalStrength)) {
                     Logger.d(TAG, "Activating Wi-Fi for: " + entry.getSsid());
                     return true;
@@ -155,7 +160,9 @@ public class ManagerService extends IntentService {
         int currentMinute = cal.get(Calendar.MINUTE);
         Pair<Integer, Integer> time = new Pair<>(currentHour, currentMinute);
         Logger.d(TAG, "Number of schedule entries: " + scheduleEntries.size());
-        for (ScheduleEntry entry : scheduleEntries) {
+
+        for (int i = 0; i < scheduleEntries.size(); i++) {
+            ScheduleEntry entry = scheduleEntries.get(i);
             if (entry.getScheduleCondition().check(time)) {
                 Logger.d(TAG, "Active schedule - " + entry.toString());
                 return true; // schedule active, skip the rest

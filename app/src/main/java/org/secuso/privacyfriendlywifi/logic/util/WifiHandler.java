@@ -21,6 +21,7 @@ public class WifiHandler {
 
     /**
      * Returns the system´s WifiManager.
+     *
      * @param context A context to use.
      * @return The WifiManager instance.
      */
@@ -115,7 +116,10 @@ public class WifiHandler {
             boolean alreadyManaged = false;
             WifiListHandler handler = new WifiListHandler(context);
 
-            for (WifiLocationEntry knownEntry : handler.getAll()) {
+            List<WifiLocationEntry> knownEntries = handler.getAll();
+            for (int i = 0; i < knownEntries.size(); i++) {
+                WifiLocationEntry knownEntry = knownEntries.get(i);
+
                 if (confSSID.equals(knownEntry.getSsid())) {
                     // ssid is already present, so we should add the MAC to the existing network
                     modified = knownEntry.addCellLocationCondition(new CellLocationCondition(config.BSSID)); // FIXME: Don't do this here, handle new MACs in own method!
