@@ -8,6 +8,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="remove_entry">Remove entry</string>
+    <string name="button_start">Start</string>
+    <string name="button_next">Next</string>
+    <string name="button_finish">Finish</string>
+    <string name="button_cancel">Cancel</string>
 
 
     <!-- DRAWER ENTRIES -->
@@ -54,10 +58,6 @@
     <string name="time_picker_dialog_title_choose_end_time">Choose end time</string>
     <string name="time_picker_dialog_title_choose_title">Choose title</string>
     <string name="time_picker_dialog_text_title_hint">Time slot %1$d</string>
-    <string name="time_picker_dialog_button_next">Next</string>
-    <string name="time_picker_dialog_button_finish">Finish</string>
-    <string name="time_picker_dialog_button_cancel">Cancel</string>
-
 
     <!-- ABOUT STRINGS -->
     <string name="about_whatdoesitdo"><b>Goal:</b> Privacy friendly WiFi keeps track of the CellIDs in your areay while you are in a Wifi. By keeping this information, the app tries to learn

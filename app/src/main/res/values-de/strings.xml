@@ -8,6 +8,10 @@
     <string name="navigation_drawer_open">Menü öffnen</string>
     <string name="navigation_drawer_close">Menü schließen</string>
     <string name="remove_entry">Eintrag löschen</string>
+    <string name="button_start">Start</string>
+    <string name="button_next">Weiter</string>
+    <string name="button_finish">Fertig</string>
+    <string name="button_cancel">Abbrechen</string>
 
 
     <!-- DRAWER ENTRIES -->
@@ -54,9 +58,6 @@
     <string name="time_picker_dialog_title_choose_end_time">Wähle Endzeit</string>
     <string name="time_picker_dialog_title_choose_title">Wähle Titel</string>
     <string name="time_picker_dialog_text_title_hint">Zeitslot %1$d</string>
-    <string name="time_picker_dialog_button_next">Weiter</string>
-    <string name="time_picker_dialog_button_finish">Fertig</string>
-    <string name="time_picker_dialog_button_cancel">Abbrechen</string>
 
 
     <!-- ABOUT STRINGS -->

@@ -71,12 +71,12 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
                 setDialogTitle(position);
 
                 if (position == 2) {
-                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.time_picker_dialog_button_finish);
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.button_finish);
                     titleEditText.requestFocus();
                     ((InputMethodManager) StaticContext.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .showSoftInput(titleEditText, InputMethodManager.SHOW_IMPLICIT);
                 } else {
-                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.time_picker_dialog_button_next);
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.button_next);
                     ((InputMethodManager) StaticContext.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(titleEditText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
                 }
@@ -90,8 +90,8 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
         } else {
             builder = new AlertDialog.Builder(activity);
         }
-        builder.setPositiveButton(R.string.time_picker_dialog_button_next, null);
-        builder.setNegativeButton(R.string.time_picker_dialog_button_cancel, null);
+        builder.setPositiveButton(R.string.button_next, null);
+        builder.setNegativeButton(R.string.button_cancel, null);
         builder.setTitle(R.string.time_picker_dialog_title_choose_start_time);
         builder.setView(view);
 

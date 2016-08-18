@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -41,6 +42,26 @@ public class HelpActivity extends AppCompatActivity {
         }
         actionBar.setTitle(getString(R.string.help_actionbar_string));
         actionBar.setSubtitle(getString(R.string.help_actionbar_substring_welcome));
+
+        final Button nextbutton = (Button) findViewById(R.id.nextbutton);
+        nextbutton.setText(getString(R.string.button_next));
+
+        // Button Listener
+        nextbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mViewPager.getChildCount() > mViewPager.getCurrentItem())
+                {
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1, true);
+                }
+                else{
+                    mViewPager.setCurrentItem(0);
+                }
+
+
+            }
+        });
+
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -87,6 +108,7 @@ public class HelpActivity extends AppCompatActivity {
                             if (actionBar != null) {
                                 actionBar.setTitle(getString(R.string.help_actionbar_string));
                                 actionBar.setSubtitle(getString(R.string.help_actionbar_substring_welcome));
+                                nextbutton.setText(getString(R.string.button_start));
                             }
                             break;
                         case 1:
@@ -94,6 +116,7 @@ public class HelpActivity extends AppCompatActivity {
                             if (actionBar != null) {
                                 actionBar.setTitle(getString(R.string.help_actionbar_string_basics));
                                 actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step1));
+                                nextbutton.setText(getString(R.string.button_next));
                             }
                             break;
                         case 2:
@@ -101,6 +124,7 @@ public class HelpActivity extends AppCompatActivity {
                             if (actionBar != null) {
                                 actionBar.setTitle(getString(R.string.help_actionbar_string_basics));
                                 actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step2));
+                                nextbutton.setText(getString(R.string.button_next));
                             }
                             break;
                         case 3:
@@ -108,6 +132,7 @@ public class HelpActivity extends AppCompatActivity {
                             if (actionBar != null) {
                                 actionBar.setTitle(getString(R.string.help_actionbar_string_basics));
                                 actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step3));
+                                nextbutton.setText(getString(R.string.button_finish));
                             }
                             break;
                     }

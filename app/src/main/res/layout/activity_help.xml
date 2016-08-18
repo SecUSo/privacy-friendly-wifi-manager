@@ -38,35 +38,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RadioGroup
-            android:id="@+id/radiogroup"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_gravity="center_horizontal|bottom"
-            android:orientation="horizontal">
+            >
 
-            <RadioButton
-                android:id="@+id/radioButton0"
+            <Button
+                android:id="@+id/nextbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true" />
+                android:layout_gravity="center_horizontal" />
 
-            <RadioButton
-                android:id="@+id/radioButton1"
+            <RadioGroup
+                android:id="@+id/radiogroup"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <RadioButton
+                    android:id="@+id/radioButton0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
 
-            <RadioButton
-                android:id="@+id/radioButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/radioButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:id="@+id/radioButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+        </LinearLayout>
     </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>
