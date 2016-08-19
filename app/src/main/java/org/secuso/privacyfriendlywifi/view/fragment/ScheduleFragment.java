@@ -19,8 +19,8 @@ import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.ScheduleListHandler;
 import org.secuso.privacyfriendlywifi.logic.util.ScreenHandler;
+import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
-import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 import org.secuso.privacyfriendlywifi.view.adapter.ScheduleAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
@@ -120,7 +120,7 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
     @Override
     public void update(Observable observable, Object data) {
         // run manager service to calculate new next alarm
-        if (ManagerService.isServiceActive(StaticContext.getContext())) {
+        if (SettingsEntry.isServiceActive(StaticContext.getContext())) {
             AlarmReceiver.fireAndSchedule(StaticContext.getContext());
         }
 

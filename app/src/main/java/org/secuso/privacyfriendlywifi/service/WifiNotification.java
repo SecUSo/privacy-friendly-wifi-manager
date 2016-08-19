@@ -13,6 +13,7 @@ import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
@@ -114,7 +115,7 @@ public class WifiNotification {
             refreshList.setAction("REFRESH_LIST");
             context.getApplicationContext().sendBroadcast(refreshList);
 
-            if (ManagerService.isServiceActive(context)) {
+            if (SettingsEntry.isServiceActive(context)) {
                 AlarmReceiver.fireAndSchedule(context);
             }
 

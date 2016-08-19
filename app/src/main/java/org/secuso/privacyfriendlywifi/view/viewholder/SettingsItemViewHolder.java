@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
-import org.secuso.privacyfriendlywifi.service.ManagerService;
 
 import secuso.org.privacyfriendlywifi.R;
 
@@ -23,9 +23,15 @@ public class SettingsItemViewHolder extends RecyclerView.ViewHolder {
         this.name = (TextView) itemView.findViewById(R.id.settings_name);
         this.desc = (TextView) itemView.findViewById(R.id.settings_desc);
         this.checkBox = (CheckBox) itemView.findViewById(R.id.settings_checkbox);
+        this.settings = StaticContext.getContext().getSharedPreferences(SettingsEntry.PREF_SETTINGS, Context.MODE_PRIVATE);
 
-        this.settings = StaticContext.getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
-
+        // treat item click as checkbox click
+        this.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkBox.performClick();
+            }
+        });
     }
 
     public void setupItem(String name, String desc, final String preference) {

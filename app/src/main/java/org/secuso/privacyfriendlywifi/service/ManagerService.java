@@ -3,7 +3,6 @@ package org.secuso.privacyfriendlywifi.service;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
@@ -17,6 +16,7 @@ import org.secuso.privacyfriendlywifi.logic.types.ScheduleEntry;
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.FileHandler;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
+import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
@@ -34,14 +34,6 @@ public class ManagerService extends IntentService {
     public static final String TAG = ManagerService.class.getSimpleName();
     public static final String FN_SCHEDULE_ENTRIES = "fn_schedule_entries";
     public static final String FN_LOCATION_ENTRIES = "fn_location_entries";
-
-    public final static String PREF_SETTINGS = "SHARED_PREF_SETTINGS";
-    public final static String PREF_ENTRY_FIRST_RUN = "SHARED_PREF_FIRST_RUN";
-    public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
-    public final static String PREF_ENTRY_USE_SIGNAL_STRENGTH = "SHARED_PREF_ENTRY_USE_SIGNAL_STRENGTH";
-    public final static String PREF_ENTRY_SERVICE_RUNNING = "SHARED_PREF_SERVICE_RUNNING";
-    public final static String PREF_ENTRY_SHOW_NOTIFICATION = "SHARED_PREF_SHOW_NOTIFICATION";
-    public final static String PREF_ENTRY_DEVELOPER = "SHARED_PREF_DEVELOPER";
 
     private WifiListHandler wifiListHandler;
 
@@ -124,7 +116,7 @@ public class ManagerService extends IntentService {
 
     private boolean checkCells() {
         PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
-        boolean respectSignalStrength = ManagerService.shouldRespectSignalStrength(this);
+        boolean respectSignalStrength = SettingsEntry.shouldRespectSignalStrength(this);
 
         List<WifiLocationEntry> wifis = this.wifiListHandler.getAll();
 
@@ -173,31 +165,4 @@ public class ManagerService extends IntentService {
         return false; // no schedule active
     }
 
-    public static boolean shouldRespectSignalStrength(Context context) {
-        SharedPreferences settings = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
-        return settings.getBoolean(ManagerService.PREF_ENTRY_USE_SIGNAL_STRENGTH, true);
-    }
-
-    public static boolean shouldRespectSignalStrength() {
-        return ManagerService.shouldRespectSignalStrength(StaticContext.getContext());
-    }
-
-    public static void setActiveFlag(Context context, boolean state) {
-        SharedPreferences settings = context.getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
-        settings.edit().putBoolean(ManagerService.PREF_ENTRY_SERVICE_ACTIVE, state).apply();
-    }
-
-    public static void setActiveFlag(boolean state) {
-        ManagerService.setActiveFlag(StaticContext.getContext(), state);
-    }
-
-    public static boolean isServiceActive(Context context) {
-        SharedPreferences settings = context.getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
-
-        return settings.getBoolean(ManagerService.PREF_ENTRY_SERVICE_ACTIVE, false);
-    }
-
-    public static boolean isServiceActive() {
-        return ManagerService.isServiceActive(StaticContext.getContext());
-    }
 }

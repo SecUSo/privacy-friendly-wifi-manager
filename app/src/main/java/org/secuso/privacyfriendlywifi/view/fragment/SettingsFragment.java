@@ -19,7 +19,6 @@ import android.widget.Toast;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
-import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 import org.secuso.privacyfriendlywifi.view.adapter.SettingsListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
@@ -54,7 +53,7 @@ public class SettingsFragment extends Fragment {
             actionBar.setSubtitle(R.string.fragment_settings);
         }
 
-        this.settings = StaticContext.getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
+        this.settings = StaticContext.getContext().getSharedPreferences(SettingsEntry.PREF_SETTINGS, Context.MODE_PRIVATE);
 
          /* GENERAL SETTINGS - START */
 
@@ -65,8 +64,8 @@ public class SettingsFragment extends Fragment {
         List<SettingsEntry> settingsEntries = new ArrayList<>();
 
         /* Add settings here */
-        settingsEntries.add(new SettingsEntry(getString(R.string.settings_show_notification_to_add_unmanaged_wi_fis), getString(R.string.settings_show_notification_to_add_unmanaged_wi_fis_desc), ManagerService.PREF_ENTRY_SHOW_NOTIFICATION));
-        settingsEntries.add(new SettingsEntry(getString(R.string.settings_respect_signal_strength), getString(R.string.settings_respect_signal_strength_desc), ManagerService.PREF_ENTRY_USE_SIGNAL_STRENGTH));
+        settingsEntries.add(new SettingsEntry(getString(R.string.settings_show_notification_to_add_unmanaged_wi_fis), getString(R.string.settings_show_notification_to_add_unmanaged_wi_fis_desc), SettingsEntry.PREF_ENTRY_SHOW_NOTIFICATION));
+        settingsEntries.add(new SettingsEntry(getString(R.string.settings_respect_signal_strength), getString(R.string.settings_respect_signal_strength_desc), SettingsEntry.PREF_ENTRY_USE_SIGNAL_STRENGTH));
 
         recyclerView.setAdapter(new SettingsListAdapter(settingsEntries));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()) {
@@ -80,7 +79,7 @@ public class SettingsFragment extends Fragment {
 
         /* DEVELOPER SETTINGS - START */
 
-        boolean showDeveloper = settings.getBoolean(ManagerService.PREF_ENTRY_DEVELOPER, false);
+        boolean showDeveloper = settings.getBoolean(SettingsEntry.PREF_ENTRY_DEVELOPER, false);
         this.developerLayout = (LinearLayout) rootView.findViewById(R.id.layout_developer);
         final TextView textViewGeneralSettings = (TextView) rootView.findViewById(R.id.textGeneralSettings);
 
@@ -88,7 +87,7 @@ public class SettingsFragment extends Fragment {
         buttonHideDeveloper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settings.edit().putBoolean(ManagerService.PREF_ENTRY_DEVELOPER, false).apply();
+                settings.edit().putBoolean(SettingsEntry.PREF_ENTRY_DEVELOPER, false).apply();
                 developerLayout.setVisibility(View.GONE);
 
                 // reset counter
@@ -163,7 +162,7 @@ public class SettingsFragment extends Fragment {
                 this.infoToast.show();
 
                 if (clicked >= clicksNeeded) {
-                    settings.edit().putBoolean(ManagerService.PREF_ENTRY_DEVELOPER, true).apply();
+                    settings.edit().putBoolean(SettingsEntry.PREF_ENTRY_DEVELOPER, true).apply();
                     developerLayout.setVisibility(View.VISIBLE);
                 }
             }

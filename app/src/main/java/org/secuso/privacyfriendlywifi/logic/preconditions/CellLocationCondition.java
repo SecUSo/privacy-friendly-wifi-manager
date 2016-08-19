@@ -36,7 +36,6 @@ public class CellLocationCondition extends Precondition {
 
     /**
      * Creates a new {@link CellLocationCondition}.
-     *
      * @param bssid        The BSSID (which should be equivalent to a MAC address from this perspective
      * @param relatedCells All related cells.
      */
@@ -44,11 +43,19 @@ public class CellLocationCondition extends Precondition {
         initialize(bssid, relatedCells);
     }
 
+    /**
+     * Initializes the object with the given parameters.
+     * @param bssid        The BSSID (which should be equivalent to a MAC address from this perspective
+     * @param relatedCells All related cells.
+     */
     public void initialize(String bssid, Set<PrimitiveCellInfo> relatedCells) {
         this.bssid = bssid;
         this.relatedCells = relatedCells;
     }
 
+    /**
+     * @see SerializationHelper
+     */
     public void initialize(Context context, Object[] args) throws IOException {
         if (args[0] instanceof String && args[1] instanceof Set) {
             initialize((String) args[0], (Set<PrimitiveCellInfo>) args[1]);

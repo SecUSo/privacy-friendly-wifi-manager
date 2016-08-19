@@ -25,6 +25,9 @@ public class ScheduleCondition extends Precondition {
         this.end_minute = end_minute;
     }
 
+    /**
+     * @see SerializationHelper
+     */
     public void initialize(Context context, Object[] args) throws IOException {
         if (args[0] instanceof Integer && args[1] instanceof Integer && args[2] instanceof Integer && args[3] instanceof Integer) {
             initialize((int) args[0], (int) args[1], (int) args[2], (int) args[3]);

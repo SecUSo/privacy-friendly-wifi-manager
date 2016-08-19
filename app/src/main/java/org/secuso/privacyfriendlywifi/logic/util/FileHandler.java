@@ -12,7 +12,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 /**
- *
+ * Util class for file operations.
  */
 public class FileHandler {
     private static final String TAG = FileHandler.class.getSimpleName();
@@ -21,11 +21,11 @@ public class FileHandler {
     /**
      * Loads an object from a specified file path
      *
-     * @param context
+     * @param context         A context to use.
      * @param fileName        File path
      * @param deleteAfterRead delete object after it has been read
      * @return The loaded object
-     * @throws IOException
+     * @throws IOException if there has been an error loading the file.
      */
     public static Object loadObject(Context context, String fileName, boolean deleteAfterRead) throws IOException {
         File file = new File(context.getFilesDir().getAbsolutePath().concat(File.separator).concat(fileName));
@@ -89,6 +89,14 @@ public class FileHandler {
         return file.exists();
     }
 
+    /**
+     * Store object to a specified file path
+     *
+     * @param fos The OutputStream to write to.
+     * @param o   Object to store.
+     * @return Always true.
+     * @throws IOException
+     */
     public static boolean storeObject(OutputStream fos, Object o) throws IOException {
         if (o instanceof String) {
             OutputStreamWriter out = new OutputStreamWriter(fos);

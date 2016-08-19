@@ -10,9 +10,9 @@ import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 
+import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.Controller;
-import org.secuso.privacyfriendlywifi.service.ManagerService;
 
 import secuso.org.privacyfriendlywifi.R;
 
@@ -30,7 +30,7 @@ public class WifiWidget extends AppWidgetProvider {
      * @param appWidgetId      The ID of the widget to update.
      */
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        RemoteViews widgetActiveButtonView = updateButton(context, ManagerService.isServiceActive(context), false);
+        RemoteViews widgetActiveButtonView = updateButton(context, SettingsEntry.isServiceActive(context), false);
 
         // intent for widget button click
         Intent buttonIntent = new Intent(context, WidgetClickListener.class);
@@ -94,8 +94,8 @@ public class WifiWidget extends AppWidgetProvider {
     public static class WidgetClickListener extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            boolean active = !ManagerService.isServiceActive(context);
-            ManagerService.setActiveFlag(context, active);
+            boolean active = !SettingsEntry.isServiceActive(context);
+            SettingsEntry.setActiveFlag(context, active);
 
             if (active) {
                 Controller.registerReceivers(context);
