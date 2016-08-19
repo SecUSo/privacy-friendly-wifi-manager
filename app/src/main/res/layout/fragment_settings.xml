@@ -1,90 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/activity_horizontal_margin"
     android:weightSum="1">
-    <!--
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin"-->
-    <TextView
-        android:id="@+id/textGeneralSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:text="@string/settings_general_settings"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/settingsList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
 
     <LinearLayout
-        android:id="@+id/layout_developer"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_horizontal_margin">
+        <!--
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"-->
 
         <TextView
+            android:id="@+id/textGeneralSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:text="@string/settings_developer_settings"
+            android:text="@string/settings_general_settings"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/settingsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/layout_developer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <Button
-                android:id="@+id/buttonTriggerService"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:text="@string/settings_developer_settings"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Trigger ManagerService" />
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingStart="@dimen/activity_horizontal_margin">
 
-            <Button
-                android:id="@+id/buttonDeleteLogfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_delete_logfile" />
+                <Button
+                    android:id="@+id/buttonTriggerService"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Trigger ManagerService" />
 
-            <Button
-                android:id="@+id/buttonFlushLog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_flush_logfile" />
+                <Button
+                    android:id="@+id/buttonDeleteLogfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_delete_logfile" />
 
-            <Button
-                android:id="@+id/buttonRemoveFirstRunFlag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_remove_first_run_flag" />
+                <Button
+                    android:id="@+id/buttonFlushLog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_flush_logfile" />
 
-            <Button
-                android:id="@+id/buttonHideDeveloperSettings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_hide_developer_settings" />
+                <Button
+                    android:id="@+id/buttonRemoveFirstRunFlag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_remove_first_run_flag" />
+
+                <Button
+                    android:id="@+id/buttonHideDeveloperSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_hide_developer_settings" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>
