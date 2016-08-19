@@ -11,11 +11,11 @@
             android:title="@string/fragment_wifilist" />
         <item
             android:id="@+id/nav_schedule"
-            android:icon="@drawable/ic_menu_preferences"
+            android:icon="@drawable/ic_menu_schedule"
             android:title="@string/fragment_schedule" />
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_schedule"
+            android:icon="@drawable/ic_menu_preferences"
             android:title="@string/fragment_settings" />
 
     </group>
