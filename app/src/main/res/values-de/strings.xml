@@ -100,12 +100,12 @@
 
 
     <!-- SETTINGS STRINGS -->
-    <string name="settings_general_settings">Allgemeine Einstellungen</string>
+    <string name="settings_general">Allgemeine Einstellungen</string>
     <string name="settings_respect_signal_strength">Signalstärke berücksichtigen</string>
     <string name="settings_respect_signal_strength_desc">Stärke des Mobilfunksignals wird zusätzlich für Standortbestimmung genutzt (erhöht Genauigkeit).</string>
     <string name="settings_show_notification_to_add_unmanaged_wi_fis">Benachrichtigungen anzeigen</string>
     <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">Zeigt bei Verbindung zu einem nicht-verwalteten WLAN eine Benachrichtigung.</string>
-    <string name="settings_developer_settings">Entwickleroptionen</string>
+    <string name="settings_developer">Entwickleroptionen</string>
     <string name="settings_delete_logfile">Logdatei löschen</string>
     <string name="settings_info_logfile_deleted">Logdatei erfolgreich gelöscht.</string>
     <string name="settings_info_logfile_deletion_error">Logdatei konnte nicht gelöscht werden.</string>

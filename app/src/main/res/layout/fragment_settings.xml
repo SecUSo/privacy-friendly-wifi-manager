@@ -18,7 +18,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:text="@string/settings_general_settings"
+        android:text="@string/settings_general"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <android.support.v7.widget.RecyclerView
@@ -44,7 +44,7 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:text="@string/settings_developer_settings"
+            android:text="@string/settings_developer"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <LinearLayout
