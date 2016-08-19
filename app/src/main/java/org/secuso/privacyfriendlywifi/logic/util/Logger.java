@@ -82,12 +82,16 @@ public class Logger {
         if (buffer.size() > 0) {
             try {
                 if (Logger.init()) { // ensure there is a context
+                    ArrayList<String> bufferCopy = new ArrayList<>(Logger.buffer); // create shallow copy to avoid concurrent modification
+
+                    // clear buffer for next entries
+                    buffer.clear();
 
                     // assemble single string
                     StringBuilder sb = new StringBuilder();
 
-                    for (String out : buffer) {
-                        sb.append(out).append("\n");
+                    for (String bufferEntry : bufferCopy) {
+                        sb.append(bufferEntry).append("\n");
                     }
 
                     FileHandler.storeObject(Logger.output_stream, sb.toString());
@@ -97,8 +101,7 @@ public class Logger {
                 Logger.logADB("e", TAG, "Could not flush log.");
             }
 
-            // clear buffer for next entries
-            buffer.clear();
+
         }
     }
 

@@ -104,11 +104,11 @@ public class ManagerService extends IntentService {
 
         List<WifiLocationEntry> wifis = this.wifiListHandler.getAll();
 
-        for (int i = 0; i < wifis.size(); i++) {
+        for (int i = 0; i < wifis.size(); i++) { // concurrent modification is okay, since new conditions are appended at the end
             WifiLocationEntry entry = wifis.get(i);
             if (entry.getSsid().equals(currentSsid)) {
                 List<CellLocationCondition> cellLocationConditions = entry.getCellLocationConditions();
-                for (int j = 0; j < cellLocationConditions.size(); j++) {
+                for (int j = 0; j < cellLocationConditions.size(); j++) { // concurrent modification is okay, since new conditions are appended at the end
                     CellLocationCondition condition = cellLocationConditions.get(j);
                     if (condition.getBssid().equals(currentBssid)) {
                         Logger.d(TAG, "Adding new cells for: " + entry.getSsid());
@@ -127,11 +127,11 @@ public class ManagerService extends IntentService {
 
         List<WifiLocationEntry> wifis = this.wifiListHandler.getAll();
 
-        for (int i = 0; i < wifis.size(); i++) {
+        for (int i = 0; i < wifis.size(); i++) { // concurrent modification is okay, since new conditions are appended at the end
             WifiLocationEntry entry = wifis.get(i);
             List<CellLocationCondition> cellLocationConditions = entry.getCellLocationConditions();
 
-            for (int j = 0; j < cellLocationConditions.size(); j++) {
+            for (int j = 0; j < cellLocationConditions.size(); j++) { // concurrent modification is okay, since new conditions are appended at the end
                 CellLocationCondition condition = cellLocationConditions.get(j);
                 if (condition.check(allCells, respectSignalStrength)) {
                     Logger.d(TAG, "Activating Wi-Fi for: " + entry.getSsid());
@@ -161,7 +161,7 @@ public class ManagerService extends IntentService {
         Pair<Integer, Integer> time = new Pair<>(currentHour, currentMinute);
         Logger.d(TAG, "Number of schedule entries: " + scheduleEntries.size());
 
-        for (int i = 0; i < scheduleEntries.size(); i++) {
+        for (int i = 0; i < scheduleEntries.size(); i++) { // concurrent modification is okay, since new conditions are appended at the end
             ScheduleEntry entry = scheduleEntries.get(i);
             if (entry.getScheduleCondition().check(time)) {
                 Logger.d(TAG, "Active schedule - " + entry.toString());
