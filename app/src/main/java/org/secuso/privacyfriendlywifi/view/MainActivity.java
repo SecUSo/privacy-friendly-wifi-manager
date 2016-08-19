@@ -4,7 +4,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -55,56 +57,67 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         StaticContext.setContext(this);
 
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        SharedPreferences prefs = getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
+        boolean firstRun = prefs.getBoolean(ManagerService.PREF_ENTRY_FIRST_RUN, true);
 
-        // setup the drawer layout
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // show help activity on first run
+        if (firstRun) {
+            Intent startHelpIntent = new Intent(this, HelpActivity.class);
+            startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            this.startActivity(startHelpIntent);
+            this.overridePendingTransition(0, 0); // deactivate the transition between empty activity and help activity
+        } else {
+            setContentView(R.layout.activity_main);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+            // setup the drawer layout
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
-        if (drawer != null) {
-            // set version string in navigation header
-            NavigationView navigationView = (NavigationView) drawer.findViewById(R.id.nav_view);
-            View header = navigationView.getHeaderView(0);
-            TextView versionString = (TextView) header.findViewById(R.id.nav_header_versionString);
-            versionString.setText(String.format(Locale.getDefault(), this.getString(R.string.about_version), BuildConfig.VERSION_NAME));
+            if (drawer != null) {
+                // set version string in navigation header
+                NavigationView navigationView = (NavigationView) drawer.findViewById(R.id.nav_view);
+                View header = navigationView.getHeaderView(0);
+                TextView versionString = (TextView) header.findViewById(R.id.nav_header_versionString);
+                versionString.setText(String.format(Locale.getDefault(), this.getString(R.string.about_version), BuildConfig.VERSION_NAME));
 
-            if (getResources().getBoolean(R.bool.isTablet)) {
-                // we are on a tablet
-                Logger.e(TAG, "TABLET");
-                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-                drawer.setScrimColor(Color.TRANSPARENT);
-                this.isDrawerLocked = true;
-            } else {
-                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                        R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-                    @Override
-                    public void onDrawerSlide(View drawerView, float slideOffset) {
-                        super.onDrawerSlide(drawerView, 0); // this disables the animation
-                    }
-                };
+                if (getResources().getBoolean(R.bool.isTablet)) {
+                    // we are on a tablet
+                    Logger.e(TAG, "TABLET");
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+                    drawer.setScrimColor(Color.TRANSPARENT);
+                    this.isDrawerLocked = true;
+                } else {
+                    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                            R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+                        @Override
+                        public void onDrawerSlide(View drawerView, float slideOffset) {
+                            super.onDrawerSlide(drawerView, 0); // this disables the animation
+                        }
+                    };
 
-                drawer.addDrawerListener(toggle);
+                    drawer.addDrawerListener(toggle);
 
-                toggle.syncState();
+                    toggle.syncState();
+                }
             }
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+            if (navigationView != null) {
+                navigationView.setNavigationItemSelectedListener(this);
+            }
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                Logger.d(TAG, "SHOW SOME EXPLANATION FOR LOCATION"); // TODO show some explanatory dialog
+            }
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_WIFI_STATE,
+                            Manifest.permission.CHANGE_WIFI_STATE,
+                            Manifest.permission.ACCESS_COARSE_LOCATION}, DYN_PERMISSION);
         }
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-        if (navigationView != null) {
-            navigationView.setNavigationItemSelectedListener(this);
-        }
-
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            Logger.d(TAG, "SHOW SOME EXPLANATION FOR LOCATION"); // TODO show some explanatory dialog
-        }
-
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_WIFI_STATE,
-                        Manifest.permission.CHANGE_WIFI_STATE,
-                        Manifest.permission.ACCESS_COARSE_LOCATION}, DYN_PERMISSION);
     }
 
     @Override

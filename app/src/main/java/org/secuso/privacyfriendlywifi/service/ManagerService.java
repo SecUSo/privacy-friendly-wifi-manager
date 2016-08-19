@@ -36,6 +36,7 @@ public class ManagerService extends IntentService {
     public static final String FN_LOCATION_ENTRIES = "fn_location_entries";
 
     public final static String PREF_SETTINGS = "SHARED_PREF_SETTINGS";
+    public final static String PREF_ENTRY_FIRST_RUN = "SHARED_PREF_FIRST_RUN";
     public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
     public final static String PREF_ENTRY_USE_SIGNAL_STRENGTH = "SHARED_PREF_ENTRY_USE_SIGNAL_STRENGTH";
     public final static String PREF_ENTRY_SERVICE_RUNNING = "SHARED_PREF_SERVICE_RUNNING";
