@@ -14,17 +14,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/section_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/help_onoff" />
+            android:src="@drawable/help_onoff_medium" />
 
         <TextView
             android:layout_width="wrap_content"

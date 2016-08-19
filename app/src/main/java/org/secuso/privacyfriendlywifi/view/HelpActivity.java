@@ -18,6 +18,7 @@ import android.widget.TextView;
 import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment0;
 import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment1;
 import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment2;
+import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment3;
 
 import secuso.org.privacyfriendlywifi.R;
 
@@ -44,7 +45,7 @@ public class HelpActivity extends AppCompatActivity {
         actionBar.setSubtitle(getString(R.string.help_actionbar_substring_welcome));
 
         final Button nextbutton = (Button) findViewById(R.id.nextbutton);
-        nextbutton.setText(getString(R.string.button_next));
+        nextbutton.setText(getString(R.string.button_start));
 
         // Button Listener
         nextbutton.setOnClickListener(new View.OnClickListener() {
@@ -172,8 +173,10 @@ public class HelpActivity extends AppCompatActivity {
                     return HelpFragment1.newInstance("Help: Step 1");
                 case 2:
                     return HelpFragment2.newInstance("Help: Step 2");
+                case 3:
+                    return HelpFragment3.newInstance("Help: Step 3");
                 default:
-                    return HelpFragment0.newInstance("Help: Step 3");
+                    return HelpFragment0.newInstance("Help: Welcome");
             }
         }
 
