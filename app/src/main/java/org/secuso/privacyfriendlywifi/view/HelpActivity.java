@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 
-import org.secuso.privacyfriendlywifi.service.ManagerService;
+import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment0;
 import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment1;
 import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment2;
@@ -36,8 +36,8 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        final SharedPreferences prefs = getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
-        final boolean firstRun = prefs.getBoolean(ManagerService.PREF_ENTRY_FIRST_RUN, true);
+        final SharedPreferences prefs = getSharedPreferences(SettingsEntry.PREF_SETTINGS, Context.MODE_PRIVATE);
+        final boolean firstRun = prefs.getBoolean(SettingsEntry.PREF_ENTRY_FIRST_RUN, true);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,7 +63,7 @@ public class HelpActivity extends AppCompatActivity {
                 } else {
                     if (firstRun) {
                         // set help finished on first run and start main activity as new root
-                        prefs.edit().putBoolean(ManagerService.PREF_ENTRY_FIRST_RUN, false).apply();
+                        prefs.edit().putBoolean(SettingsEntry.PREF_ENTRY_FIRST_RUN, false).apply();
                         Intent startMainIntent = new Intent(thisActivity, MainActivity.class);
                         startMainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(startMainIntent);

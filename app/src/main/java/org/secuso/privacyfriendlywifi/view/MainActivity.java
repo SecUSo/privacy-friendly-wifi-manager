@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         StaticContext.setContext(this);
 
-        SharedPreferences prefs = getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
-        boolean firstRun = prefs.getBoolean(ManagerService.PREF_ENTRY_FIRST_RUN, true);
+        SharedPreferences prefs = getSharedPreferences(SettingsEntry.PREF_SETTINGS, Context.MODE_PRIVATE);
+        boolean firstRun = prefs.getBoolean(SettingsEntry.PREF_ENTRY_FIRST_RUN, true);
 
         // show help activity on first run
         if (firstRun) {

@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
  */
 public class SettingsEntry {
     public final static String PREF_SETTINGS = "SHARED_PREF_SETTINGS";
+    public final static String PREF_ENTRY_FIRST_RUN = "SHARED_PREF_FIRST_RUN";
     public final static String PREF_ENTRY_SERVICE_ACTIVE = "SHARED_PREF_ENTRY_SERVICE_ACTIVE";
     public final static String PREF_ENTRY_USE_SIGNAL_STRENGTH = "SHARED_PREF_ENTRY_USE_SIGNAL_STRENGTH";
     public final static String PREF_ENTRY_SHOW_NOTIFICATION = "SHARED_PREF_SHOW_NOTIFICATION";

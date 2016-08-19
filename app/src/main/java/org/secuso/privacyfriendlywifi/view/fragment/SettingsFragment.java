@@ -133,7 +133,7 @@ public class SettingsFragment extends Fragment {
         buttonRemoveFirstRunFlag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE).edit().remove(ManagerService.PREF_ENTRY_FIRST_RUN).apply();
+                getContext().getSharedPreferences(SettingsEntry.PREF_SETTINGS, Context.MODE_PRIVATE).edit().remove(SettingsEntry.PREF_ENTRY_FIRST_RUN).apply();
             }
         });
 
