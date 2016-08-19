@@ -70,7 +70,7 @@
     <string name="about_whyprivacyfriendly"><b>Privatssphäre:</b> Diese "privacy friendly app" schützt die
         Privatssphäre durch geringstmögliche Datenerhebung- Die gesamten Daten werden ausschließlich auf dem
         Telefon gehalten. Keine Daten werden an Dritte gesendet. Weiterhin wird versucht, so wenig Permissions wie möglich zu nutzen.
-        </string>
+    </string>
     <string name="about_author"><b>Autoren:</b> Jan Henzel, Patrick Jauernig, Dennis Werner</string>
     <string name="about_affiliation">In Zusammenarbeit mit</string>
     <string name="about_privacyfriendly">Diese App gehört zum Privacy Friendly Apps Projekt.</string>
@@ -110,7 +110,9 @@
     <string name="settings_info_logfile_deleted">Logdatei erfolgreich gelöscht.</string>
     <string name="settings_info_logfile_deletion_error">Logdatei konnte nicht gelöscht werden.</string>
     <string name="settings_flush_logfile">Schreibe Logdatei</string>
+    <string name="settings_remove_first_run_flag">First-Run-Flag löschen</string>
     <string name="settings_hide_developer_settings">Verstecke Entwickleroptionen</string>
+
 
     <!-- DETAILS STRINGS -->
     <string name="details_ssid_placeholder">Unbekannte SSID</string>

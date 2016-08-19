@@ -59,12 +59,14 @@
     <string name="time_picker_dialog_title_choose_title">Choose title</string>
     <string name="time_picker_dialog_text_title_hint">Time slot %1$d</string>
 
+
     <!-- ABOUT STRINGS -->
     <string name="about_whatdoesitdo"><b>Goal:</b> Privacy friendly WiFi keeps track of the CellIDs in your areay while you are in a Wifi. By keeping this information, the app tries to learn
     where your WiFi is located without using GPS. The main goal is to save battery life by automatically disabling your phones Wifi when it is not near a already known and used wireless network.
     </string>
     <string name="about_whyprivacyfriendly"><b>Privacy:</b> This privacy friendly app preserves your privacy by tracking least necessary data. All data is kept on your phone. No data is send
-        to anybody. We also try to use least permissions possible.</string>
+        to anybody. We also try to use least permissions possible.
+    </string>
     <string name="about_author"><b>Author:</b> Jan Henzel, Patrick Jauernig, Dennis Werner</string>
     <string name="about_affiliation">In affiliation with</string>
     <string name="about_privacyfriendly">This application belongs to the Privacy Friendly Apps Project.</string>
@@ -104,6 +106,7 @@
     <string name="settings_info_logfile_deleted">Deleted logfile successfully.</string>
     <string name="settings_info_logfile_deletion_error">Logfile could not be deleted.</string>
     <string name="settings_flush_logfile">Flush logfile</string>
+    <string name="settings_remove_first_run_flag">Remove first-run-flag</string>
     <string name="settings_hide_developer_settings">Hide developer settings</string>
 
 
