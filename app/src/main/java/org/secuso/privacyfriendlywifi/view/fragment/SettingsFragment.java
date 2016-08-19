@@ -6,20 +6,26 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
+import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
+import org.secuso.privacyfriendlywifi.view.adapter.SettingsListAdapter;
+import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import secuso.org.privacyfriendlywifi.R;
@@ -51,31 +57,25 @@ public class SettingsFragment extends Fragment {
 
         this.settings = StaticContext.getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
 
-        /* GENERAL SETTINGS - START */
+         /* GENERAL SETTINGS - START */
 
-        final Switch signalStrengthSwitch = (Switch) rootView.findViewById(R.id.switchSignalStrength);
-        signalStrengthSwitch.setChecked(ManagerService.shouldRespectSignalStrength());
+        // setup recycler view
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.settingsList);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
 
-        signalStrengthSwitch.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        settings.edit().putBoolean(ManagerService.PREF_ENTRY_USE_SIGNAL_STRENGTH, signalStrengthSwitch.isChecked()).apply();
-                    }
-                }
-        );
+        List<SettingsEntry> settingsEntries = new ArrayList<>();
 
-        final Switch notificationSwitch = (Switch) rootView.findViewById(R.id.switchNotification);
-        notificationSwitch.setChecked(settings.getBoolean(ManagerService.PREF_ENTRY_SHOW_NOTIFICATION, true));
+        /* Add settings here */
+        settingsEntries.add(new SettingsEntry(getString(R.string.settings_show_notification_to_add_unmanaged_wi_fis), getString(R.string.settings_show_notification_to_add_unmanaged_wi_fis_desc), ManagerService.PREF_ENTRY_SHOW_NOTIFICATION));
+        settingsEntries.add(new SettingsEntry(getString(R.string.settings_respect_signal_strength), getString(R.string.settings_respect_signal_strength_desc), ManagerService.PREF_ENTRY_USE_SIGNAL_STRENGTH));
 
-        notificationSwitch.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        settings.edit().putBoolean(ManagerService.PREF_ENTRY_SHOW_NOTIFICATION, notificationSwitch.isChecked()).apply();
-                    }
-                }
-        );
+        recyclerView.setAdapter(new SettingsListAdapter(settingsEntries));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
 
         /* GENERAL SETTINGS - END */
 
@@ -85,21 +85,21 @@ public class SettingsFragment extends Fragment {
         this.developerLayout = (LinearLayout) rootView.findViewById(R.id.layout_developer);
         final TextView textViewGeneralSettings = (TextView) rootView.findViewById(R.id.textGeneralSettings);
 
+        final Button buttonHideDeveloper = (Button) rootView.findViewById(R.id.buttonHideDeveloperSettings);
+
+        buttonHideDeveloper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                settings.edit().putBoolean(ManagerService.PREF_ENTRY_DEVELOPER, false).apply();
+                developerLayout.setVisibility(View.GONE);
+
+                // reset counter
+                textViewGeneralSettings.setOnClickListener(new DeveloperClickListener());
+            }
+        });
+
         if (showDeveloper) {
             developerLayout.setVisibility(View.VISIBLE);
-
-            final Button buttonHideDeveloper = (Button) rootView.findViewById(R.id.buttonHideDeveloperSettings);
-
-            buttonHideDeveloper.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    settings.edit().putBoolean(ManagerService.PREF_ENTRY_DEVELOPER, false).apply();
-                    developerLayout.setVisibility(View.GONE);
-
-                    // reset counter
-                    textViewGeneralSettings.setOnClickListener(new DeveloperClickListener());
-                }
-            });
         } else {
             textViewGeneralSettings.setOnClickListener(new DeveloperClickListener());
         }
@@ -119,9 +119,9 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (Logger.deleteLogFile()) {
-                    Toast.makeText(getContext(), R.string.info_logfile_deleted, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.settings_info_logfile_deleted, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(), R.string.info_logfile_deletion_error, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.settings_info_logfile_deletion_error, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -167,4 +167,6 @@ public class SettingsFragment extends Fragment {
             }
         }
     }
+
+
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp">
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/settings_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+        <LinearLayout
+            android:id="@+id/settings_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/settings_checkbox"
+            android:layout_toStartOf="@id/settings_checkbox"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/settings_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/settings_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingBottom="4dp"
+
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textColor="@color/middlegrey" />
+        </LinearLayout>
+
+
+        <!--
+
+            android:layout_toLeftOf="@id/settings_checkbox"
+            android:layout_toStartOf="@id/settings_checkbox"
+        -->
+    </RelativeLayout>
+
+</LinearLayout>

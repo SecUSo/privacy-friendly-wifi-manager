@@ -94,13 +94,17 @@
 
 
     <!-- SETTINGS STRINGS -->
-    <string name="general_settings">General Settings</string>
-    <string name="respect_signal_strength">Respect signal strength</string>
-    <string name="developer_settings">Developer Settings</string>
-    <string name="delete_logfile">Delete logfile</string>
-    <string name="info_logfile_deleted">Deleted logfile successfully.</string>
-    <string name="info_logfile_deletion_error">Logfile could not be deleted.</string>
-    <string name="show_notification_to_add_unmanaged_wi_fis">Show notification to add unmanaged Wi-Fis</string>
+    <string name="settings_general">General Settings</string>
+    <string name="settings_respect_signal_strength">Respect signal strength</string>
+    <string name="settings_respect_signal_strength_desc">Cellular signal strength will be respected for location estimation.</string>
+    <string name="settings_show_notification_to_add_unmanaged_wi_fis">Show notifications</string>
+    <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">A notification will be shown when connected to unmanaged Wi-Fis.</string>
+    <string name="settings_developer">Developer Settings</string>
+    <string name="settings_delete_logfile">Delete logfile</string>
+    <string name="settings_info_logfile_deleted">Deleted logfile successfully.</string>
+    <string name="settings_info_logfile_deletion_error">Logfile could not be deleted.</string>
+    <string name="settings_flush_logfile">Flush logfile</string>
+    <string name="settings_hide_developer_settings">Hide developer settings</string>
 
 
     <!-- DETAILS STRINGS -->
