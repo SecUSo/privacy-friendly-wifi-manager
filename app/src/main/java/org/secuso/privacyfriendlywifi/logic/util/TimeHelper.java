@@ -1,7 +1,7 @@
 package org.secuso.privacyfriendlywifi.logic.util;
 
 /**
- * Util class for time arithmetic
+ * Util class for time arithmetic.
  */
 public class TimeHelper {
 
@@ -23,6 +23,17 @@ public class TimeHelper {
         return timeDifference;
     }
 
+    /**
+     * Checks whether the given time is in a given time span.
+     *
+     * @param start_hour     Start hour
+     * @param start_minute   Start minute
+     * @param end_hour       End hour
+     * @param end_minute     End minute
+     * @param current_hour   Current hour
+     * @param current_minute Current minute
+     * @return True, if current hour and current minute is in timespan.
+     */
     public static boolean inTimespan(int start_hour, int start_minute, int end_hour, int end_minute, int current_hour, int current_minute) {
         if (start_hour < end_hour) {
 

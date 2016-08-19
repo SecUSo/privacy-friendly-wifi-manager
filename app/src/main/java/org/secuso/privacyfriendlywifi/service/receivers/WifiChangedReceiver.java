@@ -9,10 +9,10 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiHandler;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
-import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.service.WifiNotification;
 
 /**
@@ -26,7 +26,7 @@ public class WifiChangedReceiver extends BroadcastReceiver {
         WifiListHandler wifiListHandler = new WifiListHandler(context);
         wifiListHandler.sort(); // sort list in order to reflect state changes is Wi-Fi list fragment
 
-        if (ManagerService.isServiceActive(context)) { // check that the app is actually expected to manage wifi
+        if (SettingsEntry.isServiceActive(context)) { // check that the app is actually expected to manage wifi
             NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 
             if (info != null && info.isConnected()) { // wifi is connected
@@ -50,8 +50,8 @@ public class WifiChangedReceiver extends BroadcastReceiver {
 
                 // if unknown, show notification - check settings before
 
-                SharedPreferences settings = context.getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE);
-                if (settings.getBoolean(ManagerService.PREF_ENTRY_SHOW_NOTIFICATION, true)) {
+                SharedPreferences settings = context.getSharedPreferences(SettingsEntry.PREF_SETTINGS, Context.MODE_PRIVATE);
+                if (settings.getBoolean(SettingsEntry.PREF_ENTRY_SHOW_NOTIFICATION, true)) {
                     WifiNotification.show(context, wifiInfo);
                 }
 

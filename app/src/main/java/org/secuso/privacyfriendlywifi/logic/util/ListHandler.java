@@ -24,10 +24,6 @@ public class ListHandler<EntryType extends PreconditionEntry> extends Observable
         initialize(context, listFilePath);
     }
 
-    public void initialize(Context context, Object[] args) {
-        initialize(context, (String) args[0]);
-    }
-
     public void initialize(Context context, String listFilePath) {
         StaticContext.setContext(context);
         this.listFilePath = listFilePath;

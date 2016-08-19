@@ -14,7 +14,7 @@ import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import java.util.List;
 
 /**
- * Helper functions for Wifi.
+ * Helper functions for Wi-Fi.
  */
 public class WifiHandler {
     private static WifiManager wifiManager;

@@ -24,7 +24,9 @@ public class ScheduleEntry extends PreconditionEntry implements Serializable {
         initialize(title, start_hour, start_minute, end_hour, end_minute);
     }
 
-
+    /**
+     * @see SerializationHelper
+     */
     public void initialize(Context context, Object[] args) throws IOException {
         if (args[0] instanceof String && args[1] instanceof Integer && args[2] instanceof Integer && args[3] instanceof Integer && args[4] instanceof Integer) {
             initialize((String) args[0], (int) args[1], (int) args[2], (int) args[3], (int) args[4]);

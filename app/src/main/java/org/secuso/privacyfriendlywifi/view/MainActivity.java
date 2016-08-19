@@ -30,9 +30,9 @@ import android.widget.TextView;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
+import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.Controller;
-import org.secuso.privacyfriendlywifi.service.ManagerService;
 import org.secuso.privacyfriendlywifi.view.fragment.AboutFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.ScheduleFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.SettingsFragment;
@@ -134,10 +134,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void onClick(View v) {
 
                         if (mainSwitch.isChecked()) {
-                            ManagerService.setActiveFlag(self, true);
+                            SettingsEntry.setActiveFlag(self, true);
                             Controller.registerReceivers(self);
                         } else {
-                            ManagerService.setActiveFlag(self, false);
+                            SettingsEntry.setActiveFlag(self, false);
                             Controller.unregisterReceivers(self);
                         }
 
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         );
 
         // update state switch´s state
-        mainSwitch.setChecked(ManagerService.isServiceActive(this));
+        mainSwitch.setChecked(SettingsEntry.isServiceActive(this));
 
         // set marginStart using measurement since drawer is locked
         if (this.isDrawerLocked) {
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Switch mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
 
                 // update state switch´s state
-                mainSwitch.setChecked(ManagerService.isServiceActive(this));
+                mainSwitch.setChecked(SettingsEntry.isServiceActive(this));
             }
         }
     }

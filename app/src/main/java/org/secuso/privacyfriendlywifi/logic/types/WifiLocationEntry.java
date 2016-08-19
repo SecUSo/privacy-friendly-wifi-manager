@@ -34,6 +34,9 @@ public class WifiLocationEntry extends PreconditionEntry implements Serializable
         initialize(ssid, Arrays.asList(new String[]{bssid}));
     }
 
+    /**
+     * @see SerializationHelper
+     */
     public void initialize(Context context, Object[] args) throws IOException {
         if (args[0] instanceof String && args[1] instanceof List) {
             this.ssid = (String) args[0];
