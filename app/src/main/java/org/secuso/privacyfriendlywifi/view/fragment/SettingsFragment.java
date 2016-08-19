@@ -43,8 +43,7 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
@@ -86,7 +85,6 @@ public class SettingsFragment extends Fragment {
         final TextView textViewGeneralSettings = (TextView) rootView.findViewById(R.id.textGeneralSettings);
 
         final Button buttonHideDeveloper = (Button) rootView.findViewById(R.id.buttonHideDeveloperSettings);
-
         buttonHideDeveloper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +103,6 @@ public class SettingsFragment extends Fragment {
         }
 
         Button buttonTriggerService = (Button) rootView.findViewById(R.id.buttonTriggerService);
-
         buttonTriggerService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +111,6 @@ public class SettingsFragment extends Fragment {
         });
 
         Button buttonDeleteLogfile = (Button) rootView.findViewById(R.id.buttonDeleteLogfile);
-
         buttonDeleteLogfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,11 +123,18 @@ public class SettingsFragment extends Fragment {
         });
 
         Button buttonFlushLogfile = (Button) rootView.findViewById(R.id.buttonFlushLog);
-
         buttonFlushLogfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Logger.flush();
+            }
+        });
+
+        Button buttonRemoveFirstRunFlag = (Button) rootView.findViewById(R.id.buttonRemoveFirstRunFlag);
+        buttonRemoveFirstRunFlag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getContext().getSharedPreferences(ManagerService.PREF_SETTINGS, Context.MODE_PRIVATE).edit().remove(ManagerService.PREF_ENTRY_FIRST_RUN).apply();
             }
         });
 
@@ -144,7 +147,6 @@ public class SettingsFragment extends Fragment {
         int clicked = 0;
         int clicksNeeded = 6;
         Toast infoToast;
-
 
         @Override
         public void onClick(View v) {
@@ -167,6 +169,4 @@ public class SettingsFragment extends Fragment {
             }
         }
     }
-
-
 }

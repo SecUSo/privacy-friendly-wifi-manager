@@ -58,25 +58,31 @@
 
             <Button
                 android:id="@+id/buttonTriggerService"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Trigger ManagerService" />
 
             <Button
                 android:id="@+id/buttonDeleteLogfile"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_delete_logfile" />
 
             <Button
                 android:id="@+id/buttonFlushLog"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_flush_logfile" />
 
             <Button
+                android:id="@+id/buttonRemoveFirstRunFlag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_remove_first_run_flag" />
+
+            <Button
                 android:id="@+id/buttonHideDeveloperSettings"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_hide_developer_settings" />
         </LinearLayout>
