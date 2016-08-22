@@ -55,11 +55,18 @@ public class HelpActivity extends AppCompatActivity {
 
         final AppCompatActivity thisActivity = this;
 
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        final SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.container);
+
         // Button Listener
         nextbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mViewPager.getChildCount() > mViewPager.getCurrentItem()) {
+                if (mSectionsPagerAdapter.getCount() > (mViewPager.getCurrentItem() + 1)) {
                     mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
                 } else {
                     if (firstRun) {
@@ -78,13 +85,6 @@ public class HelpActivity extends AppCompatActivity {
             }
         });
 
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
 
         final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
         if (radioGroup != null) {

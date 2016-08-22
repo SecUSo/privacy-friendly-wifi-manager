@@ -40,9 +40,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center_horizontal|bottom"
-            >
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/nextbutton"
@@ -77,6 +76,7 @@
                     android:id="@+id/radioButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <RadioButton
                     android:id="@+id/radioButton4"
                     android:layout_width="wrap_content"
