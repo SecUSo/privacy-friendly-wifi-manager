@@ -31,11 +31,14 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="120dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <FrameLayout
+        android:id="@+id/fragment_help_controls"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -85,5 +88,6 @@
 
         </LinearLayout>
     </FrameLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>
