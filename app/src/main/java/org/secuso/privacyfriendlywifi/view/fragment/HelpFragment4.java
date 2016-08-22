@@ -8,16 +8,16 @@ import android.view.ViewGroup;
 
 import secuso.org.privacyfriendlywifi.R;
 
-public class HelpFragment3 extends Fragment {
+public class HelpFragment4 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_help_step3, container, false);
+        return inflater.inflate(R.layout.fragment_help_step4, container, false);
     }
 
-    public static HelpFragment3 newInstance(String text) {
+    public static HelpFragment4 newInstance(String text) {
 
-        HelpFragment3 f = new HelpFragment3();
+        HelpFragment4 f = new HelpFragment4();
         Bundle b = new Bundle();
         b.putString("msg", text);
 

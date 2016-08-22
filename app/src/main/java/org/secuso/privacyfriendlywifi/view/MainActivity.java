@@ -118,6 +118,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Manifest.permission.CHANGE_WIFI_STATE,
                             Manifest.permission.ACCESS_COARSE_LOCATION}, DYN_PERMISSION);
         }
+
+        updateNavigationDrawer();
+    }
+
+    private void updateNavigationDrawer() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            Menu nav_menu = navigationView.getMenu();
+            boolean visible = SettingsEntry.hasCoarseLocationPermission(this);
+
+            nav_menu.findItem(R.id.nav_whitelist).setVisible(visible);
+            Logger.d(TAG, "BLA: " + nav_menu.findItem(R.id.nav_whitelist).toString());
+            navigationView.invalidate();
+        }
     }
 
     @Override
@@ -194,15 +208,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         if (grantResults[2] == PackageManager.PERMISSION_GRANTED) {
                             // we got coarse location permission
+                            invalidateOptionsMenu();
                             // switch to list of allowed wifis
                             this.switchToFragment(WifiListFragment.class, true);
                         } else {
                             // switch to an explaining dialog
-                            this.switchToFragment(AboutFragment.class, true);
+                            Intent startHelpIntent = new Intent(this, HelpActivity.class);
+                            startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            this.startActivity(startHelpIntent);
                         }
                     }
 
-
+                    updateNavigationDrawer();
                 }
 
                 break;
@@ -252,7 +269,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (CellLocationCondition.hasCoarseLocationPermission(this)) {
                     fragmentClass = WifiListFragment.class;
                 } else {
-                    fragmentClass = AboutFragment.class;
+                    // switch to an explaining dialog
+                    Intent startHelpIntent = new Intent(this, HelpActivity.class);
+                    startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    this.startActivity(startHelpIntent);
+                    return true;
                 }
                 break;
             case R.id.nav_schedule:
@@ -270,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentClass = AboutFragment.class;
                 break;
             default:
-                fragmentClass = WifiListFragment.class;
+                fragmentClass = SettingsEntry.hasCoarseLocationPermission(this) ? WifiListFragment.class : ScheduleFragment.class;
         }
 
         this.switchToFragment(fragmentClass);

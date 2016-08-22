@@ -1,7 +1,10 @@
 package org.secuso.privacyfriendlywifi.logic.util;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 
 /**
  * This class is used to represent a settings entry in the settings fragment.
@@ -34,6 +37,7 @@ public class SettingsEntry {
 
     /**
      * Getter for {@code PREF_ENTRY_USE_SIGNAL_STRENGTH}
+     *
      * @param context A context to use.
      * @return True, if signal strength should be respected in calculations.
      */
@@ -44,6 +48,7 @@ public class SettingsEntry {
 
     /**
      * Getter for {@code PREF_ENTRY_USE_SIGNAL_STRENGTH}
+     *
      * @return True, if signal strength should be respected in calculations.
      */
     public static boolean shouldRespectSignalStrength() {
@@ -52,8 +57,9 @@ public class SettingsEntry {
 
     /**
      * Setter for {@code PREF_ENTRY_SERVICE_ACTIVE}
+     *
      * @param context A context to use.
-     * @param state True, if the flag should be set.
+     * @param state   True, if the flag should be set.
      */
     public static void setActiveFlag(Context context, boolean state) {
         SharedPreferences settings = context.getSharedPreferences(PREF_SETTINGS, Context.MODE_PRIVATE);
@@ -62,6 +68,7 @@ public class SettingsEntry {
 
     /**
      * Setter for {@code PREF_ENTRY_SERVICE_ACTIVE}
+     *
      * @param state True, if the flag should be set.
      */
     public static void setActiveFlag(boolean state) {
@@ -70,6 +77,7 @@ public class SettingsEntry {
 
     /**
      * Getter for {@code PREF_ENTRY_SERVICE_ACTIVE}
+     *
      * @param context A context to use.
      * @return True, if service is active.
      */
@@ -81,9 +89,21 @@ public class SettingsEntry {
 
     /**
      * Getter for {@code PREF_ENTRY_SERVICE_ACTIVE}
+     *
      * @return True, if service is active.
      */
     public static boolean isServiceActive() {
         return isServiceActive(StaticContext.getContext());
+    }
+
+    /**
+     * Checks if ACCESS_COARSE_LOCATION has been granted.
+     *
+     * @param context A context to use.
+     * @return True, if ACCESS_COARSE_LOCATION has been granted, false otherwise.
+     */
+    public static boolean hasCoarseLocationPermission(Context context) {
+        String permission = Manifest.permission.ACCESS_COARSE_LOCATION;
+        return ContextCompat.checkSelfPermission(context, permission) == (int) PackageManager.PERMISSION_GRANTED;
     }
 }

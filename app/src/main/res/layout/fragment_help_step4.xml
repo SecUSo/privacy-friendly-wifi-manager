@@ -18,26 +18,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/help_actionbar_substring_step0"
+            android:layout_marginTop="20dp"
+            android:text="@string/help_actionbar_substring_step3"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/basics_step0_permission" />
+            android:src="@drawable/basics_step3_deletewifi_combined_medium" />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/help_content_step0_description"
             android:layout_gravity="center_horizontal"
             android:padding="10dp"
+            android:text="@string/help_content_step3_description"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
     </LinearLayout>
 
 

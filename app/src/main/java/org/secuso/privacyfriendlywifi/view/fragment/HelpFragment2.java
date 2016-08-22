@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import secuso.org.privacyfriendlywifi.R;
 
 public class HelpFragment2 extends Fragment {

@@ -20,6 +20,7 @@ import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment0;
 import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment1;
 import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment2;
 import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment3;
+import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment4;
 
 import secuso.org.privacyfriendlywifi.R;
 
@@ -103,6 +104,9 @@ public class HelpActivity extends AppCompatActivity {
                         case R.id.radioButton3:
                             mViewPager.setCurrentItem(3, true);
                             break;
+                        case R.id.radioButton4:
+                            mViewPager.setCurrentItem(4, true);
+                            break;
                     }
                 }
             });
@@ -130,7 +134,7 @@ public class HelpActivity extends AppCompatActivity {
                             radioGroup.check(R.id.radioButton1);
                             if (actionBar != null) {
                                 actionBar.setTitle(getString(R.string.help_actionbar_string_basics));
-                                actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step1));
+                                actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step0));
                                 nextbutton.setText(getString(R.string.button_next));
                             }
                             break;
@@ -138,12 +142,20 @@ public class HelpActivity extends AppCompatActivity {
                             radioGroup.check(R.id.radioButton2);
                             if (actionBar != null) {
                                 actionBar.setTitle(getString(R.string.help_actionbar_string_basics));
-                                actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step2));
+                                actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step1));
                                 nextbutton.setText(getString(R.string.button_next));
                             }
                             break;
                         case 3:
                             radioGroup.check(R.id.radioButton3);
+                            if (actionBar != null) {
+                                actionBar.setTitle(getString(R.string.help_actionbar_string_basics));
+                                actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step2));
+                                nextbutton.setText(getString(R.string.button_next));
+                            }
+                            break;
+                        case 4:
+                            radioGroup.check(R.id.radioButton4);
                             if (actionBar != null) {
                                 actionBar.setTitle(getString(R.string.help_actionbar_string_basics));
                                 actionBar.setSubtitle(getString(R.string.help_actionbar_substring_step3));
@@ -189,6 +201,8 @@ public class HelpActivity extends AppCompatActivity {
                     return HelpFragment2.newInstance("Help: Step 2");
                 case 3:
                     return HelpFragment3.newInstance("Help: Step 3");
+                case 4:
+                    return HelpFragment4.newInstance("Help: Step 4");
                 default:
                     return HelpFragment0.newInstance("Help: Welcome");
             }
@@ -197,7 +211,7 @@ public class HelpActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 4 total pages.
-            return 4;
+            return 5;
         }
 
         @Override
@@ -211,6 +225,8 @@ public class HelpActivity extends AppCompatActivity {
                     return "SECTION 3";
                 case 3:
                     return "SECTION 4";
+                case 4:
+                    return "SECTION 5";
             }
             return null;
         }
