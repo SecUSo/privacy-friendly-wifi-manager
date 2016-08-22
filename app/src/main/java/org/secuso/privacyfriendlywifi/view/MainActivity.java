@@ -58,11 +58,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         StaticContext.setContext(this);
 
+        setContentView(R.layout.activity_main);
+
         SharedPreferences prefs = getSharedPreferences(SettingsEntry.PREF_SETTINGS, Context.MODE_PRIVATE);
         boolean firstRun = prefs.getBoolean(SettingsEntry.PREF_ENTRY_FIRST_RUN, true);
 
         // show help activity on first run
         if (firstRun) {
+            Logger.d(TAG, "First run.");
             Intent startHelpIntent = new Intent(this, HelpActivity.class);
             startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
             this.startActivity(startHelpIntent);
@@ -72,17 +75,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Manifest.permission.CHANGE_WIFI_STATE,
                             Manifest.permission.ACCESS_COARSE_LOCATION}, DYN_PERMISSION);
         } else {
-            setContentView(R.layout.activity_main);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
             // setup the drawer layout
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            // set version string in navigation header
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+            if (drawer != null && navigationView != null) {
+                navigationView.setNavigationItemSelectedListener(this);
 
-            if (drawer != null) {
-                // set version string in navigation header
-                NavigationView navigationView = (NavigationView) drawer.findViewById(R.id.nav_view);
                 View header = navigationView.getHeaderView(0);
                 TextView versionString = (TextView) header.findViewById(R.id.nav_header_versionString);
                 versionString.setText(String.format(Locale.getDefault(), this.getString(R.string.about_version), BuildConfig.VERSION_NAME));
@@ -106,12 +109,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     toggle.syncState();
                 }
-            }
-
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-            if (navigationView != null) {
-                navigationView.setNavigationItemSelectedListener(this);
             }
 
             if (AbstractSettingsEntry.hasCoarseLocationPermission(this)) {
@@ -248,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (drawer != null) {
+        if (drawer != null && !isDrawerLocked) {
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START);
             } else {
@@ -322,6 +319,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             Logger.e(TAG, "IllegalAccessException");
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            Logger.e(TAG, "IllegalArgumentException");
             e.printStackTrace();
         }
     }

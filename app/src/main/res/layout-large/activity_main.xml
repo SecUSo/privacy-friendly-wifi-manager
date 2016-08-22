@@ -28,16 +28,16 @@
 
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            app:menu="@menu/activity_main_drawer" />
+            app:menu="@menu/activity_main_drawer"
+            app:headerLayout="@layout/nav_header_main"/>
 
     </android.support.v4.widget.DrawerLayout>
 
     <FrameLayout
         android:id="@+id/fragmentContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true" />
+        android:layout_height="match_parent" />
 </RelativeLayout>
