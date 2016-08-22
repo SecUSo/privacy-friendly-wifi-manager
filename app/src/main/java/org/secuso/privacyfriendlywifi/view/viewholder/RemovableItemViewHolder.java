@@ -11,7 +11,7 @@ import org.secuso.privacyfriendlywifi.view.adapter.RemovableRecyclerViewAdapter;
 import secuso.org.privacyfriendlywifi.R;
 
 /**
- *
+ * An ItemViewHolder for use in removable item lists.
  */
 public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
     private ImageButton deleteButton;
@@ -19,6 +19,10 @@ public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder 
     private RemovableRecyclerViewAdapter<EntryType> adapter;
     protected IOnDeleteModeChangedListener listener;
 
+    /**
+     * Constructs a new RemovableItemViewHolder.
+     * @param itemView A parent view.
+     */
     public RemovableItemViewHolder(View itemView) {
         super(itemView);
         this.deleteButton = (ImageButton) itemView.findViewById(R.id.button_delete);
@@ -32,6 +36,13 @@ public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder 
         itemView.setOnClickListener(this);
     }
 
+    /**
+     * Updates the view.
+     * @param context A context to use.
+     * @param recyclerViewEntry The EntryType to represent.
+     * @param adapter An adapter for the delete mode callback.
+     * @param listener A listener for the delete mode callback.
+     */
     public void setupItem(Context context, EntryType recyclerViewEntry, RemovableRecyclerViewAdapter<EntryType> adapter, IOnDeleteModeChangedListener listener) {
         this.recyclerViewEntry = recyclerViewEntry;
         this.adapter = adapter;
@@ -53,6 +64,10 @@ public class RemovableItemViewHolder<EntryType> extends RecyclerView.ViewHolder 
         }
     }
 
+    /**
+     * Toggles visibility of delete icon.
+     * @param visible Visibility state.
+     */
     public void setDeleteButtonVisible(boolean visible) {
         if (visible) {
             this.deleteButton.setVisibility(View.VISIBLE);

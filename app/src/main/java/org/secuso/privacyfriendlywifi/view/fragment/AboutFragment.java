@@ -16,10 +16,8 @@ import secuso.org.privacyfriendlywifi.R;
 
 
 /**
- *
+ * Fragment to show information about authors and their intentions.
  */
-
-
 public class AboutFragment extends Fragment {
 
 

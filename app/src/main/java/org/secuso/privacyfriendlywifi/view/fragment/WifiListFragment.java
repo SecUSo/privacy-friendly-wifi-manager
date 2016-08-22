@@ -31,6 +31,9 @@ import java.util.Observer;
 
 import secuso.org.privacyfriendlywifi.R;
 
+/**
+ * Fragment to manage location-based Wi-Fi toggle.
+ */
 public class WifiListFragment extends Fragment implements IOnDialogClosedListener, Observer {
     private static final String TAG = WifiListFragment.class.getSimpleName();
     private IOnDialogClosedListener thisClass;

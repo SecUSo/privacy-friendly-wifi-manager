@@ -6,7 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- *
+ * A serializable precondition entry.
  */
 public abstract class PreconditionEntry extends SerializationHelper implements Observer, Comparable<PreconditionEntry> {
     protected void notifyChanged() {

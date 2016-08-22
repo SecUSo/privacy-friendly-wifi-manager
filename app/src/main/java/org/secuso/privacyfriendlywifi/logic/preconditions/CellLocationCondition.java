@@ -69,14 +69,27 @@ public class CellLocationCondition extends Precondition {
     }
 
     /* GETTERS & SETTERS */
+
+    /**
+     * Returns the number of related cells.
+     * @return the number of related cells.
+     */
     public int getNumberOfRelatedCells() {
         return this.relatedCells.size();
     }
 
+    /**
+     * Returns the related cells.
+     * @return all related cells.
+     */
     public Set<PrimitiveCellInfo> getRelatedCells() {
         return this.relatedCells;
     }
 
+    /**
+     * Returns the BSSID.
+     * @return the BSSID.
+     */
     public String getBssid() {
         return this.bssid;
     }
@@ -170,7 +183,7 @@ public class CellLocationCondition extends Precondition {
                     }
                 }
 
-                //TODO DEBUGGING, REMOVE!
+                // TODO DEBUGGING, REMOVE!
                 StringBuffer buf = new StringBuffer();
                 buf.append("currentCells = {");
                 for (PrimitiveCellInfo cell : currentCells) {

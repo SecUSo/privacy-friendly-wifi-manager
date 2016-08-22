@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 
 import secuso.org.privacyfriendlywifi.R;
 
+/**
+ * Help fragment used in ViewPagerActivity.
+ */
 public class HelpFragment3 extends Fragment {
 
     @Override

@@ -14,10 +14,24 @@ import java.io.IOException;
 public class ScheduleCondition extends Precondition {
     private int start_hour, start_minute, end_hour, end_minute;
 
+    /**
+     * Creates a new ScheduleCondition with the given time slot.
+     * @param start_hour Start hour.
+     * @param start_minute Start minute.
+     * @param end_hour End hour.
+     * @param end_minute End minute.
+     */
     public ScheduleCondition(int start_hour, int start_minute, int end_hour, int end_minute) {
         initialize(start_hour, start_minute, end_hour, end_minute);
     }
 
+    /**
+     * Sets current instance to the given time slot.
+     * @param start_hour Start hour.
+     * @param start_minute Start minute.
+     * @param end_hour End hour.
+     * @param end_minute End minute.
+     */
     public void initialize(int start_hour, int start_minute, int end_hour, int end_minute) {
         this.start_hour = start_hour;
         this.start_minute = start_minute;
@@ -36,6 +50,9 @@ public class ScheduleCondition extends Precondition {
         }
     }
 
+    /**
+     * @see SerializationHelper
+     */
     protected Object[] getPersistentFields() {
         return new Object[]{this.start_hour, this.start_minute, this.end_hour, this.end_minute};
     }
@@ -48,19 +65,34 @@ public class ScheduleCondition extends Precondition {
                 && TimeHelper.inTimespan(this.start_hour, this.start_minute, this.end_hour, this.end_minute, currentTime.first, currentTime.second);
     }
 
-
+    /**
+     * Returns the start hour.
+     * @return the start hour.
+     */
     public int getStartHour() {
         return this.start_hour;
     }
 
+    /**
+     * Returns the start minute.
+     * @return the start minute.
+     */
     public int getStartMinute() {
         return this.start_minute;
     }
 
+    /**
+     * Returns the end hour.
+     * @return the end hour.
+     */
     public int getEndHour() {
         return this.end_hour;
     }
 
+    /**
+     * Returns the end minute.
+     * @return the end minute.
+     */
     public int getEndMinute() {
         return this.end_minute;
     }

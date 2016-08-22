@@ -10,14 +10,24 @@ import java.io.Serializable;
 public abstract class Precondition extends SerializationHelper implements Serializable {
     protected boolean isActive; // by default a user created precondition is active
 
+    /**
+     * Creates a new Precondition. This is active by default.
+     */
     public Precondition() {
         this(true);
     }
 
+    /**
+     * Creates a new Precondition.
+     * @param isActive True if the precondition should be active, false otherwise.
+     */
     public Precondition(boolean isActive) {
         this.isActive = isActive;
     }
 
+    /**
+     * Notifies listeners about a changed data set.
+     */
     protected void notifyChanged() {
         this.setChanged();
         this.notifyObservers();
