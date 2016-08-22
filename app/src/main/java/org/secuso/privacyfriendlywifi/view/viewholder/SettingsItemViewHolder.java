@@ -45,4 +45,11 @@ public class SettingsItemViewHolder extends RecyclerView.ViewHolder {
             }
         });
     }
+
+    public void setupItem(String name, String desc, View.OnClickListener clickListener) {
+        this.name.setText(name);
+        this.desc.setText(desc);
+        this.itemView.setOnClickListener(clickListener);
+        this.checkBox.setVisibility(View.GONE);
+    }
 }

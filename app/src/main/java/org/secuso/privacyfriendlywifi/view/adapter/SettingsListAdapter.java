@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.secuso.privacyfriendlywifi.logic.util.AbstractSettingsEntry;
+import org.secuso.privacyfriendlywifi.logic.util.ClickSettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.view.viewholder.SettingsItemViewHolder;
 
@@ -13,9 +15,9 @@ import java.util.List;
 import secuso.org.privacyfriendlywifi.R;
 
 public class SettingsListAdapter extends RecyclerView.Adapter<SettingsItemViewHolder> {
-    private List<SettingsEntry> settingsEntryList;
+    private List<AbstractSettingsEntry> settingsEntryList;
 
-    public SettingsListAdapter(List<SettingsEntry> settingsEntryList) {
+    public SettingsListAdapter(List<AbstractSettingsEntry> settingsEntryList) {
         this.settingsEntryList = settingsEntryList;
     }
 
@@ -27,8 +29,12 @@ public class SettingsListAdapter extends RecyclerView.Adapter<SettingsItemViewHo
 
     @Override
     public void onBindViewHolder(SettingsItemViewHolder holder, int position) {
-        SettingsEntry entry = this.settingsEntryList.get(position);
-        holder.setupItem(entry.name, entry.desc, entry.preference);
+        AbstractSettingsEntry entry = this.settingsEntryList.get(position);
+        if (entry instanceof SettingsEntry) {
+            holder.setupItem(entry.name, entry.desc, ((SettingsEntry) entry).preference);
+        } else {
+            holder.setupItem(entry.name, entry.desc, ((ClickSettingsEntry) entry).clickListener);
+        }
     }
 
     @Override

@@ -31,6 +31,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
+import org.secuso.privacyfriendlywifi.logic.util.AbstractSettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
@@ -47,7 +48,7 @@ import secuso.org.privacyfriendlywifi.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
-    private final static int DYN_PERMISSION = 0;
+    public final static int DYN_PERMISSION = 0;
     private Menu menu;
 
     private boolean isDrawerLocked = false;
@@ -66,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
             this.startActivity(startHelpIntent);
             this.overridePendingTransition(0, 0); // deactivate the transition between empty activity and help activity
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_WIFI_STATE,
+                            Manifest.permission.CHANGE_WIFI_STATE,
+                            Manifest.permission.ACCESS_COARSE_LOCATION}, DYN_PERMISSION);
         } else {
             setContentView(R.layout.activity_main);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -109,14 +114,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 navigationView.setNavigationItemSelectedListener(this);
             }
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                Logger.d(TAG, "SHOW SOME EXPLANATION FOR LOCATION"); // TODO show some explanatory dialog
+            if (AbstractSettingsEntry.hasCoarseLocationPermission(this)) {
+                this.switchToFragment(WifiListFragment.class, true);
+            } else {
+                this.switchToFragment(ScheduleFragment.class, true);
             }
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_WIFI_STATE,
-                            Manifest.permission.CHANGE_WIFI_STATE,
-                            Manifest.permission.ACCESS_COARSE_LOCATION}, DYN_PERMISSION);
         }
 
         updateNavigationDrawer();
@@ -129,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             boolean visible = SettingsEntry.hasCoarseLocationPermission(this);
 
             nav_menu.findItem(R.id.nav_whitelist).setVisible(visible);
-            Logger.d(TAG, "BLA: " + nav_menu.findItem(R.id.nav_whitelist).toString());
             navigationView.invalidate();
         }
     }
@@ -212,10 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             // switch to list of allowed wifis
                             this.switchToFragment(WifiListFragment.class, true);
                         } else {
-                            // switch to an explaining dialog
-                            Intent startHelpIntent = new Intent(this, HelpActivity.class);
-                            startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            this.startActivity(startHelpIntent);
+                            this.switchToFragment(ScheduleFragment.class, true);
                         }
                     }
 
@@ -269,11 +267,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (CellLocationCondition.hasCoarseLocationPermission(this)) {
                     fragmentClass = WifiListFragment.class;
                 } else {
-                    // switch to an explaining dialog
-                    Intent startHelpIntent = new Intent(this, HelpActivity.class);
-                    startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    this.startActivity(startHelpIntent);
-                    return true;
+                    fragmentClass = ScheduleFragment.class;
                 }
                 break;
             case R.id.nav_schedule:
