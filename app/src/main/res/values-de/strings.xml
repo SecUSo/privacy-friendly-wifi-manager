@@ -1,10 +1,10 @@
 <resources>
 
     <!-- GENERAL -->
-    <string name="app_name">Privacy Friendly WiFi</string>
-    <string name="on">On</string>
-    <string name="off">Off</string>
-    <string name="global_on_off_switch">On/Off</string>
+    <string name="app_name">WiFi-Manager</string>
+    <string name="on">An</string>
+    <string name="off">Aus</string>
+    <string name="global_on_off_switch">An/Aus</string>
     <string name="navigation_drawer_open">Menü öffnen</string>
     <string name="navigation_drawer_close">Menü schließen</string>
     <string name="remove_entry">Eintrag löschen</string>
@@ -29,7 +29,7 @@
 
 
     <!-- CONTENT STRINGS -->
-    <string name="header_wifilist">Liste der gemanagten WLANs</string>
+    <string name="header_wifilist">Liste der verwalteten WLANs</string>
     <string name="header_schedule">Liste der aktiven Zeitslots</string>
     <string name="header_about">Über</string>
 
@@ -39,14 +39,14 @@
     <string name="wifi_bssid_text">MAC: %1$s</string>
     <string name="wifi_num_cells_text">Zugehörige Zellen: %1$d</string>
     <string name="wifi_multi_bssid_text">%1$d zugehörige MACs</string>
-    <string name="wifi_enable_wifi_to_scan">You have to enable Wi-Fi in order to add a new network</string>
-    <string name="wifi_enable_wifi">Enable Wi-Fi</string>
+    <string name="wifi_enable_wifi_to_scan">Um ein Netzwerk hinzuzufügen, bitte WLAN aktivieren.</string>
+    <string name="wifi_enable_wifi">WLAN einschalten</string>
     <string name="wifi_hidden_wifi_text">--Verstecktes WLAN--</string>
 
 
     <!-- WIFI PICKER DIALOG STRINGS -->
-    <string name="wifi_picker_dialog_title">Select network</string>
-    <string name="wifi_picker_dialog_button_cancel">Cancel</string>
+    <string name="wifi_picker_dialog_title">Netzwerk auswählen</string>
+    <string name="wifi_picker_dialog_button_cancel">Abbrechen</string>
 
 
     <!-- SCHEDULE STRINGS -->
@@ -54,21 +54,21 @@
 
 
     <!-- TIME PICKER DIALOG STRINGS -->
-    <string name="time_picker_dialog_title_choose_start_time">Wähle Starzeit</string>
+    <string name="time_picker_dialog_title_choose_start_time">Wähle Startzeit</string>
     <string name="time_picker_dialog_title_choose_end_time">Wähle Endzeit</string>
     <string name="time_picker_dialog_title_choose_title">Wähle Titel</string>
     <string name="time_picker_dialog_text_title_hint">Zeitslot %1$d</string>
 
 
     <!-- ABOUT STRINGS -->
-    <string name="about_whatdoesitdo"><b>Das Ziel:</b> Privacy friendly WiFi merkt sich die sog. CellIDs
+    <string name="about_whatdoesitdo"><b>Das Ziel:</b> WiFi-Manager merkt sich Mobilfunktürme (Zell-IDs)
         innerhalb des Bereiches, in denen das Telefon mit einem WLAN verbunden ist. Die App versucht
-        so zu lernen, in welchen Bereichen WLAN genutzt wird, ohne den GPS Standort abzurufen.
-        Das Hauptziel von Privacy friendly Wifi ist Akkuschonung durch gezielte Abschaltung des WLANs,
-        wenn man z.B. das Haus verlässt, ohne dabei auf GPS Daten zurückzugreifen.
+        so zu lernen, in welchen Bereichen WLAN genutzt wird, ohne den GPS-Standort abzurufen.
+        Das Hauptziel von Privacy friendly Wifi ist zwar die Reduzierung der WLAN-basierten Standortverfolgung,
+        jedoch bewirkt die gezielte Abschaltung des WLANs auch eine Schonung des Akkus.
     </string>
     <string name="about_whyprivacyfriendly"><b>Privatssphäre:</b> Diese "privacy friendly app" schützt die
-        Privatssphäre durch geringstmögliche Datenerhebung- Die gesamten Daten werden ausschließlich auf dem
+        Privatssphäre durch geringstmögliche Datenerhebung. Die gesamten Daten werden ausschließlich auf dem
         Telefon gehalten. Keine Daten werden an Dritte gesendet. Weiterhin wird versucht, so wenig Permissions wie möglich zu nutzen.
     </string>
     <string name="about_author"><b>Autoren:</b> Jan Henzel, Patrick Jauernig, Dennis Werner</string>
@@ -86,10 +86,10 @@
     <string name="help_actionbar_substring_step1">Schritt 1: Manager einschalten</string>
     <string name="help_actionbar_substring_step2">Schritt 2: Ein WLAN auswählen</string>
     <string name="help_actionbar_substring_step3">Schritt 3: Ein WLAN löschen</string>
-    <string name="help_content_step1_description">Um den Wi-Fi Manager zu benutzen, muss dieser erst eingeschaltet werden. Dazu einfach den On/Off-Schalter betätigen. Damit kann dieser Zellen erlernen und auch das WLAN des Geräts steuern.</string>
+    <string name="help_content_step1_description">Um den WiFi-Manager zu benutzen, muss dieser erst eingeschaltet werden. Dazu einfach den On/Off-Schalter betätigen. Damit kann dieser Zellen erlernen und auch das WLAN des Geräts steuern.</string>
     <string name="help_content_step2_description">Ein bekanntes WLAN kann einfach in die gemanagte Liste aufgenommen werden, indem man unten auf den Addbutton drückt und anschließend das WLAN aus der Liste auswählt.</string>
     <string name="help_content_step3_description">Um ein WLAN zu löschen, genügt es einfach lange auf die Liste der WLANs zu drücken. Im Anschluss kann ein WLAN durch das Berühren der Mülltonne neben dem Namen gelöscht werden.</string>
-    <string name="help_welcome_description"><b>Willkommen zu AutoWifi!</b>\r\nDiese App hilft dabei, automatisch das WLAN aus zu schalten, sobald Sie nicht in der Nähe eines von Ihnen genutzten WLANs sind.\r\n\r\n<b>So funktioniert\'s:</b> Während Sie mit ihrem Mobilgerät mit einem WLAN verbunden sind, sind sie ebenfalls von Sendemasten ihres Mobilfunkanbieters umgeben, die eine Funkzelle aufspannen. Autowifi erinnert sich daran, welche Funkzellen nahe Ihrem genutzen WLAN liegen, um das z.B. direkt anzuschalten, wenn Sie z.B. nach Hause kommen, oder Ihr Haus verlassen (wenn Sie zur Arbeit gehen).\r\n\r\nÜber die Stundenplanfunktion können Sie weiterhin Zeiträume definieren, in denen das WLAN automatisch abgeschaltet werden soll (nachts z.B.).\r\n\r\nDrücken Sie \'START\' um eine Tour zu beginnen.
+    <string name="help_welcome_description"><b>Willkommen zum WiFi-Manager!</b>\r\nDiese App hilft dabei, automatisch das WLAN aus zu schalten, sobald Sie nicht in der Nähe eines von Ihnen genutzten WLANs sind.\r\n\r\n<b>So funktioniert\'s:</b> Während Sie mit ihrem Mobilgerät mit einem WLAN verbunden sind, sind sie ebenfalls von Sendemasten ihres Mobilfunkanbieters umgeben, die eine Funkzelle aufspannen. Autowifi erinnert sich daran, welche Funkzellen nahe Ihrem genutzen WLAN liegen, um das z.B. direkt anzuschalten, wenn Sie z.B. nach Hause kommen, oder Ihr Haus verlassen (wenn Sie zur Arbeit gehen).\r\n\r\nÜber die Stundenplanfunktion können Sie weiterhin Zeiträume definieren, in denen das WLAN automatisch abgeschaltet werden soll (nachts z.B.).\r\n\r\nDrücken Sie \'START\' um eine Tour zu beginnen.
     </string>
 
 
@@ -98,7 +98,7 @@
     <string name="notification_content_info">Nicht verwaltete Verbindung</string>
     <string name="notification_unknown_wifi_title">Nicht verwaltetes WLAN</string>
     <string name="notification_unknown_wifi_title_format">Nicht verwaltetes WLAN: %1$s</string>
-    <string name="notification_button_add">Diese Verbindung automatisch managen</string>
+    <string name="notification_button_add">Diese Verbindung automatisch verwalten</string>
     <string name="notification_main_text">Berühren um Verbindungen zu verwalten</string>
     <string name="toast_wifi_added">Wi-Fi %1$s wird jetzt verwaltet.</string>
 

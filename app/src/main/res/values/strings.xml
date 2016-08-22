@@ -1,7 +1,7 @@
 <resources>
 
     <!-- GENERAL -->
-    <string name="app_name">Privacy Friendly WiFi</string>
+    <string name="app_name">WiFi-Manager</string>
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="global_on_off_switch">On/Off</string>
@@ -39,7 +39,7 @@
     <string name="wifi_bssid_text">MAC: %1$s</string>
     <string name="wifi_multi_bssid_text">%1$d related MACs</string>
     <string name="wifi_num_cells_text">Related cells: %1$d</string>
-    <string name="wifi_enable_wifi_to_scan">You have to enable WiFi in order to add a new network</string>
+    <string name="wifi_enable_wifi_to_scan">You have to enable WiFi in order to add a new network.</string>
     <string name="wifi_enable_wifi">Enable WiFi</string>
     <string name="wifi_hidden_wifi_text">--Hidden WiFi--</string>
 
@@ -61,10 +61,10 @@
 
 
     <!-- ABOUT STRINGS -->
-    <string name="about_whatdoesitdo"><b>Goal:</b> Privacy friendly WiFi keeps track of the CellIDs in your areay while you are in a WiFi. By keeping this information, the app tries to learn
-    where your WiFi is located without using GPS. The main goal is to save battery life by automatically disabling your phones WiFi when it is not near a already known and used wireless network.
+    <string name="about_whatdoesitdo"><b>Goal:</b> WiFi-Manager keeps track of the cell tower ids in your area while you are connected to a Wi-Fi. By keeping this information, the app tries to learn
+    where your WiFi is located without using GPS. The main goal is to avoid location tracking via Wi-Fi, but WiFi-Manager also saves battery life by automatically disabling your phones WiFi when it is not near a already known wireless network.
     </string>
-    <string name="about_whyprivacyfriendly"><b>Privacy:</b> This privacy friendly app preserves your privacy by tracking least necessary data. All data is kept on your phone. No data is send
+    <string name="about_whyprivacyfriendly"><b>Privacy:</b> This privacy friendly app preserves your privacy by tracking least necessary data. All data is kept on your phone. No data is sent
         to anybody. We also try to use least permissions possible.
     </string>
     <string name="about_author"><b>Author:</b> Jan Henzel, Patrick Jauernig, Dennis Werner</string>
@@ -77,23 +77,23 @@
 
     <!-- HELP STRINGS -->
     <string name="help_actionbar_string">Help</string>
-    <string name="help_actionbar_substring_welcome">Welcome to AutoWiFi</string>
+    <string name="help_actionbar_substring_welcome">Welcome to WiFi-Manager</string>
     <string name="help_actionbar_string_basics">Help: Basics</string>
     <string name="help_actionbar_substring_step1">Step 1: Enabling the Manager</string>
     <string name="help_actionbar_substring_step2">Step 2: Adding a WiFi</string>
     <string name="help_actionbar_substring_step3">Step 3: Delete a WiFi</string>
-    <string name="help_content_step1_description">To use the WiFi manager, you have to enable it, by toggling the on/off button. This enables its learning feature and collects the cell-ids around your WiFi. It also lets AutoWiFi take control of toggling your phone´s WiFi on/off.</string>
-    <string name="help_content_step2_description">Now lets add a known WiFi to the list of managed WiFis. Touch the add-button on the bottom and then select a WiFi in your range.</string>
-    <string name="help_content_step3_description">To delete a WiFi in your list, simply press a little longer on the WiFi list. Then delete a WiFi by pressing on the trashcan symbol beside its name.</string>
-    <string name="help_welcome_description"><b>Welcome to AutoWiFi!</b>\r\nThis app helps you automatically turning on/off your WiFi while you are not near a known WiFi.\r\n\r\n<b>How it works:</b> While you are sitting in an area with a WiFi, you are sorrounded by radio masts providing you a \'cell\'
-        for your mobile phone. AutoWiFi remembers which cell is near your WiFi, to turn it right on when you are coming home, or turning it off, when you are leaving (e.g. work/school).\r\n\r\nBy using the schedule, you can also define timesots, when your phone\'s WiFi should automatically be turned off (e.g. at night time).\r\n\r\nTap \'start\' to take a tour.
+    <string name="help_content_step1_description">To use the WiFi-Manager, you have to enable it by toggling the on/off button. This enables its learning feature and collects the cell ids around your Wi-Fi. It also lets AutoWiFi take control of toggling your phone´s Wi-Fi on/off.</string>
+    <string name="help_content_step2_description">Now lets add a known WiFi to the list of managed WiFis. Touch the add-button on the bottom and then select a Wi-Fi in your range.</string>
+    <string name="help_content_step3_description">To delete a Wi-Fi in your list, simply press a little longer on the Wi-Fi list. Then delete a Wi-Fi by pressing on the trashcan symbol beside its name.</string>
+    <string name="help_welcome_description"><b>Welcome to WiFi-Manager!</b>\r\nThis app helps you automatically turning on/off your Wi-Fi while you are not near a known WiFi.\r\n\r\n<b>How it works:</b> While you are sitting in an area with a WiFi, you are surrounded by radio masts providing you a \'cell\'
+        for your mobile phone. WiFi-Manager remembers which cell is near your Wi-Fi, to turn it right on when you are coming home, or turning it off, when you are leaving (e.g. work/school).\r\n\r\nBy using the schedule, you can also define time slots, when your phone\'s Wi-Fi should automatically be turned off (e.g. at night).\r\n\r\nTap \'start\' to take a tour.
     </string>
 
     <!-- NOTIFICATION -->
-    <string name="notification_content_text">An unmanaged WiFi connection has been established</string>
+    <string name="notification_content_text">An unmanaged Wi-Fi connection has been established</string>
     <string name="notification_content_info">Unmanaged connection</string>
-    <string name="notification_unknown_wifi_title">New unmanaged WiFi</string>
-    <string name="notification_unknown_wifi_title_format">New unmanaged WiFi: %1$s</string>
+    <string name="notification_unknown_wifi_title">New unmanaged Wi-Fi</string>
+    <string name="notification_unknown_wifi_title_format">New unmanaged Wi-Fi: %1$s</string>
     <string name="notification_button_add">Manage this connection automatically</string>
     <string name="notification_main_text">Touch to manage connections</string>
     <string name="toast_wifi_added">WiFi %1$s now managed.</string>
@@ -104,7 +104,7 @@
     <string name="settings_respect_signal_strength">Respect signal strength</string>
     <string name="settings_respect_signal_strength_desc">Cellular signal strength will be respected for location estimation.</string>
     <string name="settings_show_notification_to_add_unmanaged_wi_fis">Show notifications</string>
-    <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">A notification will be shown when connected to unmanaged WiFis.</string>
+    <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">A notification will be shown when connected to unmanaged Wi-Fis.</string>
     <string name="settings_developer">Developer Settings</string>
     <string name="settings_delete_logfile">Delete logfile</string>
     <string name="settings_info_logfile_deleted">Deleted logfile successfully.</string>
@@ -123,6 +123,6 @@
 
 
     <!-- WIDGET STRINGS -->
-    <string name="appwidget_text">Automatic WiFi Management:</string>
+    <string name="appwidget_text">Automatic Wi-Fi Management:</string>
 
 </resources>
