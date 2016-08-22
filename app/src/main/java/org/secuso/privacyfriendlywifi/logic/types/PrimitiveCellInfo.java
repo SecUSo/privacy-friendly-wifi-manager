@@ -238,15 +238,19 @@ public class PrimitiveCellInfo implements Serializable {
 
         // get neighboring cells
         List<NeighboringCellInfo> cells = telephonyManager.getNeighboringCellInfo();
-        for (NeighboringCellInfo cell : cells) {
-            PrimitiveCellInfo primitiveCellInfo = PrimitiveCellInfo.getPrimitiveCellInfo(cell);
-            if (primitiveCellInfo != null) {
-                cellsInRange.add(primitiveCellInfo);
 
-                if (cell.getCid() == cellId) {
-                    found = true;
+        if (cells != null) {
+            for (NeighboringCellInfo cell : cells) {
+                PrimitiveCellInfo primitiveCellInfo = PrimitiveCellInfo.getPrimitiveCellInfo(cell);
+                if (primitiveCellInfo != null) {
+                    cellsInRange.add(primitiveCellInfo);
+
+                    if (cell.getCid() == cellId) {
+                        found = true;
+                    }
                 }
             }
+
         }
 
         if (!found && cellId != NeighboringCellInfo.UNKNOWN_CID) {
