@@ -34,7 +34,7 @@ public class WifiWidget extends AppWidgetProvider {
 
         // intent for widget button click
         Intent buttonIntent = new Intent(context, WidgetClickListener.class);
-        PendingIntent pendingButtonIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, 0);
+        PendingIntent pendingButtonIntent = PendingIntent.getBroadcast(context, 0, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         widgetActiveButtonView.setOnClickPendingIntent(R.id.appwidget_switch, pendingButtonIntent);
         widgetActiveButtonView.setOnClickPendingIntent(R.id.appwidget_text, pendingButtonIntent);
