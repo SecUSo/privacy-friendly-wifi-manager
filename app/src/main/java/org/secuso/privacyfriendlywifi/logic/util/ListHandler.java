@@ -17,6 +17,8 @@ import java.util.Observer;
  *
  */
 public class ListHandler<EntryType extends PreconditionEntry> extends Observable implements Observer, IListHandler<EntryType> {
+    private final String TAG = ListHandler.class.getSimpleName();
+    private static final int MAX_TRIES = 3;
     private List<EntryType> entries;
     private String listFilePath;
 
@@ -25,23 +27,61 @@ public class ListHandler<EntryType extends PreconditionEntry> extends Observable
     }
 
     public void initialize(Context context, String listFilePath) {
+        initialize(context, listFilePath, 0);
+    }
+
+    public void initialize(Context context, String listFilePath, int tries) {
         StaticContext.setContext(context);
         this.listFilePath = listFilePath;
 
         try {
             Object o = FileHandler.loadObject(context, this.listFilePath, false);
+
+            //noinspection unchecked
             this.entries = (List<EntryType>) o;
         } catch (IOException e) {
-            // File does not exist
-            this.entries = new ArrayList<>();
+
+            // try it multiple times (if e.g. file is only partially written by the service until now)
+            if (tries < ListHandler.MAX_TRIES) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ignored) {
+                }
+
+                initialize(context, listFilePath, tries + 1);
+            } else {
+                Logger.e(TAG, "Could not load file '" + this.listFilePath + "': " + e.getMessage());
+
+                // File could not be loaded -> time to start from scratch
+                this.entries = new ArrayList<>();
+            }
         }
     }
 
     public boolean save() {
+        return save(0);
+    }
+
+    public boolean save(int tries) {
+        boolean saved;
         try {
-            FileHandler.storeObject(StaticContext.getContext(), this.listFilePath, this.entries);
+            saved = FileHandler.storeObject(StaticContext.getContext(), this.listFilePath, this.entries);
         } catch (IOException e) {
             e.printStackTrace();
+            saved = false;
+        }
+
+        if (!saved) {
+            if (tries < ListHandler.MAX_TRIES) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ignored) {
+                }
+
+                return save(tries + 1);
+            }
+
+            Logger.e(TAG, "Could not save file '" + this.listFilePath);
             return false;
         }
 
@@ -107,6 +147,8 @@ public class ListHandler<EntryType extends PreconditionEntry> extends Observable
     }
 
     public int indexOf(Object o) {
+        // inspection not needed as indexOf takes care of this itself
+        //noinspection SuspiciousMethodCalls
         return this.entries.indexOf(o);
     }
 

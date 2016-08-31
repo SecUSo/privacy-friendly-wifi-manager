@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -73,11 +74,15 @@ public class FileHandler {
             }
         }
 
-        FileOutputStream fos = new FileOutputStream(file);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            storeObject(fos, o);
 
-        storeObject(fos, o);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            return false;
+        }
 
-        fos.close();
 
         if (file.exists()) {
             Logger.logADB("d", TAG, "File " + fileName + " saved.");
