@@ -20,8 +20,8 @@ import java.util.Set;
  */
 public class CellLocationCondition extends Precondition {
     private static final String TAG = CellLocationCondition.class.getCanonicalName();
-    public final int MIN_CELLS = 3;
-    public final double MIN_CELL_PERCENTAGE = 0.3;
+    public final int MIN_CELLS = 2;
+    public final double MIN_CELL_PERCENTAGE = 0.2;
     private String bssid;
     private Set<PrimitiveCellInfo> relatedCells; // cells
 
@@ -36,6 +36,7 @@ public class CellLocationCondition extends Precondition {
 
     /**
      * Creates a new {@link CellLocationCondition}.
+     *
      * @param bssid        The BSSID (which should be equivalent to a MAC address from this perspective
      * @param relatedCells All related cells.
      */
@@ -45,6 +46,7 @@ public class CellLocationCondition extends Precondition {
 
     /**
      * Initializes the object with the given parameters.
+     *
      * @param bssid        The BSSID (which should be equivalent to a MAC address from this perspective
      * @param relatedCells All related cells.
      */
@@ -72,6 +74,7 @@ public class CellLocationCondition extends Precondition {
 
     /**
      * Returns the number of related cells.
+     *
      * @return the number of related cells.
      */
     public int getNumberOfRelatedCells() {
@@ -80,6 +83,7 @@ public class CellLocationCondition extends Precondition {
 
     /**
      * Returns the related cells.
+     *
      * @return all related cells.
      */
     public Set<PrimitiveCellInfo> getRelatedCells() {
@@ -88,6 +92,7 @@ public class CellLocationCondition extends Precondition {
 
     /**
      * Returns the BSSID.
+     *
      * @return the BSSID.
      */
     public String getBssid() {
@@ -183,50 +188,16 @@ public class CellLocationCondition extends Precondition {
                     }
                 }
 
-                // TODO DEBUGGING, REMOVE!
-                StringBuffer buf = new StringBuffer();
-                buf.append("currentCells = {");
-                for (PrimitiveCellInfo cell : currentCells) {
-                    buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
-                }
-                buf.delete(buf.length() - 2, buf.length() - 1);
-                buf.append("}");
-                Logger.d(TAG, buf.toString());
+                debugCells(currentCells, union, unionRange); // TODO remove me
 
-                buf = new StringBuffer();
-                buf.append("union = {");
-                for (PrimitiveCellInfo cell : union) {
-                    buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
-                }
-                buf.delete(buf.length() - 2, buf.length() - 1);
-                buf.append("}");
-                Logger.d(TAG, buf.toString());
-
-                buf = new StringBuffer();
-                buf.append("unionRange = {");
-                for (PrimitiveCellInfo cell : unionRange) {
-                    buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
-                }
-                buf.delete(buf.length() - 2, buf.length() - 1);
-                buf.append("}");
-                Logger.d(TAG, buf.toString());
-
-                buf = new StringBuffer();
-                buf.append("this.relatedCells = {");
-                for (PrimitiveCellInfo cell : this.relatedCells) {
-                    buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
-                }
-                buf.delete(buf.length() - 2, buf.length() - 1);
-                buf.append("}");
-                Logger.d(TAG, buf.toString());
 
                 Logger.d(TAG, "size(unionRange) = " + unionRange.size() + ". Use it for calculation: " + respectSignalStrength);
                 Logger.d(TAG, "size(UNION(cells ^ related)) = " + union.size() + "; relatedCells.size() = " + this.relatedCells.size());
 
                 // return true if there are enough known cells in neighborhood or if there are at least MIN_CELLS known cells
-                boolean retVal = ((double) union.size() / (double) this.relatedCells.size()) > MIN_CELL_PERCENTAGE || union.size() >= MIN_CELLS;
+                boolean retVal = (((double) union.size() / (double) this.relatedCells.size()) > MIN_CELL_PERCENTAGE) || (union.size() >= MIN_CELLS);
 
-                return (respectSignalStrength && unionRange.size() > 0 && retVal) || (!respectSignalStrength && retVal);
+                return (respectSignalStrength && unionRange.size() > 0) || (!respectSignalStrength && retVal);
             } else {
                 Logger.e(TAG, "ACCESS_COARSE_LOCATION not granted.");
                 return false;
@@ -234,6 +205,46 @@ public class CellLocationCondition extends Precondition {
         }
 
         return false; // condition not active
+    }
+
+    private void debugCells(Set<PrimitiveCellInfo> currentCells, Set<PrimitiveCellInfo> union, Set<PrimitiveCellInfo> unionRange) {
+
+        // TODO DEBUGGING, REMOVE!
+        StringBuffer buf = new StringBuffer();
+        buf.append("currentCells = {");
+        for (PrimitiveCellInfo cell : currentCells) {
+            buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
+        }
+        buf.delete(buf.length() - 2, buf.length() - 1);
+        buf.append("}");
+        Logger.d(TAG, buf.toString());
+
+        buf = new StringBuffer();
+        buf.append("union = {");
+        for (PrimitiveCellInfo cell : union) {
+            buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
+        }
+        buf.delete(buf.length() - 2, buf.length() - 1);
+        buf.append("}");
+        Logger.d(TAG, buf.toString());
+
+        buf = new StringBuffer();
+        buf.append("unionRange = {");
+        for (PrimitiveCellInfo cell : unionRange) {
+            buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
+        }
+        buf.delete(buf.length() - 2, buf.length() - 1);
+        buf.append("}");
+        Logger.d(TAG, buf.toString());
+
+        buf = new StringBuffer();
+        buf.append("this.relatedCells = {");
+        for (PrimitiveCellInfo cell : this.relatedCells) {
+            buf.append(cell.getCellId()).append(":").append(cell.getSignalStrength()).append("dBm, ");
+        }
+        buf.delete(buf.length() - 2, buf.length() - 1);
+        buf.append("}");
+        Logger.d(TAG, buf.toString());
     }
 
     @Override
