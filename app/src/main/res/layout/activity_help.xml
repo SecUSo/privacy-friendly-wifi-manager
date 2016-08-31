@@ -50,7 +50,9 @@
                 android:id="@+id/nextbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/button_secuso"
+                android:textColor="@color/white" />
 
             <RadioGroup
                 android:id="@+id/radiogroup"
