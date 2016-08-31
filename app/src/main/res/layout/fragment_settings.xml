@@ -21,7 +21,9 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:text="@string/settings_general"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textColor="@color/colorAccent"
+
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/settingsList"
