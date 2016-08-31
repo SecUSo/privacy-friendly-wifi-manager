@@ -28,7 +28,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.util.AbstractSettingsEntry;
@@ -41,9 +40,6 @@ import org.secuso.privacyfriendlywifi.view.fragment.ScheduleFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.SettingsFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.WifiListFragment;
 
-import java.util.Locale;
-
-import secuso.org.privacyfriendlywifi.BuildConfig;
 import secuso.org.privacyfriendlywifi.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -86,10 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (drawer != null && navigationView != null) {
                 navigationView.setNavigationItemSelectedListener(this);
 
-                View header = navigationView.getHeaderView(0);
-                TextView versionString = (TextView) header.findViewById(R.id.nav_header_versionString);
-                versionString.setText(String.format(Locale.getDefault(), this.getString(R.string.about_version), BuildConfig.VERSION_NAME));
-
                 if (getResources().getBoolean(R.bool.isTablet)) {
                     // we are on a tablet
                     Logger.e(TAG, "TABLET");
@@ -118,10 +110,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
-        updateNavigationDrawer();
+        updateNavigationDrawerSelection(R.id.nav_whitelist);
     }
 
-    private void updateNavigationDrawer() {
+    private void updateNavigationDrawerSelection(int id) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            Menu nav_menu = navigationView.getMenu();
+
+            nav_menu.findItem(id).setChecked(true);
+            navigationView.postInvalidate();
+        }
+    }
+
+    private void updateNavigationDrawerVisibility() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             Menu nav_menu = navigationView.getMenu();
@@ -214,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }
 
-                    updateNavigationDrawer();
+                    updateNavigationDrawerVisibility();
                 }
 
                 break;
@@ -257,9 +259,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Class<? extends Fragment> fragmentClass = null;
+        final int id = item.getItemId();
 
-        Class<? extends Fragment> fragmentClass;
-        switch (item.getItemId()) {
+        updateNavigationDrawerSelection(id); // update selection in drawer
+
+        switch (id) {
             case R.id.nav_whitelist:
                 if (CellLocationCondition.hasCoarseLocationPermission(this)) {
                     fragmentClass = WifiListFragment.class;
@@ -277,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent startHelpIntent = new Intent(this, HelpActivity.class);
                 startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 this.startActivity(startHelpIntent);
-                return true;
+                break;
             case R.id.nav_about:
                 fragmentClass = AboutFragment.class;
                 break;

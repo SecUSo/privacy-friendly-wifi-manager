@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Pair;
@@ -138,22 +139,35 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     }
 
     /**
-     * Schedules a new alarm and invokes {@link ManagerService}.
+     * Schedules a new alarm and invokes {@link ManagerService}. Returns asynchronous.
      */
-    public static void fireAndSchedule(Context context) {
-        schedule(context);
-        fire();
+    public static void fireAndSchedule(final Context context) {
+        Handler h = new Handler();
+        h.post(new Runnable() {
+            @Override
+            public void run() {
+                schedule(context);
+                fire();
+            }
+        });
+
     }
 
     /**
      * /**
-     * Schedules a new alarm with additional delay and invokes {@link ManagerService}.
+     * Schedules a new alarm with additional delay and invokes {@link ManagerService}. Returns asynchronous.
      *
      * @param addDelay If true, {@code AlarmReceiver.ADDITIONAL_TIMEOUT_IN_SECONDS} will be added to delay.
      */
-    public static void fireAndSchedule(Context context, boolean addDelay) {
-        schedule(context, addDelay);
-        fire();
+    public static void fireAndSchedule(final Context context, final boolean addDelay) {
+        Handler h = new Handler();
+        h.post(new Runnable() {
+            @Override
+            public void run() {
+                schedule(context, addDelay);
+                fire();
+            }
+        });
     }
 
     @Override

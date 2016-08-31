@@ -111,6 +111,8 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         this.recyclerView.setAdapter(itemsAdapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        this.wifiListHandler.addObserver(this);
+
         return rootView;
     }
 
@@ -124,7 +126,6 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
         this.wifiListHandler = new WifiListHandler(context);
         this.wifiListHandler.sort(); // important here: we are sorting before we are waiting for changes since we are creating the list later anyway
-        this.wifiListHandler.addObserver(this);
     }
 
     @Override
