@@ -56,7 +56,7 @@ public class WifiChangedReceiver extends BroadcastReceiver {
                 }
 
             } else {
-                AlarmReceiver.fireAndSchedule(context, true); // not connected -> maybe we can already disable Wi-Fi
+                AlarmReceiver.fireAndSchedule(context, false); // not connected -> maybe we can already disable Wi-Fi
             }
         }
     }
