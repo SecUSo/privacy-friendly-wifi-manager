@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -259,38 +260,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        Class<? extends Fragment> fragmentClass = null;
         final int id = item.getItemId();
+        final MainActivity self = this;
+        Handler h = new Handler();
 
-        updateNavigationDrawerSelection(id); // update selection in drawer
+        h.post(new Runnable() {
+            @Override
+            public void run() {
+                Class<? extends Fragment> fragmentClass = null;
+                updateNavigationDrawerSelection(id); // update selection in drawer
 
-        switch (id) {
-            case R.id.nav_whitelist:
-                if (CellLocationCondition.hasCoarseLocationPermission(this)) {
-                    fragmentClass = WifiListFragment.class;
-                } else {
-                    fragmentClass = ScheduleFragment.class;
+                switch (id) {
+                    case R.id.nav_whitelist:
+                        if (CellLocationCondition.hasCoarseLocationPermission(self)) {
+                            fragmentClass = WifiListFragment.class;
+                        } else {
+                            fragmentClass = ScheduleFragment.class;
+                        }
+                        break;
+                    case R.id.nav_schedule:
+                        fragmentClass = ScheduleFragment.class;
+                        break;
+                    case R.id.nav_settings:
+                        fragmentClass = SettingsFragment.class;
+                        break;
+                    case R.id.nav_help:
+                        Intent startHelpIntent = new Intent(self, HelpActivity.class);
+                        startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        self.startActivity(startHelpIntent);
+                        break;
+                    case R.id.nav_about:
+                        fragmentClass = AboutFragment.class;
+                        break;
+                    default:
+                        fragmentClass = SettingsEntry.hasCoarseLocationPermission(self) ? WifiListFragment.class : ScheduleFragment.class;
                 }
-                break;
-            case R.id.nav_schedule:
-                fragmentClass = ScheduleFragment.class;
-                break;
-            case R.id.nav_settings:
-                fragmentClass = SettingsFragment.class;
-                break;
-            case R.id.nav_help:
-                Intent startHelpIntent = new Intent(this, HelpActivity.class);
-                startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                this.startActivity(startHelpIntent);
-                break;
-            case R.id.nav_about:
-                fragmentClass = AboutFragment.class;
-                break;
-            default:
-                fragmentClass = SettingsEntry.hasCoarseLocationPermission(this) ? WifiListFragment.class : ScheduleFragment.class;
-        }
 
-        this.switchToFragment(fragmentClass);
+                self.switchToFragment(fragmentClass);
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 

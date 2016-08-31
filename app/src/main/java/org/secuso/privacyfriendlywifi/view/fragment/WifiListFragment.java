@@ -133,6 +133,10 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
             this.wifiListHandler.add((WifiLocationEntry) returnValue[0]);
             this.recyclerView.getAdapter().notifyDataSetChanged();
+
+            if (SettingsEntry.isServiceActive(StaticContext.getContext())) {
+                AlarmReceiver.fireAndSchedule(StaticContext.getContext());
+            }
         }
     }
 
@@ -148,11 +152,6 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
     @Override
     public void update(Observable o, Object data) {
-        if (SettingsEntry.isServiceActive(StaticContext.getContext())) {
-            AlarmReceiver.fireAndSchedule(StaticContext.getContext());
-        }
-
-
         if (this.mActivity != null) {
             this.mActivity.runOnUiThread(new Runnable() {
                 @Override

@@ -69,7 +69,6 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
 
         this.scheduleListHandler = new ScheduleListHandler(this.getContext());
         this.scheduleListHandler.sort();
-        this.scheduleListHandler.addObserver(this);
 
         // Set substring in actionbar
         ActionBar actionBar = ((AppCompatActivity) this.mActivity).getSupportActionBar();
@@ -109,6 +108,8 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
                         ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), StaticContext.getContext())
                         : fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom()));
 
+        this.scheduleListHandler.addObserver(this);
+
         return rootView;
     }
 
@@ -117,16 +118,16 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         if (returnCode == DialogInterface.BUTTON_POSITIVE) {
             this.scheduleListHandler.add((ScheduleEntry) returnValue[0]);
             this.recyclerView.getAdapter().notifyDataSetChanged(); // this actually is against the purpose of a recyclerView, but we cannot avoid it at the moment
+
+            // run manager service to calculate new next alarm
+            if (SettingsEntry.isServiceActive(StaticContext.getContext())) {
+                AlarmReceiver.fireAndSchedule(StaticContext.getContext());
+            }
         }
     }
 
     @Override
     public void update(Observable observable, Object data) {
-        // run manager service to calculate new next alarm
-        if (SettingsEntry.isServiceActive(StaticContext.getContext())) {
-            AlarmReceiver.fireAndSchedule(StaticContext.getContext());
-        }
-
         // update UI first, since it is asynchronous anyway
         if (this.mActivity != null) {
             this.mActivity.runOnUiThread(new Runnable() {
