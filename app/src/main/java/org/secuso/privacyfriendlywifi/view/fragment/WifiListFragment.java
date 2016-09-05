@@ -15,8 +15,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
+import org.secuso.privacyfriendlywifi.logic.util.AbstractSettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.IOnDialogClosedListener;
 import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
@@ -126,6 +128,10 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
         this.wifiListHandler = new WifiListHandler(context);
         this.wifiListHandler.sort(); // important here: we are sorting before we are waiting for changes since we are creating the list later anyway
+
+        if (!AbstractSettingsEntry.hasCoarseLocationPermission(context)) {
+            Toast.makeText(context, R.string.help_toast_coarse_location, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

@@ -87,6 +87,7 @@
     <string name="help_actionbar_substring_step1">Schritt 2: Manager einschalten</string>
     <string name="help_actionbar_substring_step2">Schritt 3: Ein WLAN auswählen</string>
     <string name="help_actionbar_substring_step3">Schritt 4: Ein WLAN löschen</string>
+    <string name="help_toast_coarse_location">Eine Berechtigung ist nötig um Informationen von umliegenden Mobilfunktürmen zu erhalten.</string>
     <string name="help_content_step0_description">Eine Berechtigung ist nötig um Informationen von umliegenden Mobilfunktürmen zu erhalten. Um ortsbasierte Funktionen von Wifi-Manager zu nutzen, müssen Sie, beginnend mit Android 6, den Zugriff auf den Standort erlauben. Die Berechtigung kann auch später in den Einstellungen erneut angefordert werden.</string>
     <string name="help_content_step1_description">Um den WiFi-Manager zu benutzen, muss dieser erst eingeschaltet werden. Dazu einfach den On/Off-Schalter betätigen. Damit kann dieser Zellen erlernen und auch das WLAN des Geräts steuern.</string>
     <string name="help_content_step2_description">Ein bekanntes WLAN kann einfach in die gemanagte Liste aufgenommen werden, indem man unten auf den Addbutton drückt und anschließend das WLAN aus der Liste auswählt.</string>

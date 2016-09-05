@@ -83,6 +83,7 @@
     <string name="help_actionbar_substring_step1">Step 2: Enabling the Manager</string>
     <string name="help_actionbar_substring_step2">Step 3: Adding a Wi-Fi</string>
     <string name="help_actionbar_substring_step3">Step 4: Delete a Wi-Fi</string>
+    <string name="help_toast_coarse_location">Eine Berechtigung ist nötig um Informationen von umliegenden Mobilfunktürmen zu erhalten.</string>
     <string name="help_content_step0_description">A permission is needed to retrieve nearby cell information. To use location-based features of WiFi-Manager, starting with Android 6, you have to grant access to your coarse location. If you want to use this functionality later, you can request the necessary permission in the settings.</string>
     <string name="help_content_step1_description">To activate the WiFi-Manager, you have to enable it by toggling the on/off button. This enables its learning feature and collects the cell ids around your Wi-Fi. It also lets AutoWiFi take control of toggling your phone\'s Wi-Fi on/off.</string>
     <string name="help_content_step2_description">Now lets add a known WiFi to the list of managed WiFis. Touch the add-button on the bottom and then select a Wi-Fi in your range.</string>

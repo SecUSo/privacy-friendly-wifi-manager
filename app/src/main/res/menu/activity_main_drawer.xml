@@ -13,16 +13,15 @@
             android:id="@+id/nav_schedule"
             android:icon="@drawable/ic_menu_schedule"
             android:title="@string/fragment_schedule" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_preferences"
-            android:title="@string/fragment_settings" />
-
     </group>
     <group
         android:id="@+id/nav_lower"
         android:checkableBehavior="single"
         android:title="@string/group_communicate">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_preferences"
+            android:title="@string/fragment_settings" />
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_menu_help"
