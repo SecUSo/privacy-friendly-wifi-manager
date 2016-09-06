@@ -1,10 +1,8 @@
 package org.secuso.privacyfriendlywifi.view.fragment;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,12 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.util.AbstractSettingsEntry;
-import org.secuso.privacyfriendlywifi.logic.util.ClickSettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
-import org.secuso.privacyfriendlywifi.view.MainActivity;
 import org.secuso.privacyfriendlywifi.view.adapter.SettingsListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 
@@ -71,6 +67,8 @@ public class SettingsFragment extends Fragment {
         /* Add settings here */
         settingsEntries.add(new SettingsEntry(getString(R.string.settings_show_notification_to_add_unmanaged_wi_fis), getString(R.string.settings_show_notification_to_add_unmanaged_wi_fis_desc), SettingsEntry.PREF_ENTRY_SHOW_NOTIFICATION));
         settingsEntries.add(new SettingsEntry(getString(R.string.settings_respect_signal_strength), getString(R.string.settings_respect_signal_strength_desc), SettingsEntry.PREF_ENTRY_USE_SIGNAL_STRENGTH));
+
+        /*
         settingsEntries.add(new ClickSettingsEntry(getString(R.string.settings_grant_permissions), getString(R.string.settings_grant_permissions_desc), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +79,7 @@ public class SettingsFragment extends Fragment {
                                 Manifest.permission.ACCESS_COARSE_LOCATION}, MainActivity.DYN_PERMISSION);
             }
         }));
+        */
 
         recyclerView.setAdapter(new SettingsListAdapter(settingsEntries));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()) {

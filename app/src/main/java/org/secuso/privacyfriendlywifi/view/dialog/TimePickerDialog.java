@@ -58,7 +58,7 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
         this.initPicker(endTimePicker, endHour, endMinute);
 
         this.titleEditText = (EditText) view.findViewById(R.id.title_edit_text);
-        this.titleEditText.setHint(String.format(Locale.getDefault(), StaticContext.getContext().getString(R.string.time_picker_dialog_text_title_hint), this.currentListSize));
+        this.titleEditText.setHint(String.format(Locale.getDefault(), StaticContext.getContext().getString(R.string.time_picker_dialog_text_title_hint), this.currentListSize + 1));
 
 //        this.titleText = (TextView) view.findViewById(R.id.dialog_title_text);
 

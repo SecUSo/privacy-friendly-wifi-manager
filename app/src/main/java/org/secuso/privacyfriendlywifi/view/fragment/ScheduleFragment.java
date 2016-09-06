@@ -100,13 +100,21 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         ScheduleAdapter itemsAdapter = new ScheduleAdapter(R.layout.list_item_schedule, this.scheduleListHandler, this.recyclerView, fab);
         this.recyclerView.setAdapter(itemsAdapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(StaticContext.getContext()));
+
+        int padding_bottom = 0;
+        if (fab != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                padding_bottom = ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), StaticContext.getContext());
+            } else {
+                padding_bottom = fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom();
+            }
+        }
+
         this.recyclerView.setPadding(
                 this.recyclerView.getPaddingLeft(),
                 this.recyclerView.getPaddingTop(),
                 this.recyclerView.getPaddingRight(),
-                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
-                        ScreenHandler.getPXFromDP(fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom(), StaticContext.getContext())
-                        : fab.getPaddingTop() + fab.getHeight() + fab.getPaddingBottom()));
+                padding_bottom);
 
         this.scheduleListHandler.addObserver(this);
 
