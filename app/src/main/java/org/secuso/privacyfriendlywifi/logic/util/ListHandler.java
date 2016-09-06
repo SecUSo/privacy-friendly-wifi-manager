@@ -16,7 +16,8 @@ import java.util.Observer;
 /**
  *
  */
-public class ListHandler<EntryType extends PreconditionEntry> extends Observable implements Observer, IListHandler<EntryType> {
+public class ListHandler<EntryType extends PreconditionEntry> extends SerializationHelper implements Observer, IListHandler<EntryType> {
+    private static final long serialVersionUID = 354678322122715718L;
     private final String TAG = ListHandler.class.getSimpleName();
     private static final int MAX_TRIES = 3;
     private List<EntryType> entries;
@@ -28,6 +29,18 @@ public class ListHandler<EntryType extends PreconditionEntry> extends Observable
 
     public void initialize(Context context, String listFilePath) {
         initialize(context, listFilePath, 0);
+    }
+
+    @Override
+    public void initialize(Context context, Object[] args) throws IOException {
+        if (args.length > 0) {
+            String listFilePath = (String) args[0];
+            if (args.length > 1) {
+                initialize(context, listFilePath, (int) args[1]);
+            } else {
+                initialize(context, listFilePath);
+            }
+        }
     }
 
     public void initialize(Context context, String listFilePath, int tries) {
@@ -166,5 +179,10 @@ public class ListHandler<EntryType extends PreconditionEntry> extends Observable
     public void update(Observable observable, Object data) {
         AlarmReceiver.fireAndSchedule(StaticContext.getContext());
         this.notifyChanged();
+    }
+
+    @Override
+    protected Object[] getPersistentFields() {
+        return new Object[0];
     }
 }

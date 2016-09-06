@@ -13,6 +13,7 @@ import java.util.Observer;
  *
  */
 public class ScheduleListHandler extends SerializationHelper implements IListHandler<ScheduleEntry> {
+    private static final long serialVersionUID = -6410767487856461175L;
     private static ListHandler<ScheduleEntry> list;
 
     /**

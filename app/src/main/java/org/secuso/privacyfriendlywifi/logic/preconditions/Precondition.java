@@ -8,6 +8,7 @@ import java.io.Serializable;
  * Interface representing a precondition to check for.
  */
 public abstract class Precondition extends SerializationHelper implements Serializable {
+    private static final long serialVersionUID = 6055669715368490046L;
     protected boolean isActive; // by default a user created precondition is active
 
     /**

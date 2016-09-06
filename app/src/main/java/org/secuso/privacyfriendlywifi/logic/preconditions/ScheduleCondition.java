@@ -12,6 +12,7 @@ import java.io.IOException;
  *
  */
 public class ScheduleCondition extends Precondition {
+    private static final long serialVersionUID = -8932924693319958978L;
     private int start_hour, start_minute, end_hour, end_minute;
 
     /**

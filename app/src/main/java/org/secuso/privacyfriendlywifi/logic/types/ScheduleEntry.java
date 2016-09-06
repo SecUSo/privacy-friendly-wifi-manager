@@ -13,6 +13,7 @@ import java.io.Serializable;
  *
  */
 public class ScheduleEntry extends PreconditionEntry implements Serializable {
+    private static final long serialVersionUID = -3813298954101147159L;
     private String title;
     private int start_hour;
     private int start_minute;

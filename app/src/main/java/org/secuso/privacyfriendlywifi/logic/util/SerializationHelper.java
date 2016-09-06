@@ -14,6 +14,7 @@ import java.util.Observable;
  */
 public abstract class SerializationHelper extends Observable implements Serializable {
     public static final String SERIALIZATION_ERROR = "SERIALIZATION ERROR";
+    private static final long serialVersionUID = 5473512705567192831L;
 
     /**
      * Initializes a SerializationHelper inheritor using passed args.

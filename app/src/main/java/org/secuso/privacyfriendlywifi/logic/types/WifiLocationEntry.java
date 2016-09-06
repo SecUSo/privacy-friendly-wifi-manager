@@ -19,6 +19,7 @@ import java.util.List;
  *
  */
 public class WifiLocationEntry extends PreconditionEntry implements Serializable {
+    private static final long serialVersionUID = -5254647899323647079L;
     private String ssid;
     private List<CellLocationCondition> cellLocationConditions;
 

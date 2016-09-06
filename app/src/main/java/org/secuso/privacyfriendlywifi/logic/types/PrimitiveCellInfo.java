@@ -24,6 +24,7 @@ import java.util.List;
  *
  */
 public class PrimitiveCellInfo implements Serializable {
+    private static final long serialVersionUID = -4770462586735151000L;
     private static String TAG = PrimitiveCellInfo.class.getSimpleName();
     private static int DEFAULT_SIGNAL_STRENGTH = 0;
     private int cellId; // the ID of the cell

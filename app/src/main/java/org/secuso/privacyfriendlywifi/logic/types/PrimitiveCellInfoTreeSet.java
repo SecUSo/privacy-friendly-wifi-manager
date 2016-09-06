@@ -7,6 +7,8 @@ import java.util.TreeSet;
  *
  */
 public class PrimitiveCellInfoTreeSet extends TreeSet<PrimitiveCellInfo> {
+    private static final long serialVersionUID = 8437449073091988702L;
+
     public PrimitiveCellInfoTreeSet() {
         super(new Comparator<PrimitiveCellInfo>() {
             @Override

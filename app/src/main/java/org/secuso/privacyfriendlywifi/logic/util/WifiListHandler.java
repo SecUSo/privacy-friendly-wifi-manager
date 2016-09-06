@@ -13,6 +13,7 @@ import java.util.Observer;
  *
  */
 public class WifiListHandler extends SerializationHelper implements IListHandler<WifiLocationEntry> {
+    private static final long serialVersionUID = -7094227865638670543L;
     private static ListHandler<WifiLocationEntry> list;
 
     /**

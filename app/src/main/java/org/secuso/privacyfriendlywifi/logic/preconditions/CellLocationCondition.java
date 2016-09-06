@@ -20,6 +20,7 @@ import java.util.Set;
  */
 public class CellLocationCondition extends Precondition {
     private static final String TAG = CellLocationCondition.class.getCanonicalName();
+    private static final long serialVersionUID = 1111115571759500839L;
     public final int MIN_CELLS = 2;
     public final double MIN_CELL_PERCENTAGE = 0.2;
     private String bssid;

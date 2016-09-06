@@ -9,6 +9,8 @@ import java.util.Observer;
  * A serializable precondition entry.
  */
 public abstract class PreconditionEntry extends SerializationHelper implements Observer, Comparable<PreconditionEntry> {
+    private static final long serialVersionUID = -8344028945131554037L;
+
     protected void notifyChanged() {
         this.setChanged();
         this.notifyObservers();
