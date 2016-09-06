@@ -35,7 +35,7 @@ import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.Controller;
-import org.secuso.privacyfriendlywifi.view.fragment.AboutFragment;
+import org.secuso.privacyfriendlywifi.view.fragment.HelpGeneralFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.ScheduleFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.SettingsFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.WifiListFragment;
@@ -280,12 +280,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         fragmentClass = SettingsFragment.class;
                         break;
                     case R.id.nav_help:
-                        Intent startHelpIntent = new Intent(self, HelpActivity.class);
-                        startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        self.startActivity(startHelpIntent);
+                        fragmentClass = HelpGeneralFragment.class;
                         break;
                     case R.id.nav_about:
-                        fragmentClass = AboutFragment.class;
+                        Intent startAboutIntent = new Intent(self, AboutActivity.class);
+                        startAboutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        self.startActivity(startAboutIntent);
+                        //fragmentClass = AboutFragment.class;
                         break;
                     default:
                         fragmentClass = SettingsEntry.hasCoarseLocationPermission(self) ? WifiListFragment.class : ScheduleFragment.class;

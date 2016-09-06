@@ -61,13 +61,15 @@
 
 
     <!-- ABOUT STRINGS -->
-    <string name="about_whatdoesitdo"><b>Das Ziel:</b> Privacy Friendly WiFi-Manager merkt sich Mobilfunktürme (Zell-IDs)
+    <string name="about_goal">Ziel</string>
+    <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager merkt sich Mobilfunktürme (Zell-IDs)
         innerhalb des Bereiches, in denen das Telefon mit einem WLAN verbunden ist. Die App versucht
         so zu lernen, in welchen Bereichen WLAN genutzt wird, ohne den GPS-Standort abzurufen.
         Das Hauptziel von Privacy Friendly WiFi-Manager ist zwar die Reduzierung der WLAN-basierten Standortverfolgung,
         jedoch bewirkt die gezielte Abschaltung des WLANs auch eine Schonung des Akkus.
     </string>
-    <string name="about_whyprivacyfriendly"><b>Privatssphäre:</b> Diese "Privacy Friendly App" schützt die
+    <string name="about_privacy">Privatssphäre</string>string>
+    <string name="about_whyprivacyfriendly">Diese "Privacy Friendly App" schützt die
         Privatssphäre durch geringstmögliche Datenerhebung. Die gesamten Daten werden ausschließlich auf dem
         Telefon gehalten. Keine Daten werden an Dritte gesendet. Weiterhin wird versucht, so wenig Permissions wie möglich zu nutzen.
     </string>

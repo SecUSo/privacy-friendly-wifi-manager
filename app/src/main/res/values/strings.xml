@@ -61,18 +61,23 @@
 
 
     <!-- ABOUT STRINGS -->
-    <string name="about_whatdoesitdo"><b>Goal:</b> Privacy Friendly WiFi-Manager keeps track of the cell tower ids in your area while you are connected to a Wi-Fi. By keeping this information, the app tries to learn
+    <string name="about_goal">Goal</string>
+    <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager keeps track of the cell tower ids in your area while you are connected to a Wi-Fi. By keeping this information, the app tries to learn
     where your WiFi is located without using GPS. The main goal is to avoid location tracking via Wi-Fi, but WiFi-Manager also saves battery life by automatically disabling your phones WiFi when it is not near a already known wireless network.
     </string>
-    <string name="about_whyprivacyfriendly"><b>Privacy:</b> This privacy friendly app preserves your privacy by tracking least necessary data. All data is kept on your phone. No data is sent
+    <string name="about_privacy">Privacy</string>string>
+    <string name="about_whyprivacyfriendly">This privacy friendly app preserves your privacy by tracking least necessary data. All data is kept on your phone. No data is sent
         to anybody. We also try to use least permissions possible.
     </string>
     <string name="about_author"><b>Author:</b> Jan Henzel, Patrick Jauernig, Dennis Werner</string>
     <string name="about_affiliation">In affiliation with</string>
-    <string name="about_privacyfriendly">This application belongs to the Privacy Friendly Apps Project.</string>
     <string name="about_moreinfo">More information can be found at:</string>
     <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
     <string name="about_version">Version: %1$s</string>
+    <string name="about_privacyfriendly">This application belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
+    <string name="about_more_info">More information can be found on:</string>
+    <string name="about_url_github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-wifi">Github-Repo</a></string>
+    <string name="about_url_secuso" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
 
 
     <!-- HELP STRINGS -->
@@ -129,4 +134,7 @@
 
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Automatic Wi-Fi Management:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
