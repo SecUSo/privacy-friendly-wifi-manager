@@ -5,8 +5,8 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="global_on_off_switch">On/Off</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Ouvre navigation drawer</string>
+    <string name="navigation_drawer_close">Fermer navigation drawer</string>
     <string name="remove_entry">Supprime l\'entrée</string>
     <string name="button_start">Commence</string>
     <string name="button_next">Prochain</string>
@@ -19,7 +19,7 @@
     <string name="fragment_schedule">Calendrier</string>
     <string name="fragment_settings">Paramètres</string>
     <string name="activity_help">Assistance</string>
-    <string name="fragment_about">About</string>
+    <string name="fragment_about">Auteurs</string>
     <string name="group_communicate">Communiquer</string>
 
 
@@ -29,19 +29,19 @@
 
 
     <!-- CONTENT STRINGS -->
-    <string name="header_wifilist">Liste des réseaux Wi-Fi gérés</string>
+    <string name="header_wifilist">Liste des réseaux wifi gérés</string>
     <string name="header_schedule">Liste des temps actifs</string>
-    <string name="header_about">About</string>
+    <string name="header_about">Auteurs</string>
 
 
     <!-- WIFI STRINGS -->
     <string name="wifi_ssid_text">%1$s</string>
     <string name="wifi_bssid_text">MAC: %1$s</string>
-    <string name="wifi_multi_bssid_text">%1$d related MACs</string>
+    <string name="wifi_multi_bssid_text">%1$d MACs associées</string>
     <string name="wifi_num_cells_text">antennes associées: %1$d</string>
     <string name="wifi_enable_wifi_to_scan">Vous devez activer le WiFi afin d\'ajouter un nouveau réseau.</string>
-    <string name="wifi_enable_wifi">Activer Wi-Fi</string>
-    <string name="wifi_hidden_wifi_text">--Wi-Fi caché--</string>
+    <string name="wifi_enable_wifi">Activer wifi</string>
+    <string name="wifi_hidden_wifi_text">--Wifi caché--</string>
 
 
     <!-- WIFI PICKER DIALOG STRINGS -->
@@ -61,8 +61,8 @@
 
 
     <!-- ABOUT STRINGS -->
-    <string name="about_whatdoesitdo"><b>Objectif:</b> Privacy Friendly WiFi-Manager garde la trace des ids de la tour cellulaire dans votre région pendant que vous êtes connecté à un réseau Wi-Fi. En gardant ces informations , l\'application essaie d\'apprendre
-    où votre Wi-Fi se trouve sans utiliser GPS. L\'objectif principal est d\'éviter le suivi de localisation via Wi-Fi, mais WiFi-Manager enregistre également la vie de la batterie en désactivant automatiquement votre téléphone Wi-Fi quand il est pas près d\'un réseau sans fil déjà connu.
+    <string name="about_whatdoesitdo"><b>Objectif:</b> Privacy Friendly WiFi-Manager garde la trace des ids de la tour cellulaire dans votre région pendant que vous êtes connecté à un réseau wifi. En gardant ces informations , l\'application essaie d\'apprendre
+    où votre wifi se trouve sans utiliser GPS. L\'objectif principal est d\'éviter le suivi de localisation via wifi, mais WiFi-Manager enregistre également la vie de la batterie en désactivant automatiquement votre téléphone wifi quand il est pas près d\'un réseau sans fil déjà connu.
     </string>
     <string name="about_whyprivacyfriendly"><b>Intimité:</b> Cette privacy friendly application préserve votre vie privée par le suivi des données moins nécessaires. Toutes les données sont conservées sur votre téléphone. Aucune donnée n\'a été envoyée
         à n\'importe qui. Nous essayons aussi d\'utiliser moins d\'autorisations possible.
@@ -76,41 +76,50 @@
 
 
     <!-- HELP STRINGS -->
-    <string name="help_actionbar_string">Help</string>
-    <string name="help_actionbar_substring_welcome">Welcome to Privacy Friendly WiFi-Manager</string>
-    <string name="help_actionbar_string_basics">Help: Basics</string>
-    <string name="help_actionbar_substring_step0">Step 1: Granting Permissions</string>
-    <string name="help_actionbar_substring_step1">Step 2: Enabling the Manager</string>
-    <string name="help_actionbar_substring_step2">Step 3: Adding a Wi-Fi</string>
-    <string name="help_actionbar_substring_step3">Step 4: Delete a Wi-Fi</string>
-    <string name="help_content_step0_description">A permission is needed to retrieve nearby cell information. To use location-based features of WiFi-Manager, starting with Android 6, you have to grant access to your coarse location. If you want to use this functionality later, you can request the necessary permission in the settings.</string>
-    <string name="help_content_step1_description">To activate the WiFi-Manager, you have to enable it by toggling the on/off button. This enables its learning feature and collects the cell ids around your Wi-Fi. It also lets AutoWiFi take control of toggling your phone\'s Wi-Fi on/off.</string>
-    <string name="help_content_step2_description">Now lets add a known WiFi to the list of managed WiFis. Touch the add-button on the bottom and then select a Wi-Fi in your range.</string>
-    <string name="help_content_step3_description">To delete a Wi-Fi in your list, simply press a little longer on the Wi-Fi list. Then delete a Wi-Fi by pressing on the trashcan symbol beside its name.</string>
-    <string name="help_welcome_description"><b>Welcome to Privacy Friendly WiFi-Manager!</b>\r\nThis app helps you automatically turning on/off your Wi-Fi while you are not near a known WiFi.\r\n\r\n<b>How it works:</b> While you are sitting in an area with a WiFi, you are surrounded by radio masts providing you a \'cell\'
-        for your mobile phone. WiFi-Manager remembers which cell is near your Wi-Fi, to turn it right on when you are coming home, or turning it off, when you are leaving (e.g. work/school).\r\n\r\nBy using the schedule, you can also define time slots, when your phone\'s Wi-Fi should automatically be turned off (e.g. at night).\r\n\r\nTap \'start\' to take a tour.
+    <string name="help_category_permissions">Autorisations</string>
+    <string name="help_title_coarse_location">Accès à votre position approximatif</string>
+    <string name="help_desc_coarse_location">L'autorisation pour votre emplacement grossier est nécessaire pour récupérer des informations sur les cellules à proximité.</string>
+    <string name="help_category_tutorial">Tutoriel</string>
+    <string name="help_category_tutorial_title">Tutoriel</string>
+    <string name="help_category_tutorial_desc">Affiche le tutoriel.</string>
+    <string name="help_actionbar_string">Aide</string>
+    <string name="help_actionbar_substring_welcome">Bienvenue à Privacy Friendly WiFi-Manager</string>
+    
+    
+    <!-- TUTORIAL -->
+    <string name="help_actionbar_substring_step">Pas %1$d</string>
+    <string name="help_actionbar_string_basics">Tutoriel: Bases</string>
+    <string name="help_actionbar_substring_step0">Donner la permission</string>
+    <string name="help_actionbar_substring_step1">Permettant à le manager</string>
+    <string name="help_actionbar_substring_step2">L\'ajout d'un wifi</string>
+    <string name="help_actionbar_substring_step3">Supprimer un wifi</string>
+    <string name="help_content_step0_description">Une autorisation est nécessaire pour récupérer des informations sur les cellules à proximité. Pour utiliser les fonctionnalités de géolocalisation de WiFi-Manager, en commençant par Android 6, vous devez accorder l\'accès à votre position approximatif. Si vous souhaitez utiliser cette fonctionnalité, vous pouvez demander l\'autorisation nécessaire plus tard.</string>
+    <string name="help_content_step1_description">Pour activer le WiFi Manager, vous devez l'activer en activant le bouton on/off. Cela permet sa fonction d'apprentissage et recueille les ids cellulaires autour de votre connexion wifi. Il permet donc WiFi-Manager prendre le contrôle de basculement wifi de votre téléphone on/off.</string>
+    <string name="help_content_step2_description">Maintenant passons à ajouter un wifi connu à la liste des wifis gérés. Appuyez sur le bouton d'ajout sur le fond et puis sélectionnez une connexion wifi près.</string>
+    <string name="help_content_step3_description">Pour supprimer une connexion wifi dans votre liste, appuyez simplement un peu plus sur la liste wifi. Ensuite, supprimer une connexion wifi en appuyant sur l\'icône de corbeille à côté de son nom.</string>
+    <string name="help_welcome_description"><b>Bienvenue à Privacy Friendly WiFi-Manager!</b>\r\nCette application vous aide à commuter automatiquement votre wifi lorsque vous n'êtes pas à proximité d'un WiFi connu.\r\n\r\n<b>Comment ça marche:</b> Alors que vous êtes assis dans une zone avec une connexion wifi, vous êtes entouré par des mâts de radio vous offrir un \'cellule\' pour votre téléphone mobile. WiFi-Manager se souvient quelle cellule est près de votre connexion wifi, de tourner à droite sur lorsque vous avez terminé rentrent à la maison, ou le mettre hors tension, lorsque vous avez terminé quittez (par ex. travail / école). En utilisant le calendrier, vous pouvez donc définir des intervalles de temps, whenyour téléphone d\'une connexion wifi shoulderstand automatiquement désactivée (par ex. la nuit).\r\n\r\nAppuyez sur \'Démarrer\' pour faire un tour.
     </string>
 
     <!-- NOTIFICATION -->
-    <string name="notification_content_text">An unmanaged Wi-Fi connection has been established</string>
-    <string name="notification_content_info">Unmanaged connection</string>
-    <string name="notification_unknown_wifi_title">New unmanaged Wi-Fi</string>
-    <string name="notification_unknown_wifi_title_format">New unmanaged Wi-Fi: %1$s</string>
-    <string name="notification_button_add">Manage this connection automatically</string>
-    <string name="notification_main_text">Touch to manage connections</string>
-    <string name="toast_wifi_added">WiFi %1$s now managed.</string>
+    <string name="notification_content_text">Une connexion sans fil non géré a été établi</string>
+    <string name="notification_content_info">Unmanaged connexion </string>
+    <string name="notification_unknown_wifi_title">New unmanaged wifi</string>
+    <string name="notification_unknown_wifi_title_format">New unmanaged wifi: %1$s</string>
+    <string name="notification_button_add">Gérer automatiquement cette connexion</string>
+    <string name="notification_main_text">Touchez pour gérer les connexions</string>
+    <string name="toast_wifi_added">WiFi %1$s la neige gérée.</string>
 
 
     <!-- SETTINGS STRINGS -->
-    <string name="settings_general">General Settings</string>
-    <string name="settings_respect_signal_strength">Respect signal strength</string>
-    <string name="settings_respect_signal_strength_desc">Cellular signal strength will be respected for location estimation.</string>
-    <string name="settings_show_notification_to_add_unmanaged_wi_fis">Show notifications</string>
-    <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">A notification will be shown when connected to unmanaged Wi-Fis.</string>
-    <string name="settings_grant_permissions">Request permissions</string>
-    <string name="settings_grant_permissions_desc">Request permissions needed for location-based services.</string>
+    <string name="settings_general">Paramètres généraux</string>
+    <string name="settings_respect_signal_strength">Respecter la puissance du signal</string>
+    <string name="settings_respect_signal_strength_desc">La puissance du signal cellulaire sera respecté pour l\'emplacement estimation.</string>
+    <string name="settings_show_notification_to_add_unmanaged_wi_fis">Afficher les notifications</string>
+    <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">Une notification sera affichée lors de la connexion aux wifis.</string>
+    <string name="settings_grant_permissions">Demander des autorisations</string>
+    <string name="settings_grant_permissions_desc">Demander les autorisations nécessaires pour les services basés sur la localisation.</string>
     <string name="settings_developer">Developer Settings</string>
-    <string name="settings_delete_logfile">Delete logfile</string>
+    <string name="settings_delete_logfile">Paramètres de développeur</string>
     <string name="settings_info_logfile_deleted">Deleted logfile successfully.</string>
     <string name="settings_info_logfile_deletion_error">Logfile could not be deleted.</string>
     <string name="settings_flush_logfile">Flush logfile</string>
@@ -119,13 +128,13 @@
 
 
     <!-- DETAILS STRINGS -->
-    <string name="details_ssid_placeholder">SSID unknown</string>
-    <string name="details_bssid_placeholder">MAC unknown</string>
-    <string name="details_cellid_placeholder">Cell ID unknown</string>
+    <string name="details_ssid_placeholder">Inconnue SSID</string>
+    <string name="details_bssid_placeholder">Inconnue MAC</string>
+    <string name="details_cellid_placeholder">Inconnue Cell ID</string>
     <string name="details_macs_header">MACs</string>
     <string name="details_cellids_header">Cell IDs</string>
 
 
     <!-- WIDGET STRINGS -->
-    <string name="appwidget_text">Automatic Wi-Fi Management:</string>
+    <string name="appwidget_text">Gestion automatique Wifi:</string>
 </resources>

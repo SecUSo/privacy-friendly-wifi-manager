@@ -61,34 +61,53 @@
 
 
     <!-- ABOUT STRINGS -->
-    <string name="about_whatdoesitdo"><b>Goal:</b> Privacy Friendly WiFi-Manager keeps track of the cell tower ids in your area while you are connected to a Wi-Fi. By keeping this information, the app tries to learn
-    where your WiFi is located without using GPS. The main goal is to avoid location tracking via Wi-Fi, but WiFi-Manager also saves battery life by automatically disabling your phones WiFi when it is not near a already known wireless network.
-    </string>
-    <string name="about_whyprivacyfriendly"><b>Privacy:</b> This privacy friendly app preserves your privacy by tracking least necessary data. All data is kept on your phone. No data is sent
-        to anybody. We also try to use least permissions possible.
+    <string name="about_goal">Obiettivo</string>
+    <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager tiene traccia dei ripetitori cellulari nella tua zona mentre sei connesso ad una rete Wi-Fi.
+        Grazie a queste informazioni, l\'app cerca di imparare la posizione del tuo Wi-Fi senza utilizzare il GPS.
+        L\'obiettivo principale è di evitare il tracciamento della tua posizione sfruttando il Wi-Fi,
+        ma WiFi-Manager ti fa anche risparmiare la batteria disabilitando automaticamente il Wi-Fi quando sei fuori portata dai network wireless già conosciuti.</string>
+    <string name="about_privacy">Privacy</string>string>
+    <string name="about_whyprivacyfriendly">Questa app rispetta la tua privacy tracciando meno dati possibile. Tutti i dati vengono conservati sul tuo dispositivo.
+        Nessuna informazione viene inviata ad alcuno. Infine, l\'applicazione non richiede alcun privilegio ad eccezione di quelli necessari.
     </string>
     <string name="about_author"><b>Author:</b> Jan Henzel, Patrick Jauernig, Dennis Werner</string>
     <string name="about_affiliation">In affiliation with</string>
-    <string name="about_privacyfriendly">This application belongs to the Privacy Friendly Apps Project.</string>
     <string name="about_moreinfo">More information can be found at:</string>
     <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
     <string name="about_version">Version: %1$s</string>
+    <string name="about_privacyfriendly">This application belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
+    <string name="about_more_info">More information can be found on:</string>
+    <string name="about_url_github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-wifi">Github-Repo</a></string>
+    <string name="about_url_secuso" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
 
 
     <!-- HELP STRINGS -->
     <string name="help_actionbar_string">Help</string>
     <string name="help_actionbar_substring_welcome">Welcome to Privacy Friendly WiFi-Manager</string>
-    <string name="help_actionbar_string_basics">Help: Basics</string>
-    <string name="help_actionbar_substring_step0">Step 1: Granting Permissions</string>
-    <string name="help_actionbar_substring_step1">Step 2: Enabling the Manager</string>
-    <string name="help_actionbar_substring_step2">Step 3: Adding a Wi-Fi</string>
-    <string name="help_actionbar_substring_step3">Step 4: Delete a Wi-Fi</string>
-    <string name="help_content_step0_description">A permission is needed to retrieve nearby cell information. To use location-based features of WiFi-Manager, starting with Android 6, you have to grant access to your coarse location. If you want to use this functionality later, you can request the necessary permission in the settings.</string>
-    <string name="help_content_step1_description">To activate the WiFi-Manager, you have to enable it by toggling the on/off button. This enables its learning feature and collects the cell ids around your Wi-Fi. It also lets AutoWiFi take control of toggling your phone\'s Wi-Fi on/off.</string>
-    <string name="help_content_step2_description">Now lets add a known WiFi to the list of managed WiFis. Touch the add-button on the bottom and then select a Wi-Fi in your range.</string>
-    <string name="help_content_step3_description">To delete a Wi-Fi in your list, simply press a little longer on the Wi-Fi list. Then delete a Wi-Fi by pressing on the trashcan symbol beside its name.</string>
-    <string name="help_welcome_description"><b>Welcome to Privacy Friendly WiFi-Manager!</b>\r\nThis app helps you automatically turning on/off your Wi-Fi while you are not near a known WiFi.\r\n\r\n<b>How it works:</b> While you are sitting in an area with a WiFi, you are surrounded by radio masts providing you a \'cell\'
-        for your mobile phone. WiFi-Manager remembers which cell is near your Wi-Fi, to turn it right on when you are coming home, or turning it off, when you are leaving (e.g. work/school).\r\n\r\nBy using the schedule, you can also define time slots, when your phone\'s Wi-Fi should automatically be turned off (e.g. at night).\r\n\r\nTap \'start\' to take a tour.
+    <string name="help_category_permissions">Permissions</string>
+    <string name="help_title_coarse_location">Access coarse location</string>
+    <string name="help_desc_coarse_location">The permission for your coarse location is needed to retrieve nearby cell information.</string>
+    <string name="help_category_tutorial">Tutorial</string>
+    <string name="help_category_tutorial_title">Tutorial</string>
+    <string name="help_category_tutorial_desc">Shows the tutorial.</string>
+
+    <!-- TUTORIAL -->
+    <string name="help_actionbar_string_basics">Tutorial: Basics</string>
+    <string name="help_actionbar_substring_step">Step %1$d</string>
+    <string name="help_actionbar_substring_step0">Granting Permissions</string>
+    <string name="help_actionbar_substring_step1">Enabling the Manager</string>
+    <string name="help_actionbar_substring_step2">Adding a Wi-Fi</string>
+    <string name="help_actionbar_substring_step3">Delete a Wi-Fi</string>
+    <string name="help_content_step0_description">È necessario fornire il permesso per ottenere informazioni sui ripetitori della zona. Per utilizzare le funzioni dipendenti dalla posizione di WiFi-Manager è necessario il permesso per la localizzazione approssimata a partire da Android 6. Se vuoi utilizzare questa funzionalità in un secondo momento puoi attivare il permesso nelle impostazioni.</string>
+    <string name="help_content_step1_description">Per attivare WiFi-Manager utilizza il bottone on/off. In questa maniera abiliti la funzione di apprendimento e fa sì che vengano raccolti gli identificativi dei ripetitori cellulari nei pressi del tuo Wi-Fi. Inoltre, fa sì che AutoWiFi attivi e disattivi automaticamente il Wi-Fi.</string>
+    <string name="help_content_step2_description">Ora aggiungiamo una rete Wi-Fi alla lista di reti conosciute. Tocca il tasto «aggiungi» in basso e seleziona una rete Wi-Fi nelle vicinanze.</string>
+    <string name="help_content_step3_description">Per cancellare una rete Wi-Fi dalla lista, tocca per qualche secondo il nome nella lista, poi tocca l\'icona a forma di cestino vicino al nome.</string>
+    <string name="help_welcome_description"><b>Benvenuto in Privacy Friendly WiFi-Manager!</b>\r\n
+        Questa applicazione è in grado di disattivare automaticamente la tua connessione Wi-Fi quando non sei nella portata dei network Wi-Fi conosciuti.\r\n\r\n
+        <b>Funzionamento:</b> Mentre sei collegato ad una rete Wi-Fi, il tuo telefono riceve anche il segnale di diversi ripetitori della rete cellulare.
+        WiFi-Manager ricorda quali ripetitori sono vicini alla tua rete Wi-Fi, così può attivare la tua connessione quando arrivi a casa e disattivarla quando esci.\r\n\r\n
+        Puoi anche usare la funzione di programmazione definendo fasce orarie in cui il Wi-Fi sarà mantenuto spento, ad esempio di notte.\r\n\r\n
+        Premi «start» per vedere una panoramica.
     </string>
 
     <!-- NOTIFICATION -->

@@ -97,8 +97,8 @@
     <string name="help_actionbar_substring_step1">Enabling the Manager</string>
     <string name="help_actionbar_substring_step2">Adding a Wi-Fi</string>
     <string name="help_actionbar_substring_step3">Delete a Wi-Fi</string>
-    <string name="help_content_step0_description">A permission is needed to retrieve nearby cell information. To use location-based features of WiFi-Manager, starting with Android 6, you have to grant access to your coarse location. If you want to use this functionality later, you can request the necessary permission in the settings.</string>
-    <string name="help_content_step1_description">To activate the WiFi-Manager, you have to enable it by toggling the on/off button. This enables its learning feature and collects the cell ids around your Wi-Fi. It also lets AutoWiFi take control of toggling your phone\'s Wi-Fi on/off.</string>
+    <string name="help_content_step0_description">A permission is needed to retrieve nearby cell information. To use location-based features of WiFi-Manager, starting with Android 6, you have to grant access to your coarse location. If you want to use this functionality, you can request the necessary permission later.</string>
+    <string name="help_content_step1_description">To activate the WiFi-Manager, you have to enable it by toggling the on/off button. This enables its learning feature and collects the cell ids around your Wi-Fi. It also lets WiFi-Manager take control of toggling your phone\'s Wi-Fi on/off.</string>
     <string name="help_content_step2_description">Now lets add a known WiFi to the list of managed WiFis. Touch the add-button on the bottom and then select a Wi-Fi in your range.</string>
     <string name="help_content_step3_description">To delete a Wi-Fi in your list, simply press a little longer on the Wi-Fi list. Then delete a Wi-Fi by pressing on the trashcan symbol beside its name.</string>
     <string name="help_welcome_description"><b>Welcome to Privacy Friendly WiFi-Manager!</b>\r\nThis app helps you automatically turning on/off your Wi-Fi while you are not near a known WiFi.\r\n\r\n<b>How it works:</b> While you are sitting in an area with a WiFi, you are surrounded by radio masts providing you a \'cell\'
@@ -142,7 +142,4 @@
 
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Automatic Wi-Fi Management:</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
