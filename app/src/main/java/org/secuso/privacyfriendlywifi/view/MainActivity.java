@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private final static String TAG = MainActivity.class.getSimpleName();
     public final static int DYN_PERMISSION = 0;
     private Menu menu;
+    private Switch mainSwitch;
 
     private boolean isDrawerLocked = false;
 
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // get action view
         final MenuItem toggleservice = menu.findItem(R.id.main_switch);
         final RelativeLayout switchOuter = (RelativeLayout) toggleservice.getActionView();
-        final Switch mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
+        this.mainSwitch = (Switch) switchOuter.findViewById(R.id.switchMain);
 
         // intent to update all widgets
         final Intent updateWidgetsIntent = new Intent(this, WifiWidget.class);
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         final MainActivity self = this;
 
-        mainSwitch.setOnClickListener(
+        this.mainSwitch.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         );
 
         // update state switch´s state
-        mainSwitch.setChecked(SettingsEntry.isServiceActive(this));
+        this.mainSwitch.setChecked(SettingsEntry.isServiceActive(this));
 
         // set marginStart using measurement since drawer is locked
         if (this.isDrawerLocked) {
@@ -266,6 +267,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         h.post(new Runnable() {
             @Override
             public void run() {
+                int switchVisibility = View.VISIBLE;
                 Class<? extends Fragment> fragmentClass = null;
                 updateNavigationDrawerSelection(id); // update selection in drawer
 
@@ -278,9 +280,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         break;
                     case R.id.nav_settings:
                         fragmentClass = SettingsFragment.class;
+                        switchVisibility = View.GONE;
                         break;
                     case R.id.nav_help:
                         fragmentClass = HelpGeneralFragment.class;
+                        switchVisibility = View.GONE;
                         break;
                     case R.id.nav_about:
                         Intent startAboutIntent = new Intent(self, AboutActivity.class);
@@ -293,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 self.switchToFragment(fragmentClass);
+                mainSwitch.setVisibility(switchVisibility);
             }
         });
 
