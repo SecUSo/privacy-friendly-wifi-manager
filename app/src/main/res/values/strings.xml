@@ -83,7 +83,6 @@
     <!-- HELP STRINGS -->
     <string name="help_actionbar_string">Help</string>
     <string name="help_actionbar_substring_welcome">Welcome to Privacy Friendly WiFi-Manager</string>
-    <string name="help_actionbar_string_basics">Help: Basics</string>
     <string name="help_category_permissions">Permissions</string>
     <string name="help_title_coarse_location">Access coarse location</string>
     <string name="help_desc_coarse_location">The permission for your coarse location is needed to retrieve nearby cell information.</string>
@@ -92,6 +91,7 @@
     <string name="help_category_tutorial_desc">Shows the tutorial.</string>
 
     <!-- TUTORIAL -->
+    <string name="help_actionbar_string_basics">Tutorial: Basics</string>
     <string name="help_actionbar_substring_step">Step %1$d</string>
     <string name="help_actionbar_substring_step0">Granting Permissions</string>
     <string name="help_actionbar_substring_step1">Enabling the Manager</string>

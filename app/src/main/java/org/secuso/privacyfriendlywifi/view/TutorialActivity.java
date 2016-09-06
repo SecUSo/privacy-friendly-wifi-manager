@@ -138,7 +138,7 @@ public class TutorialActivity extends AppCompatActivity {
                     int id = radioButtons.get(position).getId();
                     radioGroup.check(id);
                     if (position == 0) {
-                        actionBar.setTitle(getString(R.string.help_actionbar_string));
+                        actionBar.setTitle(getString(R.string.help_category_tutorial));
                         nextbutton.setText(getString(R.string.button_start));
                     } else {
                         actionBar.setTitle(getString(R.string.help_actionbar_string_basics));

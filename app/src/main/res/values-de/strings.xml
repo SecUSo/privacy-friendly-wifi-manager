@@ -84,7 +84,6 @@
     <!-- HELP STRINGS -->
     <string name="help_actionbar_string">Hilfe</string>
     <string name="help_actionbar_substring_welcome">Willkommen beim Privacy Friendly WiFi-Manager</string>
-    <string name="help_actionbar_string_basics">Hilfe: Grundlagen</string>
     <string name="help_category_permissions">Berechtigungen</string>
     <string name="help_title_coarse_location">Zugriff auf ungefähren Standort</string>
     <string name="help_desc_coarse_location">Die Berechtigung zum Zugriff auf den ungefähren Standort ist nötig um Informationen über nahegelegene Zellen abrufen zu können.</string>
@@ -94,6 +93,7 @@
 
 
     <!-- TUTORIAL -->
+    <string name="help_actionbar_string_basics">Tutorial: Grundlagen</string>
     <string name="help_actionbar_substring_step">Schritt %1$d</string>
     <string name="help_actionbar_substring_step0">Berechtigung erteilen</string>
     <string name="help_actionbar_substring_step1">Manager einschalten</string>
