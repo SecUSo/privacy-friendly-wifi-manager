@@ -30,7 +30,6 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 
-import org.secuso.privacyfriendlywifi.logic.util.AbstractSettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
@@ -50,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private boolean isDrawerLocked = false;
 
+    private Fragment currentFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startTutorialIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
             this.startActivity(startTutorialIntent);
             this.overridePendingTransition(0, 0); // deactivate the transition between empty activity and help activity
+
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_WIFI_STATE,
                             Manifest.permission.CHANGE_WIFI_STATE,
@@ -102,13 +104,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     toggle.syncState();
                 }
+
+                updateWifiViewComponents();
             }
 
-            if (AbstractSettingsEntry.hasCoarseLocationPermission(this)) {
-                this.switchToFragment(WifiListFragment.class, true);
-            } else {
-                this.switchToFragment(ScheduleFragment.class, true);
-            }
+            this.switchToFragment(WifiListFragment.class, true);
         }
 
         updateNavigationDrawerSelection(R.id.nav_whitelist);
@@ -199,6 +199,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onCreateOptionsMenu(menu);
     }
 
+    private void updateWifiViewComponents() {
+        if (this.currentFragment != null && this.currentFragment instanceof WifiListFragment) {
+            WifiListFragment wfrag = (WifiListFragment) this.currentFragment;
+            wfrag.updateFab();
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -206,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (grantResults.length >= 3) {
                     if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                         // we got wifi permissions - but we do not care at the moment
+                        updateWifiViewComponents();
 
                         /*
                         if (grantResults[2] == PackageManager.PERMISSION_GRANTED) {
@@ -220,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         */
                     }
 
-                    updateNavigationDrawerVisibility();
+                    // updateNavigationDrawerVisibility();
                 }
 
                 break;
@@ -296,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         //fragmentClass = AboutFragment.class;
                         break;
                     default:
-                        fragmentClass = SettingsEntry.hasCoarseLocationPermission(self) ? WifiListFragment.class : ScheduleFragment.class;
+                        fragmentClass = WifiListFragment.class;
                 }
 
                 self.switchToFragment(fragmentClass);
@@ -322,6 +330,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (fragmentClass != null) {
                 // Insert the fragment by replacing any existing fragment
                 Fragment fragment = fragmentClass.newInstance();
+
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 @SuppressLint("CommitTransaction") FragmentTransaction trans = fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment);
 
@@ -330,6 +339,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } else {
                     trans.commit();
                 }
+
+                currentFragment = fragment;
+                updateWifiViewComponents();
             }
         } catch (InstantiationException e) {
             Logger.e(TAG, "InstantiationException");

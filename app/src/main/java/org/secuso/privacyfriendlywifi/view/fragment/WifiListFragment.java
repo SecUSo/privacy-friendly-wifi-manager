@@ -45,6 +45,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
+    private View rootView;
 
     protected FragmentActivity mActivity;
 
@@ -70,7 +71,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         super.onCreateView(inflater, container, savedInstanceState);
 
         // Inflate the layout for this fragment
-        final View rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
+        rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
 
         // Set substring in actionbar
         ActionBar actionBar = ((AppCompatActivity) this.mActivity).getSupportActionBar();
@@ -118,6 +119,8 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         this.wifiListHandler.addObserver(this);
 
         if (!AbstractSettingsEntry.hasCoarseLocationPermission(getContext())) {
+            this.fab.setEnabled(false);
+            updateFab(false);
             Snackbar snackbar = Snackbar
                     .make(rootView, R.string.help_desc_coarse_location, Snackbar.LENGTH_LONG)
                     .setAction(R.string.settings_grant_permissions, new View.OnClickListener() {
@@ -135,6 +138,22 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         }
 
         return rootView;
+    }
+
+    public void updateFab() {
+        Context context = StaticContext.getContext();
+        if (context != null) {
+            updateFab(AbstractSettingsEntry.hasCoarseLocationPermission(context));
+        }
+    }
+
+    private void updateFab(boolean enabled) {
+        if (fab != null) {
+            fab.setEnabled(enabled);
+            fab.setVisibility(enabled ? View.VISIBLE : View.GONE);
+            fab.invalidate();
+            rootView.invalidate();
+        }
     }
 
     @Override
