@@ -119,7 +119,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
         if (!AbstractSettingsEntry.hasCoarseLocationPermission(getContext())) {
             Snackbar snackbar = Snackbar
-                    .make(rootView, R.string.help_toast_coarse_location, Snackbar.LENGTH_LONG)
+                    .make(rootView, R.string.help_desc_coarse_location, Snackbar.LENGTH_LONG)
                     .setAction(R.string.settings_grant_permissions, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

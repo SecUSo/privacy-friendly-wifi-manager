@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/help_actionbar_string">
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:title="@string/about_goal"
+            android:summary="@string/about_whyprivacyfriendly"/>
+        <Preference
+            android:selectable="false"
+            android:persistent="false"
+            android:title="@string/about_privacy"
+            android:summary="@string/about_whatdoesitdo"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/help_category_tutorial">
+        <Preference
+            android:key="launchTutorial"
+            android:summary="@string/help_category_tutorial_desc"
+            android:title="@string/help_category_tutorial_title"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/help_category_permissions">
+        <Preference android:title="@string/help_title_coarse_location"
+            android:summary="@string/help_desc_coarse_location"
+            android:selectable="false"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

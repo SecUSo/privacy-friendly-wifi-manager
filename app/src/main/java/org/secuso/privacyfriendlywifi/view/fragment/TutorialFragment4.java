@@ -11,19 +11,17 @@ import secuso.org.privacyfriendlywifi.R;
 /**
  * Help fragment used in ViewPagerActivity.
  */
-public class HelpFragment4 extends Fragment {
+public class TutorialFragment4 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_help_step4, container, false);
+        return inflater.inflate(R.layout.fragment_tutorial_step4, container, false);
     }
 
-    public static HelpFragment4 newInstance(String text) {
+    public static TutorialFragment4 newInstance() {
 
-        HelpFragment4 f = new HelpFragment4();
+        TutorialFragment4 f = new TutorialFragment4();
         Bundle b = new Bundle();
-        b.putString("msg", text);
-
         f.setArguments(b);
 
         return f;

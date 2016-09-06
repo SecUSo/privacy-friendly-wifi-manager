@@ -29,7 +29,7 @@
             android:parentActivityName="org.secuso.privacyfriendlywifi.view.MainActivity"
             android:label="@string/fragment_about"/>
         <activity
-            android:name="org.secuso.privacyfriendlywifi.view.HelpActivity"
+            android:name="org.secuso.privacyfriendlywifi.view.TutorialActivity"
             android:label="@string/title_activity_help"
             android:parentActivityName="org.secuso.privacyfriendlywifi.view.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

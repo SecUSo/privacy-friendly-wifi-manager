@@ -35,7 +35,7 @@ import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.service.Controller;
-import org.secuso.privacyfriendlywifi.view.fragment.HelpGeneralFragment;
+import org.secuso.privacyfriendlywifi.view.fragment.HelpFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.ScheduleFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.SettingsFragment;
 import org.secuso.privacyfriendlywifi.view.fragment.WifiListFragment;
@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // show help activity on first run
         if (firstRun) {
             Logger.d(TAG, "First run.");
-            Intent startHelpIntent = new Intent(this, HelpActivity.class);
-            startHelpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            this.startActivity(startHelpIntent);
+            Intent startTutorialIntent = new Intent(this, TutorialActivity.class);
+            startTutorialIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            this.startActivity(startTutorialIntent);
             this.overridePendingTransition(0, 0); // deactivate the transition between empty activity and help activity
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_WIFI_STATE,
@@ -205,9 +205,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case DYN_PERMISSION: {
                 if (grantResults.length >= 3) {
                     if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                        // we got wifi permissions
+                        // we got wifi permissions - but we do not care at the moment
 
+                        /*
                         if (grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+
                             // we got coarse location permission
                             invalidateOptionsMenu();
                             // switch to list of allowed wifis
@@ -215,9 +217,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         } else {
                             this.switchToFragment(ScheduleFragment.class, true);
                         }
+                        */
                     }
 
-                    // updateNavigationDrawerVisibility();
+                    updateNavigationDrawerVisibility();
                 }
 
                 break;
@@ -258,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         final int id = item.getItemId();
         final MainActivity self = this;
@@ -283,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         switchVisibility = View.GONE;
                         break;
                     case R.id.nav_help:
-                        fragmentClass = HelpGeneralFragment.class;
+                        fragmentClass = HelpFragment.class;
                         switchVisibility = View.GONE;
                         break;
                     case R.id.nav_about:
