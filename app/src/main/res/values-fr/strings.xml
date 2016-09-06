@@ -7,7 +7,7 @@
     <string name="global_on_off_switch">On/Off</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="remove_entry">Supprime l'entrée</string>
+    <string name="remove_entry">Supprime l\'entrée</string>
     <string name="button_start">Commence</string>
     <string name="button_next">Prochain</string>
     <string name="button_finish">Terminer</string>
@@ -39,7 +39,7 @@
     <string name="wifi_bssid_text">MAC: %1$s</string>
     <string name="wifi_multi_bssid_text">%1$d related MACs</string>
     <string name="wifi_num_cells_text">antennes associées: %1$d</string>
-    <string name="wifi_enable_wifi_to_scan">Vous devez activer le WiFi afin d'ajouter un nouveau réseau.</string>
+    <string name="wifi_enable_wifi_to_scan">Vous devez activer le WiFi afin d\'ajouter un nouveau réseau.</string>
     <string name="wifi_enable_wifi">Activer Wi-Fi</string>
     <string name="wifi_hidden_wifi_text">--Wi-Fi caché--</string>
 
@@ -54,23 +54,23 @@
 
 
     <!-- TIME PICKER DIALOG STRINGS -->
-    <string name="time_picker_dialog_title_choose_start_time">Choisissez l'heure de début</string>
-    <string name="time_picker_dialog_title_choose_end_time">Choisissez l'heure de fin</string>
+    <string name="time_picker_dialog_title_choose_start_time">Choisissez l\'heure de début</string>
+    <string name="time_picker_dialog_title_choose_end_time">Choisissez l\'heure de fin</string>
     <string name="time_picker_dialog_title_choose_title">Choisissez un titre</string>
     <string name="time_picker_dialog_text_title_hint">Time slot %1$d</string>
 
 
     <!-- ABOUT STRINGS -->
-    <string name="about_whatdoesitdo"><b>Objectif:</b> Privacy Friendly WiFi-Manager garde la trace des ids de la tour cellulaire dans votre région pendant que vous êtes connecté à un réseau Wi -Fi. En gardant ces informations , l'application essaie d'apprendre
-    où votre Wi-Fi se trouve sans utiliser GPS. L'objectif principal est d'éviter le suivi de localisation via Wi- Fi , mais WiFi- Manager enregistre également la vie de la batterie en désactivant automatiquement votre téléphone WiFi quand il est pas près d'un réseau sans fil déjà connu.
+    <string name="about_whatdoesitdo"><b>Objectif:</b> Privacy Friendly WiFi-Manager garde la trace des ids de la tour cellulaire dans votre région pendant que vous êtes connecté à un réseau Wi-Fi. En gardant ces informations , l\'application essaie d\'apprendre
+    où votre Wi-Fi se trouve sans utiliser GPS. L\'objectif principal est d\'éviter le suivi de localisation via Wi-Fi, mais WiFi-Manager enregistre également la vie de la batterie en désactivant automatiquement votre téléphone Wi-Fi quand il est pas près d\'un réseau sans fil déjà connu.
     </string>
-    <string name="about_whyprivacyfriendly"><b>Intimité:</b> Cette privacy friendly application préserve votre vie privée par le suivi des données moins nécessaires . Toutes les données sont conservées sur votre téléphone . Aucune donnée n'a été envoyée
-        à n'importe qui. Nous essayons aussi d' utiliser moins d'autorisations possible.
+    <string name="about_whyprivacyfriendly"><b>Intimité:</b> Cette privacy friendly application préserve votre vie privée par le suivi des données moins nécessaires. Toutes les données sont conservées sur votre téléphone. Aucune donnée n\'a été envoyée
+        à n\'importe qui. Nous essayons aussi d\'utiliser moins d\'autorisations possible.
     </string>
     <string name="about_author"><b>Auteurs:</b> Jan Henzel, Patrick Jauernig, Dennis Werner</string>
     <string name="about_affiliation">En association avec</string>
     <string name="about_privacyfriendly">Cette application fait partie du projet \"Privacy Friendly Apps\".</string>
-    <string name="about_moreinfo">Plus d'informations peuvent être trouvées à l'adresse:</string>
+    <string name="about_moreinfo">Plus d\'informations peuvent être trouvées à l\'adresse:</string>
     <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
     <string name="about_version">Version: %1$s</string>
 

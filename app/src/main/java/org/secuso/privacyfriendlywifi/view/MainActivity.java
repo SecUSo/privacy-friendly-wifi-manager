@@ -30,7 +30,6 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 
-import org.secuso.privacyfriendlywifi.logic.preconditions.CellLocationCondition;
 import org.secuso.privacyfriendlywifi.logic.util.AbstractSettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
@@ -272,11 +271,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 switch (id) {
                     case R.id.nav_whitelist:
-                        if (CellLocationCondition.hasCoarseLocationPermission(self)) {
-                            fragmentClass = WifiListFragment.class;
-                        } else {
-                            fragmentClass = ScheduleFragment.class;
-                        }
+                        fragmentClass = WifiListFragment.class;
                         break;
                     case R.id.nav_schedule:
                         fragmentClass = ScheduleFragment.class;

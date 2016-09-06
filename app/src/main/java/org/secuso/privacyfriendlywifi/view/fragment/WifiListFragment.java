@@ -1,11 +1,13 @@
 package org.secuso.privacyfriendlywifi.view.fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
@@ -15,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.AbstractSettingsEntry;
@@ -24,6 +25,7 @@ import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
 import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 import org.secuso.privacyfriendlywifi.logic.util.WifiListHandler;
 import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
+import org.secuso.privacyfriendlywifi.view.MainActivity;
 import org.secuso.privacyfriendlywifi.view.adapter.WifiListAdapter;
 import org.secuso.privacyfriendlywifi.view.decoration.DividerItemDecoration;
 import org.secuso.privacyfriendlywifi.view.dialog.WifiPickerDialog;
@@ -68,7 +70,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         super.onCreateView(inflater, container, savedInstanceState);
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_wifilist, container, false);
 
         // Set substring in actionbar
         ActionBar actionBar = ((AppCompatActivity) this.mActivity).getSupportActionBar();
@@ -115,6 +117,23 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
         this.wifiListHandler.addObserver(this);
 
+        if (!AbstractSettingsEntry.hasCoarseLocationPermission(getContext())) {
+            Snackbar snackbar = Snackbar
+                    .make(rootView, R.string.help_toast_coarse_location, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.settings_grant_permissions, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Re-grant permissions
+                            ActivityCompat.requestPermissions(getActivity(),
+                                    new String[]{Manifest.permission.ACCESS_WIFI_STATE,
+                                            Manifest.permission.CHANGE_WIFI_STATE,
+                                            Manifest.permission.ACCESS_COARSE_LOCATION}, MainActivity.DYN_PERMISSION);
+                        }
+                    });
+
+            snackbar.show();
+        }
+
         return rootView;
     }
 
@@ -128,10 +147,6 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
 
         this.wifiListHandler = new WifiListHandler(context);
         this.wifiListHandler.sort(); // important here: we are sorting before we are waiting for changes since we are creating the list later anyway
-
-        if (!AbstractSettingsEntry.hasCoarseLocationPermission(context)) {
-            Toast.makeText(context, R.string.help_toast_coarse_location, Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
