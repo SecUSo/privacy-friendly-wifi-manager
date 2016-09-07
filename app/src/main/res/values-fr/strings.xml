@@ -78,7 +78,7 @@
     <!-- HELP STRINGS -->
     <string name="help_category_permissions">Autorisations</string>
     <string name="help_title_coarse_location">Accès à votre position approximatif</string>
-    <string name="help_desc_coarse_location">L'autorisation pour votre emplacement grossier est nécessaire pour récupérer des informations sur les cellules à proximité.</string>
+    <string name="help_desc_coarse_location">L\'autorisation pour votre emplacement grossier est nécessaire pour récupérer des informations sur les cellules à proximité.</string>
     <string name="help_category_tutorial">Tutoriel</string>
     <string name="help_category_tutorial_title">Tutoriel</string>
     <string name="help_category_tutorial_desc">Affiche le tutoriel.</string>
@@ -91,13 +91,13 @@
     <string name="help_actionbar_string_basics">Tutoriel: Bases</string>
     <string name="help_actionbar_substring_step0">Donner la permission</string>
     <string name="help_actionbar_substring_step1">Permettant à le manager</string>
-    <string name="help_actionbar_substring_step2">L\'ajout d'un wifi</string>
+    <string name="help_actionbar_substring_step2">L\'ajout d\'un wifi</string>
     <string name="help_actionbar_substring_step3">Supprimer un wifi</string>
     <string name="help_content_step0_description">Une autorisation est nécessaire pour récupérer des informations sur les cellules à proximité. Pour utiliser les fonctionnalités de géolocalisation de WiFi-Manager, en commençant par Android 6, vous devez accorder l\'accès à votre position approximatif. Si vous souhaitez utiliser cette fonctionnalité, vous pouvez demander l\'autorisation nécessaire plus tard.</string>
-    <string name="help_content_step1_description">Pour activer le WiFi Manager, vous devez l'activer en activant le bouton on/off. Cela permet sa fonction d'apprentissage et recueille les ids cellulaires autour de votre connexion wifi. Il permet donc WiFi-Manager prendre le contrôle de basculement wifi de votre téléphone on/off.</string>
-    <string name="help_content_step2_description">Maintenant passons à ajouter un wifi connu à la liste des wifis gérés. Appuyez sur le bouton d'ajout sur le fond et puis sélectionnez une connexion wifi près.</string>
+    <string name="help_content_step1_description">Pour activer le WiFi Manager, vous devez l\'activer en activant le bouton on/off. Cela permet sa fonction d\'apprentissage et recueille les ids cellulaires autour de votre connexion wifi. Il permet donc WiFi-Manager prendre le contrôle de basculement wifi de votre téléphone on/off.</string>
+    <string name="help_content_step2_description">Maintenant passons à ajouter un wifi connu à la liste des wifis gérés. Appuyez sur le bouton d\'ajout sur le fond et puis sélectionnez une connexion wifi près.</string>
     <string name="help_content_step3_description">Pour supprimer une connexion wifi dans votre liste, appuyez simplement un peu plus sur la liste wifi. Ensuite, supprimer une connexion wifi en appuyant sur l\'icône de corbeille à côté de son nom.</string>
-    <string name="help_welcome_description"><b>Bienvenue à Privacy Friendly WiFi-Manager!</b>\r\nCette application vous aide à commuter automatiquement votre wifi lorsque vous n'êtes pas à proximité d'un WiFi connu.\r\n\r\n<b>Comment ça marche:</b> Alors que vous êtes assis dans une zone avec une connexion wifi, vous êtes entouré par des mâts de radio vous offrir un \'cellule\' pour votre téléphone mobile. WiFi-Manager se souvient quelle cellule est près de votre connexion wifi, de tourner à droite sur lorsque vous avez terminé rentrent à la maison, ou le mettre hors tension, lorsque vous avez terminé quittez (par ex. travail / école). En utilisant le calendrier, vous pouvez donc définir des intervalles de temps, whenyour téléphone d\'une connexion wifi shoulderstand automatiquement désactivée (par ex. la nuit).\r\n\r\nAppuyez sur \'Démarrer\' pour faire un tour.
+    <string name="help_welcome_description"><b>Bienvenue à Privacy Friendly WiFi-Manager!</b>\r\nCette application vous aide à commuter automatiquement votre wifi lorsque vous n\'êtes pas à proximité d\'un WiFi connu.\r\n\r\n<b>Comment ça marche:</b> Alors que vous êtes assis dans une zone avec une connexion wifi, vous êtes entouré par des mâts de radio vous offrir un \'cellule\' pour votre téléphone mobile. WiFi-Manager se souvient quelle cellule est près de votre connexion wifi, de tourner à droite sur lorsque vous avez terminé rentrent à la maison, ou le mettre hors tension, lorsque vous avez terminé quittez (par ex. travail / école). En utilisant le calendrier, vous pouvez donc définir des intervalles de temps, whenyour téléphone d\'une connexion wifi shoulderstand automatiquement désactivée (par ex. la nuit).\r\n\r\nAppuyez sur \'Démarrer\' pour faire un tour.
     </string>
 
     <!-- NOTIFICATION -->
