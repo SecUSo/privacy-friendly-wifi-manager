@@ -5,10 +5,10 @@
     <string name="on">włączać</string>
     <string name="off">wyłączyć</string>
     <string name="global_on_off_switch">On/Off</string>
-    <string name="navigation_drawer_open">Menü otworzyć</string>
-    <string name="navigation_drawer_close">Menü zamknąć</string>
+    <string name="navigation_drawer_open">Menu otworzyć</string>
+    <string name="navigation_drawer_close">Menu zamknąć</string>
     <string name="remove_entry">wpis usuwać</string>
-    <string name="button_start">Start</string>
+    <string name="button_start">Początek</string>
     <string name="button_next">dalej</string>
     <string name="button_finish">gotowy</string>
     <string name="button_cancel">przerwać</string>
@@ -57,7 +57,7 @@
     <string name="time_picker_dialog_title_choose_start_time">wybierz czas start</string>
     <string name="time_picker_dialog_title_choose_end_time">wybierz czas cel</string>
     <string name="time_picker_dialog_title_choose_title">wybierz tytuł</string>
-    <string name="time_picker_dialog_text_title_hint">Zeitslot %1$d</string>
+    <string name="time_picker_dialog_text_title_hint">przedział czasu %1$d</string>
 
 
     <!-- ABOUT STRINGS -->
@@ -124,9 +124,9 @@ na przykład).\r\n\r\nnaciśnij przycisk \'START\' Aby rozpocząć wycieczkę.
     <!-- DETAILS STRINGS -->
     <string name="details_ssid_placeholder">nieznany SSID</string>
     <string name="details_bssid_placeholder">nieznany MAC</string>
-    <string name="details_cellid_placeholder">nieznany Zell-ID</string>
+    <string name="details_cellid_placeholder">nieznany cela-ID</string>
     <string name="details_macs_header">MACs</string>
-    <string name="details_cellids_header">Zell-IDs</string>
+    <string name="details_cellids_header">Cela-IDs</string>
 
 
     <!-- WIDGET STRINGS -->
