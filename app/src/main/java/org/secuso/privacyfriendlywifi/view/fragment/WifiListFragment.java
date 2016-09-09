@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.secuso.privacyfriendlywifi.logic.types.WifiLocationEntry;
 import org.secuso.privacyfriendlywifi.logic.util.AbstractSettingsEntry;
@@ -122,7 +123,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
             this.fab.setEnabled(false);
             updateFab(false);
             Snackbar snackbar = Snackbar
-                    .make(rootView, R.string.help_desc_coarse_location, Snackbar.LENGTH_LONG)
+                    .make(rootView, R.string.help_desc_coarse_location, Snackbar.LENGTH_INDEFINITE)
                     .setAction(R.string.settings_grant_permissions, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -133,6 +134,10 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                                             Manifest.permission.ACCESS_COARSE_LOCATION}, MainActivity.DYN_PERMISSION);
                         }
                     });
+
+            // allow longer strings in snackbar
+            TextView snackbarTextView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+            snackbarTextView.setMaxLines(999);
 
             snackbar.show();
         }
