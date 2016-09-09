@@ -111,24 +111,24 @@
     </string>
 
     <!-- NOTIFICATION -->
-    <string name="notification_content_text">An unmanaged Wi-Fi connection has been established</string>
-    <string name="notification_content_info">Unmanaged connection</string>
-    <string name="notification_unknown_wifi_title">New unmanaged Wi-Fi</string>
-    <string name="notification_unknown_wifi_title_format">New unmanaged Wi-Fi: %1$s</string>
-    <string name="notification_button_add">Manage this connection automatically</string>
-    <string name="notification_main_text">Touch to manage connections</string>
-    <string name="toast_wifi_added">WiFi %1$s now managed.</string>
+    <string name="notification_content_text">Una connessione wifi non gestito è stata stabilita</string>
+    <string name="notification_content_info">Connessione wifi non gestito</string>
+    <string name="notification_unknown_wifi_title">Nuovo wifi non gestito</string>
+    <string name="notification_unknown_wifi_title_format">Nuovo wifi non gestito: %1$s</string>
+    <string name="notification_button_add">Gestire questa connessione automaticamente</string>
+    <string name="notification_main_text">Toccare per gestire le connessioni</string>
+    <string name="toast_wifi_added">Wifi %1$s non è riuscito.</string>
 
 
     <!-- SETTINGS STRINGS -->
-    <string name="settings_general">General Settings</string>
-    <string name="settings_respect_signal_strength">Respect signal strength</string>
-    <string name="settings_respect_signal_strength_desc">Cellular signal strength will be respected for location estimation.</string>
-    <string name="settings_show_notification_to_add_unmanaged_wi_fis">Show notifications</string>
-    <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">A notification will be shown when connected to unmanaged Wi-Fis.</string>
-    <string name="settings_grant_permissions">Request permissions</string>
-    <string name="settings_grant_permissions_desc">Request permissions needed for location-based services.</string>
-    <string name="settings_developer">Developer Settings</string>
+    <string name="settings_general">Impostazioni generali</string>
+    <string name="settings_respect_signal_strength">Rispettare potenza del segnale</string>
+    <string name="settings_respect_signal_strength_desc">La potenza del segnale cellulare sarà rispettato per la stima posizione.</string>
+    <string name="settings_show_notification_to_add_unmanaged_wi_fis">Mostra notifiche</string>
+    <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">Una notifica verrà mostrata quando è collegato a wifi non gestito.</string>
+    <string name="settings_grant_permissions">Richiesta permessi</string>
+    <string name="settings_grant_permissions_desc">Richiesta permessi necessarie per i servizi basati sulla localizzazione.</string>
+    <string name="settings_developer">Impostazioni sviluppatori</string>
     <string name="settings_delete_logfile">Delete logfile</string>
     <string name="settings_info_logfile_deleted">Deleted logfile successfully.</string>
     <string name="settings_info_logfile_deletion_error">Logfile could not be deleted.</string>
@@ -138,13 +138,13 @@
 
 
     <!-- DETAILS STRINGS -->
-    <string name="details_ssid_placeholder">SSID unknown</string>
-    <string name="details_bssid_placeholder">MAC unknown</string>
-    <string name="details_cellid_placeholder">Cell ID unknown</string>
+    <string name="details_ssid_placeholder">SSID sconosciuto</string>
+    <string name="details_bssid_placeholder">MAC sconosciuto</string>
+    <string name="details_cellid_placeholder">Cell ID sconosciuto</string>
     <string name="details_macs_header">MACs</string>
     <string name="details_cellids_header">Cell IDs</string>
 
 
     <!-- WIDGET STRINGS -->
-    <string name="appwidget_text">Automatic Wi-Fi Management:</string>
+    <string name="appwidget_text">Gestione automatica di wifi:</string>
 </resources>
