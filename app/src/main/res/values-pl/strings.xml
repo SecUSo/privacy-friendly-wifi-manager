@@ -37,7 +37,7 @@
     <!-- WIFI STRINGS -->
     <string name="wifi_ssid_text">%1$s</string>
     <string name="wifi_bssid_text">MAC: %1$s</string>
-    <string name="wifi_num_cells_text">należycie komórka/cela: %1$d</string>
+    <string name="wifi_num_cells_text">należycie cela: %1$d</string>
     <string name="wifi_multi_bssid_text">%1$d związane MACs</string>
     <string name="wifi_enable_wifi_to_scan">Aby dodać sieć, Proszę włączyć WLAN.</string>
     <string name="wifi_enable_wifi">włączać  WLAN</string>
