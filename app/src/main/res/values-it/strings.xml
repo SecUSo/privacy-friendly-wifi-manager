@@ -84,7 +84,7 @@
     <!-- HELP STRINGS -->
     <string name="help_actionbar_string">Aiuto</string>
     <string name="help_actionbar_substring_welcome">Benvenuto in Privacy Friendly WiFi-Manager</string>
-    <string name="help_category_permissions">Permessi</string>
+    <string name="help_category_permissions">Autorizzazioni</string>
     <string name="help_title_coarse_location">L\'accesso a posizione approssimativa</string>
     <string name="help_desc_coarse_location">Il permesso per accedere alla posizione approssimativa è quello di essere in grado di recuperare necessario informazioni su cellulare nelle vicinanze.</string>
     <string name="help_category_tutorial">Lezione</string>
@@ -126,8 +126,8 @@
     <string name="settings_respect_signal_strength_desc">La potenza del segnale cellulare sarà rispettato per la stima posizione.</string>
     <string name="settings_show_notification_to_add_unmanaged_wi_fis">Mostra notifiche</string>
     <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">Una notifica verrà mostrata quando è collegato a wifi non gestito.</string>
-    <string name="settings_grant_permissions">Richiesta permessi</string>
-    <string name="settings_grant_permissions_desc">Richiesta permessi necessarie per i servizi basati sulla localizzazione.</string>
+    <string name="settings_grant_permissions">Richiesta autorizzazioni</string>
+    <string name="settings_grant_permissions_desc">Richiesta autorizzazioni necessarie per i servizi basati sulla localizzazione.</string>
     <string name="settings_developer">Impostazioni sviluppatori</string>
     <string name="settings_delete_logfile">Delete logfile</string>
     <string name="settings_info_logfile_deleted">Deleted logfile successfully.</string>
