@@ -61,9 +61,7 @@
 
 
     <!-- ABOUT STRINGS -->
-    <string name="about_whatdoesitdo"><b>Objectif:</b> Privacy Friendly WiFi-Manager garde la trace des ids de la tour cellulaire dans votre région pendant que vous êtes connecté à un réseau wifi. En gardant ces informations , l\'application essaie d\'apprendre
-    où votre wifi se trouve sans utiliser GPS. L\'objectif principal est d\'éviter le suivi de localisation via wifi, mais WiFi-Manager enregistre également la vie de la batterie en désactivant automatiquement votre téléphone wifi quand il est pas près d\'un réseau sans fil déjà connu.
-    </string>
+    <string name="about_whatdoesitdo">"Privacy Friendly WiFi-Manager garde la trace des ids de la tour cellulaire dans votre région pendant que vous êtes connecté à un réseau wifi. En gardant ces informations , l'application essaie d'apprendre\n    où votre wifi se trouve sans utiliser GPS. L'objectif principal est d'éviter le suivi de localisation via wifi, mais WiFi-Manager enregistre également la vie de la batterie en désactivant automatiquement votre téléphone wifi quand il est pas près d'un réseau sans fil déjà connu.\n    "</string>
     <string name="about_whyprivacyfriendly"><b>Intimité:</b> Cette privacy friendly application préserve votre vie privée par le suivi des données moins nécessaires. Toutes les données sont conservées sur votre téléphone. Aucune donnée n\'a été envoyée
         à n\'importe qui. Nous essayons aussi d\'utiliser moins d\'autorisations possible.
     </string>
@@ -137,4 +135,6 @@
 
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Gestion automatique Wifi:</string>
+    <string name="about_goal">Objectif</string>
+    <string name="about_privacy">Intimité</string>
 </resources>

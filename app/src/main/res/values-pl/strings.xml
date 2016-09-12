@@ -61,10 +61,7 @@
 
 
     <!-- ABOUT STRINGS -->
-    <string name="about_whatdoesitdo"><b>Das Ziel:</b> PPrivacy Friendly WiFi-Manager pamięta nadajniki naziemne sieci internetowych
-	(Zell-IDs) w zakresie, do którego połączony jest telefon z siecią bezprzewodową. Aplikacja próbuje nauczyć, stosuje się w miejscach,
-	w których bezprzewodowe WLAN, bez pobierania lokalizacji GPS. głównym celem Friendly WiFi-Manager jest rzeczywiśta redukcja śledzenia
-	lokalizacji prez otwarty WLAN, dodatkowo selektywne wyłączanie od WLAN zmniejsza zużycie baterię.</string>
+    <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager pamięta nadajniki naziemne sieci internetowych\n\t(Zell-IDs) w zakresie, do którego połączony jest telefon z siecią bezprzewodową. Aplikacja próbuje nauczyć, stosuje się w miejscach,\n\tw których bezprzewodowe WLAN, bez pobierania lokalizacji GPS. głównym celem Friendly WiFi-Manager jest rzeczywiśta redukcja śledzenia\n\tlokalizacji prez otwarty WLAN, dodatkowo selektywne wyłączanie od WLAN zmniejsza zużycie baterię.</string>
     <string name="about_whyprivacyfriendly"><b>prywatność:</b> ta "Privacy Friendly App" chroni prywatność poprzez możliwie najniższym
 	zbierania danych. Cały danych odbywa się wyłącznie na telefon. Żadne dane nie są wysyłane do osoby trzeciej. Ponadto podjęto próbę
 	używać jak najmniej Uprawnienia.</string>
@@ -80,10 +77,10 @@
     <string name="help_actionbar_string">pomoc</string>
     <string name="help_actionbar_substring_welcome">Witamy w Privacy Friendly WiFi-Manager</string>
     <string name="help_actionbar_string_basics">Pomoc: Podstawy</string>
-    <string name="help_actionbar_substring_step0">Krok 1 : Pozwolenie grant</string>
-    <string name="help_actionbar_substring_step1">Krok 2 : Przełącz menadżera</string>
-    <string name="help_actionbar_substring_step2">Krok 3 : Wybierz Wireless</string>
-    <string name="help_actionbar_substring_step3">Krok 4 : Usuń Wireless</string>
+    <string name="help_actionbar_substring_step0">Pozwolenie grant</string>
+    <string name="help_actionbar_substring_step1">Przełącz menadżera</string>
+    <string name="help_actionbar_substring_step2">Wybierz Wireless</string>
+    <string name="help_actionbar_substring_step3">Usuń Wireless</string>
     <string name="help_content_step0_description">Pozwolenie jest niezbędne do uzyskania informacji z pobliskich stacji telefonii komórkowej. W celu korzystania z funkcji opartych na lokalizacji sieci WiFi Managera, musisz, zaczynając od Android 6, umożliwiają dostęp do serwisu. Zezwolenie może zostać ponownie później wniosek w ustawieniach.</string>
     <string name="help_content_step1_description">Aby korzystać z WiFi-Manager, musi on być włączony. W tym celu wystarczy nacisnąć włącznik / wyłącznik. To może uczyć się i również kontrolować urządzenia bezprzewodowego tych komórek.</string>
     <string name="help_content_step2_description">Znany WLAN może być łatwo dodana do listy zarządzanych, naciskając na AddButton a następnie wybiera sieć WLAN na liście.</string>
@@ -131,5 +128,14 @@ na przykład).\r\n\r\nnaciśnij przycisk \'START\' Aby rozpocząć wycieczkę.
 
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">automatyczna kontrola WLAN:</string>
+    <string name="about_goal">Cel</string>
+    <string name="about_privacy">Prywatność</string>
+    <string name="help_actionbar_substring_step">Krok %1$d</string>
+    <string name="help_category_permissions">Uprawnienia</string>
+    <string name="help_category_tutorial">Poradnik</string>
+    <string name="help_category_tutorial_desc">Pokazuje samouczek.</string>
+    <string name="help_category_tutorial_title">Poradnik</string>
+    <string name="help_title_coarse_location">Dostęp gruba lokalizacja</string>
+    <string name="help_desc_coarse_location">Potrzebne jest uprawnienie do grubej lokalizacji, aby pobrać informacje o pobliskiej komórki.</string>
 
 </resources>
