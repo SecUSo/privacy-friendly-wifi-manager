@@ -69,12 +69,12 @@
     <string name="about_whyprivacyfriendly">This privacy friendly app preserves your privacy by tracking least necessary data. All data is kept on your phone. No data is sent
         to anybody. We also try to use least permissions possible.
     </string>
-    <string name="about_author"><b>Author:</b> Jan Henzel, Patrick Jauernig, Dennis Werner</string>
-    <string name="about_affiliation">In affiliation with</string>
+    <string name="about_author">Authors:</string>
+    <string name="about_affiliation"><b>In affiliation with</b></string>
     <string name="about_moreinfo">More information can be found at:</string>
     <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
-    <string name="about_version">Version: %1$s</string>
-    <string name="about_privacyfriendly">This application belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_privacyfriendly">This application belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt. Sourcecode licensed under Apache version 2.0. Images copyright TU Darmstadt and Google Inc.</string>
     <string name="about_url_github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-wifi">Github-Repo</a></string>
     <string name="about_url_secuso" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
 
@@ -141,4 +141,6 @@
 
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Automatic Wi-Fi Management:</string>
+    <string name="app_name_privacy" translatable="false">Privacy Friendly WiFi-Manager</string>
+    <string name="about_author_names" translatable="false">Jan Henzel, Patrick Jauernig, Dennis Werner</string>
 </resources>

@@ -3,7 +3,9 @@ package org.secuso.privacyfriendlywifi.view;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
+import secuso.org.privacyfriendlywifi.BuildConfig;
 import secuso.org.privacyfriendlywifi.R;
 
 public class AboutActivity extends AppCompatActivity {
@@ -17,5 +19,10 @@ public class AboutActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        TextView versionTextView = (TextView)
+                findViewById(R.id.about_version);
+        String versionText = getString(R.string.about_version);
+        versionTextView.setText(String.format(versionText, BuildConfig.VERSION_NAME));
     }
 }

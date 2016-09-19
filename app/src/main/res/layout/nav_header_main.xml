@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="Logo"
-            android:src="@android:drawable/sym_def_app_icon" />
+            android:src="@drawable/drawer" />
 
         <TextView
             android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             android:layout_toRightOf="@id/imageView"
             android:text="@string/app_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
             android:textSize="18sp"
 
             android:paddingLeft="@dimen/activity_horizontal_margin"

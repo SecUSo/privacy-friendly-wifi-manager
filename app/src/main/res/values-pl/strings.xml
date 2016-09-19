@@ -65,12 +65,12 @@
     <string name="about_whyprivacyfriendly"><b>prywatność:</b> ta "Privacy Friendly App" chroni prywatność poprzez możliwie najniższym
 	zbierania danych. Cały danych odbywa się wyłącznie na telefon. Żadne dane nie są wysyłane do osoby trzeciej. Ponadto podjęto próbę
 	używać jak najmniej Uprawnienia.</string>
-    <string name="about_author"><b>autorzy:</b> Jan Henzel, Patrick Jauernig, Dennis Werner</string>
-    <string name="about_affiliation">We współpracy z</string>
-    <string name="about_privacyfriendly">Ta aplikacja jest częścią z Privacy Friendly Apps Projekt.</string>
+    <string name="about_author">Autorzy:</string>
+    <string name="about_affiliation"><b>We współpracy z</b></string>
+    <string name="about_privacyfriendly">Ta aplikacja jest częścią z Privacy Friendly Apps Projekt opracowanej przez Technische Universität Darmstadt. Źródłowego na licencji Apache w wersji 2.0. Obrazy autorskie TU Darmstadt oraz Google Inc.</string>
     <string name="about_moreinfo">Więcej informacji można znaleźć tutaj:</string>
     <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
-    <string name="about_version">wersja: %1$s</string>
+    <string name="about_version">Wersja %1$s</string>
 
 
     <!-- HELP STRINGS -->

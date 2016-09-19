@@ -70,12 +70,12 @@
     <string name="about_whyprivacyfriendly">Questa app rispetta la tua privacy tracciando meno dati possibile. Tutti i dati vengono conservati sul tuo dispositivo.
         Nessuna informazione viene inviata ad alcuno. Infine, l\'applicazione non richiede alcun privilegio ad eccezione di quelli necessari.
     </string>
-    <string name="about_author"><b>Autori:</b> Jan Henzel, Patrick Jauernig, Dennis Werner</string>
-    <string name="about_affiliation">In affiliation with</string>
+    <string name="about_author">Autori:</string>
+    <string name="about_affiliation"><b>In affiliation with</b></string>
     <string name="about_moreinfo">More information can be found at:</string>
     <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
-    <string name="about_version">Version: %1$s</string>
-    <string name="about_privacyfriendly">This application belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_privacyfriendly">Questa applicazione fa parte del gruppo della Privacy Friendly Apps sviluppato dalla Technische Universität Darmstadt. Sourcecode sotto licenza Apache versione 2.0. Immagini d\'autore TU Darmstadt e Google Inc.</string>
 
 
     <!-- HELP STRINGS -->
@@ -144,7 +144,4 @@
 
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Gestione automatica di wifi:</string>
-    <string name="about_more_info"></string>
-    <string name="about_url_github" translatable="false"></string>
-    <string name="about_url_secuso" translatable="false"></string>
 </resources>

@@ -17,7 +17,6 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/privacyfriendlyappslogo" />
 
@@ -25,23 +24,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:text="@string/header_about"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_marginTop="60dp"
+                android:text="@string/app_name_privacy"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/about_version"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:padding="10dp"
+                android:layout_marginTop="5dp"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:padding="10dp"
+                android:layout_marginTop="5dp"
                 android:text="@string/about_author"
 
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -50,7 +49,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:padding="10dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/about_author_names"
+
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
                 android:text="@string/about_affiliation"
 
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -75,7 +83,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="@string/about_more_info" />
+                android:text="@string/about_moreinfo" />
 
             <TextView
                 android:layout_width="wrap_content"

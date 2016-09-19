@@ -73,12 +73,12 @@
         Privatsphäre durch geringstmögliche Datenerhebung. Die gesamten Daten werden ausschließlich auf dem
         Telefon gehalten. Keine Daten werden an Dritte gesendet. Weiterhin wird versucht, so wenig Permissions wie möglich zu nutzen.
     </string>
-    <string name="about_author"><b>Autoren:</b> Jan Henzel, Patrick Jauernig, Dennis Werner</string>
-    <string name="about_affiliation">In Zusammenarbeit mit</string>
-    <string name="about_privacyfriendly">Diese App gehört zum Privacy Friendly Apps Projekt.</string>
+    <string name="about_author">Autoren:</string>
+    <string name="about_affiliation"><b>In Zusammenarbeit mit</b></string>
+    <string name="about_privacyfriendly">Diese App gehört zum Privacy Friendly Apps Projekt entwickelt an der Technischen Universität Darmstadt. Sourcecode lizenziert unter Apache Version 2.0. Bildrechte liegen bei der TU Darmstadt und Google Inc.</string>
     <string name="about_moreinfo">Weitere Informationen finden Sie hier:</string>
     <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
-    <string name="about_version">Version: %1$s</string>
+    <string name="about_version">Version %1$s</string>
 
 
     <!-- HELP STRINGS -->
