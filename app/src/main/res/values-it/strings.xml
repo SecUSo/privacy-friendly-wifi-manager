@@ -63,9 +63,7 @@
     <!-- ABOUT STRINGS -->
     <string name="about_goal">Obiettivo</string>
     <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager tiene traccia dei ripetitori cellulari nella tua zona mentre sei connesso ad una rete Wi-Fi.
-        Grazie a queste informazioni, l\'app cerca di imparare la posizione del tuo Wi-Fi senza utilizzare il GPS.
-        L\'obiettivo principale è di evitare il tracciamento della tua posizione sfruttando il Wi-Fi,
-        ma WiFi-Manager ti fa anche risparmiare la batteria disabilitando automaticamente il Wi-Fi quando sei fuori portata dai network wireless già conosciuti.</string>
+        Grazie a queste informazioni, l\'app cerca di imparare la posizione del tuo Wi-Fi senza utilizzare il GPS.</string>
     <string name="about_privacy">Privacy</string>string>
     <string name="about_whyprivacyfriendly">Questa app rispetta la tua privacy tracciando meno dati possibile. Tutti i dati vengono conservati sul tuo dispositivo.
         Nessuna informazione viene inviata ad alcuno. Infine, l\'applicazione non richiede alcun privilegio ad eccezione di quelli necessari.
@@ -144,4 +142,11 @@
 
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Gestione automatica di wifi:</string>
+    <string name="help_welcome_summary">Questa applicazione è in grado di disattivare automaticamente la tua connessione Wi-Fi quando non sei nella portata dei network Wi-Fi conosciuti</string>
+    <string name="help_goal_desc">L\\\'obiettivo principale è di evitare il tracciamento della tua posizione sfruttando il Wi-Fi,         ma WiFi-Manager ti fa anche risparmiare la batteria disabilitando automaticamente il Wi-Fi quando sei fuori portata dai network wireless già conosciuti.</string>
+    <string name="help_benefits_desc">Con il passaggio del Wi-Fi quando non è necessario, il cosiddetto monitoraggio via Wi-Fi è evitata. Privacy friendly WiFi Manager salva anche la durata della batteria disattivando automaticamente le phone\'s Wi-Fi nel caso in cui non è in prossimità di un già noto rete Wi-Fi.</string>
+    <string name="help_category_benefits">Benefici</string>
+    <string name="help_category_general">Generalmente</string>
+    <string name="help_category_howitworks">Come funziona</string>
+    <string name="help_category_privacy_info">Informazioni sulla privacy</string>
 </resources>

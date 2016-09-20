@@ -65,8 +65,6 @@
     <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager merkt sich Mobilfunktürme (Zell-IDs)
         innerhalb des Bereiches, in denen das Telefon mit einem WLAN verbunden ist. Die App versucht
         so zu lernen, in welchen Bereichen WLAN genutzt wird, ohne den GPS-Standort abzurufen.
-        Das Hauptziel von Privacy Friendly WiFi-Manager ist zwar die Reduzierung der WLAN-basierten Standortverfolgung,
-        jedoch bewirkt die gezielte Abschaltung des WLANs auch eine Schonung des Akkus.
     </string>
     <string name="about_privacy">Privatsphäre</string>string>
     <string name="about_whyprivacyfriendly">Diese "Privacy Friendly App" schützt die
@@ -144,4 +142,11 @@
 
     <!-- WIDGET STRINGS -->
     <string name="appwidget_text">Automatische WLAN-Steuerung:</string>
+    <string name="help_category_privacy_info">Datenschutzinformationen</string>
+    <string name="help_category_general">Allgemein</string>
+    <string name="help_welcome_summary">Diese App hilft dabei, automatisch das WLAN aus zu schalten, sobald Sie nicht in der Nähe eines von Ihnen genutzten WLANs sind.</string>
+    <string name="help_category_howitworks">Funktionsweise</string>
+    <string name="help_goal_desc">Das Hauptziel von Privacy Friendly WiFi-Manager ist zwar die Reduzierung der WLAN-basierten Standortverfolgung,         jedoch bewirkt die gezielte Abschaltung des WLANs auch eine Schonung des Akkus.</string>
+    <string name="help_category_benefits">Vorteile</string>
+    <string name="help_benefits_desc">Durch gezieltes Abschalten der WLAN-Funktion bei Nichtnutzung wird sogenanntes Tracking via WLAN effektiv verhindert. Privacy Friendly WiFi-Manager schont außerdem den Akku, indem WLAN abgeschaltet wird, sofern man sich nicht in der Nähe eines bekannten WLANs befindet.</string>
 </resources>

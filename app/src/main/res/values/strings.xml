@@ -63,7 +63,7 @@
     <!-- ABOUT STRINGS -->
     <string name="about_goal">Goal</string>
     <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager keeps track of the cell tower ids in your area while you are connected to a Wi-Fi. By keeping this information, the app tries to learn
-    where your WiFi is located without using GPS. The main goal is to avoid location tracking via Wi-Fi, but WiFi-Manager also saves battery life by automatically disabling your phones WiFi when it is not near a already known wireless network.
+    where your WiFi is located without using GPS.
     </string>
     <string name="about_privacy">Privacy</string>string>
     <string name="about_whyprivacyfriendly">This privacy friendly app preserves your privacy by tracking least necessary data. All data is kept on your phone. No data is sent
@@ -88,6 +88,7 @@
     <string name="help_category_tutorial">Tutorial</string>
     <string name="help_category_tutorial_title">Tutorial</string>
     <string name="help_category_tutorial_desc">Shows the tutorial.</string>
+    <string name="help_category_privacy_info">Privacy Info</string>
 
     <!-- TUTORIAL -->
     <string name="help_actionbar_string_basics">Tutorial: Basics</string>
@@ -143,4 +144,11 @@
     <string name="appwidget_text">Automatic Wi-Fi Management:</string>
     <string name="app_name_privacy" translatable="false">Privacy Friendly WiFi-Manager</string>
     <string name="about_author_names" translatable="false">Jan Henzel, Patrick Jauernig, Dennis Werner</string>
+    <string name="help_category_general">General</string>
+    <string name="help_welcome_summary">This app helps you automatically turning on/off your Wi-Fi while you are not near a known WiFi.</string>
+    <string name="help_category_howitworks">How it works</string>
+    <string name="help_goal_desc">The main goal is to avoid location tracking via Wi-Fi, but WiFi-Manager also saves battery life by automatically disabling your phones WiFi when it is not near a already known wireless network.</string>
+    <string name="help_category_benefits">Benefits</string>
+    <string name="help_benefits_desc">By switching of the Wi-Fi when it is not required, so called tracking via Wi-Fi is avoided. Privacy Friendly WiFi Manager also saves battery life by automatically disabling your phone´s Wi-Fi in case it is not near an already known Wi-Fi network.</string>
+
 </resources>

@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/help_actionbar_string">
+    <PreferenceCategory android:title="@string/help_category_general">
         <Preference
             android:selectable="false"
             android:persistent="false"
-            android:title="@string/about_goal"
-            android:summary="@string/about_whyprivacyfriendly"/>
+            android:summary="@string/help_welcome_summary"/>
         <Preference
             android:selectable="false"
             android:persistent="false"
-            android:title="@string/about_privacy"
+            android:title="@string/help_category_howitworks"
             android:summary="@string/about_whatdoesitdo"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/help_category_benefits">
+        <Preference
+            android:key="launchTutorial"
+            android:summary="@string/help_benefits_desc"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/help_category_privacy_info">
+        <Preference android:title="@string/about_goal"
+            android:summary="@string/help_goal_desc"
+            android:selectable="false"/>
+        <Preference android:title="@string/help_category_permissions"
+            android:summary="@string/help_desc_coarse_location"
+            android:selectable="false"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/help_category_tutorial">
@@ -19,12 +33,6 @@
             android:key="launchTutorial"
             android:summary="@string/help_category_tutorial_desc"
             android:title="@string/help_category_tutorial_title"/>
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/help_category_permissions">
-        <Preference android:title="@string/help_title_coarse_location"
-            android:summary="@string/help_desc_coarse_location"
-            android:selectable="false"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

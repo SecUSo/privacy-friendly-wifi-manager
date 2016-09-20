@@ -61,7 +61,7 @@
 
 
     <!-- ABOUT STRINGS -->
-    <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager pamięta nadajniki naziemne sieci internetowych\n\t(Zell-IDs) w zakresie, do którego połączony jest telefon z siecią bezprzewodową. Aplikacja próbuje nauczyć, stosuje się w miejscach,\n\tw których bezprzewodowe WLAN, bez pobierania lokalizacji GPS. głównym celem Friendly WiFi-Manager jest rzeczywiśta redukcja śledzenia\n\tlokalizacji prez otwarty WLAN, dodatkowo selektywne wyłączanie od WLAN zmniejsza zużycie baterię.</string>
+    <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager pamięta nadajniki naziemne sieci internetowych\n\t(Zell-IDs) w zakresie, do którego połączony jest telefon z siecią bezprzewodową. Aplikacja próbuje nauczyć, stosuje się w miejscach,\n\tw których bezprzewodowe WLAN, bez pobierania lokalizacji GPS.</string>
     <string name="about_whyprivacyfriendly"><b>prywatność:</b> ta "Privacy Friendly App" chroni prywatność poprzez możliwie najniższym
 	zbierania danych. Cały danych odbywa się wyłącznie na telefon. Żadne dane nie są wysyłane do osoby trzeciej. Ponadto podjęto próbę
 	używać jak najmniej Uprawnienia.</string>
@@ -137,5 +137,12 @@ na przykład).\r\n\r\nnaciśnij przycisk \'START\' Aby rozpocząć wycieczkę.
     <string name="help_category_tutorial_title">Poradnik</string>
     <string name="help_title_coarse_location">Dostęp gruba lokalizacja</string>
     <string name="help_desc_coarse_location">Potrzebne jest uprawnienie do grubej lokalizacji, aby pobrać informacje o pobliskiej komórki.</string>
+    <string name="help_welcome_summary">Ta aplikacja pozwala automatycznie włączyć WLAN wyłączony, gdy nie jesteś w pobliżu używanym przez Ciebie sieci WLAN.</string>
+    <string name="help_goal_desc">Głównym celem Friendly WiFi-Manager jest rzeczywiśta redukcja śledzenia\\n\\tlokalizacji prez otwarty WLAN, dodatkowo selektywne wyłączanie od WLAN zmniejsza zużycie baterię.</string>
+    <string name="help_benefits_desc">Dzięki przejściu z Wi-Fi, gdy nie jest to konieczne, tzw śledzenia za pośrednictwem Wi-Fi jest unikać. Bezpieczeństwo friendly WiFi Manager zapisuje również żywotność baterii poprzez automatyczne wyłączanie się phone\'s Wi-Fi w przypadku, gdy nie ma w pobliżu znanego już z siecią Wi-Fi.</string>
+    <string name="help_category_benefits">Korzyści</string>
+    <string name="help_category_general">Ogólnie</string>
+    <string name="help_category_howitworks">Jak to działa</string>
+    <string name="help_category_privacy_info">Informacje o prywatności</string>
 
 </resources>
