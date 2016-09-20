@@ -1,12 +1,8 @@
 # Privacy Friendly WiFi
-This app helps you automatically turning on/off your Wi-Fi while you are not near a known WiFi.
+This app helps you automatically turning on/off your Wi-Fi while you are not near a known WiFi. The intent of this Android app is to provide a possibility to (de-) activate WiFi according to preset rules. Triggers include cell location and a time schedule.
 
 ## Motivation
 By switching of the Wi-Fi when it is not required, so called tracking via Wi-Fi is avoided. Privacy Friendly WiFi Manager also saves battery life by automatically disabling your phone´s Wi-Fi in case it is not near an already known Wi-Fi network. As it is developed as a practical work for the SECUSO research group of the Technische Universtität Darmstadt in Germany, the main motivation lies in providing a useful app using minimum permissions. This also implies that we put a stress on preserving the user´s privacy.
-
-## Overview
-The intent of this Android app is to provide a possibility to (de-) activate WiFi according to preset rules.
-Triggers include cell location and a time schedule.
 
 ## Download and more Information
 
