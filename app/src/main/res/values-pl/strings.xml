@@ -62,7 +62,7 @@
 
     <!-- ABOUT STRINGS -->
     <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager pamięta nadajniki naziemne sieci internetowych\n\t(Zell-IDs) w zakresie, do którego połączony jest telefon z siecią bezprzewodową. Aplikacja próbuje nauczyć, stosuje się w miejscach,\n\tw których bezprzewodowe WLAN, bez pobierania lokalizacji GPS.</string>
-    <string name="about_whyprivacyfriendly"><b>prywatność:</b> ta "Privacy Friendly App" chroni prywatność poprzez możliwie najniższym
+    <string name="about_whyprivacyfriendly">Ta "Privacy Friendly App" chroni prywatność poprzez możliwie najniższym
 	zbierania danych. Cały danych odbywa się wyłącznie na telefon. Żadne dane nie są wysyłane do osoby trzeciej. Ponadto podjęto próbę
 	używać jak najmniej Uprawnienia.</string>
     <string name="about_author">Autorzy:</string>

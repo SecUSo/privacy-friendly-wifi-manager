@@ -144,7 +144,7 @@
     <string name="appwidget_text">Automatische WLAN-Steuerung:</string>
     <string name="help_category_privacy_info">Datenschutzinformationen</string>
     <string name="help_category_general">Allgemein</string>
-    <string name="help_welcome_summary">Diese App hilft dabei, automatisch das WLAN aus zu schalten, sobald Sie nicht in der Nähe eines von Ihnen genutzten WLANs sind.</string>
+    <string name="help_welcome_summary">Diese App hilft dabei, automatisch das WLAN auszuschalten, sobald Sie nicht in der Nähe eines von Ihnen genutzten WLANs sind.</string>
     <string name="help_category_howitworks">Funktionsweise</string>
     <string name="help_goal_desc">Das Hauptziel von Privacy Friendly WiFi-Manager ist zwar die Reduzierung der WLAN-basierten Standortverfolgung,         jedoch bewirkt die gezielte Abschaltung des WLANs auch eine Schonung des Akkus.</string>
     <string name="help_category_benefits">Vorteile</string>
