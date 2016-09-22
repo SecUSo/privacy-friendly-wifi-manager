@@ -14,6 +14,9 @@ import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
+/**
+ * Adapter for Settings.
+ */
 public class SettingsListAdapter extends RecyclerView.Adapter<SettingsItemViewHolder> {
     private List<AbstractSettingsEntry> settingsEntryList;
 

@@ -145,6 +145,9 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         return rootView;
     }
 
+    /**
+     * Hides the floating action button to add a new WiFi if permission not granted.
+     */
     public void updateFab() {
         Context context = StaticContext.getContext();
         if (context != null) {
@@ -152,6 +155,11 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
         }
     }
 
+    /**
+     * Hides the floating action button to add a new WiFi depending on parameter.
+     *
+     * @param enabled Visible if true, hidden otherwise.
+     */
     private void updateFab(boolean enabled) {
         if (fab != null) {
             fab.setEnabled(enabled);
@@ -183,16 +191,6 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
                 AlarmReceiver.fireAndSchedule(StaticContext.getContext());
             }
         }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     @Override

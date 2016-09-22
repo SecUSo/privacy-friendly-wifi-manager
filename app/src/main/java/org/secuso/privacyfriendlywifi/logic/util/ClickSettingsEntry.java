@@ -3,7 +3,7 @@ package org.secuso.privacyfriendlywifi.logic.util;
 import android.view.View;
 
 /**
- *
+ * Clickable settings entry.
  */
 public class ClickSettingsEntry extends AbstractSettingsEntry {
     public View.OnClickListener clickListener;

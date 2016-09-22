@@ -15,6 +15,9 @@ import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
+/**
+ * Adapter for WiFis in a dialog.
+ */
 public class DialogWifiListAdapter extends RecyclerView.Adapter<DialogWifiItemViewHolder> {
     private final IOnDialogClosedListener listener;
     private List<WifiLocationEntry> knownWifis;

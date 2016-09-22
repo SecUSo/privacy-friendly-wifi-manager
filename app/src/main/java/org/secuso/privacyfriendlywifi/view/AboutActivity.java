@@ -8,6 +8,9 @@ import android.widget.TextView;
 import secuso.org.privacyfriendlywifi.BuildConfig;
 import secuso.org.privacyfriendlywifi.R;
 
+/**
+ * About page.
+ */
 public class AboutActivity extends AppCompatActivity {
 
     @Override

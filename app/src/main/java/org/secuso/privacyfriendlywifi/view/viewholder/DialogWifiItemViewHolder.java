@@ -11,7 +11,7 @@ import org.secuso.privacyfriendlywifi.view.adapter.DialogWifiListAdapter;
 import secuso.org.privacyfriendlywifi.R;
 
 /**
- * ItemViewHolder for Wi-Fis in a dialog.
+ * ItemViewHolder for WiFis in a dialog.
  */
 public class DialogWifiItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private TextView ssidTextView;
@@ -20,6 +20,7 @@ public class DialogWifiItemViewHolder extends RecyclerView.ViewHolder implements
 
     /**
      * Constructs a new DialogWifiItemViewHolder.
+     *
      * @param itemView A parent view.
      */
     public DialogWifiItemViewHolder(View itemView) {
@@ -30,7 +31,8 @@ public class DialogWifiItemViewHolder extends RecyclerView.ViewHolder implements
 
     /**
      * Updates the view.
-     * @param conf A WifiLocationEntry for the item.
+     *
+     * @param conf    A WifiLocationEntry for the item.
      * @param adapter A DialogWifiListAdapter for onListItemClicked-Callback.
      */
     public void setupItem(WifiLocationEntry conf, DialogWifiListAdapter adapter) {

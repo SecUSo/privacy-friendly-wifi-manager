@@ -32,7 +32,7 @@ import java.util.Observer;
 import secuso.org.privacyfriendlywifi.R;
 
 /**
- * Fragment to create new time slots for Wi-Fi deactivation.
+ * Fragment to create new time slots for WiFi deactivation.
  */
 public class ScheduleFragment extends Fragment implements IOnDialogClosedListener, Observer {
     private IOnDialogClosedListener thisClass;
@@ -47,6 +47,10 @@ public class ScheduleFragment extends Fragment implements IOnDialogClosedListene
         this.thisClass = this;
     }
 
+    /**
+     * Creates a new instance of the ScheduleFragment.
+     * @return A new ScheduleFragment.
+     */
     public static ScheduleFragment newInstance() {
         ScheduleFragment fragment = new ScheduleFragment();
         Bundle args = new Bundle();

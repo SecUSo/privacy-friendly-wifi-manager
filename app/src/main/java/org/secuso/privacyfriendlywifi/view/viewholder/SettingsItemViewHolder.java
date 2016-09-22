@@ -12,6 +12,9 @@ import org.secuso.privacyfriendlywifi.logic.util.StaticContext;
 
 import secuso.org.privacyfriendlywifi.R;
 
+/**
+ * ItemViewHolder for Settings.
+ */
 public class SettingsItemViewHolder extends RecyclerView.ViewHolder {
     private TextView name;
     private TextView desc;

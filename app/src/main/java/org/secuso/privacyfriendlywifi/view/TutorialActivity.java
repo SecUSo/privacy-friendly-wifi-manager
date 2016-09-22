@@ -29,6 +29,9 @@ import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
+/**
+ * Shows a tutorial using a ViewPager to host the contents.
+ */
 public class TutorialActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.

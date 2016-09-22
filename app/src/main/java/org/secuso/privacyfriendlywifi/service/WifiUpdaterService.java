@@ -63,8 +63,10 @@ public class WifiUpdaterService extends Service {
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
 
+        // register receiver as callback handler for WiFi scan
         this.registerReceiver(receiver, filter);
 
+        // start actual scan
         WifiHandler.getWifiManager(this).startScan();
 
         return ret;

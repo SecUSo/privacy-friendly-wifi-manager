@@ -21,6 +21,9 @@ import java.util.List;
 
 import secuso.org.privacyfriendlywifi.R;
 
+/**
+ * Used to show details of a WiFi (cells and MACs).
+ */
 public class DetailsActivity extends AppCompatActivity {
 
     @Override

@@ -16,7 +16,7 @@ import java.util.Locale;
 import secuso.org.privacyfriendlywifi.R;
 
 /**
- *
+ * ItemViewHolder for WifiLocationEntry.
  */
 public class WifiItemViewHolder extends RemovableItemViewHolder<WifiLocationEntry> {
     private TextView ssidTextView;
@@ -46,6 +46,8 @@ public class WifiItemViewHolder extends RemovableItemViewHolder<WifiLocationEntr
         String numCellsText = context.getString(R.string.wifi_num_cells_text);
 
         this.ssidTextView.setText(String.format(Locale.getDefault(), ssidText, "".equals(entry.getSsid().trim()) ? context.getString(R.string.wifi_hidden_wifi_text) : entry.getSsid()));
+
+        // switch text if more than one MAC
         if (entry.getCellLocationConditions().size() > 1) {
             this.bssidTextView.setText(String.format(Locale.getDefault(), multiBssidText, entry.getCellLocationConditions().size()));
         } else {

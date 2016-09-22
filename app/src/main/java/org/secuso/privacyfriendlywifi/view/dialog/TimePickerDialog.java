@@ -25,7 +25,7 @@ import java.util.Locale;
 import secuso.org.privacyfriendlywifi.R;
 
 /**
- *
+ * A picker dialog for start & end time and a title.
  */
 public class TimePickerDialog implements IOnDialogClosedListener, DialogInterface.OnCancelListener {
     private int startHour = 22;

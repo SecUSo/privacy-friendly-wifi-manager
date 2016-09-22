@@ -30,8 +30,10 @@ public class HelpFragment extends PreferenceFragmentCompat {
             actionBar.setSubtitle(R.string.help_actionbar_string);
         }
 
+        // load entries for help page
         addPreferencesFromResource(R.xml.help_elements);
 
+        // handler for tutorial
         Preference launchTutorialPref = findPreference("launchTutorial");
         launchTutorialPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {

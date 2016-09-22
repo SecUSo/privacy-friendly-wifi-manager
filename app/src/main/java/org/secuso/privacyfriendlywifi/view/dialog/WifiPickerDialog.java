@@ -30,7 +30,7 @@ import java.util.List;
 import secuso.org.privacyfriendlywifi.R;
 
 /**
- *
+ * Picker for WiFi networks.
  */
 public class WifiPickerDialog implements IOnDialogClosedListener, DialogInterface.OnCancelListener {
     private static final String TAG = WifiPickerDialog.class.getSimpleName();

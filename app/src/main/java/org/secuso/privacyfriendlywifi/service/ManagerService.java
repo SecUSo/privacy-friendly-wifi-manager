@@ -91,6 +91,10 @@ public class ManagerService extends IntentService {
         WakefulBroadcastReceiver.completeWakefulIntent(intent);
     }
 
+    /**
+     * Updates the WiFiLocationEntry objects with new cells and MACs.
+     * @return True if an entry has been changed, false otherwise.
+     */
     private boolean updateCells() {
         WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
         WifiInfo currentConnection = wifiManager.getConnectionInfo();
@@ -116,6 +120,10 @@ public class ManagerService extends IntentService {
         return false;
     }
 
+    /**
+     * Checks the neighboring cells for known cells.
+     * @return True if cell check has been positive, false otherwise.
+     */
     private boolean checkCells() {
         PrimitiveCellInfoTreeSet allCells = PrimitiveCellInfo.getAllCells(this);
         boolean respectSignalStrength = SettingsEntry.shouldRespectSignalStrength(this);
@@ -138,6 +146,10 @@ public class ManagerService extends IntentService {
         return false;
     }
 
+    /**
+     * Checks the ScheduleEntry list for active entries.
+     * @return True if an entry is active.
+     */
     private boolean checkSchedule() {
         List<ScheduleEntry> scheduleEntries;
 

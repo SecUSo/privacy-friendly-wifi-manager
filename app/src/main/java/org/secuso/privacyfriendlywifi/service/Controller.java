@@ -6,7 +6,7 @@ import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver;
 
 /**
- *
+ * Controller to (un-) register the service.
  */
 public class Controller {
     private static final String TAG = Controller.class.getSimpleName();

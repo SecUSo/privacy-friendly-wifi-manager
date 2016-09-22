@@ -12,6 +12,9 @@ import org.secuso.privacyfriendlywifi.view.viewholder.ScheduleItemViewHolder;
 
 import secuso.org.privacyfriendlywifi.R;
 
+/**
+ * Adapter for ScheduleEntry.
+ */
 public class ScheduleAdapter extends RemovableRecyclerViewAdapter<ScheduleEntry> {
 
     public ScheduleAdapter(int layoutResId, IListHandler<ScheduleEntry> scheduleListHandler, RecyclerView recyclerView, FloatingActionButton fab) {

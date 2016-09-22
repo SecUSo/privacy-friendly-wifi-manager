@@ -10,7 +10,7 @@ import android.view.View;
 import secuso.org.privacyfriendlywifi.R;
 
 /**
- *
+ * Divider drawable for lists.
  */
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable divider;

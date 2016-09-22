@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Adapter for lists with deletable items.
  */
 public class RemovableRecyclerViewAdapter<EntryType> extends RecyclerView.Adapter<RemovableItemViewHolder<EntryType>> implements IOnDeleteModeChangedListener, View.OnKeyListener {
     private List<RemovableItemViewHolder<EntryType>> children;

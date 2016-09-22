@@ -12,6 +12,9 @@ import org.secuso.privacyfriendlywifi.view.viewholder.WifiItemViewHolder;
 
 import secuso.org.privacyfriendlywifi.R;
 
+/**
+ * Adapter for WifiLocationEntry.
+ */
 public class WifiListAdapter extends RemovableRecyclerViewAdapter<WifiLocationEntry> {
 
     public WifiListAdapter(int viewItemLayoutId, IListHandler<WifiLocationEntry> wifiListHandler, RecyclerView recyclerView, FloatingActionButton fab) {

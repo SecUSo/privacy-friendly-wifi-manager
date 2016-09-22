@@ -157,6 +157,9 @@ public class SettingsFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Class to show developer options that are normally hidden.
+     */
     class DeveloperClickListener implements View.OnClickListener {
         int clicked = 0;
         int clicksNeeded = 6;

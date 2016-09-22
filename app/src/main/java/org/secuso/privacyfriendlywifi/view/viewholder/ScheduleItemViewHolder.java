@@ -15,7 +15,7 @@ import java.util.Locale;
 import secuso.org.privacyfriendlywifi.R;
 
 /**
- *
+ * ItemViewHolder for ScheduleEntry.
  */
 public class ScheduleItemViewHolder extends RemovableItemViewHolder<ScheduleEntry> {
     private TextView titleTextView;

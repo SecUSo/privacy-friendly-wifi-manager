@@ -43,11 +43,12 @@ import secuso.org.privacyfriendlywifi.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final static String TAG = MainActivity.class.getSimpleName();
-    public final static int DYN_PERMISSION = 0;
-    private Menu menu;
-    private Switch mainSwitch;
 
-    private boolean isDrawerLocked = false;
+    public final static int DYN_PERMISSION = 0; // used to request coarse location permission
+    private Menu menu; // menu in navigation drawer
+    private Switch mainSwitch; // switch in actionbar to en-/disable service
+
+    private boolean isDrawerLocked = false; // used for tablet layout to lock drawer
 
     private Fragment currentFragment;
 
@@ -114,6 +115,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         updateNavigationDrawerSelection(R.id.nav_whitelist);
     }
 
+    /**
+     * Highlights the correct item in the drawer, since standard implementation does not work reliably.
+     * @param id menu element id to select
+     */
     private void updateNavigationDrawerSelection(int id) {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
@@ -124,6 +129,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     * Hides the wifi whitelist item from the menu if permission not granted.
+     */
     private void updateNavigationDrawerVisibility() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
@@ -156,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         final MainActivity self = this;
 
+        // setup main switch for toggling service
         this.mainSwitch.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -199,6 +208,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Show/hide floating action bar in wifi fragment if permission is missing.
+     */
     private void updateWifiViewComponents() {
         if (this.currentFragment != null && this.currentFragment instanceof WifiListFragment) {
             WifiListFragment wfrag = (WifiListFragment) this.currentFragment;
@@ -212,7 +224,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case DYN_PERMISSION: {
                 if (grantResults.length >= 3) {
                     if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                        // we got wifi permissions - but we do not care at the moment
+                        // we got wifi permissions
+                        // TODO we do not care about this at the moment
                         updateWifiViewComponents();
 
                         /*
@@ -321,10 +334,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    /**
+     * Switches to the passed fragment.
+     * @param fragmentClass Fragment to switch to.
+     */
     private void switchToFragment(Class<? extends Fragment> fragmentClass) {
         this.switchToFragment(fragmentClass, false);
     }
 
+    /**
+     * Switches to the passed fragment.
+     * @param fragmentClass Fragment to switch to.
+     * @param force Commit allowing state loss if true.
+     */
     private void switchToFragment(Class<? extends Fragment> fragmentClass, boolean force) {
         try {
             if (fragmentClass != null) {
