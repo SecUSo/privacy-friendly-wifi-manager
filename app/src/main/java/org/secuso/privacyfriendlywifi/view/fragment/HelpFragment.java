@@ -12,8 +12,6 @@ import org.secuso.privacyfriendlywifi.view.TutorialActivity;
 
 import secuso.org.privacyfriendlywifi.R;
 
-;
-
 /**
  * The help fragment. Note that this does not have a related xml file.
  */
@@ -35,13 +33,15 @@ public class HelpFragment extends PreferenceFragmentCompat {
 
         // handler for tutorial
         Preference launchTutorialPref = findPreference("launchTutorial");
-        launchTutorialPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                Intent startAboutIntent = new Intent(getContext(), TutorialActivity.class);
-                startAboutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                self.startActivity(startAboutIntent);
-                return true;
-            }
-        });
+        if (launchTutorialPref != null) {
+            launchTutorialPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent startAboutIntent = new Intent(getContext(), TutorialActivity.class);
+                    startAboutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    self.startActivity(startAboutIntent);
+                    return true;
+                }
+            });
+        }
     }
 }

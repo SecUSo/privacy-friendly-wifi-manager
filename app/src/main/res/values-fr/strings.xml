@@ -82,8 +82,8 @@
     <string name="help_category_tutorial_desc">Affiche le tutoriel.</string>
     <string name="help_actionbar_string">Aide</string>
     <string name="help_actionbar_substring_welcome">Bienvenue à Privacy Friendly WiFi-Manager</string>
-    
-    
+
+
     <!-- TUTORIAL -->
     <string name="help_actionbar_substring_step">Pas %1$d</string>
     <string name="help_actionbar_string_basics">Tutoriel: Bases</string>
@@ -144,4 +144,5 @@
     <string name="help_category_general">Généralement</string>
     <string name="help_category_howitworks">Comment cela fonctionne</string>
     <string name="help_category_privacy_info">Privacy information</string>
+    <string name="help_content_step0_cm"><b>Note pour les utilisateurs de CyanogenMod (ou les utilisateurs de distributions de CyanogenMod):</b>\nEn raison d\'un bogue dans CyanogenMod 13 vous devez activer le service de localisation, également connu sous le GPS, dans vos paramètres (en plus de l\'autorisation de localisation grossière). Sinon, aucun réseau WiFi peuvent être trouvés.</string>
 </resources>

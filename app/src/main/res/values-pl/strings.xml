@@ -144,5 +144,6 @@ na przykład).\r\n\r\nnaciśnij przycisk \'START\' Aby rozpocząć wycieczkę.
     <string name="help_category_general">Ogólnie</string>
     <string name="help_category_howitworks">Jak to działa</string>
     <string name="help_category_privacy_info">Informacje o prywatności</string>
+    <string name="help_content_step0_cm"><b>Uwaga dla użytkowników CyanogenMod (lub użytkowników rozkładów CyanogenMod):</b>\nZ powodu błędu w CyanogenMod 13 trzeba włączyć usługę lokalizacji, znany również jako GPS w ustawieniach (oprócz grubej zgody lokalizacji). W przeciwnym razie, nie ma sieci Wi-Fi można znaleźć.</string>
 
 </resources>

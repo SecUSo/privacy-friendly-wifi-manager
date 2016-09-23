@@ -149,4 +149,5 @@
     <string name="help_goal_desc">Das Hauptziel von Privacy Friendly WiFi-Manager ist zwar die Reduzierung der WLAN-basierten Standortverfolgung,         jedoch bewirkt die gezielte Abschaltung des WLANs auch eine Schonung des Akkus.</string>
     <string name="help_category_benefits">Vorteile</string>
     <string name="help_benefits_desc">Durch gezieltes Abschalten der WLAN-Funktion bei Nichtnutzung wird sogenanntes Tracking via WLAN effektiv verhindert. Privacy Friendly WiFi-Manager schont außerdem den Akku, indem WLAN abgeschaltet wird, sofern man sich nicht in der Nähe eines bekannten WLANs befindet.</string>
+    <string name="help_content_step0_cm"><b>Anmerkung für CyanogenMod-Nutzer (oder Nutzer von CyanogenMod-basierte Distributionen):</b>\nDurch einen Bug in CyanogenMod 13 muss der Standortdienst, auch bekannt als GPS, in den Einstellungen aktiviert sein (zusätzlich zur Berechtigung zum Zugriff auf den ungefähren Standort). Andernfalls werden keine WLAN-Netze gefunden.</string>
 </resources>

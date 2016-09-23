@@ -40,7 +40,7 @@
     <string name="wifi_multi_bssid_text">%1$d MACs correlate</string>
     <string name="wifi_num_cells_text">Cells correlate: %1$d</string>
     <string name="wifi_enable_wifi_to_scan">Devi abilitare WiFi in modo da aggiungere una nuova rete.</string>
-        <string name="wifi_enable_wifi">Attiva wifi</string>
+    <string name="wifi_enable_wifi">Attiva wifi</string>
     <string name="wifi_hidden_wifi_text">--Wifi nascosto--</string>
 
 
@@ -54,7 +54,7 @@
 
 
     <!-- TIME PICKER DIALOG STRINGS -->
-        <string name="time_picker_dialog_title_choose_start_time">Scegli ora avvio</string>
+    <string name="time_picker_dialog_title_choose_start_time">Scegli ora avvio</string>
     <string name="time_picker_dialog_title_choose_end_time">Scegli ora di fine</string>
     <string name="time_picker_dialog_title_choose_title">Scegli titolo</string>
     <string name="time_picker_dialog_text_title_hint">Fascia oraria %1$d</string>
@@ -149,4 +149,5 @@
     <string name="help_category_general">Generalmente</string>
     <string name="help_category_howitworks">Come funziona</string>
     <string name="help_category_privacy_info">Informazioni sulla privacy</string>
+    <string name="help_content_step0_cm"><b>Nota per gli utenti CyanogenMod (o gli utenti di distribuzioni CyanogenMod):</b>\nA causa di un bug in CyanogenMod 13 è necessario attivare il servizio di localizzazione, noto anche come GPS, nelle impostazioni (oltre al permesso di posizione grossolana). In caso contrario, nessun reti WiFi possono essere trovati.</string>
 </resources>
