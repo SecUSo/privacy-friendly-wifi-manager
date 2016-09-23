@@ -20,6 +20,10 @@ Licensed under the [Apache License Version 2.0](https://github.com/SecUSo/privac
 The icons used in the nagivation drawer are licensed under the [CC BY 2.5] (http://creativecommons.org/licenses/by/2.5/). In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo and the header in the navigation drawer) copyright [Technische Universtität Darmstadt] (www.tu-darmstadt.de) (2016).
 
 ##Contributors
+App-Icon: <br />
+Markus Hau
+
+GitHub-Users:<br />
 bigwern<br />
 jonny08152<br />
 patrickjauernig
