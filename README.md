@@ -21,7 +21,7 @@ The icons used in the nagivation drawer are licensed under the [CC BY 2.5] (http
 
 ##Contributors
 App-Icon: <br />
-Markus Hau
+Markus Hau<br /><br />
 
 GitHub-Users:<br />
 bigwern<br />
