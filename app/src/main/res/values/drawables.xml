@@ -5,5 +5,4 @@
     <item name="ic_menu_help" type="drawable">@android:drawable/ic_menu_help</item>
     <item name="ic_menu_whitelist" type="drawable">@drawable/ic_action_wifi</item>
     <item name="ic_add" type="drawable">@drawable/ic_action_add</item>
-    <item name="ic_drawer_secuso" type="drawable">@drawable/drawer</item>
 </resources>
