@@ -24,19 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="org.secuso.privacyfriendlywifi.view.tutorial.TutorialActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name="org.secuso.privacyfriendlywifi.view.AboutActivity"
             android:parentActivityName="org.secuso.privacyfriendlywifi.view.MainActivity"
             android:label="@string/fragment_about"/>
-        <activity
-            android:name="org.secuso.privacyfriendlywifi.view.TutorialActivity"
-            android:label="@string/title_activity_help"
-            android:parentActivityName="org.secuso.privacyfriendlywifi.view.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlywifi.view.MainActivity" />
-        </activity>
         <activity
             android:name="org.secuso.privacyfriendlywifi.view.DetailsActivity"
             android:label="@string/title_activity_details"

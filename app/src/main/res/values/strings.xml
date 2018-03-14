@@ -13,6 +13,12 @@
     <string name="button_finish">Finish</string>
     <string name="button_cancel">Cancel</string>
 
+    <string name="okay">Okay</string>
+    <string name="viewhelp">View Help</string>
+    <string name="main_button_welcomedialog">Show Welcome</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+
 
     <!-- DRAWER ENTRIES -->
     <string name="fragment_wifilist">Allowed WiFi Networks</string>
