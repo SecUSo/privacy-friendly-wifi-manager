@@ -41,7 +41,7 @@ import secuso.org.privacyfriendlywifi.R;
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
  *
  * @author Karola Marky
- * @version 20180314
+ * @version 20180315
  */
 
 public class TutorialActivity extends AppCompatActivity {
@@ -105,7 +105,8 @@ public class TutorialActivity extends AppCompatActivity {
                         R.layout.fragment_tutorial_step1,
                         R.layout.fragment_tutorial_step2,
                         R.layout.fragment_tutorial_step3,
-                        R.layout.fragment_tutorial_step4,}
+                        R.layout.fragment_tutorial_step4,
+                        R.layout.fragment_tutorial_step5,}
 
         ;
 

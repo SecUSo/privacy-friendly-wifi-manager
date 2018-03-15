@@ -13,12 +13,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="@string/help_actionbar_substring_step2"
+            android:text="@string/help_actionbar_substring_step1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_title"
-            android:textStyle="bold"  />
+            android:textStyle="bold"
+            />
 
         <ImageView
             android:layout_width="250dp"
@@ -26,10 +27,10 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/basics_step2_selectwifi_medium" />
+            android:src="@drawable/help_onoff_medium" />
 
         <TextView
-            android:text="@string/help_content_step2_description"
+            android:text="@string/help_content_step1_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

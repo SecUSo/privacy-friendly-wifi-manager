@@ -91,18 +91,22 @@
 
 
     <!-- TUTORIAL -->
+    <string name="welcome">Willkommen</string>
     <string name="help_actionbar_string_basics">Tutorial: Grundlagen</string>
     <string name="help_actionbar_substring_step">Schritt %1$d</string>
     <string name="help_actionbar_substring_step0">Berechtigung erteilen</string>
     <string name="help_actionbar_substring_step1">Manager einschalten</string>
-    <string name="help_actionbar_substring_step2">Ein WLAN auswählen</string>
-    <string name="help_actionbar_substring_step3">Ein WLAN löschen</string>
-    <string name="help_content_step0_description">Eine Berechtigung ist nötig um Informationen von umliegenden Mobilfunktürmen zu erhalten. Um ortsbasierte Funktionen von Wifi-Manager zu nutzen, müssen Sie, beginnend mit Android 6, den Zugriff auf den Standort erlauben. Die Berechtigung kann auch später in den Einstellungen erneut angefordert werden.</string>
-    <string name="help_content_step1_description">Um den WiFi-Manager zu benutzen, muss dieser erst eingeschaltet werden. Dazu einfach den On/Off-Schalter betätigen. Damit kann dieser Zellen erlernen und auch das WLAN des Geräts steuern.</string>
-    <string name="help_content_step2_description">Ein bekanntes WLAN kann einfach in die gemanagte Liste aufgenommen werden, indem man unten auf den Addbutton drückt und anschließend das WLAN aus der Liste auswählt.</string>
-    <string name="help_content_step3_description">Um ein WLAN zu löschen, genügt es einfach lange auf die Liste der WLANs zu drücken. Im Anschluss kann ein WLAN durch das Berühren der Mülltonne neben dem Namen gelöscht werden.</string>
-    <string name="help_welcome_description"><b>Willkommen zum Privacy Friendly WiFi-Manager!</b>\r\nDiese App hilft dabei, automatisch das WLAN aus zu schalten, sobald Sie nicht in der Nähe eines von Ihnen genutzten WLANs sind.\r\n\r\n<b>So funktioniert\'s:</b> Während Sie mit ihrem Mobilgerät mit einem WLAN verbunden sind, sind sie ebenfalls von Sendemasten ihres Mobilfunkanbieters umgeben, die eine Funkzelle aufspannen. Privacy Friendly WiFi-Manager erinnert sich daran, welche Funkzellen nahe Ihrem genutzen WLAN liegen, um das z.B. direkt anzuschalten, wenn Sie z.B. nach Hause kommen, oder Ihr Haus verlassen (wenn Sie zur Arbeit gehen).\r\n\r\nÜber die Stundenplanfunktion können Sie weiterhin Zeiträume definieren, in denen das WLAN automatisch abgeschaltet werden soll (nachts z.B.).\r\n\r\nDrücken Sie \'START\' um eine Tour zu beginnen.
+    <string name="help_actionbar_substring_step2">WLAN auswählen</string>
+    <string name="help_actionbar_substring_step3">So funktioniert\'s</string>
+    <string name="help_content_step0_description">Eine Berechtigung ist nötig um Informationen von umliegenden Funkmasten zu erhalten. Um ortsbasierte Funktionen von Wifi-Manager zu nutzen, müssen Sie den Zugriff auf den Standort erlauben, wenn Sie mind. Android 6 installiert haben. Die Berechtigung kann auch später erneut angefordert werden.</string>
+    <string name="help_content_step1_description">Um den WiFi-Manager zu benutzen, muss dieser erst eingeschaltet werden. Nutzen Sie dafür den Aus/Ausschalter. Damit kann dieser Zellen erlernen und auch das WLAN des Geräts steuern.</string>
+    <string name="help_content_step2_description">Ein bekanntes WLAN kann in die gemanagte Liste aufgenommen werden, indem man unten auf den Addbutton drückt und anschließend das WLAN aus der Liste auswählt.</string>
+    <string name="help_content_step3_description">Während Sie mit einem WLAN verbunden sind, sind sie ebenfalls von Sendemasten ihres Mobilfunkanbieters umgeben, die eine Funkzelle aufspannen. Privacy Friendly WiFi-Manager speichert, welche Funkzellen nahe Ihrem genutzen WLAN liegen, um dieses für Sie abhängig vom Ihrem Standort an- bzw. auszuschalten. Über die Stundenplanfunktion können Sie außerdem Zeiträume definieren, in denen das WLAN automatisch abgeschaltet werden soll.
     </string>
+    <string name="help_welcome_description">Willkommen zum Privacy Friendly WiFi-Manager! Diese App schaltet automatisch das WLAN ein oder aus abhängig davon, wo Sie sich befinden.</string>
+    <string name="help_actionbar_substring_step5">SIM Karte</string>
+    <string name="help_content_step5_description">Um Ihr WLAN basierend auf den Funkmasten mit denen Ihr Gerät verbunden ist zu steuern, muss Ihr Gerät eine SIM-Karte enthalten. Andernfalls wird keine Verbindung zu Funkmasten aufgebaut.</string>
+    <string name="help_content_step0_cm">Anmerkung für CyanogenMod-basierte Distributionen): Durch einen Bug in CM 13 muss der Standortdienst (GPS) in den Einstellungen aktiviert sein. Andernfalls werden keine WLAN-Netze gefunden.</string>
 
 
     <!-- NOTIFICATION -->
@@ -149,5 +153,4 @@
     <string name="help_goal_desc">Das Hauptziel von Privacy Friendly WiFi-Manager ist zwar die Reduzierung der WLAN-basierten Standortverfolgung,         jedoch bewirkt die gezielte Abschaltung des WLANs auch eine Schonung des Akkus.</string>
     <string name="help_category_benefits">Vorteile</string>
     <string name="help_benefits_desc">Durch gezieltes Abschalten der WLAN-Funktion bei Nichtnutzung wird sogenanntes Tracking via WLAN effektiv verhindert. Privacy Friendly WiFi-Manager schont außerdem den Akku, indem WLAN abgeschaltet wird, sofern man sich nicht in der Nähe eines bekannten WLANs befindet.</string>
-    <string name="help_content_step0_cm"><b>Anmerkung für CyanogenMod-Nutzer (oder Nutzer von CyanogenMod-basierte Distributionen):</b>\nDurch einen Bug in CyanogenMod 13 muss der Standortdienst, auch bekannt als GPS, in den Einstellungen aktiviert sein (zusätzlich zur Berechtigung zum Zugriff auf den ungefähren Standort). Andernfalls werden keine WLAN-Netze gefunden.</string>
 </resources>
