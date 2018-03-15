@@ -102,14 +102,17 @@
     <string name="help_actionbar_substring_step0">Granting Permissions</string>
     <string name="help_actionbar_substring_step1">Enabling the Manager</string>
     <string name="help_actionbar_substring_step2">Adding a Wi-Fi</string>
-    <string name="help_actionbar_substring_step3">Delete a Wi-Fi</string>
+    <string name="help_actionbar_substring_step3">Functionality</string>
+    <string name="welcome">Welcome</string>
     <string name="help_content_step0_description">A permission is needed to retrieve nearby cell information. To use location-based features of WiFi-Manager, starting with Android 6, you have to grant access to your coarse location. If you want to use this functionality, you can request the necessary permission later.</string>
     <string name="help_content_step1_description">To activate the WiFi-Manager, you have to enable it by toggling the on/off button. This enables its learning feature and collects the cell ids around your Wi-Fi. It also lets WiFi-Manager take control of toggling your phone\'s Wi-Fi on/off.</string>
     <string name="help_content_step2_description">Now lets add a known WiFi to the list of managed WiFis. Touch the add-button on the bottom and then select a Wi-Fi in your range.</string>
-    <string name="help_content_step3_description">To delete a Wi-Fi in your list, simply press a little longer on the Wi-Fi list. Then delete a Wi-Fi by pressing on the trashcan symbol beside its name.</string>
-    <string name="help_welcome_description"><b>Welcome to Privacy Friendly WiFi-Manager!</b>\r\nThis app helps you automatically turning on/off your Wi-Fi while you are not near a known WiFi.\r\n\r\n<b>How it works:</b> While you are sitting in an area with a WiFi, you are surrounded by radio masts providing you a \'cell\'
-        for your mobile phone. WiFi-Manager remembers which cell is near your Wi-Fi, to turn it right on when you are coming home, or turning it off, when you are leaving (e.g. work/school).\r\n\r\nBy using the schedule, you can also define time slots, when your phone\'s Wi-Fi should automatically be turned off (e.g. at night).\r\n\r\nTap \'start\' to take a tour.
+    <string name="help_content_step3_description">While you are sitting in an area with a WiFi, you are surrounded by radio masts providing you a \'cell\'
+        for your mobile phone. WiFi-Manager remembers which cell is near your Wi-Fi, to turn it right on when you are coming home, or turning it off, when you are leaving (e.g. work/school). By using the schedule, you can also define time slots, when your phone\'s Wi-Fi should automatically be turned off (e.g. at night).</string>
+    <string name="help_welcome_description">Welcome to Privacy Friendly WiFi-Manager! This app helps you automatically turning on/off your WiFi while you are not near a known WiFi.
     </string>
+    <string name="help_content_step0_cm">Note for CyanogenMod-based distributions: Due to a bug in CM 13 you have to enable the location service (GPS). Otherwise, no WiFi networks can be found.</string>
+
 
     <!-- NOTIFICATION -->
     <string name="notification_content_text">An unmanaged Wi-Fi connection has been established</string>
@@ -156,6 +159,5 @@
     <string name="help_goal_desc">The main goal is to avoid location tracking via Wi-Fi, but WiFi-Manager also saves battery life by automatically disabling your phones WiFi when it is not near a already known wireless network.</string>
     <string name="help_category_benefits">Benefits</string>
     <string name="help_benefits_desc">By switching of the Wi-Fi when it is not required, so called tracking via Wi-Fi is avoided. Privacy Friendly WiFi Manager also saves battery life by automatically disabling your phone´s Wi-Fi in case it is not near an already known Wi-Fi network.</string>
-    <string name="help_content_step0_cm"><b>Note for CyanogenMod users (or users of CyanogenMod-based distributions):</b>\n Due to a bug in CyanogenMod 13 you have to enable the location service, also known as GPS, in your settings (in addition to the coarse location permission). Otherwise, no WiFi networks can be found.</string>
 
 </resources>

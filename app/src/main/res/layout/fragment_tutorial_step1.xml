@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="@string/help_actionbar_substring_step0"
+            android:text="@string/help_actionbar_substring_step3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
@@ -21,27 +21,13 @@
             android:textStyle="bold"  />
 
         <ImageView
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/basics_step0_permission" />
+            android:layout_width="@dimen/img_width_height"
+            android:layout_height="@dimen/img_width_height"
+            android:background="@mipmap/ic_drawer"
+            />
 
         <TextView
-            android:text="@string/help_content_step0_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="@dimen/desc_padding"
-            android:paddingRight="@dimen/desc_padding"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_desc" />
-
-        <TextView
-            android:text="@string/help_content_step0_cm"
+            android:text="@string/help_content_step3_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
