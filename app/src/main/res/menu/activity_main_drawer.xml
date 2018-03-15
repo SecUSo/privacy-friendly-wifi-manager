@@ -13,6 +13,10 @@
             android:id="@+id/nav_schedule"
             android:icon="@drawable/ic_menu_schedule"
             android:title="@string/fragment_schedule" />
+        <item
+            android:id="@+id/nav_tutorial"
+            android:icon="@drawable/ic_menu_tutorial"
+            android:title="@string/help_category_tutorial" />
     </group>
     <group
         android:id="@+id/nav_lower"
