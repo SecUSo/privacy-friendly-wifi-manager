@@ -78,11 +78,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // show help activity on first run
         if (firstRun) {
-            Logger.d(TAG, "First run.");
-            Intent startTutorialIntent = new Intent(this, TutorialActivity.class);
-            startTutorialIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            this.startActivity(startTutorialIntent);
-            this.overridePendingTransition(0, 0); // deactivate the transition between empty activity and help activity
 
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_WIFI_STATE,
