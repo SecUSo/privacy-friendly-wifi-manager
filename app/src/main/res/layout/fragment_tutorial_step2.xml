@@ -22,8 +22,9 @@
 
         <ImageView
             android:layout_width="@dimen/img_width_height"
-            android:layout_height="@dimen/img_width_height"
-            android:background="@mipmap/ic_drawer"
+            android:layout_height="85dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/sim"
             />
 
         <TextView
