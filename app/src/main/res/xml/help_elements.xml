@@ -27,11 +27,9 @@
             android:selectable="false"/>
     </PreferenceCategory>
 
-    <!--<PreferenceCategory android:title="@string/help_category_tutorial">
+    <PreferenceCategory android:title="@string/help_category_cm">
         <Preference
-            android:key="launchTutorial"
-            android:summary="@string/help_category_tutorial_desc"
-            android:title="@string/help_category_tutorial_title"/>
-    </PreferenceCategory>-->
+            android:summary="@string/help_content_step0_cm"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

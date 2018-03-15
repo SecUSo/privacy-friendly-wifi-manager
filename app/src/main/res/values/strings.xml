@@ -95,6 +95,9 @@
     <string name="help_category_tutorial_title">Tutorial</string>
     <string name="help_category_tutorial_desc">Shows the tutorial.</string>
     <string name="help_category_privacy_info">Privacy Info</string>
+    <string name="help_category_cm">CyanogenMod-based Distribution</string>
+    <string name="help_content_step0_cm">Due to a bug in CM 13 you have to enable the location service (GPS). Otherwise, no WiFi networks can be found.</string>
+
 
     <!-- TUTORIAL -->
     <string name="help_actionbar_string_basics">Tutorial: Basics</string>
@@ -114,7 +117,6 @@
         for your mobile phone. WiFi-Manager remembers which cell is near your Wi-Fi, to turn it right on when you are coming home, or turning it off, when you are leaving (e.g. work/school). By using the schedule, you can also define time slots, when your phone\'s Wi-Fi should automatically be turned off (e.g. at night).</string>
     <string name="help_welcome_description">Welcome to Privacy Friendly WiFi-Manager! This app helps you automatically turning on/off your WiFi while you are not near a known WiFi.
     </string>
-    <string name="help_content_step0_cm">Note for CyanogenMod-based distributions: Due to a bug in CM 13 you have to enable the location service (GPS). Otherwise, no WiFi networks can be found.</string>
 
 
     <!-- NOTIFICATION -->

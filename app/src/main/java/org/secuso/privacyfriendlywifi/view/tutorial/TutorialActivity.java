@@ -105,7 +105,7 @@ public class TutorialActivity extends AppCompatActivity {
                         R.layout.fragment_tutorial_step1,
                         R.layout.fragment_tutorial_step2,
                         R.layout.fragment_tutorial_step3,
-                        R.layout.fragment_tutorial_step4,
+                        //R.layout.fragment_tutorial_step4,
                         R.layout.fragment_tutorial_step5,}
 
         ;

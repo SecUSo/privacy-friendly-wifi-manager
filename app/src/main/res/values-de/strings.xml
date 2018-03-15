@@ -88,6 +88,10 @@
     <string name="help_category_tutorial">Tutorial</string>
     <string name="help_category_tutorial_title">Tutorial</string>
     <string name="help_category_tutorial_desc">Zeigt das Tutorial erneut an.</string>
+    <string name="help_category_cm">CyanogenMod-basierte Distributionen</string>
+    <string name="help_content_step0_cm">Durch einen Bug in CM 13 muss der Standortdienst (GPS) in den Einstellungen aktiviert sein. Andernfalls werden keine WLAN-Netze gefunden.</string>
+
+
 
 
     <!-- TUTORIAL -->
@@ -100,14 +104,12 @@
     <string name="help_actionbar_substring_step3">So funktioniert\'s</string>
     <string name="help_content_step0_description">Eine Berechtigung ist nötig um Informationen von umliegenden Funkmasten zu erhalten. Um ortsbasierte Funktionen von Wifi-Manager zu nutzen, müssen Sie den Zugriff auf den Standort erlauben, wenn Sie mind. Android 6 installiert haben. Die Berechtigung kann auch später erneut angefordert werden.</string>
     <string name="help_content_step1_description">Um den WiFi-Manager zu benutzen, muss dieser erst eingeschaltet werden. Nutzen Sie dafür den Aus/Ausschalter. Damit kann dieser Zellen erlernen und auch das WLAN des Geräts steuern.</string>
-    <string name="help_content_step2_description">Ein bekanntes WLAN kann in die gemanagte Liste aufgenommen werden, indem man unten auf den Addbutton drückt und anschließend das WLAN aus der Liste auswählt.</string>
+    <string name="help_content_step2_description">Sie können ein bekanntes WLAN, mit dem Sie verbunden sein möchten, über den \"+\"-Button hinzufügen. Privacy Friendly WiFi-Manager schaltet dann das WLAN Ihres Geräts an, wenn Sie in dessen Nähe sind.</string>
     <string name="help_content_step3_description">Während Sie mit einem WLAN verbunden sind, sind sie ebenfalls von Sendemasten ihres Mobilfunkanbieters umgeben, die eine Funkzelle aufspannen. Privacy Friendly WiFi-Manager speichert, welche Funkzellen nahe Ihrem genutzen WLAN liegen, um dieses für Sie abhängig vom Ihrem Standort an- bzw. auszuschalten. Über die Stundenplanfunktion können Sie außerdem Zeiträume definieren, in denen das WLAN automatisch abgeschaltet werden soll.
     </string>
     <string name="help_welcome_description">Willkommen zum Privacy Friendly WiFi-Manager! Diese App schaltet automatisch das WLAN ein oder aus abhängig davon, wo Sie sich befinden.</string>
     <string name="help_actionbar_substring_step5">SIM Karte</string>
     <string name="help_content_step5_description">Um Ihr WLAN basierend auf den Funkmasten mit denen Ihr Gerät verbunden ist zu steuern, muss Ihr Gerät eine SIM-Karte enthalten. Andernfalls wird keine Verbindung zu Funkmasten aufgebaut.</string>
-    <string name="help_content_step0_cm">Anmerkung für CyanogenMod-basierte Distributionen): Durch einen Bug in CM 13 muss der Standortdienst (GPS) in den Einstellungen aktiviert sein. Andernfalls werden keine WLAN-Netze gefunden.</string>
-
 
     <!-- NOTIFICATION -->
     <string name="notification_content_text">Eine nicht verwaltet WLAN-Verbindung wurde hergestellt</string>
