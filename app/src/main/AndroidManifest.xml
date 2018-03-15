@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="org.secuso.privacyfriendlywifi.view.SplashActivity"
+            android:name="org.secuso.privacyfriendlywifimanager.view.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,56 +23,56 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlywifi.view.tutorial.TutorialActivity"
+            android:name="org.secuso.privacyfriendlywifimanager.view.tutorial.TutorialActivity"
             android:theme="@style/AppTheme.NoActionBar"> <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="org.secuso.privacyfriendlywifi.view.MainActivity" />
+            android:value="org.secuso.privacyfriendlywifimanager.view.MainActivity" />
         </activity>
         <activity
-            android:name="org.secuso.privacyfriendlywifi.view.MainActivity"
+            android:name="org.secuso.privacyfriendlywifimanager.view.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="org.secuso.privacyfriendlywifi.view.AboutActivity"
+            android:name="org.secuso.privacyfriendlywifimanager.view.AboutActivity"
             android:label="@string/fragment_about"
-            android:parentActivityName="org.secuso.privacyfriendlywifi.view.MainActivity" />
+            android:parentActivityName="org.secuso.privacyfriendlywifimanager.view.MainActivity" />
         <activity
-            android:name="org.secuso.privacyfriendlywifi.view.DetailsActivity"
+            android:name="org.secuso.privacyfriendlywifimanager.view.DetailsActivity"
             android:label="@string/title_activity_details"
-            android:parentActivityName="org.secuso.privacyfriendlywifi.view.MainActivity"
+            android:parentActivityName="org.secuso.privacyfriendlywifimanager.view.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.secuso.privacyfriendlywifi.view.MainActivity" />
+                android:value="org.secuso.privacyfriendlywifimanager.view.MainActivity" />
         </activity>
 
         <service
-            android:name="org.secuso.privacyfriendlywifi.service.ManagerService"
+            android:name="org.secuso.privacyfriendlywifimanager.service.ManagerService"
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false" />
         <service
-            android:name="org.secuso.privacyfriendlywifi.service.WifiUpdaterService"
+            android:name="org.secuso.privacyfriendlywifimanager.service.WifiUpdaterService"
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false" />
 
-        <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.AlarmReceiver" />
-        <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.BootCompletedReceiver">
+        <receiver android:name="org.secuso.privacyfriendlywifimanager.service.receivers.AlarmReceiver" />
+        <receiver android:name="org.secuso.privacyfriendlywifimanager.service.receivers.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.secuso.privacyfriendlywifi.service.receivers.WifiChangedReceiver">
+        <receiver android:name="org.secuso.privacyfriendlywifimanager.service.receivers.WifiChangedReceiver">
             <intent-filter android:priority="100">
                 <action android:name="android.net.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.secuso.privacyfriendlywifi.service.WifiNotification$NotificationButtonListener" />
-        <receiver android:name="org.secuso.privacyfriendlywifi.service.WifiNotification$NotificationClickListener" />
-        <receiver android:name="org.secuso.privacyfriendlywifi.view.WifiWidget$WidgetClickListener" />
-        <receiver android:name="org.secuso.privacyfriendlywifi.view.WifiWidget">
+        <receiver android:name="org.secuso.privacyfriendlywifimanager.service.WifiNotification$NotificationButtonListener" />
+        <receiver android:name="org.secuso.privacyfriendlywifimanager.service.WifiNotification$NotificationClickListener" />
+        <receiver android:name="org.secuso.privacyfriendlywifimanager.view.WifiWidget$WidgetClickListener" />
+        <receiver android:name="org.secuso.privacyfriendlywifimanager.view.WifiWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
