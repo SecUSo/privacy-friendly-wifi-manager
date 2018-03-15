@@ -99,7 +99,7 @@
     <string name="help_actionbar_substring_step1">Manager einschalten</string>
     <string name="help_actionbar_substring_step2">WLAN auswählen</string>
     <string name="help_actionbar_substring_step3">So funktioniert\'s</string>
-    <string name="help_content_step0_description">Um Informationen von umliegenden Funkmasten zu erhalten, wird eine Berechtigung benötigt. Um ortsbasierte Funktionen von Wifi-Manager zu nutzen, müssen Sie den Zugriff auf den Standort erlauben, wenn Sie mind. Android 6 installiert haben. Die Berechtigung kann auch später erneut angefordert werden.</string>
+    <string name="help_content_step0_description">Um Informationen von umliegenden Funkmasten zu erhalten, wird eine Berechtigung benötigt. Um ortsbasierte Funktionen von Wifi-Manager zu nutzen, müssen Sie den Zugriff auf den Standort erlauben. Die Berechtigung kann auch später erneut angefordert werden.</string>
     <string name="help_content_step1_description">Um den WiFi-Manager zu benutzen, muss dieser erst eingeschaltet werden. Nutzen Sie dafür den Aus/Ausschalter. Damit kann dieser Zellen erlernen und auch das WLAN des Geräts steuern.</string>
     <string name="help_content_step2_description">Sie können ein bekanntes WLAN, mit dem Sie verbunden sein möchten, über den \"+\"-Button hinzufügen. Privacy Friendly WiFi-Manager schaltet dann das WLAN Ihres Geräts an, wenn Sie in dessen Nähe sind.</string>
     <string name="help_content_step3_description">Privacy Friendly WiFi-Manager merkt sich mit welchen Funkmasten Sie verbunden sind, während Sie sich in einem bekannten WLAN-Netz befinden.

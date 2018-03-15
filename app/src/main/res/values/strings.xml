@@ -110,7 +110,7 @@
     <string name="help_content_step5_description">To control your WiFi based on the cell, the device has to be connected to a cell. Therefore, this functionality does not work on devices without a SIM card.</string>
 
     <string name="welcome">Welcome</string>
-    <string name="help_content_step0_description">A permission is needed to retrieve nearby cell information. To use location-based features of WiFi-Manager, starting with Android 6, you have to grant access to your coarse location. If you want to use this functionality, you can request the necessary permission later.</string>
+    <string name="help_content_step0_description">A permission is needed to retrieve nearby cell information. To use location-based features of WiFi-Manager you have to grant access to your coarse location. If you want to use this functionality, you can request the necessary permission later.</string>
     <string name="help_content_step1_description">To activate the WiFi-Manager, you have to enable it by toggling the on/off button. This enables its learning feature and collects the cell ids around your Wi-Fi. It also lets WiFi-Manager take control of toggling your phone\'s Wi-Fi on/off.</string>
     <string name="help_content_step2_description">Now lets add a known WiFi to the list of managed WiFis. Touch the add-button on the bottom and then select a Wi-Fi in your range.</string>
     <string name="help_content_step3_description">While you are sitting in an area with a WiFi, you are surrounded by radio masts providing you a \'cell\'

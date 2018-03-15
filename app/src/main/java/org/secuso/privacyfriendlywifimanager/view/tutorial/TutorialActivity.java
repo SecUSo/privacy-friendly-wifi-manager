@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.secuso.privacyfriendlywifimanager.view.MainActivity;
+
 import secuso.org.privacyfriendlywifi.R;
 
 import static android.os.Build.VERSION.SDK_INT;
@@ -73,7 +74,7 @@ public class TutorialActivity extends AppCompatActivity {
         }
 
         // Making notification bar transparent
-        if(Build.VERSION.SDK_INT >=21)
+        if (Build.VERSION.SDK_INT >= 21)
 
         {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -81,19 +82,19 @@ public class TutorialActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_tutorial);
 
-        viewPager =(ViewPager)
+        viewPager = (ViewPager)
 
                 findViewById(R.id.view_pager);
 
-        dotsLayout =(LinearLayout)
+        dotsLayout = (LinearLayout)
 
                 findViewById(R.id.layoutDots);
 
-        btnSkip =(Button)
+        btnSkip = (Button)
 
                 findViewById(R.id.btn_skip);
 
-        btnNext =(Button)
+        btnNext = (Button)
 
                 findViewById(R.id.btn_next);
 
@@ -102,7 +103,7 @@ public class TutorialActivity extends AppCompatActivity {
         // add few more layouts if you want
 
         if (SDK_INT >= Build.VERSION_CODES.M) {
-            layouts =new int[]
+            layouts = new int[]
 
                     {
                             R.layout.fragment_tutorial_step0,
@@ -110,11 +111,9 @@ public class TutorialActivity extends AppCompatActivity {
                             R.layout.fragment_tutorial_step2,
                             R.layout.fragment_tutorial_step3,
                             //R.layout.fragment_tutorial_step4,
-                            R.layout.fragment_tutorial_step5,}
-
-            ;
+                            R.layout.fragment_tutorial_step5,};
         } else {
-            layouts =new int[]
+            layouts = new int[]
 
                     {
                             R.layout.fragment_tutorial_step0,
@@ -122,10 +121,8 @@ public class TutorialActivity extends AppCompatActivity {
                             R.layout.fragment_tutorial_step2,
                             //R.layout.fragment_tutorial_step3,
                             //R.layout.fragment_tutorial_step4,
-                            R.layout.fragment_tutorial_step5,}
-            ;
+                            R.layout.fragment_tutorial_step5,};
         }
-
 
 
         // adding bottom dots
@@ -134,7 +131,7 @@ public class TutorialActivity extends AppCompatActivity {
         // making notification bar transparent
         changeStatusBarColor();
 
-        myViewPagerAdapter =new
+        myViewPagerAdapter = new
 
                 MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
@@ -144,7 +141,7 @@ public class TutorialActivity extends AppCompatActivity {
 
         {
             @Override
-            public void onClick (View v){
+            public void onClick(View v) {
                 launchHomeScreen();
             }
         });
@@ -153,7 +150,7 @@ public class TutorialActivity extends AppCompatActivity {
 
         {
             @Override
-            public void onClick (View v){
+            public void onClick(View v) {
                 // checking for last page
                 // if last page home screen will be launched
                 int current = getItem(+1);
