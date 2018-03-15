@@ -6,7 +6,7 @@ By switching of the Wi-Fi when it is not required, so called tracking via Wi-Fi 
 
 ## Download and more Information
 
-Further development requires Android Studio, we recommend to use at least version 2.2.0
+Further development requires Android Studio, we recommend to use at least version 3.0.1
 
 ### API Reference
 
@@ -17,13 +17,16 @@ Target SDK: 23
 ##License
 Licensed under the [Apache License Version 2.0](https://github.com/SecUSo/privacy-friendly-wifi/blob/master/LICENSE).
 
-The icons used in the nagivation drawer are licensed under the [CC BY 2.5] (http://creativecommons.org/licenses/by/2.5/). In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. All other images (the logo of Privacy Friendly Apps, the SECUSO logo and the header in the navigation drawer) copyright [Technische Universtität Darmstadt] (www.tu-darmstadt.de) (2016).
+The icons used in the nagivation drawer are licensed under the [CC BY 2.5](http://creativecommons.org/licenses/by/2.5/). 
+In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. 
+All other images (the logo of Privacy Friendly Apps, the SECUSO logo, the app's logo) copyright [Technische Universtität Darmstadt](www.tu-darmstadt.de) (2016-2018).
 
 ##Contributors
 App-Icon: <br />
 Markus Hau<br /><br />
 
 GitHub-Users:<br />
-bigwern<br />
-jonny08152<br />
-patrickjauernig
+bigwern <br />
+jonny08152 <br />
+patrickjauernig <br />
+yonjuni
