@@ -22,19 +22,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="org.secuso.privacyfriendlywifi.view.tutorial.TutorialActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name="org.secuso.privacyfriendlywifi.view.tutorial.TutorialActivity"
+            android:theme="@style/AppTheme.NoActionBar"> <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="org.secuso.privacyfriendlywifi.view.MainActivity" />
         </activity>
         <activity
             android:name="org.secuso.privacyfriendlywifi.view.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.secuso.privacyfriendlywifi.view.AboutActivity"
-            android:parentActivityName="org.secuso.privacyfriendlywifi.view.MainActivity"
-            android:label="@string/fragment_about"/>
+            android:label="@string/fragment_about"
+            android:parentActivityName="org.secuso.privacyfriendlywifi.view.MainActivity" />
         <activity
             android:name="org.secuso.privacyfriendlywifi.view.DetailsActivity"
             android:label="@string/title_activity_details"

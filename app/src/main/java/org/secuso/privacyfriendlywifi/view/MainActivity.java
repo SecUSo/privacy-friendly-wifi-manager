@@ -31,18 +31,22 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.os.Build;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+
+import static android.os.Build.VERSION.SDK_INT;
 
 import org.secuso.privacyfriendlywifi.logic.util.Logger;
 import org.secuso.privacyfriendlywifi.logic.util.SettingsEntry;
@@ -73,59 +77,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         SharedPreferences prefs = getSharedPreferences(SettingsEntry.PREF_SETTINGS, Context.MODE_PRIVATE);
         boolean firstRun = prefs.getBoolean(SettingsEntry.PREF_ENTRY_FIRST_RUN, true);
 
         // show help activity on first run
-        if (firstRun) {
+        if (firstRun && SDK_INT >= Build.VERSION_CODES.M) {
 
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_WIFI_STATE,
                             Manifest.permission.CHANGE_WIFI_STATE,
                             Manifest.permission.ACCESS_COARSE_LOCATION}, DYN_PERMISSION);
-        } else {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
+        }
 
-            // setup the drawer layout
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            // set version string in navigation header
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        // setup the drawer layout
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // set version string in navigation header
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-            if (drawer != null && navigationView != null) {
-                navigationView.setNavigationItemSelectedListener(this);
+        if (drawer != null && navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
 
-                if (getResources().getBoolean(R.bool.isTablet)) {
-                    // we are on a tablet
-                    Logger.e(TAG, "TABLET");
-                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-                    drawer.setScrimColor(Color.TRANSPARENT);
-                    this.isDrawerLocked = true;
-                } else {
-                    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                            R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-                        @Override
-                        public void onDrawerSlide(View drawerView, float slideOffset) {
-                            super.onDrawerSlide(drawerView, 0); // this disables the animation
-                        }
-                    };
+            if (getResources().getBoolean(R.bool.isTablet)) {
+                // we are on a tablet
+                Logger.e(TAG, "TABLET");
+                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+                drawer.setScrimColor(Color.TRANSPARENT);
+                this.isDrawerLocked = true;
+            } else {
+                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                        R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {
+                        super.onDrawerSlide(drawerView, 0); // this disables the animation
+                    }
+                };
 
-                    drawer.addDrawerListener(toggle);
+                drawer.addDrawerListener(toggle);
 
-                    toggle.syncState();
-                }
-
-                updateWifiViewComponents();
+                toggle.syncState();
             }
 
-            this.switchToFragment(WifiListFragment.class, true);
+            updateWifiViewComponents();
         }
+
+        this.switchToFragment(WifiListFragment.class, true);
+        //}
 
         updateNavigationDrawerSelection(R.id.nav_whitelist);
     }
 
     /**
      * Highlights the correct item in the drawer, since standard implementation does not work reliably.
+     *
      * @param id menu element id to select
      */
     private void updateNavigationDrawerSelection(int id) {
@@ -344,6 +350,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * Switches to the passed fragment.
+     *
      * @param fragmentClass Fragment to switch to.
      */
     private void switchToFragment(Class<? extends Fragment> fragmentClass) {
@@ -352,8 +359,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * Switches to the passed fragment.
+     *
      * @param fragmentClass Fragment to switch to.
-     * @param force Commit allowing state loss if true.
+     * @param force         Commit allowing state loss if true.
      */
     private void switchToFragment(Class<? extends Fragment> fragmentClass, boolean force) {
         try {
