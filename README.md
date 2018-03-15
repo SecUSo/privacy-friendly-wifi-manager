@@ -14,14 +14,14 @@ Mininum SDK: 17
 Target SDK: 23
 
 
-##License
+## License
 Licensed under the [Apache License Version 2.0](https://github.com/SecUSo/privacy-friendly-wifi/blob/master/LICENSE).
 
 The icons used in the nagivation drawer are licensed under the [CC BY 2.5](http://creativecommons.org/licenses/by/2.5/). 
 In addition to them the app uses icons from [Google Design Material Icons](https://design.google.com/icons/index.html) licensed under Apache License Version 2.0. 
 All other images (the logo of Privacy Friendly Apps, the SECUSO logo, the app's logo) copyright [Technische Universtität Darmstadt](www.tu-darmstadt.de) (2016-2018).
 
-##Contributors
+## Contributors
 App-Icon: <br />
 Markus Hau<br /><br />
 
