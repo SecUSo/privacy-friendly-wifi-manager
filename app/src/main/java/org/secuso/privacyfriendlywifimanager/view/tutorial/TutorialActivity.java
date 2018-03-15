@@ -37,6 +37,8 @@ import android.widget.TextView;
 import org.secuso.privacyfriendlywifimanager.view.MainActivity;
 import secuso.org.privacyfriendlywifi.R;
 
+import static android.os.Build.VERSION.SDK_INT;
+
 /**
  * Class structure taken from tutorial at http://www.androidhive.info/2016/05/android-build-intro-slider-app/
  *
@@ -98,17 +100,33 @@ public class TutorialActivity extends AppCompatActivity {
 
         // layouts of all welcome sliders
         // add few more layouts if you want
-        layouts =new int[]
 
-                {
-                        R.layout.fragment_tutorial_step0,
-                        R.layout.fragment_tutorial_step1,
-                        R.layout.fragment_tutorial_step2,
-                        R.layout.fragment_tutorial_step3,
-                        //R.layout.fragment_tutorial_step4,
-                        R.layout.fragment_tutorial_step5,}
+        if (SDK_INT >= Build.VERSION_CODES.M) {
+            layouts =new int[]
 
-        ;
+                    {
+                            R.layout.fragment_tutorial_step0,
+                            R.layout.fragment_tutorial_step1,
+                            R.layout.fragment_tutorial_step2,
+                            R.layout.fragment_tutorial_step3,
+                            //R.layout.fragment_tutorial_step4,
+                            R.layout.fragment_tutorial_step5,}
+
+            ;
+        } else {
+            layouts =new int[]
+
+                    {
+                            R.layout.fragment_tutorial_step0,
+                            R.layout.fragment_tutorial_step1,
+                            R.layout.fragment_tutorial_step2,
+                            //R.layout.fragment_tutorial_step3,
+                            //R.layout.fragment_tutorial_step4,
+                            R.layout.fragment_tutorial_step5,}
+            ;
+        }
+
+
 
         // adding bottom dots
         addBottomDots(0);
