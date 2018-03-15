@@ -62,7 +62,7 @@
 
     <!-- ABOUT STRINGS -->
     <string name="about_goal">Ziel</string>
-    <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager merkt sich Mobilfunktürme (Zell-IDs)
+    <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager merkt sich Funkmasten (Zell-IDs)
         innerhalb des Bereiches, in denen das Telefon mit einem WLAN verbunden ist. Die App versucht
         so zu lernen, in welchen Bereichen WLAN genutzt wird, ohne den GPS-Standort abzurufen.
     </string>
