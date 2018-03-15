@@ -64,7 +64,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:text="@string/about_affiliation"
-
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <ImageView
