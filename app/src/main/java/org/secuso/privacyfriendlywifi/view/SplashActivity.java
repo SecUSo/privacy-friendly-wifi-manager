@@ -22,7 +22,7 @@ import org.secuso.privacyfriendlywifi.view.tutorial.TutorialActivity;
 
 /**
  * @author Karola Marky
- * @version 20161022
+ * @version 20160315
  */
 
 public class SplashActivity extends AppCompatActivity {
@@ -31,8 +31,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//TODO Tutorial
-        Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+        Intent mainIntent = new Intent(SplashActivity.this, TutorialActivity.class);
         SplashActivity.this.startActivity(mainIntent);
         SplashActivity.this.finish();
     }

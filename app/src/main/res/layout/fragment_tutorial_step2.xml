@@ -1,27 +1,25 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="org.secuso.privacyfriendlywifi.view.tutorial.TutorialActivity">
-
+    android:background="@color/colorAccent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:layout_centerVertical="true"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tutorial_step_header"
+            android:text="@string/help_actionbar_substring_step1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="@string/help_actionbar_substring_step1"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/slide_title"
+            android:textStyle="bold"
+            />
 
         <ImageView
             android:layout_width="250dp"
@@ -31,17 +29,16 @@
             android:adjustViewBounds="true"
             android:src="@drawable/help_onoff_medium" />
 
-
         <TextView
+            android:text="@string/help_content_step1_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="10dp"
-            android:text="@string/help_content_step1_description"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
+            android:layout_marginTop="10dp"
+            android:paddingLeft="@dimen/desc_padding"
+            android:paddingRight="@dimen/desc_padding"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/slide_desc" />
     </LinearLayout>
-
-
-</ScrollView>
+</RelativeLayout>
