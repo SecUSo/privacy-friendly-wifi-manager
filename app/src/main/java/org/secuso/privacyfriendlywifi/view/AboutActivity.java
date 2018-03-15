@@ -17,6 +17,7 @@ package org.secuso.privacyfriendlywifi.view;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
 import secuso.org.privacyfriendlywifi.BuildConfig;
@@ -37,9 +38,8 @@ public class AboutActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        TextView versionTextView = (TextView)
-                findViewById(R.id.about_version);
-        String versionText = getString(R.string.about_version);
-        versionTextView.setText(String.format(versionText, BuildConfig.VERSION_NAME));
+        ((TextView)findViewById(R.id.secusoWebsite)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView)findViewById(R.id.githubURL)).setMovementMethod(LinkMovementMethod.getInstance());
+        ((TextView)findViewById(R.id.about_version)).setText(String.format(getString(R.string.about_version), BuildConfig.VERSION_NAME));
     }
 }

@@ -328,7 +328,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Intent startAboutIntent = new Intent(self, AboutActivity.class);
                         startAboutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         self.startActivity(startAboutIntent);
-                        //fragmentClass = AboutFragment.class;
                         break;
                     default:
                         fragmentClass = WifiListFragment.class;
