@@ -33,6 +33,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_action_add"
-        app:layout_behavior="org.secuso.privacyfriendlywifi.view.behavior.ScrollAwareFABBehavior" />
+        app:layout_behavior="org.secuso.privacyfriendlywifimanager.view.behavior.ScrollAwareFABBehavior" />
 
 </android.support.design.widget.CoordinatorLayout>
