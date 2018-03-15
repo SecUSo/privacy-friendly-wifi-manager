@@ -39,17 +39,6 @@
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_desc" />
-
-        <TextView
-            android:text="@string/help_content_step0_cm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="@dimen/desc_padding"
-            android:paddingRight="@dimen/desc_padding"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_desc" />
+        
     </LinearLayout>
 </RelativeLayout>
