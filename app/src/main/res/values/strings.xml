@@ -1,7 +1,7 @@
 <resources>
 
     <!-- GENERAL -->
-    <string name="app_name">WiFi-Manager</string>
+    <string name="app_name">WiFi Manager</string>
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="global_on_off_switch">On/Off</string>
@@ -68,7 +68,7 @@
 
     <!-- ABOUT STRINGS -->
     <string name="about_goal">Goal</string>
-    <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager keeps track of the cell tower ids in your area while you are connected to a Wi-Fi. By keeping this information, the app tries to learn
+    <string name="about_whatdoesitdo">Privacy Friendly WiFi Manager keeps track of the cell tower ids in your area while you are connected to a WiFi network. By keeping this information, the app tries to learn
     where your WiFi is located without using GPS.
     </string>
     <string name="about_privacy">Privacy</string>string>
@@ -87,10 +87,10 @@
 
     <!-- HELP STRINGS -->
     <string name="help_actionbar_string">Help</string>
-    <string name="help_actionbar_substring_welcome">Welcome to Privacy Friendly WiFi-Manager</string>
+    <string name="help_actionbar_substring_welcome">Welcome to Privacy Friendly WiFi Manager.</string>
     <string name="help_category_permissions">Permissions</string>
     <string name="help_title_coarse_location">Access coarse location</string>
-    <string name="help_desc_coarse_location">The permission for your coarse location is needed to retrieve nearby cell information.</string>
+    <string name="help_desc_coarse_location">The permission for your coarse location is needed to retrieve nearby cell tower information.</string>
     <string name="help_category_tutorial">Tutorial</string>
     <string name="help_category_tutorial_title">Tutorial</string>
     <string name="help_category_tutorial_desc">Shows the tutorial.</string>
@@ -104,26 +104,26 @@
     <string name="help_actionbar_substring_step">Step %1$d</string>
     <string name="help_actionbar_substring_step0">Granting Permissions</string>
     <string name="help_actionbar_substring_step1">Enabling the Manager</string>
-    <string name="help_actionbar_substring_step2">Adding a Wi-Fi</string>
-    <string name="help_actionbar_substring_step3">Functionality</string>
+    <string name="help_actionbar_substring_step2">Adding a WiFi</string>
+    <string name="help_actionbar_substring_step3">This is how it works</string>
     <string name="help_actionbar_substring_step5">SIM Card</string>
-    <string name="help_content_step5_description">To control your WiFi based on the cell, the device has to be connected to a cell. Therefore, this functionality does not work on devices without a SIM card.</string>
+    <string name="help_content_step5_description">To control your WiFi based on the cell tower, the device has to be connected to a cell tower. Therefore, this functionality does not work on devices without a SIM card.</string>
 
     <string name="welcome">Welcome</string>
-    <string name="help_content_step0_description">A permission is needed to retrieve nearby cell information. To use location-based features of WiFi-Manager you have to grant access to your coarse location. If you want to use this functionality, you can request the necessary permission later.</string>
-    <string name="help_content_step1_description">To activate the WiFi-Manager, you have to enable it by toggling the on/off button. This enables its learning feature and collects the cell ids around your Wi-Fi. It also lets WiFi-Manager take control of toggling your phone\'s Wi-Fi on/off.</string>
-    <string name="help_content_step2_description">Now lets add a known WiFi to the list of managed WiFis. Touch the add-button on the bottom and then select a Wi-Fi in your range.</string>
-    <string name="help_content_step3_description">While you are sitting in an area with a WiFi, you are surrounded by radio masts providing you a \'cell\'
-        for your mobile phone. WiFi-Manager remembers which cell is near your Wi-Fi, to turn it right on when you are coming home, or turning it off, when you are leaving (e.g. work/school). By using the schedule, you can also define time slots, when your phone\'s Wi-Fi should automatically be turned off (e.g. at night).</string>
-    <string name="help_welcome_description">Welcome to Privacy Friendly WiFi-Manager! This app helps you automatically turning on/off your WiFi while you are not near a known WiFi.
+    <string name="help_content_step0_description">To retrieve nearby cell tower information Privacy Friendly WiFi Manager requires access to our coarse location. The permission can also be granted at a later point of time.</string>
+    <string name="help_content_step1_description">To activate the WiFi Manager, you have to enable it by toggling the on/off button. This enables its learning feature and collects the cell ids around your WiFi. It also lets WiFi Manager take control of toggling your device\'s WiFi on/off.</string>
+    <string name="help_content_step2_description">To add a known WiFi to the list of managed WiFis, click the \"+"-button. Privacy Friendly WiFi Manager switches your device\'s WiFi on when you are near a known WiFi.</string>
+    <string name="help_content_step3_description">Privacy Friendly WiFi Manager saves cell towers your mobile device is connected to while you are in range of a known WiFi
+        network. Based on the saved cell towers Privacy Friendly WiFi Manager switches your WiFi on or off. You can furthermore define time slots, when your device\'s WiFi should automatically be turned off (e.g. at night).</string>
+    <string name="help_welcome_description">Welcome to Privacy Friendly WiFi Manager! This app automatically switches your WiFi off if you are not near a known WiFi network.
     </string>
 
 
     <!-- NOTIFICATION -->
-    <string name="notification_content_text">An unmanaged Wi-Fi connection has been established</string>
+    <string name="notification_content_text">An unmanaged WiFi connection has been established</string>
     <string name="notification_content_info">Unmanaged connection</string>
-    <string name="notification_unknown_wifi_title">New unmanaged Wi-Fi</string>
-    <string name="notification_unknown_wifi_title_format">New unmanaged Wi-Fi: %1$s</string>
+    <string name="notification_unknown_wifi_title">New unmanaged WiFi</string>
+    <string name="notification_unknown_wifi_title_format">New unmanaged WiFi: %1$s</string>
     <string name="notification_button_add">Manage this connection automatically</string>
     <string name="notification_main_text">Touch to manage connections</string>
     <string name="toast_wifi_added">WiFi %1$s now managed.</string>
@@ -134,7 +134,7 @@
     <string name="settings_respect_signal_strength">Respect signal strength</string>
     <string name="settings_respect_signal_strength_desc">Cellular signal strength will be respected for location estimation.</string>
     <string name="settings_show_notification_to_add_unmanaged_wi_fis">Show notifications</string>
-    <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">A notification will be shown when connected to unmanaged Wi-Fis.</string>
+    <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">A notification will be shown when connected to unmanaged WiFis.</string>
     <string name="settings_grant_permissions">Request permissions</string>
     <string name="settings_grant_permissions_desc">Request permissions needed for location-based services.</string>
     <string name="settings_developer">Developer Settings</string>
@@ -149,20 +149,20 @@
     <!-- DETAILS STRINGS -->
     <string name="details_ssid_placeholder">SSID unknown</string>
     <string name="details_bssid_placeholder">MAC unknown</string>
-    <string name="details_cellid_placeholder">Cell ID unknown</string>
+    <string name="details_cellid_placeholder">Cell tower ID unknown</string>
     <string name="details_macs_header">MACs</string>
-    <string name="details_cellids_header">Cell IDs</string>
+    <string name="details_cellids_header">Cell tower IDs</string>
 
 
     <!-- WIDGET STRINGS -->
-    <string name="appwidget_text">Automatic Wi-Fi Management:</string>
-    <string name="app_name_privacy" translatable="false">Privacy Friendly WiFi-Manager</string>
+    <string name="appwidget_text">Automatic WiFi Management:</string>
+    <string name="app_name_privacy" translatable="false">Privacy Friendly WiFi Manager</string>
     <string name="about_author_names" translatable="false">Jan Henzel, Patrick Jauernig, Dennis Werner</string>
     <string name="help_category_general">General</string>
-    <string name="help_welcome_summary">This app helps you automatically turning on/off your Wi-Fi while you are not near a known WiFi.</string>
+    <string name="help_welcome_summary">This app helps you automatically turning on/off your WiFi while you are not near a known WiFi.</string>
     <string name="help_category_howitworks">How it works</string>
-    <string name="help_goal_desc">The main goal is to avoid location tracking via Wi-Fi, but WiFi-Manager also saves battery life by automatically disabling your phones WiFi when it is not near a already known wireless network.</string>
+    <string name="help_goal_desc">The main goal is to avoid location tracking via WiFi, but WiFi Manager also saves battery life by automatically disabling your phones WiFi when it is not near a already known wireless network.</string>
     <string name="help_category_benefits">Benefits</string>
-    <string name="help_benefits_desc">By switching of the Wi-Fi when it is not required, so called tracking via Wi-Fi is avoided. Privacy Friendly WiFi Manager also saves battery life by automatically disabling your phone´s Wi-Fi in case it is not near an already known Wi-Fi network.</string>
+    <string name="help_benefits_desc">By switching of the WiFi when it is not required, so called tracking via WiFi is avoided. Privacy Friendly WiFi Manager also saves battery life by automatically disabling your device\'s WiFi in case it is not near an already known WiFi network.</string>
 
 </resources>

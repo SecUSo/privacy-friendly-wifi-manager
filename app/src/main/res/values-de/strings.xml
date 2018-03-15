@@ -81,7 +81,7 @@
 
     <!-- HELP STRINGS -->
     <string name="help_actionbar_string">Hilfe</string>
-    <string name="help_actionbar_substring_welcome">Willkommen beim Privacy Friendly WiFi-Manager</string>
+    <string name="help_actionbar_substring_welcome">Willkommen beim Privacy Friendly WiFi-Manager.</string>
     <string name="help_category_permissions">Berechtigungen</string>
     <string name="help_title_coarse_location">Zugriff auf ungefähren Standort</string>
     <string name="help_desc_coarse_location">Die Berechtigung zum Zugriff auf den ungefähren Standort ist nötig um Informationen über nahegelegene Zellen abrufen zu können.</string>
@@ -99,7 +99,7 @@
     <string name="help_actionbar_substring_step1">Manager einschalten</string>
     <string name="help_actionbar_substring_step2">WLAN auswählen</string>
     <string name="help_actionbar_substring_step3">So funktioniert\'s</string>
-    <string name="help_content_step0_description">Um Informationen von umliegenden Mobilfunkmasten zu erhalten, wird eine Berechtigung benötigt. Daher erfrägt Privacy Friendly WiFi-Manager den Zugriff auf den Standort. Die Berechtigung kann auch später in den Einstellungen angefordert werden.</string>
+    <string name="help_content_step0_description">Um Informationen von umliegenden Mobilfunkmasten zu erhalten, benötigt Privacy Friendly WiFi-Manager den Zugriff auf den Standort. Die Berechtigung kann auch später in den Einstellungen angefordert werden.</string>
     <string name="help_content_step1_description">Um den WiFi-Manager zu benutzen, muss dieser erst eingeschaltet werden. Nutzen Sie dafür den Aus/Ausschalter. Damit kann dieser Zellen erlernen und auch das WLAN des Geräts steuern.</string>
     <string name="help_content_step2_description">Sie können ein bekanntes WLAN, mit dem Sie verbunden sein möchten, über den \"+\"-Button hinzufügen. Privacy Friendly WiFi-Manager schaltet dann das WLAN Ihres Geräts an, wenn Sie in bekannten WLAN-Netzen aushalten.</string>
     <string name="help_content_step3_description">Privacy Friendly WiFi-Manager speichert mit welchen Mobilfunkmasten Ihr Gerät verbunden ist, während Sie sich in einem bekannten WLAN-Netz befinden.
