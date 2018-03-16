@@ -1,6 +1,4 @@
 <resources>
-    <item name="ic_menu_preferences" type="drawable">@android:drawable/ic_menu_preferences</item>
     <item name="ic_menu_schedule" type="drawable">@android:drawable/ic_menu_today</item>
     <item name="ic_menu_whitelist" type="drawable">@drawable/ic_action_wifi</item>
-    <item name="ic_add" type="drawable">@drawable/ic_action_add</item>
 </resources>

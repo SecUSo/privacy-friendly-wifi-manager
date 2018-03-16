@@ -5,13 +5,13 @@
     <string name="on">An</string>
     <string name="off">Aus</string>
     <string name="global_on_off_switch">An/Aus</string>
-    <string name="navigation_drawer_open">Menü öffnen</string>
-    <string name="navigation_drawer_close">Menü schließen</string>
     <string name="remove_entry">Eintrag löschen</string>
-    <string name="button_start">Start</string>
     <string name="button_next">Weiter</string>
     <string name="button_finish">Fertig</string>
     <string name="button_cancel">Abbrechen</string>
+
+    <string name="navigation_drawer_open">Navigation Drawer öffnen</string>
+    <string name="navigation_drawer_close">Navigation Drawer schließen</string>
 
 
     <!-- DRAWER ENTRIES -->
@@ -24,14 +24,12 @@
 
 
     <!-- ACTIVITY TITLES -->
-    <string name="title_activity_help">HelpActivity</string>
     <string name="title_activity_details">Details</string>
 
 
     <!-- CONTENT STRINGS -->
     <string name="header_wifilist">Liste der verwalteten WLANs</string>
     <string name="header_schedule">Liste der aktiven Zeitslots</string>
-    <string name="header_about">Über</string>
 
 
     <!-- WIFI STRINGS -->
@@ -65,42 +63,30 @@
     <string name="about_whatdoesitdo">Privacy Friendly WiFi-Manager merkt sich Mobilfunkmasten (Zell-IDs)
         innerhalb des Bereiches, in denen das Telefon mit einem WLAN verbunden ist. Die App versucht
         so zu lernen, in welchen Bereichen WLAN genutzt wird, ohne den GPS-Standort abzurufen.
-    </string>
-    <string name="about_privacy">Privatsphäre</string>string>
-    <string name="about_whyprivacyfriendly">Privacy Friendly WiFi-Manager schützt die
-        Privatsphäre durch geringstmögliche Datenerhebung. Die gesamten Daten werden ausschließlich auf dem
-        Telefon gehalten. Keine Daten werden an Dritte gesendet. Weiterhin wird versucht, so wenig Permissions wie möglich zu nutzen.
-    </string>
+    </string><![CDATA[
+    string>
+    ]]>
     <string name="about_author">Autoren:</string>
     <string name="about_affiliation"><b>In Zusammenarbeit mit</b></string>
     <string name="about_privacyfriendly">Diese App gehört zum Privacy Friendly Apps Projekt entwickelt an der Technischen Universität Darmstadt. Sourcecode lizenziert unter Apache Version 2.0. Bildrechte liegen bei der TU Darmstadt und Google Inc.</string>
     <string name="about_moreinfo">Weitere Informationen finden Sie hier:</string>
-    <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
     <string name="about_version">Version %1$s</string>
 
 
     <!-- HELP STRINGS -->
     <string name="help_actionbar_string">Hilfe</string>
-    <string name="help_actionbar_substring_welcome">Willkommen beim Privacy Friendly WiFi-Manager.</string>
     <string name="help_category_permissions">Berechtigungen</string>
-    <string name="help_title_coarse_location">Zugriff auf ungefähren Standort</string>
     <string name="help_desc_coarse_location">Die Berechtigung zum Zugriff auf den ungefähren Standort ist nötig um Informationen über nahegelegene Zellen abrufen zu können.</string>
     <string name="help_category_tutorial">Tutorial</string>
-    <string name="help_category_tutorial_title">Tutorial</string>
-    <string name="help_category_tutorial_desc">Zeigt das Tutorial erneut an.</string>
     <string name="help_category_cm">CyanogenMod-basierte Distributionen</string>
     <string name="help_content_step0_cm">Durch einen Bug in CM 13 muss der Standortdienst (GPS) in den Einstellungen aktiviert sein. Andernfalls werden keine WLAN-Netze gefunden.</string>
 
     <!-- TUTORIAL -->
     <string name="welcome">Willkommen</string>
-    <string name="help_actionbar_string_basics">Tutorial: Grundlagen</string>
-    <string name="help_actionbar_substring_step">Schritt %1$d</string>
     <string name="help_actionbar_substring_step0">Berechtigung erteilen</string>
-    <string name="help_actionbar_substring_step1">Manager einschalten</string>
     <string name="help_actionbar_substring_step2">WLAN auswählen</string>
     <string name="help_actionbar_substring_step3">So funktioniert\'s</string>
     <string name="help_content_step0_description">Um Informationen von umliegenden Mobilfunkmasten zu erhalten, benötigt Privacy Friendly WiFi-Manager den Zugriff auf den Standort. Die Berechtigung kann auch später in den Einstellungen angefordert werden.</string>
-    <string name="help_content_step1_description">Um den WiFi-Manager zu benutzen, muss dieser erst eingeschaltet werden. Nutzen Sie dafür den Aus/Ausschalter. Damit kann dieser Zellen erlernen und auch das WLAN des Geräts steuern.</string>
     <string name="help_content_step2_description">Sie können ein bekanntes WLAN, mit dem Sie verbunden sein möchten, über den \"+\"-Button hinzufügen. Privacy Friendly WiFi-Manager schaltet dann das WLAN Ihres Geräts an, wenn Sie in bekannten WLAN-Netzen aushalten.</string>
     <string name="help_content_step3_description">Privacy Friendly WiFi-Manager speichert mit welchen Mobilfunkmasten Ihr Gerät verbunden ist, während Sie sich in einem bekannten WLAN-Netz befinden.
         Basierend auf den gespeicherten Mobilfunkmasten, schaltet Privacy Friendly WiFi-Manager das WLAN Ihres Geräts ein oder aus.
@@ -111,7 +97,6 @@
     <string name="help_content_step5_description">Um Ihr WLAN basierend auf den Mobilfunkmasten zu steuern, muss Ihr Gerät eine SIM-Karte enthalten. Andernfalls wird keine Verbindung zu Mobilfunkmasten aufgebaut.</string>
 
     <!-- NOTIFICATION -->
-    <string name="notification_content_text">Eine nicht verwaltet WLAN-Verbindung wurde hergestellt</string>
     <string name="notification_content_info">Nicht verwaltete Verbindung</string>
     <string name="notification_unknown_wifi_title">Nicht verwaltetes WLAN</string>
     <string name="notification_unknown_wifi_title_format">Nicht verwaltetes WLAN: %1$s</string>
@@ -127,7 +112,6 @@
     <string name="settings_show_notification_to_add_unmanaged_wi_fis">Benachrichtigungen anzeigen</string>
     <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">Zeigt bei Verbindung zu einem nicht-verwalteten WLAN eine Benachrichtigung.</string>
     <string name="settings_grant_permissions">Berechtigungen anfordern</string>
-    <string name="settings_grant_permissions_desc">Fordere Berechtigungen für ortsbasierte Funktionen erneut an.</string>
     <string name="settings_developer">Entwickleroptionen</string>
     <string name="settings_delete_logfile">Logdatei löschen</string>
     <string name="settings_info_logfile_deleted">Logdatei erfolgreich gelöscht.</string>
@@ -139,8 +123,6 @@
 
     <!-- DETAILS STRINGS -->
     <string name="details_ssid_placeholder">Unbekannte SSID</string>
-    <string name="details_bssid_placeholder">Unbekannte MAC</string>
-    <string name="details_cellid_placeholder">Unbekannte Zell-ID</string>
     <string name="details_macs_header">MACs</string>
     <string name="details_cellids_header">Zell-IDs</string>
 

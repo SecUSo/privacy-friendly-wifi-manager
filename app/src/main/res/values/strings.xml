@@ -5,19 +5,17 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="global_on_off_switch">On/Off</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="remove_entry">Remove entry</string>
-    <string name="button_start">Start</string>
     <string name="button_next">Next</string>
     <string name="button_finish">Finish</string>
     <string name="button_cancel">Cancel</string>
 
     <string name="okay">Okay</string>
-    <string name="viewhelp">View Help</string>
-    <string name="main_button_welcomedialog">Show Welcome</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
     <!-- DRAWER ENTRIES -->
@@ -30,14 +28,12 @@
 
 
     <!-- ACTIVITY TITLES -->
-    <string name="title_activity_help">HelpActivity</string>
     <string name="title_activity_details">Details</string>
 
 
     <!-- CONTENT STRINGS -->
     <string name="header_wifilist">List of managed WiFi networks</string>
     <string name="header_schedule">List of active time slots</string>
-    <string name="header_about">About</string>
 
 
     <!-- WIFI STRINGS -->
@@ -70,15 +66,12 @@
     <string name="about_goal">Goal</string>
     <string name="about_whatdoesitdo">Privacy Friendly WiFi Manager keeps track of the cell tower ids in your area while you are connected to a WiFi network. By keeping this information, the app tries to learn
     where your WiFi is located without using GPS.
-    </string>
-    <string name="about_privacy">Privacy</string>string>
-    <string name="about_whyprivacyfriendly">This privacy friendly app preserves your privacy by tracking least necessary data. All data is kept on your phone. No data is sent
-        to anybody. We also try to use least permissions possible.
-    </string>
+    </string><![CDATA[
+    string>
+    ]]>
     <string name="about_author">Authors:</string>
     <string name="about_affiliation"><b>In affiliation with</b></string>
     <string name="about_moreinfo">More information can be found at:</string>
-    <string name="about_secusourl"><a href="https://www.secuso.informatik.tu-darmstadt.de/en/research/results/privacy-friendly-apps">https://www.secuso.org</a></string>
     <string name="about_version">Version %1$s</string>
     <string name="about_privacyfriendly">This application belongs to the group of Privacy Friendly Apps developed by Technische Universität Darmstadt. Sourcecode licensed under Apache version 2.0. Images copyright TU Darmstadt and Google Inc.</string>
     <string name="about_url_github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-wifi">Github-Repo</a></string>
@@ -87,23 +80,16 @@
 
     <!-- HELP STRINGS -->
     <string name="help_actionbar_string">Help</string>
-    <string name="help_actionbar_substring_welcome">Welcome to Privacy Friendly WiFi Manager.</string>
     <string name="help_category_permissions">Permissions</string>
-    <string name="help_title_coarse_location">Access coarse location</string>
     <string name="help_desc_coarse_location">The permission for your coarse location is needed to retrieve nearby cell tower information.</string>
     <string name="help_category_tutorial">Tutorial</string>
-    <string name="help_category_tutorial_title">Tutorial</string>
-    <string name="help_category_tutorial_desc">Shows the tutorial.</string>
     <string name="help_category_privacy_info">Privacy Info</string>
     <string name="help_category_cm">CyanogenMod-based Distribution</string>
     <string name="help_content_step0_cm">Due to a bug in CM 13 you have to enable the location service (GPS). Otherwise, no WiFi networks can be found.</string>
 
 
     <!-- TUTORIAL -->
-    <string name="help_actionbar_string_basics">Tutorial: Basics</string>
-    <string name="help_actionbar_substring_step">Step %1$d</string>
     <string name="help_actionbar_substring_step0">Granting Permissions</string>
-    <string name="help_actionbar_substring_step1">Enabling the Manager</string>
     <string name="help_actionbar_substring_step2">Adding a WiFi</string>
     <string name="help_actionbar_substring_step3">This is how it works</string>
     <string name="help_actionbar_substring_step5">SIM Card</string>
@@ -111,7 +97,6 @@
 
     <string name="welcome">Welcome</string>
     <string name="help_content_step0_description">To retrieve nearby cell tower information Privacy Friendly WiFi Manager requires access to our coarse location. The permission can also be granted at a later point of time.</string>
-    <string name="help_content_step1_description">To activate the WiFi Manager, you have to enable it by toggling the on/off button. This enables its learning feature and collects the cell ids around your WiFi. It also lets WiFi Manager take control of toggling your device\'s WiFi on/off.</string>
     <string name="help_content_step2_description">To add a known WiFi to the list of managed WiFis, click the \"+"-button. Privacy Friendly WiFi Manager switches your device\'s WiFi on when you are near a known WiFi.</string>
     <string name="help_content_step3_description">Privacy Friendly WiFi Manager saves cell towers your mobile device is connected to while you are in range of a known WiFi
         network. Based on the saved cell towers Privacy Friendly WiFi Manager switches your WiFi on or off. You can furthermore define time slots, when your device\'s WiFi should automatically be turned off (e.g. at night).</string>
@@ -120,7 +105,6 @@
 
 
     <!-- NOTIFICATION -->
-    <string name="notification_content_text">An unmanaged WiFi connection has been established</string>
     <string name="notification_content_info">Unmanaged connection</string>
     <string name="notification_unknown_wifi_title">New unmanaged WiFi</string>
     <string name="notification_unknown_wifi_title_format">New unmanaged WiFi: %1$s</string>
@@ -136,7 +120,6 @@
     <string name="settings_show_notification_to_add_unmanaged_wi_fis">Show notifications</string>
     <string name="settings_show_notification_to_add_unmanaged_wi_fis_desc">A notification will be shown when connected to unmanaged WiFis.</string>
     <string name="settings_grant_permissions">Request permissions</string>
-    <string name="settings_grant_permissions_desc">Request permissions needed for location-based services.</string>
     <string name="settings_developer">Developer Settings</string>
     <string name="settings_delete_logfile">Delete logfile</string>
     <string name="settings_info_logfile_deleted">Deleted logfile successfully.</string>
@@ -148,8 +131,6 @@
 
     <!-- DETAILS STRINGS -->
     <string name="details_ssid_placeholder">SSID unknown</string>
-    <string name="details_bssid_placeholder">MAC unknown</string>
-    <string name="details_cellid_placeholder">Cell tower ID unknown</string>
     <string name="details_macs_header">MACs</string>
     <string name="details_cellids_header">Cell tower IDs</string>
 
