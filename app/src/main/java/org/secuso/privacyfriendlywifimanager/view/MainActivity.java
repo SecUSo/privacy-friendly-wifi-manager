@@ -57,6 +57,7 @@ import org.secuso.privacyfriendlywifimanager.view.fragment.HelpFragment;
 import org.secuso.privacyfriendlywifimanager.view.fragment.ScheduleFragment;
 import org.secuso.privacyfriendlywifimanager.view.fragment.SettingsFragment;
 import org.secuso.privacyfriendlywifimanager.view.fragment.WifiListFragment;
+import org.secuso.privacyfriendlywifimanager.view.tutorial.TutorialActivity;
 
 import secuso.org.privacyfriendlywifi.R;
 
@@ -321,6 +322,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     case R.id.nav_settings:
                         fragmentClass = SettingsFragment.class;
                         switchVisibility = View.GONE;
+                        break;
+                    case R.id.nav_tutorial:
+                        Intent tutorialIntent = new Intent(self, TutorialActivity.class);
+                        tutorialIntent.setAction(TutorialActivity.ACTION_SHOW_ANYWAYS);
+                        self.startActivity(tutorialIntent);
                         break;
                     case R.id.nav_help:
                         fragmentClass = HelpFragment.class;
