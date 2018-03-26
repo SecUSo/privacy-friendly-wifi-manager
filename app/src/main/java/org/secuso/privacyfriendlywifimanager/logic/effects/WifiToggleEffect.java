@@ -32,7 +32,7 @@ public class WifiToggleEffect implements IEffect {
     @Override
     public void apply(boolean state) {
         if (WifiHandler.hasWifiPermission(StaticContext.getContext())) {
-            WifiManager wifiManager = (WifiManager) StaticContext.getContext().getSystemService(Context.WIFI_SERVICE);
+            WifiManager wifiManager = (WifiManager) StaticContext.getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             wifiManager.setWifiEnabled(state);
         } else {
             Logger.e(TAG, "No wifi permission granted"); // TODO reminder notification

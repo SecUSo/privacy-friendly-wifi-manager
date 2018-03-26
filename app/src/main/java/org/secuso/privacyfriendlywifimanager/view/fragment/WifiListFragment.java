@@ -104,7 +104,7 @@ public class WifiListFragment extends Fragment implements IOnDialogClosedListene
             this.fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final WifiManager wifiMan = (WifiManager) StaticContext.getContext().getSystemService(Context.WIFI_SERVICE);
+                    final WifiManager wifiMan = (WifiManager) StaticContext.getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                     if (!wifiMan.isWifiEnabled()) {
                         Snackbar.make(view, R.string.wifi_enable_wifi_to_scan, Snackbar.LENGTH_LONG)
                                 .setAction(R.string.wifi_enable_wifi, new View.OnClickListener() {
