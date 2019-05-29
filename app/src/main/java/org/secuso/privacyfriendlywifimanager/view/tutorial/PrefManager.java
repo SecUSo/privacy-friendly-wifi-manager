@@ -19,6 +19,8 @@ package org.secuso.privacyfriendlywifimanager.view.tutorial;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.secuso.privacyfriendlywifimanager.service.WifiNotification;
+
 /**
  * @author Karola Marky
  * @version 20161214

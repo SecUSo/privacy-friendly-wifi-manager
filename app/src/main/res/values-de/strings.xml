@@ -140,4 +140,8 @@
     <string name="help_goal_desc">Das Hauptziel von Privacy Friendly WiFi-Manager ist zwar die Reduzierung der WLAN-basierten Standortverfolgung,         jedoch bewirkt die gezielte Abschaltung des WLANs auch eine Schonung des Akkus.</string>
     <string name="help_category_benefits">Vorteile</string>
     <string name="help_benefits_desc">Durch gezieltes Abschalten der WLAN-Funktion bei Nichtnutzung wird sogenanntes Tracking via WLAN effektiv verhindert. Privacy Friendly WiFi-Manager schont außerdem den Akku, indem WLAN abgeschaltet wird, sofern man sich nicht in der Nähe eines bekannten WLANs befindet.</string>
+
+    <!-- Notification Channel -->
+    <string name="channel_name">Standard</string>
+    <string name="channel_description">Standard</string>
 </resources>

@@ -17,6 +17,7 @@ limitations under the License.
 package org.secuso.privacyfriendlywifimanager.service;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -25,7 +26,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.wifi.WifiInfo;
-import android.support.v7.app.NotificationCompat;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Toast;
 
 import org.secuso.privacyfriendlywifimanager.logic.types.WifiLocationEntry;
@@ -46,6 +49,8 @@ import secuso.org.privacyfriendlywifi.R;
  * The user is able to add the current wifi to the managed connections using the action button.
  */
 public class WifiNotification {
+
+    private static final String CHANNEL_ID = "defaultChannel";
 
     public static void show(Context context, WifiInfo wifiInfo) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -71,7 +76,7 @@ public class WifiNotification {
         Bitmap large_icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_action_wifi);
 
         // now assemble the notification
-        Notification notification = new NotificationCompat.Builder(context)
+        Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setCategory(NotificationCompat.CATEGORY_EVENT)
                 .setStyle(inboxStyle)
@@ -89,6 +94,23 @@ public class WifiNotification {
 
         // show notification - always use notification id 1 since we only have one connected wifi
         notificationManager.notify(1, notification);
+    }
+
+    public static void createNotificationChannel(Context context) {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String name = context.getString(R.string.channel_name);
+            String descriptionText = context.getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(descriptionText);
+
+            // Register the channel with the system
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     /**

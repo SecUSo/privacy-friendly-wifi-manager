@@ -17,12 +17,12 @@ limitations under the License.
 package org.secuso.privacyfriendlywifimanager.view.dialog;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,18 +67,18 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
     public void show(Activity activity, ViewGroup container) {
         View view = LayoutInflater.from(activity).inflate(R.layout.fragment_timepicker_dialog, container, false);
 
-        this.startTimePicker = (TimePicker) view.findViewById(R.id.start_time_picker);
+        this.startTimePicker = view.findViewById(R.id.start_time_picker);
+        this.endTimePicker = view.findViewById(R.id.end_time_picker);
+        this.titleEditText = view.findViewById(R.id.title_edit_text);
+        this.viewPager = view.findViewById(R.id.viewpager_dialog);
+
         this.initPicker(startTimePicker, startHour, startMinute);
-
-        this.endTimePicker = (TimePicker) view.findViewById(R.id.end_time_picker);
         this.initPicker(endTimePicker, endHour, endMinute);
-
-        this.titleEditText = (EditText) view.findViewById(R.id.title_edit_text);
         this.titleEditText.setHint(String.format(Locale.getDefault(), StaticContext.getContext().getString(R.string.time_picker_dialog_text_title_hint), this.currentListSize + 1));
 
 //        this.titleText = (TextView) view.findViewById(R.id.dialog_title_text);
 
-        this.viewPager = (ViewPager) view.findViewById(R.id.viewpager_dialog);
+
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new MyAdapter());
         final ViewPager.OnPageChangeListener listener = new ViewPager.SimpleOnPageChangeListener() {
@@ -100,16 +100,16 @@ public class TimePickerDialog implements IOnDialogClosedListener, DialogInterfac
         };
         viewPager.addOnPageChangeListener(listener);
 
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(activity, android.R.style.Theme_Material_Light_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(activity);
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            builder = new AlertDialog.Builder(activity, android.R.style.Theme_Material_Light_Dialog_Alert);
+//        } else {
+//            builder = new AlertDialog.Builder(activity);
+//        }
+        builder.setView(view);
         builder.setPositiveButton(R.string.button_next, null);
         builder.setNegativeButton(R.string.button_cancel, null);
         builder.setTitle(R.string.time_picker_dialog_title_choose_start_time);
-        builder.setView(view);
 
         this.alertDialog = builder.create();
         this.alertDialog.setCancelable(true);

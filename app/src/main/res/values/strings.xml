@@ -146,4 +146,7 @@
     <string name="help_category_benefits">Benefits</string>
     <string name="help_benefits_desc">By switching of the WiFi when it is not required, so called tracking via WiFi is avoided. Privacy Friendly WiFi Manager also saves battery life by automatically disabling your device\'s WiFi in case it is not near an already known WiFi network.</string>
 
+    <string name="channel_name">Default</string>
+    <string name="channel_description">The default channel for every notification.</string>
+
 </resources>
