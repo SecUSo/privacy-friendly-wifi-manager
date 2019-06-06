@@ -24,6 +24,13 @@ android {
     }
 }
 
+android.applicationVariants.all { variant ->
+    variant.outputs.all {
+        def appName = "pfa-wifi-manager"
+        outputFileName = appName+"-${variant.name}-v${variant.versionName}.apk"
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
