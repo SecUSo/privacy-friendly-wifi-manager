@@ -1,0 +1,11 @@
+Privacy Friendly WiFi Manager helps you automatically turning on/off your Wi-Fi while you are not near a known WiFi network.
+Therefore, Privacy Friendly WiFiManager keeps track of the cell tower ids in your area while you are connected to a WiFi network. By keeping this information, the app tries to learn where your WiFi is located without using GPS.
+
+This app is different from other apps considering two aspects:
+
+1) Minimal Permissions/Data Storage
+Privacy Friendly WiFi Manager preserves your privacy by tracking least necessary data. All data is kept on your phone. No data is sent to anybody. We also try to use least permissions possible.
+Privacy Friendly WiFi Manager requires access the the device's coarse location to retrieve the cell tower information. It furthermore requires access to the WiFi state and the permission to change the WiFi state.
+
+2) No advertisement
+Privacy Friendly WiFi-Manager does not include any form of advertisement. Many other apps in the Google Play Store show distracting ads that also reduce battery life.

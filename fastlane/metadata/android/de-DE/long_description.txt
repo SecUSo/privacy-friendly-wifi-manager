@@ -1,0 +1,13 @@
+Privacy Friendly WiFi-Manager hilft dabei automatisch das WLAN auszuschalten, sobald Sie nicht in der Nähe eines von Ihnen genutzten WLAN-Networks sind.
+Privacy Friendly WiFi-Manager merkt sich Mobilfunktürme (Zell-IDs) innerhalb des Bereiches, in denen das Telefon mit einem WLAN verbunden ist. Die App versucht so zu lernen, in welchen Bereichen WLAN genutzt wird, ohne den GPS-Standort abzurufen.
+
+Die App unterscheidet sich von anderen Applikationen hinsichtlich zweier Aspekte:
+
+1) Minimale Berechtigungen
+Privacy Friendly WiFi-Manager schützt die Privatsphäre durch geringstmögliche Datenerhebung. Die gesamten Daten werden ausschließlich auf dem Telefon gehalten. Keine Daten werden an Dritte gesendet. Weiterhin wird versucht, so wenig Berechtigungen wie möglich zu nutzen.
+Privacy Friendly WiFi-Manager benötigt Zugriff auf den ungefähren Standort des Geräts, um die Mobilfunktürme zu ermitteln. Außerdem benötigt die App Zugriff auf die Steuerung des WLANs.
+
+2) Keine Werbung
+Privacy Friendly WiFi-Manager verzichtet komplett auf das Einblenden von Werbung. Viele andere kostenlose Apps im Google Play Store blenden störende Werbung ein, die unter anderem auch die Akkulaufzeit verkürzt.
+
+Die App gehört zur Gruppe der Privacy Friendly Apps, die von der Forschungsgruppe SECUSO der Technischen Universität Darmstadt entwickelt werden. Mehr Informationen unter: https://secuso.org/pfa

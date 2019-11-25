@@ -1,0 +1,1 @@
+Privacy Friendly WiFi-Manager hilft dabei automatisch das WLAN auszuschalten, sobald Sie nicht in der Nähe eines von Ihnen genutzten WLAN-Networks sind.
