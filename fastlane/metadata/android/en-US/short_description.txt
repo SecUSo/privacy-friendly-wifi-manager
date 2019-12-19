@@ -1,1 +1,1 @@
-Privacy Friendly WiFi Manager helps you automatically turning on/off your Wi-Fi while you are not near a known WiFi network.
+Automatically turn on/off your Wi-Fi when being (not) near a known WiFi network
