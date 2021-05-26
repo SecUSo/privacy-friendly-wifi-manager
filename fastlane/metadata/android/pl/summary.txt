@@ -1,0 +1,1 @@
+Zarządza systemem Wi-Fi na podstawie lokalizacji
