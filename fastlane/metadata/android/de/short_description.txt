@@ -1,1 +1,1 @@
-Automatisch das WLAN ausschalten wenn entfernt von bekannten WLAN-Netzen
+(SECUSO) Automatisch das WLAN ausschalten wenn entfernt von bekannten Orten
