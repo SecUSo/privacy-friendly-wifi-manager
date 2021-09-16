@@ -1,1 +1,1 @@
-Automatically turn on/off your Wi-Fi when being (not) near a known WiFi network
+(SECUSO) Automatically turn on/off your Wi-Fi when away from known locations
