@@ -1,3 +1,8 @@
+[![Twitter](https://img.shields.io/badge/twitter-@SECUSOResearch-%231DA1F2.svg?&style=flat-square&logo=twitter&logoColor=1DA1F2)][Twitter]
+[![Mastodon](https://img.shields.io/badge/mastodon-@SECUSO__Research@baw%C3%BC.social-%233088D4.svg?&style=flat-square&logo=mastodon&logoColor=3088D4)][Mastodon]
+
+[Mastodon]: https://xn--baw-joa.social/@SECUSO_Research
+[Twitter]: https://twitter.com/SECUSOResearch
 # Privacy Friendly WiFi Manager
 Privacy Friendly WiFi Manager controls the WiFi of your device automatically depending on your current location. The intent of this Android app is to provide a possibility to (de-) activate the device's WiFi according to preset rules. Triggers include cell tower location and a time schedule.
 
