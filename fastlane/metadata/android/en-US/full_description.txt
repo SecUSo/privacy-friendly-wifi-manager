@@ -9,3 +9,9 @@ Privacy Friendly WiFi Manager requires access the the device's coarse location t
 
 2) No advertisement
 Privacy Friendly WiFi-Manager does not include any form of advertisement. Many other apps in the Google Play Store show distracting ads that also reduce battery life.
+
+
+Feel free to contact us via:
+Twitter - @SECUSOResearch https://twitter.com/secusoresearch
+Mastodon - @SECUSO_Research@bawü.social https://xn--baw-joa.social/@SECUSO_Research/
+Job opening - https://secuso.aifb.kit.edu/english/Job_Offers_1557.php
